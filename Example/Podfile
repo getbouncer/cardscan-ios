@@ -1,0 +1,6 @@
+use_frameworks!
+
+target 'CardScan_Example' do
+  pod 'CardScan', :path => '../'
+
+end
