@@ -42,12 +42,14 @@ camera usage to your Info.plist file:
 The string you add here will be what CardScan displays to your users
 when CardScan first prompts them for permission to use the camera.
 
+![alt text](https://github.com/getbouncer/cardscan-ios/raw/master/camera_prompt.png "Camera prompt")
+
 Alternatively, you can add this permission directly to your Info.plist
 file:
 
 ```xml
 <key>NSCameraUsageDescription</key>
-<string>Scan credit cards</string>
+<string>To scan credit cards</string>
 ```
 
 ## Configure CardScan
