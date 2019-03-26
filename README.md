@@ -93,7 +93,11 @@ class ViewController: UIViewController, ScanDelegate {
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        print(creditCard.number)
+    	let number = creditCard.number
+	var expiry: String?
+	if let expiryMonth = creditCard.expiryMonth, let expiryYear = creditCard.expiryYear {
+	    expiry = expiryMonth + "/" + expiryYear
+	}
         self.dismiss(animated: true)
     }
 }
