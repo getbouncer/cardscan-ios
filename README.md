@@ -50,9 +50,9 @@ file:
 <string>Scan credit cards</string>
 ```
 
-## Configure CardScan (Optional)
+## Configure CardScan
 
-To get faster performance on your first scan you can configure the library on app launch:
+Configure the library when your application launches:
 
 ```swift
 import UIKit
@@ -96,6 +96,20 @@ class ViewController: UIViewController, ScanDelegate {
         print(creditCard.number)
         self.dismiss(animated: true)
     }
+}
+```
+
+## Integrating with Stripe
+
+If you use Stripe to handle payments, you can store scanned card
+information into Stripe's `STPCardParams`:
+
+```swift
+let cardParam = STPCardParams()
+cardParam.number = creditCard.number
+if let expiryMonth = creditCard.expiryMonth, let expiryYear = creditCard.expiryYear {
+    cardParam.expYear = UInt(expiryYear) ?? 0
+    cardParam.expMonth = UInt(expiryMonth) ?? 0
 }
 ```
 
