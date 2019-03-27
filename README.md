@@ -49,7 +49,7 @@ file:
 
 ```xml
 <key>NSCameraUsageDescription</key>
-<string>To scan credit cards</string>
+<string>We need access to your camera to scan your card</string>
 ```
 
 ## Configure CardScan
