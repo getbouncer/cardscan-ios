@@ -104,9 +104,11 @@ class ViewController: UIViewController, ScanDelegate {
 }
 ```
 
-## Integrating with Stripe
+## Integrating with Payment Provider
 
-If you use Stripe to handle payments, you can store scanned card
+Once card number and expiry information is returned, you need to call your payment provider API to store this information.
+
+For example, if you use Stripe to handle payments you can store scanned card
 information into Stripe's `STPCardParams`:
 
 ```swift
