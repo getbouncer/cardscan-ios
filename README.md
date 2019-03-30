@@ -111,6 +111,10 @@ class ViewController: UIViewController, ScanDelegate {
 	// which you can use with Stripe's APIs
 	let cardParams = creditCard.cardParams()
 
+	// At this point you have the credit card number and optionally the expiry.
+	// You can either tokenize the number or prompt the user for more
+	// information (e.g., CVV) before tokenizing.
+
         self.dismiss(animated: true)
     }
 }
