@@ -14,6 +14,8 @@ it, add the following line to your Podfile:
 
 ```ruby
 pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
+# if you're using Stripe, uncomment this line
+# pod 'CardScan/Stripe', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
 ```
 
 Make sure that you include the `use_frameworks!` line in your Podfile
@@ -99,24 +101,13 @@ class ViewController: UIViewController, ScanDelegate {
 	let expiryMonth = creditCard.expiryMonth
 	let expiryYear = creditCard.expiryYear
 
+	# If you're using Stripe and you include the CardScan/Stripe pod, you
+  	# can get `STPCardParams` directly from CardScan `CreditCard` objects,
+	# which you can use with Stripe's APIs
+	let cardParams = creditCard.cardParams()
+
         self.dismiss(animated: true)
     }
-}
-```
-
-## Integrating with Payment Provider
-
-Once card number and expiry information is returned, you need to call your payment provider API to store this information.
-
-For example, if you use Stripe to handle payments you can store scanned card
-information into Stripe's `STPCardParams`:
-
-```swift
-let cardParam = STPCardParams()
-cardParam.number = creditCard.number
-if let expiryMonth = creditCard.expiryMonth, let expiryYear = creditCard.expiryYear {
-    cardParam.expYear = UInt(expiryYear) ?? 0
-    cardParam.expMonth = UInt(expiryMonth) ?? 0
 }
 ```
 

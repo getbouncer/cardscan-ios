@@ -12,6 +12,10 @@ import AVKit
 import VideoToolbox
 import Vision
 
+#if canImport(Stripe)
+    import Stripe
+#endif
+
 //
 // TODOS:
 //
@@ -34,6 +38,19 @@ import Vision
     public init(number: String) {
         self.number = number
     }
+    
+    #if canImport(Stripe)
+    @objc public func cardParams() -> STPCardParams {
+        let cardParam = STPCardParams()
+        cardParam.number = self.number
+        if let expiryMonth = self.expiryMonth, let expiryYear = self.expiryYear {
+            cardParam.expYear = UInt(expiryYear) ?? 0
+            cardParam.expMonth = UInt(expiryMonth) ?? 0
+        }
+        
+        return cardParam
+    }
+    #endif
 }
 
 @objc public class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
