@@ -84,10 +84,15 @@ import Vision
     
     var ocr = Ocr()
     
-    @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController {
+    @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
+        
+        if !self.isCompatible() {
+            return nil
+        }
+        
         let storyboard = UIStoryboard(name: "CardScan", bundle: Bundle(for: ScanViewController.self))
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
-        viewController.scanDelegate = delegate
+            viewController.scanDelegate = delegate
         return viewController
     }
     
