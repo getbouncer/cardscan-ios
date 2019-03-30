@@ -127,7 +127,7 @@ CardScan makes heavy use of CoreML, which Apple introduced in iOS
 a development target of iOS 9.0 or higher, but it will only run on
 devices that are running iOS 11 or higher.
 
-To check if a device supports CardScan at runtime using the
+To check if a device supports CardScan at runtime, use the
 `ScanViewController.isCompatible` method:
 
 ```swift
