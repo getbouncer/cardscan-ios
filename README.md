@@ -89,7 +89,11 @@ import CardScan
 
 class ViewController: UIViewController, ScanDelegate {
     @IBAction func scanCardButtonPressed() {
-        let vc = ScanViewController.createViewController(withDelegate: self)
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+	    print("This device is incompatible with CardScan")
+	    return
+	}
+
         self.present(vc, animated: true)
     }
 
