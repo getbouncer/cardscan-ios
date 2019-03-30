@@ -14,8 +14,13 @@ it, add the following line to your Podfile:
 
 ```ruby
 pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
-# if you're using Stripe, uncomment this line
-# pod 'CardScan/Stripe', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
+```
+
+Or if you're using Stripe:
+
+```ruby
+pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
+pod 'CardScan/Stripe', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
 ```
 
 Make sure that you include the `use_frameworks!` line in your Podfile
