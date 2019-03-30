@@ -93,7 +93,9 @@ import Vision
     
     @objc static public func configure() {
         self.machineLearningQueue.async {
-            Ocr.configure()
+            if #available(iOS 11.0, *) {
+                Ocr.configure()
+            }
         }
     }
     
@@ -128,7 +130,7 @@ import Vision
         let roundedRectpath = UIBezierPath.init(roundedRect: maskRect, cornerRadius: regionCornerRadius).cgPath
         path.addPath(roundedRectpath)
         maskLayer.path = path
-        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
+        maskLayer.fillRule = kCAFillRuleEvenOdd
         viewToMask.layer.mask = maskLayer
     }
     
@@ -167,7 +169,12 @@ import Vision
         
         if self.scanQrCode {
             self.regionOfInterestAspectConstraint.isActive = false
-            self.regionOfInterestLabel.heightAnchor.constraint(equalTo: self.regionOfInterestLabel.widthAnchor, multiplier: 1.0).isActive = true
+            if #available(iOS 9.0, *) {
+                self.regionOfInterestLabel.heightAnchor.constraint(equalTo: self.regionOfInterestLabel.widthAnchor, multiplier: 1.0).isActive = true
+                self.regionOfInterestLabel.heightAnchor.constraint(equalTo: self.regionOfInterestLabel.widthAnchor, multiplier: 1.0).isActive = true
+            } else {
+                // Fallback on earlier versions
+            }
             self.regionOfInterestLabel.text = nil
             self.ScanBelowLabel.text = "Scan QR Code"
         }
@@ -287,6 +294,7 @@ import Vision
         }
     }
     
+    @available(iOS 11.0, *)
     func handleBarcodeResults(_ results: [Any]) {
         for result in results {
             // Cast the result to a barcode-observation
@@ -305,6 +313,7 @@ import Vision
         }
     }
     
+    @available(iOS 11.0, *)
     func blockingQrModel(pixelBuffer: CVPixelBuffer) {
         let semaphore = DispatchSemaphore(value: 0)
         DispatchQueue.global(qos: .userInteractive).async {
@@ -331,6 +340,7 @@ import Vision
         semaphore.wait()
     }
     
+    @available(iOS 11.0, *)
     func blockingOcrModel(rawImage: CGImage) {
         let (number, expiry, done) = ocr.performWithErrorCorrection(for: rawImage)
         if let number = number {
@@ -375,10 +385,12 @@ import Vision
             return
         }
         
-        if self.scanQrCode {
-            self.blockingQrModel(pixelBuffer: pixelBuffer)
-        } else {
-            self.blockingOcrModel(rawImage: rawImage)
+        if #available(iOS 11.0, *) {
+            if self.scanQrCode {
+                self.blockingQrModel(pixelBuffer: pixelBuffer)
+            } else {
+                self.blockingOcrModel(rawImage: rawImage)
+            }
         }
         
         self.machineLearningSemaphore.signal()
@@ -392,7 +404,7 @@ import Vision
     func toRegionOfInterest(pixelBuffer: CVPixelBuffer) -> CGImage? {
         var cgImage: CGImage?
         if #available(iOS 9.0, *) {
-            VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
+            VTCreateCGImageFromCVPixelBuffer(pixelBuffer, nil, &cgImage)
         } else {
             return nil
         }

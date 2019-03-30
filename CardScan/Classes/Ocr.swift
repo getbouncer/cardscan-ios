@@ -7,8 +7,10 @@ public class Ocr {
     public init() {}
     
     static func configure() {
-        let ocr = FindFourOcr()
-        ocr.warmUp()
+        if #available(iOS 11.0, *) {
+            let ocr = FindFourOcr()
+            ocr.warmUp()
+        }
     }
     
     var firstResult: Date?
@@ -46,6 +48,7 @@ public class Ocr {
         self.scanStats.endTime = Date()
     }
     
+    @available(iOS 11.0, *)
     public func performWithErrorCorrection(for rawImage: CGImage) -> (String?, Expiry?, Bool) {
         let number = self.perform(for: rawImage)
 
@@ -74,6 +77,7 @@ public class Ocr {
         }
     }
     
+    @available(iOS 11.0, *)
     public func perform(for rawImage: CGImage) -> String? {
         var findFour = FindFourOcr()
         let number = findFour.predict(image: UIImage(cgImage: rawImage))

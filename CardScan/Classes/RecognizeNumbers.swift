@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 11.0, *)
 struct RecognizeNumbers {
     // parameters for our heuristics
     let maxColDelta = 24
@@ -23,6 +24,7 @@ struct RecognizeNumbers {
         self.recognizedDigits = Array(repeating: Array(repeating: nil, count: numCols), count: numRows)
     }
     
+    @available(iOS 11.0, *)
     mutating func number(lines: [[DetectedBox]]) -> (String?, [CGRect]?) {
         let maxRow = lines.map { $0.map { $0.row }}.flatMap { $0 }.max() ?? 0
         let maxCol = lines.map { $0.map { $0.col }}.flatMap { $0 }.max() ?? 0
@@ -51,6 +53,7 @@ struct RecognizeNumbers {
         return (self.number, self.numberBoxes)
     }
     
+    @available(iOS 11.0, *)
     mutating func cachedDigits(box: DetectedBox) -> RecognizedDigits? {
         var recognizedDigits: RecognizedDigits? = nil
         if self.recognizedDigits[box.row][box.col] == nil {
@@ -63,6 +66,7 @@ struct RecognizeNumbers {
         return recognizedDigits
     }
     
+    @available(iOS 11.0, *)
     mutating func recognizeAmexDigits(for line: [DetectedBox]) -> (String?, [CGRect]?) {
         
         let recognizedDigits = line.compactMap { self.cachedDigits(box: $0) }
@@ -105,6 +109,7 @@ struct RecognizeNumbers {
         return (nil, nil)
     }
     
+    @available(iOS 11.0, *)
     mutating func amexNumber(lines: [[DetectedBox]]) -> (String?, [CGRect]?) {
         let maxRow = lines.map { $0.map { $0.row }}.flatMap { $0 }.max() ?? 0
         let maxCol = lines.map { $0.map { $0.col }}.flatMap { $0 }.max() ?? 0

@@ -22,6 +22,7 @@ public struct Expiry: Hashable {
         return String(format: "%02d/%02d", self.month, twoDigitYear)
     }
     
+    @available(iOS 11.0, *)
     static func from(image: CGImage, within rect: CGRect) -> Expiry? {
         guard let digits = RecognizedDigits.from(image: image, within: rect) else {
             return nil
