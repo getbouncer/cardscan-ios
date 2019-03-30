@@ -37,9 +37,15 @@ class ViewController: UIViewController, ScanDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        if !ScanViewController.isCompatible() {
+            self.scanCardButton.isHidden = true
+        }
     }
 
+    
+    @IBOutlet weak var scanCardButton: UIButton!
+    
     @IBAction func scanQrCodePress() {
         let vc = ScanViewController.createViewController(withDelegate: self)
         vc.scanQrCode = true

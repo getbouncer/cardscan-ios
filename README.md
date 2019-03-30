@@ -5,7 +5,7 @@ CardScan iOS installation guide
 ## Requirements
 
 * Objective C or Swift 4.0 or higher
-* iOS 11 or higher
+* iOS 11 or higher (supports development target of iOS 9.0 or higher)
 
 ## Installation
 
@@ -117,6 +117,22 @@ class ViewController: UIViewController, ScanDelegate {
 
         self.dismiss(animated: true)
     }
+}
+```
+
+## iOS 10 and older
+
+CardScan makes heavy use of CoreML, which Apple introduced in iOS
+11. You can include the CardScan library in any projects that support
+a development target of iOS 9.0 or higher, but it will only run on
+devices that are running iOS 11 or higher.
+
+To check if a device supports CardScan at runtime using the
+`ScanViewController.isCompatible` method:
+
+```swift
+if !ScanViewController.isCompatible() {
+    self.scanCardButton.isHidden = true
 }
 ```
 
