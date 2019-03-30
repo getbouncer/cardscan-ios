@@ -101,9 +101,9 @@ class ViewController: UIViewController, ScanDelegate {
 	let expiryMonth = creditCard.expiryMonth
 	let expiryYear = creditCard.expiryYear
 
-	# If you're using Stripe and you include the CardScan/Stripe pod, you
-  	# can get `STPCardParams` directly from CardScan `CreditCard` objects,
-	# which you can use with Stripe's APIs
+	// If you're using Stripe and you include the CardScan/Stripe pod, you
+  	// can get `STPCardParams` directly from CardScan `CreditCard` objects,
+	// which you can use with Stripe's APIs
 	let cardParams = creditCard.cardParams()
 
         self.dismiss(animated: true)
