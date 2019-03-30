@@ -59,6 +59,8 @@ import Vision
     public var allowSkip = false
     public var scanQrCode = false
     
+    static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
+    
     @IBOutlet weak var expiryLabel: UILabel!
     @IBOutlet weak var cardNumberLabel: UILabel!
     @IBOutlet weak var blurView: UIView!
@@ -87,6 +89,12 @@ import Vision
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
         viewController.scanDelegate = delegate
         return viewController
+    }
+    
+    @objc static public func configure() {
+        self.machineLearningQueue.async {
+            Ocr.configure()
+        }
     }
     
     @IBAction func backTextPress() {
@@ -272,11 +280,8 @@ import Vision
     }
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        // XXX FIXME I think there's a way to dial back the frequency that they're sending frames
-        // we should make sure we're doing the standard thing here
-        
         if self.machineLearningSemaphore.wait(timeout: .now()) == .success {
-            DispatchQueue.global(qos: .background).async {
+            ScanViewController.machineLearningQueue.async {
                 self.captureOutputWork(sampleBuffer: sampleBuffer)
             }
         }

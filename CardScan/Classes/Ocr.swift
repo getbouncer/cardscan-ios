@@ -6,7 +6,7 @@ public class Ocr {
     
     public init() {}
     
-    public static func configure() {
+    static func configure() {
         let ocr = FindFourOcr()
         ocr.warmUp()
     }

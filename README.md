@@ -13,14 +13,14 @@ CardScan is available through [CocoaPods](https://cocoapods.org). To install
 it, add the following line to your Podfile:
 
 ```ruby
-pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
+pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4034'
 ```
 
 Or if you're using Stripe:
 
 ```ruby
-pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
-pod 'CardScan/Stripe', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
+pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4034'
+pod 'CardScan/Stripe', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4034'
 ```
 
 Make sure that you include the `use_frameworks!` line in your Podfile
@@ -71,7 +71,7 @@ import CardScan
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    	Ocr.configure() 
+    	ScanViewController.configure() 
         // do any other necessary launch configuration
         return true
     }
