@@ -28,6 +28,7 @@
                                     <constraint firstAttribute="height" constant="40" id="yRz-D1-mCf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Scan Card">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -49,18 +50,29 @@
                                     <action selector="scanQrCodePress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="JIc-3K-gPo"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9tR-DO-gyb">
+                                <rect key="frame" x="171.5" y="265.5" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="eji-UD-5BT"/>
+                                    <constraint firstAttribute="width" constant="32" id="qe9-YZ-gfV"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="qlz-Ds-Znv" firstAttribute="top" secondItem="9tR-DO-gyb" secondAttribute="bottom" constant="16" id="1PH-rJ-mXS"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="AkZ-f5-Cw0"/>
+                            <constraint firstItem="9tR-DO-gyb" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="IXC-rr-ZtJ"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="Qox-lN-oV9"/>
                             <constraint firstItem="6NY-p4-OvD" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="VtA-4O-Rau"/>
                             <constraint firstItem="6NY-p4-OvD" firstAttribute="top" secondItem="qlz-Ds-Znv" secondAttribute="bottom" constant="8" id="Y8H-65-voH"/>
+                            <constraint firstItem="qlz-Ds-Znv" firstAttribute="top" secondItem="9tR-DO-gyb" secondAttribute="bottom" constant="16" id="hrc-Fy-VMw"/>
                             <constraint firstItem="6NY-p4-OvD" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="sRZ-M5-dWl"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="tRj-Xx-bJf"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cameraImage" destination="9tR-DO-gyb" id="0XI-mF-WFZ"/>
                         <outlet property="scanCardButton" destination="qlz-Ds-Znv" id="eVz-bg-1fa"/>
                     </connections>
                 </viewController>

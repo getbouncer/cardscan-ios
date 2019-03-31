@@ -37,9 +37,11 @@ class ViewController: UIViewController, ScanDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.cameraImage.image = ScanViewController.cameraImage()
     }
 
     
+    @IBOutlet weak var cameraImage: UIImageView!
     @IBOutlet weak var scanCardButton: UIButton!
     
     @IBAction func scanQrCodePress() {
@@ -55,6 +57,7 @@ class ViewController: UIViewController, ScanDelegate {
             print("scan view controller not supported on this hardware")
             return
         }
+        
         vc.allowSkip = true
         self.present(vc, animated: true)
     }
