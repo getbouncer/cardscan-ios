@@ -112,6 +112,10 @@ import Vision
         }
     }
     
+    @objc static public func cameraImage() -> UIImage? {
+        return UIImage(named: "camera", in: Bundle(for: ScanViewController.self), compatibleWith: nil)
+    }
+    
     @IBAction func backTextPress() {
         self.backButtonPress("")
     }
