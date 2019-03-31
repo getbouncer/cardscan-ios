@@ -4,17 +4,17 @@ CardScan iOS installation guide
 
 ## Contents
 
-* [Requirements]
-* [Installation]
-* [Permissions]
-* [Configure CardScan (Swift)]
-* [Using CardScan (Swift)]
-* [iOS 10 and older (Swift)]
-* [Configure CardScan (Objective C)]
-* [Using CardScan (Objective C)]
-* [iOS 10 and older (Objective C)]
-* [Authors]
-* [License]
+* [Requirements][Requirements]
+* [Installation][Installation]
+* [Permissions][Permissions]
+* [Configure CardScan (Swift)][Configure CardScan (Swift)]
+* [Using CardScan (Swift)][Using CardScan (Swift)]
+* [iOS 10 and older (Swift)][iOS 10 and older (Swift)]
+* [Configure CardScan (Objective C)][Configure CardScan (Objective C)]
+* [Using CardScan (Objective C)][Using CardScan (Objective C)]
+* [iOS 10 and older (Objective C)][iOS 10 and older (Objective C)]
+* [Authors][Authors]
+* [License][License]
 
 ## Requirements
 
