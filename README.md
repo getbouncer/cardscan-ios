@@ -2,6 +2,20 @@
 
 CardScan iOS installation guide
 
+## Contents
+
+* [Requirements]
+* [Installation]
+* [Permissions]
+* [Configure CardScan (Swift)]
+* [Using CardScan (Swift)]
+* [iOS 10 and older (Swift)]
+* [Configure CardScan (Objective C)]
+* [Using CardScan (Objective C)]
+* [iOS 10 and older (Objective C)]
+* [Authors]
+* [License]
+
 ## Requirements
 
 * Objective C or Swift 4.0 or higher
@@ -59,7 +73,7 @@ file:
 <string>We need access to your camera to scan your card</string>
 ```
 
-## Configure CardScan
+## Configure CardScan (Swift)
 
 Configure the library when your application launches:
 
@@ -78,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-## Using CardScan
+## Using CardScan (Swift)
 
 To use CardScan, you create a `ScanViewController`, display it, and
 implement the `ScanDelegate` protocol to get the results.
@@ -124,7 +138,7 @@ class ViewController: UIViewController, ScanDelegate {
 }
 ```
 
-## iOS 10 and older
+## iOS 10 and older (Swift)
 
 CardScan makes heavy use of CoreML, which Apple introduced in iOS
 11. You can include the CardScan library in any projects that support
@@ -139,6 +153,15 @@ if !ScanViewController.isCompatible() {
     self.scanCardButton.isHidden = true
 }
 ```
+
+## Configure CardScan (Objective C)
+fill me in
+
+## Using CardScan (Objective C)
+fill me in
+
+## iOS 10 and older (Objective C)
+fill me in
 
 ## Authors
 

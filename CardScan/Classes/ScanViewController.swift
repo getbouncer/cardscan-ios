@@ -143,7 +143,11 @@ import Vision
         let roundedRectpath = UIBezierPath.init(roundedRect: maskRect, cornerRadius: regionCornerRadius).cgPath
         path.addPath(roundedRectpath)
         maskLayer.path = path
-        maskLayer.fillRule = kCAFillRuleEvenOdd
+        #if swift(>=4.2)
+            maskLayer.fillRule = .evenOdd
+        #else
+            maskLayer.fillRule = kCAFillRuleEvenOdd
+        #endif
         viewToMask.layer.mask = maskLayer
     }
     
@@ -417,7 +421,11 @@ import Vision
     func toRegionOfInterest(pixelBuffer: CVPixelBuffer) -> CGImage? {
         var cgImage: CGImage?
         if #available(iOS 9.0, *) {
-            VTCreateCGImageFromCVPixelBuffer(pixelBuffer, nil, &cgImage)
+            #if swift(>=4.2)
+                VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
+            #else
+                VTCreateCGImageFromCVPixelBuffer(pixelBuffer, nil, &cgImage)
+            #endif
         } else {
             return nil
         }
