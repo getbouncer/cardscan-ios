@@ -13,6 +13,7 @@ CardScan is a library for scanning credit cards.
   s.social_media_url = 'https://twitter.com/stk'
   s.default_subspec = 'Core'
   s.ios.deployment_target = '9.0'
+  s.swift_version = '4.2'
     
   s.subspec 'Core' do |core|
     core.source_files = 'CardScan/Classes/**/*'
