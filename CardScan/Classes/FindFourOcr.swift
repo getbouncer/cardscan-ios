@@ -20,6 +20,7 @@ import Foundation
  post processing algorithms take the boxes and try to find combinations that are
  likely numbers, combining and filtering out boxes as it goes.
  */
+@available(iOS 11.0, *)
 struct FindFourOcr {
     static let recognizeModel = FourRecognize()
     static let detectModel = FindFour()

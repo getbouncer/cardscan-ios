@@ -12,6 +12,10 @@ import AVKit
 import VideoToolbox
 import Vision
 
+#if canImport(Stripe)
+    import Stripe
+#endif
+
 //
 // TODOS:
 //
@@ -34,6 +38,19 @@ import Vision
     public init(number: String) {
         self.number = number
     }
+    
+    #if canImport(Stripe)
+    @objc public func cardParams() -> STPCardParams {
+        let cardParam = STPCardParams()
+        cardParam.number = self.number
+        if let expiryMonth = self.expiryMonth, let expiryYear = self.expiryYear {
+            cardParam.expYear = UInt(expiryYear) ?? 0
+            cardParam.expMonth = UInt(expiryMonth) ?? 0
+        }
+        
+        return cardParam
+    }
+    #endif
 }
 
 @objc public class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -41,6 +58,8 @@ import Vision
     public var scanDelegate: ScanDelegate?
     public var allowSkip = false
     public var scanQrCode = false
+    
+    static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     
     @IBOutlet weak var expiryLabel: UILabel!
     @IBOutlet weak var cardNumberLabel: UILabel!
@@ -65,11 +84,32 @@ import Vision
     
     var ocr = Ocr()
     
-    @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController {
+    @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
+        
+        if !self.isCompatible() {
+            return nil
+        }
+        
         let storyboard = UIStoryboard(name: "CardScan", bundle: Bundle(for: ScanViewController.self))
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
-        viewController.scanDelegate = delegate
+            viewController.scanDelegate = delegate
         return viewController
+    }
+    
+    @objc static public func configure() {
+        self.machineLearningQueue.async {
+            if #available(iOS 11.0, *) {
+                Ocr.configure()
+            }
+        }
+    }
+    
+    @objc static public func isCompatible() -> Bool {
+        if #available(iOS 11.0, *) {
+            return true
+        } else {
+            return false
+        }
     }
     
     @IBAction func backTextPress() {
@@ -103,7 +143,11 @@ import Vision
         let roundedRectpath = UIBezierPath.init(roundedRect: maskRect, cornerRadius: regionCornerRadius).cgPath
         path.addPath(roundedRectpath)
         maskLayer.path = path
-        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
+        #if swift(>=4.2)
+            maskLayer.fillRule = .evenOdd
+        #else
+            maskLayer.fillRule = kCAFillRuleEvenOdd
+        #endif
         viewToMask.layer.mask = maskLayer
     }
     
@@ -142,7 +186,12 @@ import Vision
         
         if self.scanQrCode {
             self.regionOfInterestAspectConstraint.isActive = false
-            self.regionOfInterestLabel.heightAnchor.constraint(equalTo: self.regionOfInterestLabel.widthAnchor, multiplier: 1.0).isActive = true
+            if #available(iOS 9.0, *) {
+                self.regionOfInterestLabel.heightAnchor.constraint(equalTo: self.regionOfInterestLabel.widthAnchor, multiplier: 1.0).isActive = true
+                self.regionOfInterestLabel.heightAnchor.constraint(equalTo: self.regionOfInterestLabel.widthAnchor, multiplier: 1.0).isActive = true
+            } else {
+                // Fallback on earlier versions
+            }
             self.regionOfInterestLabel.text = nil
             self.ScanBelowLabel.text = "Scan QR Code"
         }
@@ -255,16 +304,14 @@ import Vision
     }
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        // XXX FIXME I think there's a way to dial back the frequency that they're sending frames
-        // we should make sure we're doing the standard thing here
-        
         if self.machineLearningSemaphore.wait(timeout: .now()) == .success {
-            DispatchQueue.global(qos: .background).async {
+            ScanViewController.machineLearningQueue.async {
                 self.captureOutputWork(sampleBuffer: sampleBuffer)
             }
         }
     }
     
+    @available(iOS 11.0, *)
     func handleBarcodeResults(_ results: [Any]) {
         for result in results {
             // Cast the result to a barcode-observation
@@ -283,6 +330,7 @@ import Vision
         }
     }
     
+    @available(iOS 11.0, *)
     func blockingQrModel(pixelBuffer: CVPixelBuffer) {
         let semaphore = DispatchSemaphore(value: 0)
         DispatchQueue.global(qos: .userInteractive).async {
@@ -309,6 +357,7 @@ import Vision
         semaphore.wait()
     }
     
+    @available(iOS 11.0, *)
     func blockingOcrModel(rawImage: CGImage) {
         let (number, expiry, done) = ocr.performWithErrorCorrection(for: rawImage)
         if let number = number {
@@ -353,10 +402,12 @@ import Vision
             return
         }
         
-        if self.scanQrCode {
-            self.blockingQrModel(pixelBuffer: pixelBuffer)
-        } else {
-            self.blockingOcrModel(rawImage: rawImage)
+        if #available(iOS 11.0, *) {
+            if self.scanQrCode {
+                self.blockingQrModel(pixelBuffer: pixelBuffer)
+            } else {
+                self.blockingOcrModel(rawImage: rawImage)
+            }
         }
         
         self.machineLearningSemaphore.signal()
@@ -370,7 +421,11 @@ import Vision
     func toRegionOfInterest(pixelBuffer: CVPixelBuffer) -> CGImage? {
         var cgImage: CGImage?
         if #available(iOS 9.0, *) {
-            VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
+            #if swift(>=4.2)
+                VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
+            #else
+                VTCreateCGImageFromCVPixelBuffer(pixelBuffer, nil, &cgImage)
+            #endif
         } else {
             return nil
         }

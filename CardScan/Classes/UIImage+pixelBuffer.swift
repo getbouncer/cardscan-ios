@@ -124,8 +124,12 @@ extension UIImage {
      */
     public convenience init?(pixelBuffer: CVPixelBuffer) {
         var cgImage: CGImage?
-        if #available(iOS 9.0, *) {
-            VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
+        if #available(iOS 11.0, *) {
+            #if swift(>=4.2)
+                VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
+            #else
+                VTCreateCGImageFromCVPixelBuffer(pixelBuffer, nil, &cgImage)
+            #endif
         } else {
             // Fallback on earlier versions
         }

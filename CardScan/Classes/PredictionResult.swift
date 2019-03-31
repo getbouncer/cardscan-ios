@@ -46,8 +46,12 @@ struct PredictionResult {
     }
     
     func extractImagePng(from image: CGImage, for box: CGRect) -> String? {
-        let uiImage = image.cropping(to: box).map { UIImage(cgImage: $0) }
-        return uiImage.flatMap { $0.pngData()?.base64EncodedString() }
+        #if swift(>=4.2)
+            let uiImage = image.cropping(to: box).map { UIImage(cgImage: $0) }
+            return uiImage.flatMap { $0.pngData()?.base64EncodedString() }
+        #else
+            return nil
+        #endif
     }
         
     func binImagePng(originalImage: CGImage) -> String? {
@@ -112,6 +116,13 @@ struct PredictionResult {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return newImage?.cgImage.map { UIImage(cgImage: $0) }?.jpegData(compressionQuality: 0.75)?.base64EncodedString()
+        #if swift(>=4.2)
+            let uiImage = newImage?.cgImage.map { UIImage(cgImage: $0) }
+            return uiImage?.jpegData(compressionQuality: 0.75)?.base64EncodedString()
+        #else
+            // just to make the compiler happy
+            let _ = newImage?.cgImage.map { UIImage(cgImage: $0) }
+            return nil
+        #endif
     }
 }

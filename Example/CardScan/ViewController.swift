@@ -37,16 +37,24 @@ class ViewController: UIViewController, ScanDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
+    
+    @IBOutlet weak var scanCardButton: UIButton!
+    
     @IBAction func scanQrCodePress() {
-        let vc = ScanViewController.createViewController(withDelegate: self)
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
         vc.scanQrCode = true
         self.present(vc, animated: true)
     }
     @IBAction func scanCardFakeOnly() {
-        let vc = ScanViewController.createViewController(withDelegate: self)
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
         vc.allowSkip = true
         self.present(vc, animated: true)
     }

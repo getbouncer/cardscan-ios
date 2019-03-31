@@ -2,10 +2,24 @@
 
 CardScan iOS installation guide
 
+## Contents
+
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Permissions](#permissions)
+* [Configure CardScan (Swift)](#configure-cardscan-swift)
+* [Using CardScan (Swift)](#using-cardscan-swift)
+* [iOS 10 and older (Swift)](#ios-10-and-older-swift)
+* [Configure CardScan (Objective C)](#configure-cardscan-objective-c)
+* [Using CardScan (Objective C)](#using-cardscan-objective-c)
+* [iOS 10 and older (Objective C)](#ios-10-and-older-objective-c)]
+* [Authors](#authors)
+* [License](#license)
+
 ## Requirements
 
 * Objective C or Swift 4.0 or higher
-* iOS 11 or higher
+* iOS 11 or higher (supports development target of iOS 9.0 or higher)
 
 ## Installation
 
@@ -13,7 +27,14 @@ CardScan is available through [CocoaPods](https://cocoapods.org). To install
 it, add the following line to your Podfile:
 
 ```ruby
-pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4033'
+pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4034'
+```
+
+Or if you're using Stripe:
+
+```ruby
+pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4034'
+pod 'CardScan/Stripe', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4034'
 ```
 
 Make sure that you include the `use_frameworks!` line in your Podfile
@@ -52,7 +73,7 @@ file:
 <string>We need access to your camera to scan your card</string>
 ```
 
-## Configure CardScan
+## Configure CardScan (Swift)
 
 Configure the library when your application launches:
 
@@ -64,14 +85,14 @@ import CardScan
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    	Ocr.configure() 
+    	ScanViewController.configure() 
         // do any other necessary launch configuration
         return true
     }
 }
 ```
 
-## Using CardScan
+## Using CardScan (Swift)
 
 To use CardScan, you create a `ScanViewController`, display it, and
 implement the `ScanDelegate` protocol to get the results.
@@ -82,7 +103,11 @@ import CardScan
 
 class ViewController: UIViewController, ScanDelegate {
     @IBAction func scanCardButtonPressed() {
-        let vc = ScanViewController.createViewController(withDelegate: self)
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+	    print("This device is incompatible with CardScan")
+	    return
+	}
+
         self.present(vc, animated: true)
     }
 
@@ -99,26 +124,44 @@ class ViewController: UIViewController, ScanDelegate {
 	let expiryMonth = creditCard.expiryMonth
 	let expiryYear = creditCard.expiryYear
 
+	// If you're using Stripe and you include the CardScan/Stripe pod, you
+  	// can get `STPCardParams` directly from CardScan `CreditCard` objects,
+	// which you can use with Stripe's APIs
+	let cardParams = creditCard.cardParams()
+
+	// At this point you have the credit card number and optionally the expiry.
+	// You can either tokenize the number or prompt the user for more
+	// information (e.g., CVV) before tokenizing.
+
         self.dismiss(animated: true)
     }
 }
 ```
 
-## Integrating with Payment Provider
+## iOS 10 and older (Swift)
 
-Once card number and expiry information is returned, you need to call your payment provider API to store this information.
+CardScan makes heavy use of CoreML, which Apple introduced in iOS
+11. You can include the CardScan library in any projects that support
+a development target of iOS 9.0 or higher, but it will only run on
+devices that are running iOS 11 or higher.
 
-For example, if you use Stripe to handle payments you can store scanned card
-information into Stripe's `STPCardParams`:
+To check if a device supports CardScan at runtime, use the
+`ScanViewController.isCompatible` method:
 
 ```swift
-let cardParam = STPCardParams()
-cardParam.number = creditCard.number
-if let expiryMonth = creditCard.expiryMonth, let expiryYear = creditCard.expiryYear {
-    cardParam.expYear = UInt(expiryYear) ?? 0
-    cardParam.expMonth = UInt(expiryMonth) ?? 0
+if !ScanViewController.isCompatible() {
+    self.scanCardButton.isHidden = true
 }
 ```
+
+## Configure CardScan (Objective C)
+fill me in
+
+## Using CardScan (Objective C)
+fill me in
+
+## iOS 10 and older (Objective C)
+fill me in
 
 ## Authors
 
