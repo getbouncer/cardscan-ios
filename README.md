@@ -155,13 +155,85 @@ if !ScanViewController.isCompatible() {
 ```
 
 ## Configure CardScan (Objective C)
-fill me in
+
+Configure the library when your application launches:
+
+```objective-c
+#import "AppDelegate.h"
+@import CardScan;
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [ScanViewController configure];
+    return YES;
+}
+
+@end
+```
 
 ## Using CardScan (Objective C)
-fill me in
+
+To use CardScan, you create a `ScanViewController`, display it, and
+implement the `ScanDelegate` protocol to get the results.
+
+```objective-c
+#import "ViewController.h"
+@import Stripe;
+
+@interface ViewController ()
+
+@end
+
+@implementation ViewController
+
+- (IBAction)scanCardPress:(id)sender {
+    UIViewController *vc = [ScanViewController createViewControllerWithDelegate:self];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)userDidSkip:(ScanViewController * _Nonnull)scanViewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)userDidCancel:(ScanViewController * _Nonnull)scanViewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)userDidScanCard:(ScanViewController * _Nonnull)scanViewController creditCard:(CreditCard * _Nonnull)creditCard {
+    NSString *number = creditCard.number;
+    NSString *expiryMonth = creditCard.expiryMonth;
+    NSString *expiryYear = creditCard.expiryYear;
+    
+    // If you're using Stripe and you include the CardScan/Stripe pod, you
+    // can get `STPCardParams` directly from CardScan `CreditCard` objects,
+    // which you can use with Stripe's APIs
+    STPCardParams *cardParams = [creditCard cardParams];
+    
+    // At this point you have the credit card number and optionally the expiry.
+    // You can either tokenize the number or prompt the user for more
+    // information (e.g., CVV) before tokenizing.
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end
+```
 
 ## iOS 10 and older (Objective C)
-fill me in
+CardScan makes heavy use of CoreML, which Apple introduced in iOS
+11. You can include the CardScan library in any projects that support
+a development target of iOS 9.0 or higher, but it will only run on
+devices that are running iOS 11 or higher.
+
+To check if a device supports CardScan at runtime, use the
+`ScanViewController.isCompatible` method:
+
+```objective-c
+if (![ScanViewController isCompatible]) {
+    self.scanCardButton.isHidden = true
+}
+```
 
 ## Authors
 
