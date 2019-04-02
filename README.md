@@ -235,6 +235,13 @@ if (![ScanViewController isCompatible]) {
 }
 ```
 
+## Adding to Your App
+
+When added to your app successfully, you should see the card numbers
+being passed into your payment form. It should look something like this:
+
+![alt text](https://raw.githubusercontent.com/getbouncer/cardscan-ios/master/card_scan.gif "Card Scan Gif")
+
 ## Authors
 
 Sam King and Jaime Park
