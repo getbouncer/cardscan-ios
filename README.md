@@ -238,7 +238,7 @@ if (![ScanViewController isCompatible]) {
 ## Adding to Your App
 
 When added to your app successfully, you should see the card numbers
-being passed into your payment form. It should look something like this:
+being passed into your payment form. This is what it looks like using a standard Stripe mobile payment form:
 
 ![alt text](https://raw.githubusercontent.com/getbouncer/cardscan-ios/master/card_scan.gif "Card Scan Gif")
 
