@@ -12,7 +12,7 @@ CardScan iOS installation guide
 * [iOS 10 and older (Swift)](#ios-10-and-older-swift)
 * [Configure CardScan (Objective C)](#configure-cardscan-objective-c)
 * [Using CardScan (Objective C)](#using-cardscan-objective-c)
-* [iOS 10 and older (Objective C)](#ios-10-and-older-objective-c)]
+* [iOS 10 and older (Objective C)](#ios-10-and-older-objective-c)
 * [Authors](#authors)
 * [License](#license)
 
@@ -27,14 +27,14 @@ CardScan is available through [CocoaPods](https://cocoapods.org). To install
 it, add the following line to your Podfile:
 
 ```ruby
-pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4035'
+pod 'CardScan'
 ```
 
 Or if you're using Stripe:
 
 ```ruby
-pod 'CardScan', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4035'
-pod 'CardScan/Stripe', :git => 'git@github.com:getbouncer/cardscan-ios.git', :tag => '1.0.4035'
+pod 'CardScan'
+pod 'CardScan/Stripe'
 ```
 
 Make sure that you include the `use_frameworks!` line in your Podfile
