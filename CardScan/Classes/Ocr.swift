@@ -4,6 +4,8 @@ public class Ocr {
     public var scanStats = ScanStats()
     public var expiry: Expiry?
     
+    public var errorCorrectionDuration = 1.0
+    
     public init() {}
     
     static func configure() {
@@ -68,9 +70,9 @@ public class Ocr {
         
         let numberResult = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let expiryResult = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
-        let done = interval >= 1.5
+        let done = interval >= self.errorCorrectionDuration
         
-        if interval >= 0.75 {
+        if interval >= (self.errorCorrectionDuration / 2.0) {
             return (numberResult, expiryResult, done)
         } else {
             return (numberResult, nil, done)
