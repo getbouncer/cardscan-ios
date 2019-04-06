@@ -58,6 +58,7 @@ import Vision
     public var scanDelegate: ScanDelegate?
     public var allowSkip = false
     public var scanQrCode = false
+    public var errorCorrectionDuration = 1.0
     
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     
@@ -212,6 +213,8 @@ import Vision
             self.skipButton.isHidden = true
         }
 
+        self.ocr.errorCorrectionDuration = self.errorCorrectionDuration
+        
         self.videoFeed.requestCameraAccess()
         self.previewView.videoPreviewLayer.session = self.videoFeed.session
         self.videoFeed.setup(captureDelegate: self) { success in
