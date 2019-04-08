@@ -58,7 +58,7 @@ import Vision
     public var scanDelegate: ScanDelegate?
     public var allowSkip = false
     public var scanQrCode = false
-    public var errorCorrectionDuration = 1.0
+    public var errorCorrectionDuration = 1.5
     
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     
