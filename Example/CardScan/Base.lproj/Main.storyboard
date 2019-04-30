@@ -57,13 +57,30 @@
                                     <constraint firstAttribute="width" constant="32" id="qe9-YZ-gfV"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pIK-as-bko">
+                                <rect key="frame" x="16" y="409.5" width="343" height="40"/>
+                                <color key="backgroundColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="GPQ-FF-i1N"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Scan Card Custom Strings">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="scanCardCustomStringsPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="u4z-Ts-KST"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="top" secondItem="9tR-DO-gyb" secondAttribute="bottom" constant="16" id="1PH-rJ-mXS"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="AkZ-f5-Cw0"/>
                             <constraint firstItem="9tR-DO-gyb" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="IXC-rr-ZtJ"/>
+                            <constraint firstItem="pIK-as-bko" firstAttribute="top" secondItem="6NY-p4-OvD" secondAttribute="bottom" constant="8" id="Jpb-N9-6UO"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="Qox-lN-oV9"/>
+                            <constraint firstItem="pIK-as-bko" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="SSG-hd-RyU"/>
+                            <constraint firstItem="pIK-as-bko" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="UlN-Gs-FK7"/>
                             <constraint firstItem="6NY-p4-OvD" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="VtA-4O-Rau"/>
                             <constraint firstItem="6NY-p4-OvD" firstAttribute="top" secondItem="qlz-Ds-Znv" secondAttribute="bottom" constant="8" id="Y8H-65-voH"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="top" secondItem="9tR-DO-gyb" secondAttribute="bottom" constant="16" id="hrc-Fy-VMw"/>
