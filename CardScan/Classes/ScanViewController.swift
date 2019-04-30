@@ -55,7 +55,7 @@ import Vision
 
 @objc public class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    public var scanDelegate: ScanDelegate?
+    public weak var scanDelegate: ScanDelegate?
     public var allowSkip = false
     public var scanQrCode = false
     public var errorCorrectionDuration = 1.5

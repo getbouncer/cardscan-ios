@@ -218,7 +218,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CardScan_Example/Pods-CardScan_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-CardScan_Example/Pods-CardScan_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -227,7 +227,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CardScan_Example/Pods-CardScan_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardScan_Example/Pods-CardScan_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D9DEC8987AE09D0E1D04249B /* [CP] Check Pods Manifest.lock */ = {
@@ -393,7 +393,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = L4TQ6C2R74;
 				INFOPLIST_FILE = CardScan/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getgrowthmetrics.CardScan-Example";
@@ -411,7 +411,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = L4TQ6C2R74;
 				INFOPLIST_FILE = CardScan/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getgrowthmetrics.CardScan-Example";
