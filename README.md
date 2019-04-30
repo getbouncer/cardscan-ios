@@ -19,7 +19,7 @@ CardScan iOS installation guide
 ## Requirements
 
 * Objective C or Swift 4.0 or higher
-* iOS 11 or higher (supports development target of iOS 9.0 or higher)
+* iOS 11 or higher (supports development target of iOS 10.0 or higher)
 
 ## Installation
 
