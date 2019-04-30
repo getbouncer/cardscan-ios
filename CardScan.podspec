@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'CardScan'
-  s.version          = '1.0.4042'
+  s.version          = '1.0.4043'
   s.summary          = 'Scan credit cards'
   s.description      = <<-DESC
 CardScan is a library for scanning credit cards.
@@ -18,13 +18,13 @@ CardScan is a library for scanning credit cards.
   s.subspec 'Core' do |core|
     core.source_files = 'CardScan/Classes/**/*'
     core.resources = ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard']
-    core.frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
+    core.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
   end
 
   s.subspec 'Stripe' do |stripe|
     stripe.source_files = 'CardScan/Classes/**/*'
     stripe.resources = ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard']
-    stripe.frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
+    stripe.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
     stripe.dependency  'Stripe'
   end
 end
