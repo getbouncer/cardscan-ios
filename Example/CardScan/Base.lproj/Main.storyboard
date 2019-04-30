@@ -60,6 +60,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pIK-as-bko">
                                 <rect key="frame" x="16" y="409.5" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <accessibility key="accessibilityConfiguration" label="ScanCardCustomStrings"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="GPQ-FF-i1N"/>
                                 </constraints>
