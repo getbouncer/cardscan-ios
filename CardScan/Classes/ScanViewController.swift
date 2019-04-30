@@ -145,6 +145,17 @@ import Vision
         self.calledDelegate = true
         self.scanDelegate?.userDidSkip(self)
     }
+
+    @objc public func cancel(callDelegate: Bool) {
+        if !self.calledDelegate {
+            self.ocr.userCancelled()
+            self.calledDelegate = true
+        }
+
+        if calledDelegate {
+            self.scanDelegate?.userDidCancel(self)
+        }
+    }
     
     //jaime: added function to create blur mask
     let regionCornerRadius = CGFloat(10.0)
