@@ -52,6 +52,16 @@
                ReferencedContainer = "container:CardScan.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3BE2697B2278DF3800199C31"
+               BuildableName = "CardScan_ExampleUITests.xctest"
+               BlueprintName = "CardScan_ExampleUITests"
+               ReferencedContainer = "container:CardScan.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

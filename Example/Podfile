@@ -1,6 +1,17 @@
-use_frameworks!
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
 
 target 'CardScan_Example' do
-  pod 'CardScan', :path => '../'
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for CardScan_Example
+  pod 'CardScan', :path => '../'  
+
+  target 'CardScan_ExampleUITests' do
+    inherit! :search_paths
+    # Pods for testing
+    pod 'CardScan', :path => '../'  
+  end
 
 end
