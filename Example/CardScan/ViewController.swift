@@ -76,6 +76,20 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
         vc.stringDataSource = self
         self.present(vc, animated: true)
     }
+    
+    
+    @IBAction func scanWithTimeoutPress() {
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
+        vc.allowSkip = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 20.0) {
+            vc.cancel(callDelegate: true)
+        }
+        self.present(vc, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
