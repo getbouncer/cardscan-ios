@@ -16,17 +16,19 @@ import Vision
     import Stripe
 #endif
 
-//
-// TODOS:
-//
-// * Need to handle camera permissions a bit better
-// * Figure out if we need to drop the framerate dynamically
-//
+
 @objc public protocol ScanDelegate {
     @objc func userDidCancel(_ scanViewController: ScanViewController)
     @objc func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard)
     @objc optional func userDidScanQrCode(_ scanViewController: ScanViewController, payload: String)
     @objc func userDidSkip(_ scanViewController: ScanViewController)
+}
+
+@objc public protocol ScanStringsDataSource {
+    @objc func scanCard() -> String
+    @objc func positionCard() -> String
+    @objc func backButton() -> String
+    @objc func skipButton() -> String
 }
 
 @objc public class CreditCard: NSObject {
@@ -56,6 +58,7 @@ import Vision
 @objc public class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     public weak var scanDelegate: ScanDelegate?
+    public weak var stringDataSource: ScanStringsDataSource?
     public var allowSkip = false
     public var scanQrCode = false
     public var errorCorrectionDuration = 1.5
@@ -65,8 +68,12 @@ import Vision
     @IBOutlet weak var expiryLabel: UILabel!
     @IBOutlet weak var cardNumberLabel: UILabel!
     @IBOutlet weak var blurView: UIView!
-    @IBOutlet weak var ScanBelowLabel: UILabel!
+    
+    @IBOutlet weak var scanCardLabel: UILabel!
+    @IBOutlet weak var positionCardLabel: UILabel!
     @IBOutlet weak var skipButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    
     @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var regionOfInterestLabel: UILabel!
     @IBOutlet weak var regionOfInterestAspectConstraint: NSLayoutConstraint!
@@ -184,9 +191,21 @@ import Vision
         self.previewView.addSubview(cornersView)
     }
     
+    func setStrings() {
+        guard let dataSource = self.stringDataSource else {
+            return
+        }
+        
+        self.scanCardLabel.text = dataSource.scanCard()
+        self.positionCardLabel.text = dataSource.positionCard()
+        self.skipButton.setTitle(dataSource.skipButton(), for: .normal)
+        self.backButton.setTitle(dataSource.backButton(), for: .normal)
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setStrings()
         setNeedsStatusBarAppearanceUpdate()
         
         if self.scanQrCode {
@@ -198,7 +217,7 @@ import Vision
                 // Fallback on earlier versions
             }
             self.regionOfInterestLabel.text = nil
-            self.ScanBelowLabel.text = "Scan QR Code"
+            self.scanCardLabel.text = "Scan QR Code"
         }
         
         self.regionOfInterestLabel.layer.masksToBounds = true

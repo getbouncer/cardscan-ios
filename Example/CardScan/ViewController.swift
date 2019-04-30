@@ -9,7 +9,12 @@
 import UIKit
 import CardScan
 
-class ViewController: UIViewController, ScanDelegate {
+class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
+    func scanCard() -> String { return "New Scan Card" }
+    func positionCard() -> String { return "New Position Card" }
+    func backButton() -> String { return "New Back" }
+    func skipButton() -> String { return "New Skip" }
+    
     func userDidSkip(_ scanViewController: ScanViewController) {
         self.dismiss(animated: true)
     }
@@ -62,9 +67,17 @@ class ViewController: UIViewController, ScanDelegate {
         self.present(vc, animated: true)
     }
     
+    @IBAction func scanCardCustomStringsPress() {
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
+        vc.allowSkip = true
+        vc.stringDataSource = self
+        self.present(vc, animated: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        print("memory warning!!!!")
     }
 
 }
