@@ -17,13 +17,13 @@ CardScan is a library for scanning credit cards.
     
   s.subspec 'Core' do |core|
     core.source_files = 'CardScan/Classes/**/*'
-    core.resources = ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodel']
+    core.resources = ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.bin']
     core.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
   end
 
   s.subspec 'Stripe' do |stripe|
     stripe.source_files = 'CardScan/Classes/**/*'
-    stripe.resources = ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodel']
+    stripe.resources = ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.bin']
     stripe.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
     stripe.dependency  'Stripe'
   end

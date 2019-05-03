@@ -75,7 +75,7 @@ class FindFour {
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
         let modelcFile = documentDirectory.appendingPathComponent("FindFour.mlmodelc")
         if !FileManager.default.fileExists(atPath: modelcFile.path) {
-            let modelUrl = bundle.url(forResource: "FindFour", withExtension: "mlmodel")!
+            let modelUrl = bundle.url(forResource: "FindFour", withExtension: "bin")!
             let compiledUrl = try? MLModel.compileModel(at: modelUrl)
             try! FileManager.default.moveItem(at: compiledUrl!, to: modelcFile)
         }
@@ -249,7 +249,7 @@ class FourRecognize {
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
         let modelcFile = documentDirectory.appendingPathComponent("FourRecognize.mlmodelc")
             if !FileManager.default.fileExists(atPath: modelcFile.path) {
-            let modelUrl = bundle.url(forResource: "FourRecognize", withExtension: "mlmodel")!
+            let modelUrl = bundle.url(forResource: "FourRecognize", withExtension: "bin")!
             let compiledUrl = try? MLModel.compileModel(at: modelUrl)
             try! FileManager.default.moveItem(at: compiledUrl!, to: modelcFile)
         }
