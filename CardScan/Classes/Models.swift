@@ -70,7 +70,8 @@ class FindFour {
     
     /// URL of model assuming it was installed in the same bundle as this class
     class var urlOfModelInThisBundle : URL {
-        let bundle = Bundle(for: FindFour.self)
+        let bundleUrl = Bundle(for: FindFour.self).url(forResource: "CardScan", withExtension: "bundle")!
+        let bundle = Bundle(url: bundleUrl)!
         
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
         let modelcFile = documentDirectory.appendingPathComponent("FindFour.mlmodelc")
@@ -244,7 +245,8 @@ class FourRecognize {
     
     /// URL of model assuming it was installed in the same bundle as this class
     class var urlOfModelInThisBundle : URL {
-        let bundle = Bundle(for: FourRecognize.self)
+        let bundleUrl = Bundle(for: FourRecognize.self).url(forResource: "CardScan", withExtension: "bundle")!
+        let bundle = Bundle(url: bundleUrl)!
         
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
         let modelcFile = documentDirectory.appendingPathComponent("FourRecognize.mlmodelc")

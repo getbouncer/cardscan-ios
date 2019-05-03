@@ -98,7 +98,10 @@ import Vision
             return nil
         }
         
-        let storyboard = UIStoryboard(name: "CardScan", bundle: Bundle(for: ScanViewController.self))
+        let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: "CardScan", withExtension: "bundle")!
+        let bundle = Bundle(url: bundleUrl)!
+        
+        let storyboard = UIStoryboard(name: "CardScan", bundle: bundle)
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
             viewController.scanDelegate = delegate
         return viewController
@@ -121,7 +124,10 @@ import Vision
     }
     
     @objc static public func cameraImage() -> UIImage? {
-        return UIImage(named: "camera", in: Bundle(for: ScanViewController.self), compatibleWith: nil)
+        let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: "CardScan", withExtension: "bundle")!
+        let bundle = Bundle(url: bundleUrl)!
+        
+        return UIImage(named: "camera", in: bundle, compatibleWith: nil)
     }
     
     @IBAction func backTextPress() {
