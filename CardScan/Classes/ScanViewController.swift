@@ -36,6 +36,7 @@ import Vision
     @objc public var expiryMonth: String?
     @objc public var expiryYear: String?
     @objc public var name: String?
+    @objc public var image: UIImage?
     
     public init(number: String) {
         self.number = number
@@ -62,6 +63,7 @@ import Vision
     public var allowSkip = false
     public var scanQrCode = false
     public var errorCorrectionDuration = 1.5
+    public var includeCardImage = false
     
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     
@@ -427,6 +429,9 @@ import Vision
                 let card = CreditCard(number: number)
                 card.expiryMonth = expiry.map { String($0.month) }
                 card.expiryYear = expiry.map { String($0.year) }
+                if self.includeCardImage {
+                    card.image = UIImage(cgImage: rawImage)
+                }
                 self.scanDelegate?.userDidScanCard(self, creditCard: card)
             }
         }
