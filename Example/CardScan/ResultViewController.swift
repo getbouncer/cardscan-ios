@@ -19,6 +19,7 @@ class ResultViewController: UIViewController {
     
     var scanStats: ScanStats?
     var number: String?
+    var cardImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +28,11 @@ class ResultViewController: UIViewController {
             return
         }
         
-        self.backgroundImage.image = scanStats.backgroundImage()
+        if let image = self.cardImage {
+            self.backgroundImage.image = image
+        } else {
+            self.backgroundImage.image = scanStats.backgroundImage()
+        }
         self.bin0.image = scanStats.binImage()
         self.last0.image = scanStats.last4Image()
       

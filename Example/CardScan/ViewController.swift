@@ -29,6 +29,7 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
         let vc = storyboard.instantiateViewController(withIdentifier: "results") as! ResultViewController
         vc.scanStats = scanViewController.getScanStats()
         vc.number = creditCard.number
+        vc.cardImage = creditCard.image
         
         self.dismiss(animated: true)
         self.present(vc, animated: true)
@@ -90,6 +91,15 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
         self.present(vc, animated: true)
     }
     
+    @IBAction func scanAndShowImagePress() {
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
+        vc.includeCardImage = true
+
+        self.present(vc, animated: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
