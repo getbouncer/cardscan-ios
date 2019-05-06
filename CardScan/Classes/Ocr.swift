@@ -51,7 +51,7 @@ public class Ocr {
     }
     
     @available(iOS 11.0, *)
-    public func performWithErrorCorrection(for rawImage: CGImage) -> (String?, Expiry?, Bool) {
+    public func performWithErrorCorrection(for rawImage: CGImage) -> (String?, Expiry?, Bool, Bool) {
         let number = self.perform(for: rawImage)
 
         if self.firstResult == nil && number != nil {
@@ -71,11 +71,12 @@ public class Ocr {
         let numberResult = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let expiryResult = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let done = interval >= self.errorCorrectionDuration
+        let foundNumberInThisScan = number != nil
         
         if interval >= (self.errorCorrectionDuration / 2.0) {
-            return (numberResult, expiryResult, done)
+            return (numberResult, expiryResult, done, foundNumberInThisScan)
         } else {
-            return (numberResult, nil, done)
+            return (numberResult, nil, done, foundNumberInThisScan)
         }
     }
     

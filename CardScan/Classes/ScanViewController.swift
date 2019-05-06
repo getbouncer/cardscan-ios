@@ -59,11 +59,11 @@ import Vision
 @objc public class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     public weak var scanDelegate: ScanDelegate?
-    public weak var stringDataSource: ScanStringsDataSource?
-    public var allowSkip = false
+    @objc public weak var stringDataSource: ScanStringsDataSource?
+    @objc public var allowSkip = false
     public var scanQrCode = false
-    public var errorCorrectionDuration = 1.5
-    public var includeCardImage = false
+    @objc public var errorCorrectionDuration = 1.5
+    @objc public var includeCardImage = false
     
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     
@@ -85,6 +85,7 @@ import Vision
     private let machineLearningSemaphore = DispatchSemaphore(value: 1)
     
     var currentImageRect: CGRect?
+    var scannedCardImage: UIImage?
     
     var numberLabel: UILabel?
     var notMatchedCount = 0
@@ -404,9 +405,12 @@ import Vision
     
     @available(iOS 11.0, *)
     func blockingOcrModel(rawImage: CGImage) {
-        let (number, expiry, done) = ocr.performWithErrorCorrection(for: rawImage)
+        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: rawImage)
         if let number = number {
             self.showCardNumber(number, expiry: expiry?.display())
+            if self.includeCardImage && foundNumberInThisScan {
+                self.scannedCardImage = UIImage(cgImage: rawImage)
+            }
         }
         
         if done {
@@ -429,9 +433,7 @@ import Vision
                 let card = CreditCard(number: number)
                 card.expiryMonth = expiry.map { String($0.month) }
                 card.expiryYear = expiry.map { String($0.year) }
-                if self.includeCardImage {
-                    card.image = UIImage(cgImage: rawImage)
-                }
+                card.image = self.scannedCardImage
                 self.scanDelegate?.userDidScanCard(self, creditCard: card)
             }
         }
