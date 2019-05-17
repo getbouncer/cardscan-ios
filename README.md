@@ -37,9 +37,6 @@ pod 'CardScan'
 pod 'CardScan/Stripe'
 ```
 
-Make sure that you include the `use_frameworks!` line in your Podfile
-since CardScan is a Framework written in Swift.
-
 Next, install the new pod. From a terminal, run:
 
 ```
@@ -138,11 +135,11 @@ class ViewController: UIViewController, ScanDelegate {
 }
 ```
 
-## iOS 10 and older (Swift)
+## iOS 10 (Swift)
 
 CardScan makes heavy use of CoreML, which Apple introduced in iOS
 11. You can include the CardScan library in any projects that support
-a development target of iOS 9.0 or higher, but it will only run on
+a development target of iOS 10.0 or higher, but it will only run on
 devices that are running iOS 11 or higher.
 
 To check if a device supports CardScan at runtime, use the
@@ -220,10 +217,10 @@ implement the `ScanDelegate` protocol to get the results.
 @end
 ```
 
-## iOS 10 and older (Objective C)
+## iOS 10 (Objective C)
 CardScan makes heavy use of CoreML, which Apple introduced in iOS
 11. You can include the CardScan library in any projects that support
-a development target of iOS 9.0 or higher, but it will only run on
+a development target of iOS 10.0 or higher, but it will only run on
 devices that are running iOS 11 or higher.
 
 To check if a device supports CardScan at runtime, use the
