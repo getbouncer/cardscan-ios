@@ -97,7 +97,7 @@ import Vision
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
         
-        if !self.isCompatible() {
+        if !self.isCompatible()  || !Ocr.downloadedModelsSuccessfully() {
             return nil
         }
         

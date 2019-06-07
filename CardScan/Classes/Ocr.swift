@@ -1,4 +1,4 @@
-import Foundation
+import CoreML
 
 public class Ocr {
     public var scanStats = ScanStats()
@@ -8,10 +8,58 @@ public class Ocr {
     
     public init() {}
     
+    static func downloadedModelsSuccessfully() -> Bool {
+        let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask,
+                                                             appropriateFor:nil, create:false)
+        // check to make sure that we downloaded and compiled all of the models we were supposed to
+        for data in CardScanConfiguration.modelDownloadData() {
+            let destinationFile = documentDirectory.appendingPathComponent(data.compiledName)
+            if !FileManager.default.fileExists(atPath: destinationFile.path) {
+                return false
+            }
+        }
+        return true
+    }
+    
+    @available(iOS 11.0, *)
+    static func downloadModels() -> Bool {
+        let session = URLSession(configuration: .ephemeral)
+        let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask,
+                                                             appropriateFor:nil, create:false)
+        let dispatchGroup = DispatchGroup()
+        
+        for data in CardScanConfiguration.modelDownloadData() {
+            let destinationFile = documentDirectory.appendingPathComponent(data.compiledName)
+            if !FileManager.default.fileExists(atPath: destinationFile.path) {
+                guard let url = URL(string: data.url) else {
+                    return false
+                }
+                
+                dispatchGroup.enter()
+                session.downloadTask(with: url) { (location: URL?, response: URLResponse?, error: Error?) in
+                    guard let location = location, let compiledUrl = try? MLModel.compileModel(at: location) else {
+                        dispatchGroup.leave()
+                        return
+                    }
+
+                    // just swallow it
+                    try? FileManager.default.moveItem(at: compiledUrl, to: destinationFile)
+                    dispatchGroup.leave()
+                }.resume()
+            }
+        }
+        
+        dispatchGroup.wait()
+        
+        return downloadedModelsSuccessfully()
+    }
+    
     static func configure() {
         if #available(iOS 11.0, *) {
-            let ocr = FindFourOcr()
-            ocr.warmUp()
+            if downloadModels() {
+                let ocr = FindFourOcr()
+                ocr.warmUp()
+            }
         }
     }
     
