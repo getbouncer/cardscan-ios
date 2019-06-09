@@ -10,8 +10,7 @@ struct ModelDownloader {
     // we can move this to a config module when we need to
     static var apiKey: String?
     static let kFindFourCompiledName = "FindFour.mlmodelc"
-    // XXX FIXME we need to set this to a better default download URL after we set it up
-    static var findFourModelDownload: ModelDownload? = ModelDownload(url: "https://lab-fees.appspot.com/videos/FindFour.bin", compiledName: kFindFourCompiledName)
+    static var findFourModelDownload: ModelDownload? = ModelDownload(url: "https://downloads.getbouncer.com/ios/FindFour.4049.bin", compiledName: kFindFourCompiledName)
     
     // by default we leave the recognition model in the SDK
     static var fourRecognizeModelDownload: ModelDownload? = nil
