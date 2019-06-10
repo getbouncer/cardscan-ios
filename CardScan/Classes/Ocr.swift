@@ -1,5 +1,3 @@
-import Foundation
-
 public class Ocr {
     public var scanStats = ScanStats()
     public var expiry: Expiry?
@@ -10,8 +8,10 @@ public class Ocr {
     
     static func configure() {
         if #available(iOS 11.0, *) {
-            let ocr = FindFourOcr()
-            ocr.warmUp()
+            if ModelDownloader.download() {
+                let ocr = FindFourOcr()
+                ocr.warmUp()
+            }
         }
     }
     

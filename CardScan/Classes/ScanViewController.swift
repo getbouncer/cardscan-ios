@@ -97,7 +97,7 @@ import Vision
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
         
-        if !self.isCompatible() {
+        if !self.isCompatible()  || !ModelDownloader.downloadedSuccessfully() {
             return nil
         }
         
@@ -110,9 +110,17 @@ import Vision
         return viewController
     }
     
-    @objc static public func configure() {
+    @objc static public func configure(apiKey: String) {
+        configure(apiKey: apiKey, detectionModelUrl: nil)
+    }
+    
+    @objc static public func configure(apiKey: String, detectionModelUrl: String?) {
         self.machineLearningQueue.async {
             if #available(iOS 11.0, *) {
+                ModelDownloader.apiKey = apiKey
+                if let detectionModelUrl = detectionModelUrl {
+                    ModelDownloader.setDetectionModelUrl(detectionModelUrl)
+                }
                 Ocr.configure()
             }
         }
