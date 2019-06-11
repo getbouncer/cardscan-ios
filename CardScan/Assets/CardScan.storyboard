@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -26,7 +26,7 @@
                                         <color key="backgroundColor" red="0.18431372549019609" green="0.20784313725490194" blue="0.25882352941176467" alpha="0.70205479452054798" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRD-Sd-k9r">
-                                        <rect key="frame" x="16" y="327.5" width="382" height="241"/>
+                                        <rect key="frame" x="16" y="327.66666666666669" width="382" height="240.66666666666669"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="NRD-Sd-k9r" secondAttribute="height" multiplier="343:216" id="Ama-ER-VmW"/>
                                             <constraint firstAttribute="width" secondItem="NRD-Sd-k9r" secondAttribute="height" multiplier="343:216" id="FJr-rh-0L5"/>
@@ -36,25 +36,25 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4242 4242 4242 4242" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="mhR-St-yeE">
-                                        <rect key="frame" x="32" y="435.5" width="350" height="57.5"/>
+                                        <rect key="frame" x="32" y="435.66666666666669" width="350" height="57"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="05/22" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYa-ko-OnI">
-                                        <rect key="frame" x="32" y="501" width="350" height="24"/>
+                                        <rect key="frame" x="32" y="500.66666666666674" width="350" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan Card" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfu-3N-l48">
-                                        <rect key="frame" x="16" y="282.5" width="382" height="29"/>
+                                        <rect key="frame" x="16" y="282.66666666666669" width="382" height="29"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Position your card in the frame so the card number is visible" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iJh-NT-quU">
-                                        <rect key="frame" x="16" y="584.5" width="382" height="49"/>
+                                        <rect key="frame" x="16" y="584.33333333333337" width="382" height="49"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="49" id="scV-LN-aGg"/>
                                         </constraints>
@@ -63,10 +63,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHp-1y-YRu">
-                                        <rect key="frame" x="0.0" y="633.5" width="414" height="262.5"/>
+                                        <rect key="frame" x="0.0" y="633.33333333333337" width="414" height="262.66666666666663"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GI2-Cu-50E">
-                                                <rect key="frame" x="177" y="101" width="60" height="60"/>
+                                                <rect key="frame" x="177" y="101.33333333333326" width="60" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="FGW-3T-gOM"/>
                                                     <constraint firstAttribute="width" constant="60" id="sCb-37-0DF"/>
@@ -131,7 +131,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xu-ZF-zZr">
-                                <rect key="frame" x="16" y="328" width="382" height="240"/>
+                                <rect key="frame" x="16" y="327.66666666666669" width="382" height="240.66666666666669"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="2Xu-ZF-zZr" secondAttribute="height" multiplier="359:226" id="dV2-Th-3ei"/>
                                 </constraints>
