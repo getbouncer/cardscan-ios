@@ -7,6 +7,9 @@ struct ModelDownloader {
         let compiledName: String
     }
     
+    static let lock = DispatchSemaphore(value: 1)
+    static var downloadTimeInterval: TimeInterval?
+    
     // we can move this to a config module when we need to
     static var apiKey: String?
     static let kFindFourCompiledName = "FindFour.mlmodelc"
@@ -23,6 +26,14 @@ struct ModelDownloader {
         return [findFourModelDownload, fourRecognizeModelDownload].compactMap() { $0 }
     }
     
+    static func downloadTime() -> Double? {
+        lock.wait()
+        let interval = downloadTimeInterval
+        lock.signal()
+        
+        return interval.map { Double($0) }
+    }
+    
     static func downloadedSuccessfully() -> Bool {
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
         // check to make sure that we downloaded and compiled all of the models we were supposed to
@@ -37,7 +48,12 @@ struct ModelDownloader {
     
     @available(iOS 11.0, *)
     static func download() -> Bool {
-        let session = URLSession(configuration: .ephemeral)
+        
+        let startTime = Date()
+        
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.waitsForConnectivity = true
+        let session = URLSession(configuration: configuration)
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
         let dispatchGroup = DispatchGroup()
         
@@ -64,6 +80,13 @@ struct ModelDownloader {
         
         dispatchGroup.wait()
         
-        return downloadedSuccessfully()
+        let success = downloadedSuccessfully()
+        lock.wait()
+        if success {
+            downloadTimeInterval = -startTime.timeIntervalSinceNow
+        }
+        lock.signal()
+        
+        return success
     }
 }
