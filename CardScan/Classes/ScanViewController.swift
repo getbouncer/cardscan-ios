@@ -141,6 +141,10 @@ import Vision
         return UIImage(named: "camera", in: bundle, compatibleWith: nil)
     }
     
+    @objc static public func modelDownloadTime() -> Double {
+        return ModelDownloader.downloadTime() ?? 0.0
+    }
+    
     @IBAction func backTextPress() {
         self.backButtonPress("")
     }
