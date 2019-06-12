@@ -79,6 +79,7 @@ import Vision
     @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var regionOfInterestLabel: UILabel!
     @IBOutlet weak var regionOfInterestAspectConstraint: NSLayoutConstraint!
+    var regionOfInterestLabelFrame: CGRect?
     
     @IBOutlet weak var torchButton: UIButton!
     var videoFeed = VideoFeed()
@@ -184,13 +185,16 @@ import Vision
     }
     
     func setupMask() {
-        // these values are all copied from interface builder for setting
-        // up the region of interest label. For some reason this value changes
-        // as the screen sets up so we'll just hard code it here
-        let x = CGFloat(16.0)
-        let width = self.view.frame.width - 32.0
+        // store .frame to avoid accessing UI APIs in the machineLearningQueue
+        self.regionOfInterestLabelFrame = self.regionOfInterestLabel.frame
+
+        let regionOfInterestCenterY = self.regionOfInterestLabel.frame.origin.y + self.regionOfInterestLabel.frame.size.height / 2.0
+        
+        let x = regionOfInterestLabel.frame.origin.x
+        let width = self.view.frame.width - (2.0 * x)
         let height = width * 226.0 / 359.0
-        let y = self.view.frame.height * 0.5 - height * 0.5
+        let y = regionOfInterestCenterY - height / 2.0
+        
         let frame = CGRect(x: x, y: y, width: width, height: height)
         self.maskPreviewView(viewToMask: self.blurView, maskRect: frame)
         
@@ -439,7 +443,7 @@ import Vision
         }
     }
     
-    func captureOutputWork(sampleBuffer: CMSampleBuffer) {        
+    func captureOutputWork(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             print("could not get the pixel buffer, dropping frame")
             self.machineLearningSemaphore.signal()
@@ -484,16 +488,57 @@ import Vision
             return nil
         }
         
-        // we're assuming that the preview frame is centered in the view, if it's not then
-        // this calculation doesn't work. You'd need to grab references to the previewViewFrame
-        // and the regionOfInterestFrame to figure it out
-        
         // use the full width
-        let width = Double(image.width)
+        let width = CGFloat(image.width)
         // keep the aspect ratio at 480:302
         let height = width * 302.0 / 480.0
-        let cx = Double(image.width) / 2.0
-        let cy = Double(image.height) / 2.0
+        
+        // get device screen size
+        let screen = UIScreen.main.bounds
+        let screenWidth = screen.size.width
+        let screenHeight = screen.size.height
+        
+        guard let regionOfInterestLabelFrame = self.regionOfInterestLabelFrame else {
+            return nil
+        }
+        
+        // ROI center in Points
+        let regionOfInterestCenterX = regionOfInterestLabelFrame.origin.x + regionOfInterestLabelFrame.size.width / 2.0
+        
+        let regionOfInterestCenterY = regionOfInterestLabelFrame.origin.y + regionOfInterestLabelFrame.size.height / 2.0
+        
+        // calculate center of cropping region in Pixels.
+        var cx, cy: CGFloat
+        
+        
+        // confirm videoGravity settings in previewView. Calculations based on .resizeAspectFill
+        DispatchQueue.main.async {
+            assert(self.previewView.videoPreviewLayer.videoGravity == .resizeAspectFill)
+        }
+
+        // Find out whether left/right or top/bottom of the image was cropped before it was displayed to previewView.
+        // The size of the cropped region is needed to map regionOfInterestCenter to the image center
+        let imageAspectRatio = CGFloat(image.width) / CGFloat(image.height)
+        let screenAspectRatio = screenWidth / screenHeight
+
+        // convert from points to pixels and account for the cropped region
+        if imageAspectRatio > screenAspectRatio {
+            // left and right of the image cropped
+            //      tested on: iPhone XS Max
+            let croppedOffset = (CGFloat(image.width) - CGFloat(image.height) * screenAspectRatio) / 2.0
+            let pointsToPixels = CGFloat(image.height) / screenHeight
+            
+            cx = regionOfInterestCenterX * pointsToPixels + croppedOffset
+            cy = regionOfInterestCenterY * pointsToPixels
+        } else {
+            // top and bottom of the image cropped
+            //      tested on: iPad Mini 2
+            let croppedOffset = (CGFloat(image.height) - CGFloat(image.width) / screenAspectRatio) / 2.0
+            let pointsToPixels = CGFloat(image.width) / screenWidth
+            
+            cx = regionOfInterestCenterX * pointsToPixels
+            cy = regionOfInterestCenterY * pointsToPixels + croppedOffset
+        }
         
         let rect = CGRect(x: cx - width / 2.0, y: cy - height / 2.0, width: width, height: height)
         
