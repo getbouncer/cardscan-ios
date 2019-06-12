@@ -241,7 +241,7 @@ being passed into your payment form. This is what it looks like using a standard
 
 ## Authors
 
-Sam King and Jaime Park
+Sam King, Jaime Park, and Andy Li
 
 ## License
 
