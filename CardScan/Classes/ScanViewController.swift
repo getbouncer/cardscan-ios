@@ -260,11 +260,6 @@ import Vision
         
         self.videoFeed.requestCameraAccess()
         self.previewView.videoPreviewLayer.session = self.videoFeed.session
-        self.videoFeed.setup(captureDelegate: self) { success in
-            if success {
-                self.setupMask()
-            }
-        }
     }
     
     override public var shouldAutorotate: Bool {
@@ -281,6 +276,13 @@ import Vision
     
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.videoFeed.setup(captureDelegate: self) { success in
+            if success {
+                self.setupMask()
+            }
+        }
+        
         self.videoFeed.willAppear()
         self.isNavigationBarHidden = self.navigationController?.isNavigationBarHidden ?? true
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
