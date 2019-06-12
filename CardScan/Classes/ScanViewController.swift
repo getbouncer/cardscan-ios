@@ -185,13 +185,15 @@ import Vision
     }
     
     func setupMask() {
-        let x = regionOfInterestLabel.frame.origin.x
-        let y = regionOfInterestLabel.frame.origin.y
-        let width = self.view.frame.width - (2.0 * x)
-        let height = width * 226.0 / 359.0
-        
         // store .frame to avoid accessing UI APIs in the machineLearningQueue
         self.regionOfInterestLabelFrame = self.regionOfInterestLabel.frame
+
+        let regionOfInterestCenterY = self.regionOfInterestLabel.frame.origin.y + self.regionOfInterestLabel.frame.size.height / 2.0
+        
+        let x = regionOfInterestLabel.frame.origin.x
+        let width = self.view.frame.width - (2.0 * x)
+        let height = width * 226.0 / 359.0
+        let y = regionOfInterestCenterY - height / 2.0
         
         let frame = CGRect(x: x, y: y, width: width, height: height)
         self.maskPreviewView(viewToMask: self.blurView, maskRect: frame)
@@ -506,7 +508,7 @@ import Vision
         var cx, cy: CGFloat
         
         // Find out whether left/right or top/bottom of the image was cropped before it was displayed to previewView.
-        // The cropped region is used to map the image center to regionOfInterestCenter
+        // The size of the cropped region is needed to map regionOfInterestCenter to the image center
         let imageAspectRatio = CGFloat(image.width) / CGFloat(image.height)
         let screenAspectRatio = screenWidth / screenHeight
 
