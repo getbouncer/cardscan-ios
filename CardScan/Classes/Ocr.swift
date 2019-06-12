@@ -6,12 +6,17 @@ public class Ocr {
     
     public init() {}
     
-    static func configure() {
+    static func configure() -> Bool {
         if #available(iOS 11.0, *) {
             if ModelDownloader.download() {
                 let ocr = FindFourOcr()
                 ocr.warmUp()
+                return true
+            } else {
+                return false
             }
+        } else {
+            return true
         }
     }
     

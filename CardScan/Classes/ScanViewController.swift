@@ -111,17 +111,25 @@ import Vision
     }
     
     @objc static public func configure(apiKey: String) {
-        configure(apiKey: apiKey, detectionModelUrl: nil)
+        configure(apiKey: apiKey, detectionModelUrl: nil, completion: {_,_ in })
     }
     
-    @objc static public func configure(apiKey: String, detectionModelUrl: String?) {
+    @objc static public func configure(apiKey: String, detectionModelUrl: String?,
+                                       completion: @escaping ((Bool, Double) -> Void)) {
         self.machineLearningQueue.async {
             if #available(iOS 11.0, *) {
                 ModelDownloader.apiKey = apiKey
                 if let detectionModelUrl = detectionModelUrl {
                     ModelDownloader.setDetectionModelUrl(detectionModelUrl)
                 }
-                Ocr.configure()
+                let success = Ocr.configure()
+                DispatchQueue.main.async {
+                    completion(success, modelDownloadTime())
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(true, 0.0)
+                }
             }
         }
     }
