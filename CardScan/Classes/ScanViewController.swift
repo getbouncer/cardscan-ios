@@ -79,7 +79,7 @@ import Vision
     @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var regionOfInterestLabel: UILabel!
     @IBOutlet weak var regionOfInterestAspectConstraint: NSLayoutConstraint!
-    var regionOfInterestLabelFrame: CGRect = CGRect()
+    var regionOfInterestLabelFrame: CGRect?
     
     @IBOutlet weak var torchButton: UIButton!
     var videoFeed = VideoFeed()
@@ -498,14 +498,24 @@ import Vision
         let screenWidth = screen.size.width
         let screenHeight = screen.size.height
         
-        // ROI center in Points
-        let regionOfInterestCenterX = self.regionOfInterestLabelFrame.origin.x + self.regionOfInterestLabelFrame.size.width / 2.0
+        guard let regionOfInterestLabelFrame = self.regionOfInterestLabelFrame else {
+            return nil
+        }
         
-        let regionOfInterestCenterY = self.regionOfInterestLabelFrame.origin.y + self.regionOfInterestLabelFrame.size.height / 2.0
+        // ROI center in Points
+        let regionOfInterestCenterX = regionOfInterestLabelFrame.origin.x + regionOfInterestLabelFrame.size.width / 2.0
+        
+        let regionOfInterestCenterY = regionOfInterestLabelFrame.origin.y + regionOfInterestLabelFrame.size.height / 2.0
         
         // calculate center of cropping region in Pixels.
         var cx, cy: CGFloat
         
+        
+        // confirm videoGravity settings in previewView. Calculations based on .resizeAspectFill
+        DispatchQueue.main.async {
+            assert(self.previewView.videoPreviewLayer.videoGravity == .resizeAspectFill)
+        }
+
         // Find out whether left/right or top/bottom of the image was cropped before it was displayed to previewView.
         // The size of the cropped region is needed to map regionOfInterestCenter to the image center
         let imageAspectRatio = CGFloat(image.width) / CGFloat(image.height)
@@ -514,6 +524,7 @@ import Vision
         // convert from points to pixels and account for the cropped region
         if imageAspectRatio > screenAspectRatio {
             // left and right of the image cropped
+            //      tested on: iPhone XS Max
             let croppedOffset = (CGFloat(image.width) - CGFloat(image.height) * screenAspectRatio) / 2.0
             let pointsToPixels = CGFloat(image.height) / screenHeight
             
@@ -521,6 +532,7 @@ import Vision
             cy = regionOfInterestCenterY * pointsToPixels
         } else {
             // top and bottom of the image cropped
+            //      tested on: iPad Mini 2
             let croppedOffset = (CGFloat(image.height) - CGFloat(image.width) / screenAspectRatio) / 2.0
             let pointsToPixels = CGFloat(image.width) / screenWidth
             
