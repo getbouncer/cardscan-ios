@@ -67,11 +67,11 @@ import Vision
     @objc public var hideBackButtonImage = false
     @IBOutlet weak var backButtonWidthConstraint: NSLayoutConstraint!
     @objc public var backButtonImage: UIImage?
-    @objc public var backButtonColor: UIColor = UIColor.white
-    @objc public var backButtonFont: UIFont = UIFont.systemFont(ofSize: 15.0)
-    @objc public var scanCardFont: UIFont = UIFont.systemFont(ofSize: 24.0, weight: .bold)
-    @objc public var positionCardFont: UIFont = UIFont.systemFont(ofSize: 17.0)
-    @objc public var skipButtonFont: UIFont = UIFont.systemFont(ofSize: 17.0)
+    @objc public var backButtonColor: UIColor?
+    @objc public var backButtonFont: UIFont?
+    @objc public var scanCardFont: UIFont?
+    @objc public var positionCardFont: UIFont?
+    @objc public var skipButtonFont: UIFont?
     
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     
@@ -246,12 +246,21 @@ import Vision
             self.backButtonImageButton.setImage(newImage, for: .normal)
         }
         
-        self.backButton.setTitleColor(self.backButtonColor, for: .normal)
-        self.backButton.titleLabel?.font = self.backButtonFont
-        
-        self.scanCardLabel.font = self.scanCardFont
-        self.positionCardLabel.font = self.positionCardFont
-        self.skipButton.titleLabel?.font = self.skipButtonFont
+        if let color = self.backButtonColor {
+            self.backButton.setTitleColor(color, for: .normal)
+        }
+        if let font = self.backButtonFont {
+            self.backButton.titleLabel?.font = font
+        }
+        if let font = self.scanCardFont {
+            self.scanCardLabel.font = font
+        }
+        if let font = self.positionCardFont {
+            self.positionCardLabel.font = font
+        }
+        if let font = self.skipButtonFont {
+            self.skipButton.titleLabel?.font = font
+        }
     }
     
     override public func viewDidLoad() {
