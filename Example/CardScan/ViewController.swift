@@ -83,6 +83,18 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
             vc.backButtonFont = font
         }
         
+        if let font = UIFont(name: "Chalkduster", size: CGFloat(24.0)) {
+            vc.scanCardFont = font
+        }
+        
+        if let font = UIFont(name: "Chalkduster", size: CGFloat(17.0)) {
+            vc.positionCardFont = font
+        }
+
+        if let font = UIFont(name: "Chalkduster", size: CGFloat(17.0)) {
+            vc.skipButtonFont = font
+        }
+        
         self.present(vc, animated: true)
     }
     
