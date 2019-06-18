@@ -75,6 +75,14 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
         }
         vc.allowSkip = true
         vc.stringDataSource = self
+        
+        vc.backButtonColor = UIColor.red
+        vc.hideBackButtonImage = true
+        
+        if let font = UIFont(name: "Verdana", size: CGFloat(17.0)) {
+            vc.backButtonFont = font
+        }
+        
         self.present(vc, animated: true)
     }
     
