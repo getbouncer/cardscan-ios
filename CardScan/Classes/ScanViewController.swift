@@ -64,6 +64,14 @@ import Vision
     public var scanQrCode = false
     @objc public var errorCorrectionDuration = 1.5
     @objc public var includeCardImage = false
+    @objc public var hideBackButtonImage = false
+    @IBOutlet weak var backButtonWidthConstraint: NSLayoutConstraint!
+    @objc public var backButtonImage: UIImage?
+    @objc public var backButtonColor: UIColor?
+    @objc public var backButtonFont: UIFont?
+    @objc public var scanCardFont: UIFont?
+    @objc public var positionCardFont: UIFont?
+    @objc public var skipButtonFont: UIFont?
     
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     
@@ -75,6 +83,7 @@ import Vision
     @IBOutlet weak var positionCardLabel: UILabel!
     @IBOutlet weak var skipButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var backButtonImageButton: UIButton!
     
     @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var regionOfInterestLabel: UILabel!
@@ -226,10 +235,39 @@ import Vision
         self.backButton.setTitle(dataSource.backButton(), for: .normal)
     }
     
+    func setUiCustomization() {
+        if self.hideBackButtonImage {
+            self.backButtonImageButton.setImage(nil, for: .normal)
+            // the image button is 8 from safe area and has a width of 32 the
+            // label has a leading constraint of -11 so setting the width to
+            // 19 sets the space from the safe region to 16
+            self.backButtonWidthConstraint.constant = 19
+        } else if let newImage = self.backButtonImage {
+            self.backButtonImageButton.setImage(newImage, for: .normal)
+        }
+        
+        if let color = self.backButtonColor {
+            self.backButton.setTitleColor(color, for: .normal)
+        }
+        if let font = self.backButtonFont {
+            self.backButton.titleLabel?.font = font
+        }
+        if let font = self.scanCardFont {
+            self.scanCardLabel.font = font
+        }
+        if let font = self.positionCardFont {
+            self.positionCardLabel.font = font
+        }
+        if let font = self.skipButtonFont {
+            self.skipButton.titleLabel?.font = font
+        }
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
         self.setStrings()
+        self.setUiCustomization()
         setNeedsStatusBarAppearanceUpdate()
         
         if self.scanQrCode {
