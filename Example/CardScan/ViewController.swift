@@ -75,6 +75,15 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
         }
         vc.allowSkip = true
         vc.stringDataSource = self
+        
+        vc.backButtonColor = UIColor.red
+        vc.hideBackButtonImage = true
+        
+        vc.backButtonFont = UIFont(name: "Verdana", size: CGFloat(17.0))
+        vc.scanCardFont = UIFont(name: "Chalkduster", size: CGFloat(24.0))
+        vc.positionCardFont = UIFont(name: "Chalkduster", size: CGFloat(17.0))
+        vc.skipButtonFont = UIFont(name: "Chalkduster", size: CGFloat(17.0))
+        
         self.present(vc, animated: true)
     }
     

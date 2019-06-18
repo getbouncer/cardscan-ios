@@ -180,6 +180,8 @@
                     </view>
                     <connections>
                         <outlet property="backButton" destination="aTS-Jy-HLZ" id="FXx-Gz-A9r"/>
+                        <outlet property="backButtonImageButton" destination="cAV-bO-0Cf" id="5jh-fo-Z7b"/>
+                        <outlet property="backButtonWidthConstraint" destination="EaN-bi-nZq" id="3GV-jN-upY"/>
                         <outlet property="blurView" destination="aju-0L-PxB" id="O2s-Pr-FEO"/>
                         <outlet property="cardNumberLabel" destination="mhR-St-yeE" id="Zwu-8I-mT9"/>
                         <outlet property="expiryLabel" destination="sYa-ko-OnI" id="P2m-du-Sw7"/>
