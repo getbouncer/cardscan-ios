@@ -78,6 +78,7 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
         
         vc.backButtonColor = UIColor.red
         vc.hideBackButtonImage = true
+        vc.backButtonImageToTextDelta = 8.0
         
         vc.backButtonFont = UIFont(name: "Verdana", size: CGFloat(17.0))
         vc.scanCardFont = UIFont(name: "Chalkduster", size: CGFloat(24.0))
