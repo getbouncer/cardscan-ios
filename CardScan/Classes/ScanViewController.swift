@@ -65,6 +65,7 @@ import Vision
     @objc public var errorCorrectionDuration = 1.5
     @objc public var includeCardImage = false
     @objc public var hideBackButtonImage = false
+    @IBOutlet weak var backButtonImageToTextConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButtonWidthConstraint: NSLayoutConstraint!
     @objc public var backButtonImage: UIImage?
     @objc public var backButtonColor: UIColor?
@@ -72,6 +73,7 @@ import Vision
     @objc public var scanCardFont: UIFont?
     @objc public var positionCardFont: UIFont?
     @objc public var skipButtonFont: UIFont?
+    @objc public var backButtonImageToTextDelta: NSNumber?
     
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     
@@ -260,6 +262,9 @@ import Vision
         }
         if let font = self.skipButtonFont {
             self.skipButton.titleLabel?.font = font
+        }
+        if let delta = self.backButtonImageToTextDelta.map({ CGFloat($0.floatValue) }) {
+            self.backButtonImageToTextConstraint.constant += delta
         }
     }
     
