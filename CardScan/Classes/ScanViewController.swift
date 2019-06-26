@@ -141,10 +141,12 @@ import Vision
     //     won't hit the GPU
     //   * For any pending tasks, our sync block ensures that they finish before
     //     this returns
-    //   * TBD: make sure that this handler blocks backgrounding and add a reference
+    //   * The willResignActive function blocks the transition to the background until
+    //     it completes, which we couldn't find docs on but verified experimentally
     @objc static func willResignActive() {
         AppState.inBackground = true
-        // this makes sure that any currently running predictions finish
+        // this makes sure that any currently running predictions finish before we
+        // let the app go into the background
         ScanViewController.machineLearningQueue.sync { }
     }
     
