@@ -145,7 +145,7 @@ class FindFour {
      - returns: the result of the prediction as FindFourOutput
      */
     func prediction(input: FindFourInput, options: MLPredictionOptions) throws -> FindFourOutput {
-        if (AppState.inBackground) {
+        if AppState.inBackground {
             throw InBackgroundError.appIsInTheBackground
         }
         let outFeatures = try model.prediction(from: input, options:options)
@@ -301,7 +301,7 @@ class FourRecognize {
      - returns: the result of the prediction as FourRecognizeOutput
      */
     func prediction(input: FourRecognizeInput, options: MLPredictionOptions) throws -> FourRecognizeOutput {
-        if (AppState.inBackground) {
+        if AppState.inBackground {
             throw InBackgroundError.appIsInTheBackground
         }
         let outFeatures = try model.prediction(from: input, options:options)
