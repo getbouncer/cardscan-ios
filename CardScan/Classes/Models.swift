@@ -5,6 +5,9 @@
 
 import CoreML
 
+enum InBackgroundError: Error {
+    case appIsInTheBackground
+}
 
 /// Model Prediction Input Type
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
@@ -142,6 +145,9 @@ class FindFour {
      - returns: the result of the prediction as FindFourOutput
      */
     func prediction(input: FindFourInput, options: MLPredictionOptions) throws -> FindFourOutput {
+        if (AppState.inBackground) {
+            throw InBackgroundError.appIsInTheBackground
+        }
         let outFeatures = try model.prediction(from: input, options:options)
         return FindFourOutput(features: outFeatures)
     }
@@ -156,28 +162,6 @@ class FindFour {
     func prediction(input1: CVPixelBuffer) throws -> FindFourOutput {
         let input_ = FindFourInput(input1: input1)
         return try self.prediction(input: input_)
-    }
-    
-    /**
-     Make a batch prediction using the structured interface
-     - parameters:
-     - inputs: the inputs to the prediction as [FindFourInput]
-     - options: prediction options
-     - throws: an NSError object that describes the problem
-     - returns: the result of the prediction as [FindFourOutput]
-     */
-    @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
-    func predictions(inputs: [FindFourInput], options: MLPredictionOptions = MLPredictionOptions()) throws -> [FindFourOutput] {
-        let batchIn = MLArrayBatchProvider(array: inputs)
-        let batchOut = try model.predictions(from: batchIn, options: options)
-        var results : [FindFourOutput] = []
-        results.reserveCapacity(inputs.count)
-        for i in 0..<batchOut.count {
-            let outProvider = batchOut.features(at: i)
-            let result =  FindFourOutput(features: outProvider)
-            results.append(result)
-        }
-        return results
     }
 }
 
@@ -250,7 +234,7 @@ class FourRecognize {
         
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
         let modelcFile = documentDirectory.appendingPathComponent("FourRecognize.mlmodelc")
-            if !FileManager.default.fileExists(atPath: modelcFile.path) {
+        if !FileManager.default.fileExists(atPath: modelcFile.path) {
             let modelUrl = bundle.url(forResource: "FourRecognize", withExtension: "bin")!
             let compiledUrl = try? MLModel.compileModel(at: modelUrl)
             try! FileManager.default.moveItem(at: compiledUrl!, to: modelcFile)
@@ -317,6 +301,9 @@ class FourRecognize {
      - returns: the result of the prediction as FourRecognizeOutput
      */
     func prediction(input: FourRecognizeInput, options: MLPredictionOptions) throws -> FourRecognizeOutput {
+        if (AppState.inBackground) {
+            throw InBackgroundError.appIsInTheBackground
+        }
         let outFeatures = try model.prediction(from: input, options:options)
         return FourRecognizeOutput(features: outFeatures)
     }
@@ -331,27 +318,5 @@ class FourRecognize {
     func prediction(input1: CVPixelBuffer) throws -> FourRecognizeOutput {
         let input_ = FourRecognizeInput(input1: input1)
         return try self.prediction(input: input_)
-    }
-    
-    /**
-     Make a batch prediction using the structured interface
-     - parameters:
-     - inputs: the inputs to the prediction as [FourRecognizeInput]
-     - options: prediction options
-     - throws: an NSError object that describes the problem
-     - returns: the result of the prediction as [FourRecognizeOutput]
-     */
-    @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
-    func predictions(inputs: [FourRecognizeInput], options: MLPredictionOptions = MLPredictionOptions()) throws -> [FourRecognizeOutput] {
-        let batchIn = MLArrayBatchProvider(array: inputs)
-        let batchOut = try model.predictions(from: batchIn, options: options)
-        var results : [FourRecognizeOutput] = []
-        results.reserveCapacity(inputs.count)
-        for i in 0..<batchOut.count {
-            let outProvider = batchOut.features(at: i)
-            let result =  FourRecognizeOutput(features: outProvider)
-            results.append(result)
-        }
-        return results
     }
 }
