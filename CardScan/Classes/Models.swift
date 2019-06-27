@@ -81,23 +81,7 @@ class FindFour {
     init(contentsOf url: URL) throws {
         self.model = try MLModel(contentsOf: url)
     }
-    
-    /// Construct a model that automatically loads the model from the app's bundle
-    convenience init() {
-        try! self.init(contentsOf: BundleURL)
-    }
-    
-    /**
-     Construct a model with configuration
-     - parameters:
-     - configuration: the desired model configuration
-     - throws: an NSError object that describes the problem
-     */
-    @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
-    convenience init(configuration: MLModelConfiguration) throws {
-        try self.init(contentsOf: type(of:self).urlOfModelInThisBundle, configuration: configuration)
-    }
-    
+
     /**
      Construct a model with explicit path to mlmodelc file and configuration
      - parameters:
@@ -211,23 +195,7 @@ class FourRecognizeOutput : MLFeatureProvider {
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
 class FourRecognize {
     var model: MLModel
-    
-    /// URL of model assuming it was installed in the same bundle as this class
-    class var urlOfModelInThisBundle : URL {
-        let bundleUrl = Bundle(for: FourRecognize.self).url(forResource: "CardScan", withExtension: "bundle")!
-        let bundle = Bundle(url: bundleUrl)!
-        
-        let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
-        let modelcFile = documentDirectory.appendingPathComponent("FourRecognize.mlmodelc")
-        if !FileManager.default.fileExists(atPath: modelcFile.path) {
-            let modelUrl = bundle.url(forResource: "FourRecognize", withExtension: "bin")!
-            let compiledUrl = try? MLModel.compileModel(at: modelUrl)
-            try! FileManager.default.moveItem(at: compiledUrl!, to: modelcFile)
-        }
-            
-        return modelcFile
-    }
-    
+
     /**
      Construct a model with explicit path to mlmodelc file
      - parameters:
@@ -236,22 +204,6 @@ class FourRecognize {
      */
     init(contentsOf url: URL) throws {
         self.model = try MLModel(contentsOf: url)
-    }
-    
-    /// Construct a model that automatically loads the model from the app's bundle
-    convenience init() {
-        try! self.init(contentsOf: type(of:self).urlOfModelInThisBundle)
-    }
-    
-    /**
-     Construct a model with configuration
-     - parameters:
-     - configuration: the desired model configuration
-     - throws: an NSError object that describes the problem
-     */
-    @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
-    convenience init(configuration: MLModelConfiguration) throws {
-        try self.init(contentsOf: type(of:self).urlOfModelInThisBundle, configuration: configuration)
     }
     
     /**
