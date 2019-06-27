@@ -19,6 +19,10 @@ import Foundation
  make a lot of mistakes, thus the need for post processing algorithsm. The
  post processing algorithms take the boxes and try to find combinations that are
  likely numbers, combining and filtering out boxes as it goes.
+ 
+ WARNING WARNING WARNING this class is _not_ thread safe. Make sure you call all
+ of these functions from the same serial queue or thread.
+ 
  */
 @available(iOS 11.0, *)
 struct FindFourOcr {
