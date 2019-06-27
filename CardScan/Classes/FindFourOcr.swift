@@ -80,10 +80,29 @@ struct FindFourOcr {
     
     static func initializeModels() {
         if FindFourOcr.recognizeModel == nil {
-            FindFourOcr.recognizeModel = FourRecognize()
+            guard let fourRecognizeUrl = BundleURL.compiledModel(forResource: "FourRecognize", withExtension: "bin", modelName: "FourRecognize.mlmodelc") else {
+                print("Could not find URL for FourRecognize")
+                return
+            }
+            
+            guard let recognizeModel = try? FourRecognize(contentsOf: fourRecognizeUrl) else {
+                print("Could not get contents of recognize model with fourRecognize URL")
+                return
+            }
+            
+            FindFourOcr.recognizeModel = recognizeModel
         }
         if FindFourOcr.detectModel == nil {
-            FindFourOcr.detectModel = FindFour()
+            guard let findFourUrl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "bin", modelName: "FindFour.mlmodelc") else {
+                print("Could not find URL for FindFour")
+                return
+            }
+            
+            guard let detectModel = try? FindFour(contentsOf: findFourUrl) else {
+                print("Could not get contents of detect model with findFour URL")
+                return
+            }
+            FindFourOcr.detectModel = detectModel
         }
     }
     

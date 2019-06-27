@@ -3,7 +3,7 @@ import CoreML
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
 //model name : "FindFour.mlmodelc"
 struct BundleURL{
-    static func bundleUrl(forResource: String, withExtension: String, modelName: String) -> URL?{
+    static func compiledModel(forResource: String, withExtension: String, modelName: String) -> URL? {
         guard let documentDirectory =
             try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false) else {
                 print("Directory could not be found")
