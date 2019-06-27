@@ -81,10 +81,14 @@ class CardScan_ExampleTests: XCTestCase {
         UIGraphicsEndImageContext()
         
         let pixelBuffer = newImage.pixelBuffer(width: kCardWidth, height: kCardHeight)!
-        XCTAssertThrowsError(try FindFourOcr.detectModel!.prediction(input1: pixelBuffer))
+        XCTAssertThrowsError(try FindFourOcr.detectModel!.prediction(input1: pixelBuffer)) { error in
+            XCTAssert(error.localizedDescription == "Input image feature input1 does not match model description")
+        }
         
         let pixelBuffer2 = newImage.pixelBuffer(width: kBoxWidth, height: kBoxHeight)!
-        XCTAssertThrowsError(try FindFourOcr.recognizeModel!.prediction(input1: pixelBuffer2))
+        XCTAssertThrowsError(try FindFourOcr.recognizeModel!.prediction(input1: pixelBuffer2)) { error in
+            XCTAssert(error.localizedDescription == "Input image feature input1 does not match model description")
+        }
         
         // now call the prediction function to make sure that we're handling model exceptions
         let prediction = ffOcr.predict(image: newImage)
