@@ -14,4 +14,10 @@ target 'CardScan_Example' do
     pod 'CardScan', :path => '../'  
   end
 
+  target 'CardScan_ExampleTests' do
+    inherit! :search_paths
+    # Pods for testing
+    pod 'CardScan', :path => '../'  
+  end
+
 end
