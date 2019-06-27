@@ -22,8 +22,8 @@ import Foundation
  */
 @available(iOS 11.0, *)
 struct FindFourOcr {
-    static let recognizeModel = FourRecognize()
-    static let detectModel = FindFour()
+    static let recognizeModel: FourRecognize? = FourRecognize()
+    static let detectModel: FindFour? = FindFour()
     let modelString = "findFour"
     var algorithm: String?
     
@@ -58,12 +58,17 @@ struct FindFourOcr {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
+        guard let detectModel = FindFourOcr.detectModel, let recognizeModel = FindFourOcr.recognizeModel else {
+            print("Models not initialized")
+            return
+        }
+        
         if let pixelBuffer = newImage?.pixelBuffer(width: kCardWidth, height: kCardHeight) {
-            let _ = try? FindFourOcr.detectModel.prediction(input1: pixelBuffer)
+            let _ = try? detectModel.prediction(input1: pixelBuffer)
         }
         
         if let pixelBuffer = newImage?.pixelBuffer(width: kBoxWidth, height: kBoxHeight) {
-            let _ = try? FindFourOcr.recognizeModel.prediction(input1: pixelBuffer)
+            let _ = try? recognizeModel.prediction(input1: pixelBuffer)
         }
     }
     
@@ -108,8 +113,13 @@ struct FindFourOcr {
             return (nil, nil, nil, nil, nil, nil)
         }
         
+        guard let detectModel = FindFourOcr.detectModel else {
+            print("Models not initialized")
+            return (nil, nil, nil, nil, nil, nil)
+        }
+        
         let modelInput = FindFourInput(input1: pixelBuffer)
-        guard let prediction = try? FindFourOcr.detectModel.prediction(input: modelInput) else {
+        guard let prediction = try? detectModel.prediction(input: modelInput) else {
             return (nil, nil, nil, nil, nil, nil)
         }
         guard let cgImage = image.cgImage else {
