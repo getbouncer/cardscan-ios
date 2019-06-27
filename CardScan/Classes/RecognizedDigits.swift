@@ -20,8 +20,13 @@ struct RecognizedDigits {
             return nil
         }
         
+        guard let recognizeModel = FindFourOcr.recognizeModel else {
+            print("Models not initialized")
+            return nil
+        }
+        
         let modelInput = FourRecognizeInput(input1: pixelBuffer)
-        guard let prediction = try? FindFourOcr.recognizeModel.prediction(input: modelInput) else {
+        guard let prediction = try? recognizeModel.prediction(input: modelInput) else {
             return nil
         }
         
