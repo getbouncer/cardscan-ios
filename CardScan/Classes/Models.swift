@@ -70,22 +70,7 @@ class FindFourOutput : MLFeatureProvider {
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
 class FindFour {
     var model: MLModel
-    
-    /// URL of model assuming it was installed in the same bundle as this class
-    class var urlOfModelInThisBundle : URL {
-        let bundleUrl = Bundle(for: FindFour.self).url(forResource: "CardScan", withExtension: "bundle")!
-        let bundle = Bundle(url: bundleUrl)!
-        
-        let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
-        let modelcFile = documentDirectory.appendingPathComponent("FindFour.mlmodelc")
-        if !FileManager.default.fileExists(atPath: modelcFile.path) {
-            let modelUrl = bundle.url(forResource: "FindFour", withExtension: "bin")!
-            let compiledUrl = try? MLModel.compileModel(at: modelUrl)
-            try! FileManager.default.moveItem(at: compiledUrl!, to: modelcFile)
-        }
-        
-        return modelcFile
-    }
+
     
     /**
      Construct a model with explicit path to mlmodelc file
@@ -99,7 +84,7 @@ class FindFour {
     
     /// Construct a model that automatically loads the model from the app's bundle
     convenience init() {
-        try! self.init(contentsOf: type(of:self).urlOfModelInThisBundle)
+        try! self.init(contentsOf: BundleURL)
     }
     
     /**
