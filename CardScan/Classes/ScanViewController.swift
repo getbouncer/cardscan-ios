@@ -76,6 +76,8 @@ import Vision
     @objc public var backButtonImageToTextDelta: NSNumber?
     
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
+    // Only access this variable from the machineLearningQueue
+    static var hasRegisteredAppNotifications = false
     
     @IBOutlet weak var expiryLabel: UILabel!
     @IBOutlet weak var cardNumberLabel: UILabel!
@@ -125,9 +127,42 @@ import Vision
     @objc static public func configure() {
         self.machineLearningQueue.async {
             if #available(iOS 11.0, *) {
+                registerAppNotifications()
                 Ocr.configure()
             }
         }
+    }
+    
+ 
+    // We're keeping track of the app's background state because we need to shut down
+    // our ML threads, which use the GPU. Since there can be ML tasks in flight when
+    // this happens our correctness criteria is:
+    //   * For any new tasks, if we have `inBackground` set then we know that they
+    //     won't hit the GPU
+    //   * For any pending tasks, our sync block ensures that they finish before
+    //     this returns
+    //   * The willResignActive function blocks the transition to the background until
+    //     it completes, which we couldn't find docs on but verified experimentally
+    @objc static func willResignActive() {
+        AppState.inBackground = true
+        // this makes sure that any currently running predictions finish before we
+        // let the app go into the background
+        ScanViewController.machineLearningQueue.sync { }
+    }
+    
+    @objc static func didBecomeActive() {
+        AppState.inBackground = false
+    }
+    
+    // Only call this function from the machineLearningQueue
+    static func registerAppNotifications() {
+        if hasRegisteredAppNotifications {
+            return
+        }
+        
+        hasRegisteredAppNotifications = true
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     @objc static public func isCompatible() -> Bool {
@@ -346,15 +381,6 @@ import Vision
     }
     
     func showCardNumber(_ number: String, expiry: String?) {
-        /*
-        guard let imageRect = self.currentImageRect else {
-            return
-        }
-        
-        guard let numberRect = self.ocr.scanStats.numberRect else {
-            return
-        }*/
-        
         // we're assuming that the image takes up the full width and that
         // video has the same aspect ratio of the screen
         DispatchQueue.main.async {
@@ -369,38 +395,13 @@ import Vision
                     self.expiryLabel.fadeIn()
                 }
             }
-            
-            /*
-            let scaleX = self.view.frame.width / imageRect.width
-            let scaleY = self.view.frame.height / (2.0 * (imageRect.minY + imageRect.height / 2.0))
-            let numberHeight = numberRect.height * scaleY
-            let numberWidth = numberRect.width * scaleX
-            
-            let numberX = (numberRect.minX + imageRect.minX) * scaleX
-            let numberY = (numberRect.minY + imageRect.minY) * scaleY - numberHeight - 8.0
-            
-            let frameRect = CGRect(x: numberX, y: numberY, width: numberWidth, height: 50.0)
-            
-            let label = self.numberLabel ?? UILabel(frame: frameRect)
-            label.frame = frameRect
-            label.textAlignment = .center
-            label.text = CreditCardUtils.format(number: number)
-            label.adjustsFontSizeToFitWidth = true
-            label.minimumScaleFactor = 0.1
-            label.textColor = #colorLiteral(red: 0.2980392157, green: 0.8509803922, blue: 0.3921568627, alpha: 1)
-            label.font = label.font.withSize(60.0)
-
-            if self.numberLabel == nil {
-                self.numberLabel = label
-                self.previewView.addSubview(label)
-            }
-            */
         }
     }
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if self.machineLearningSemaphore.wait(timeout: .now()) == .success {
             ScanViewController.machineLearningQueue.async {
+                ScanViewController.registerAppNotifications()
                 self.captureOutputWork(sampleBuffer: sampleBuffer)
             }
         }
@@ -413,7 +414,7 @@ import Vision
             
             if let barcode = result as? VNBarcodeObservation, barcode.symbology == .QR {
                 if let payload = barcode.payloadStringValue {
-                    DispatchQueue.main.sync {
+                    DispatchQueue.main.async {
                         if self.calledDelegate {
                             return
                         }
@@ -463,7 +464,7 @@ import Vision
         }
         
         if done {
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 guard let number = number else {
                     return
                 }
