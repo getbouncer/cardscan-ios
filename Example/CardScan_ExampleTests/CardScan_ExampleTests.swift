@@ -12,7 +12,6 @@ import XCTest
 class CardScan_ExampleTests: XCTestCase {
     
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         FindFourOcr.detectModel = nil
         FindFourOcr.recognizeModel = nil
         FindFourOcr.findFourResource = "FindFour"
@@ -28,7 +27,9 @@ class CardScan_ExampleTests: XCTestCase {
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // For this particular test the setUp function does a pretty good job of
+        // cleaning up as well
+        self.setUp()
     }
 
     func testModelLoading() {
