@@ -1,7 +1,6 @@
 import CoreML
 
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
-//model name : "FindFour.mlmodelc"
 struct BundleURL{
     static func compiledModel(forResource: String, withExtension: String, modelName: String) -> URL? {
         guard let documentDirectory =
@@ -24,7 +23,7 @@ struct BundleURL{
             }
             
             guard let modelUrl = bundle.url(forResource: forResource, withExtension: withExtension) else {
-                print("Could not find bundle named \" FindFour.bin\" ")
+                print("Could not find bundle named \" \(forResource).\(withExtension)\" ")
                 return nil
             }
             
