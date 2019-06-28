@@ -67,6 +67,15 @@ public struct ScanStats {
                 "device_type": self.deviceType ?? ""]
     }
     
+    public func toDictionaryForFraudCheck() -> [String: Any] {
+        return ["scans": self.scans,
+                "torch_on": self.torchOn,
+                "success": self.success ?? false,
+                "duration": self.duration(),
+                "model": self.model ?? "unknown",
+                "device_type": self.deviceType ?? ""]
+    }
+    
     public func duration() -> Double {
         guard let endTime = self.endTime else {
             return 0.0
