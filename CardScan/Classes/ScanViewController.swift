@@ -185,18 +185,17 @@ import Vision
     }
     
     @IBAction func backButtonPress(_ sender: Any) {
-        if self.calledDelegate {
-            return
-        }
+        // Note: for the back button we may call the `userCancelled` delegate even if the
+        // delegate has been called just as a safety precation to always provide the
+        // user with a way to get out.
         self.ocr.userCancelled()
         self.calledDelegate = true
         self.scanDelegate?.userDidCancel(self)
     }
     
     @IBAction func skipButtonPress() {
-        if self.calledDelegate {
-            return
-        }
+        // Same for the skip button, like with the back button press we may call the
+        // delegate function even if it's already been called
         self.ocr.userCancelled()
         self.calledDelegate = true
         self.scanDelegate?.userDidSkip(self)
