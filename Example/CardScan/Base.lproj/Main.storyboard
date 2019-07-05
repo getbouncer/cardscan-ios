@@ -100,6 +100,13 @@
                                     <action selector="scanAndShowImagePress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="4Yh-It-wDZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOx-Ed-LOH">
+                                <rect key="frame" x="134" y="553.5" width="107" height="30"/>
+                                <state key="normal" title="Custom images"/>
+                                <connections>
+                                    <action selector="customVideoPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="mp5-uJ-PSq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -107,6 +114,7 @@
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="AkZ-f5-Cw0"/>
                             <constraint firstItem="LBI-Nj-Ojb" firstAttribute="top" secondItem="pIK-as-bko" secondAttribute="bottom" constant="8" id="DKk-6B-vtM"/>
                             <constraint firstItem="9tR-DO-gyb" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="IXC-rr-ZtJ"/>
+                            <constraint firstItem="lOx-Ed-LOH" firstAttribute="top" secondItem="HGF-3W-kd7" secondAttribute="bottom" constant="8" id="IrW-Pq-bcY"/>
                             <constraint firstItem="pIK-as-bko" firstAttribute="top" secondItem="6NY-p4-OvD" secondAttribute="bottom" constant="8" id="Jpb-N9-6UO"/>
                             <constraint firstItem="HGF-3W-kd7" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="LAc-xn-1Rd"/>
                             <constraint firstItem="LBI-Nj-Ojb" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="OZL-nk-k2K"/>
@@ -114,6 +122,7 @@
                             <constraint firstItem="pIK-as-bko" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="SSG-hd-RyU"/>
                             <constraint firstItem="LBI-Nj-Ojb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="TUX-zN-lhp"/>
                             <constraint firstItem="pIK-as-bko" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="UlN-Gs-FK7"/>
+                            <constraint firstItem="lOx-Ed-LOH" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Uy4-wz-YkW"/>
                             <constraint firstItem="6NY-p4-OvD" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="VtA-4O-Rau"/>
                             <constraint firstItem="6NY-p4-OvD" firstAttribute="top" secondItem="qlz-Ds-Znv" secondAttribute="bottom" constant="8" id="Y8H-65-voH"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="top" secondItem="9tR-DO-gyb" secondAttribute="bottom" constant="16" id="hrc-Fy-VMw"/>

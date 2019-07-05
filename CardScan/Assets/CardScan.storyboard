@@ -35,6 +35,9 @@
                                         <color key="textColor" red="0.18039215689999999" green="0.81568627449999997" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FbV-Jw-mRi">
+                                        <rect key="frame" x="16" y="327.66666666666669" width="382" height="240.66666666666669"/>
+                                    </imageView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4242 4242 4242 4242" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="mhR-St-yeE">
                                         <rect key="frame" x="32" y="435.66666666666669" width="350" height="57"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="48"/>
@@ -111,8 +114,10 @@
                                     <constraint firstItem="iJh-NT-quU" firstAttribute="top" secondItem="NRD-Sd-k9r" secondAttribute="bottom" constant="16" id="Gwd-mC-Yd7"/>
                                     <constraint firstAttribute="trailing" secondItem="mhR-St-yeE" secondAttribute="trailing" constant="32" id="HEa-eN-2z3"/>
                                     <constraint firstItem="mhR-St-yeE" firstAttribute="centerY" secondItem="NRD-Sd-k9r" secondAttribute="centerY" constant="16" id="Hjd-O3-cOS"/>
+                                    <constraint firstItem="FbV-Jw-mRi" firstAttribute="bottom" secondItem="NRD-Sd-k9r" secondAttribute="bottom" id="K9e-kV-SDT"/>
                                     <constraint firstAttribute="trailing" secondItem="sYa-ko-OnI" secondAttribute="trailing" constant="32" id="MRD-Go-QNU"/>
                                     <constraint firstItem="aju-0L-PxB" firstAttribute="top" secondItem="JZr-lh-2mZ" secondAttribute="top" id="Nw1-Sg-ATq"/>
+                                    <constraint firstItem="FbV-Jw-mRi" firstAttribute="trailing" secondItem="NRD-Sd-k9r" secondAttribute="trailing" id="OQ7-9h-JFH"/>
                                     <constraint firstItem="NRD-Sd-k9r" firstAttribute="leading" secondItem="JZr-lh-2mZ" secondAttribute="leading" constant="16" id="RaX-bo-Vr3"/>
                                     <constraint firstItem="NRD-Sd-k9r" firstAttribute="centerX" secondItem="JZr-lh-2mZ" secondAttribute="centerX" id="SiM-V5-xoX"/>
                                     <constraint firstAttribute="trailing" secondItem="vfu-3N-l48" secondAttribute="trailing" constant="16" id="VF2-Te-ZU2"/>
@@ -127,7 +132,9 @@
                                     <constraint firstItem="vfu-3N-l48" firstAttribute="leading" secondItem="JZr-lh-2mZ" secondAttribute="leading" constant="16" id="tfH-wA-wLC"/>
                                     <constraint firstItem="NRD-Sd-k9r" firstAttribute="top" secondItem="vfu-3N-l48" secondAttribute="bottom" constant="16" id="tvq-2M-xjH"/>
                                     <constraint firstItem="mhR-St-yeE" firstAttribute="leading" secondItem="JZr-lh-2mZ" secondAttribute="leading" constant="32" id="v82-G9-16t"/>
+                                    <constraint firstItem="FbV-Jw-mRi" firstAttribute="leading" secondItem="NRD-Sd-k9r" secondAttribute="leading" id="vgB-Rg-8Ap"/>
                                     <constraint firstAttribute="trailing" secondItem="iJh-NT-quU" secondAttribute="trailing" constant="16" id="xP1-2O-u2R"/>
+                                    <constraint firstItem="FbV-Jw-mRi" firstAttribute="top" secondItem="NRD-Sd-k9r" secondAttribute="top" id="yx5-KZ-MVe"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xu-ZF-zZr">
@@ -185,6 +192,7 @@
                         <outlet property="backButtonWidthConstraint" destination="EaN-bi-nZq" id="3GV-jN-upY"/>
                         <outlet property="blurView" destination="aju-0L-PxB" id="O2s-Pr-FEO"/>
                         <outlet property="cardNumberLabel" destination="mhR-St-yeE" id="Zwu-8I-mT9"/>
+                        <outlet property="debugImageView" destination="FbV-Jw-mRi" id="Hhh-cL-znj"/>
                         <outlet property="expiryLabel" destination="sYa-ko-OnI" id="P2m-du-Sw7"/>
                         <outlet property="positionCardLabel" destination="iJh-NT-quU" id="Ssa-XL-rLU"/>
                         <outlet property="previewView" destination="JZr-lh-2mZ" id="PpI-ZM-7tx"/>
