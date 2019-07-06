@@ -31,6 +31,10 @@ import Vision
     @objc func skipButton() -> String
 }
 
+@objc public protocol TestingImageDataSource {
+    @objc func nextImage() -> CGImage?
+}
+
 @objc public class CreditCard: NSObject {
     @objc public var number: String
     @objc public var expiryMonth: String?
@@ -60,6 +64,7 @@ import Vision
     
     public weak var scanDelegate: ScanDelegate?
     @objc public weak var stringDataSource: ScanStringsDataSource?
+    @objc public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var allowSkip = false
     public var scanQrCode = false
     @objc public var errorCorrectionDuration = 1.5
@@ -74,6 +79,7 @@ import Vision
     @objc public var positionCardFont: UIFont?
     @objc public var skipButtonFont: UIFont?
     @objc public var backButtonImageToTextDelta: NSNumber?
+    @objc public var showDebugImageView = false
     
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     // Only access this variable from the machineLearningQueue
@@ -89,6 +95,7 @@ import Vision
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var backButtonImageButton: UIButton!
     
+    @IBOutlet weak var debugImageView: UIImageView!
     @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var regionOfInterestLabel: UILabel!
     @IBOutlet weak var regionOfInterestAspectConstraint: NSLayoutConstraint!
@@ -452,6 +459,38 @@ import Vision
         semaphore.wait()
     }
     
+    func drawBoundingBoxesOnImage(image: UIImage, embossedCharacterBoxes: [CGRect],
+                                  characterBoxes: [CGRect], appleBoxes: [CGRect]) -> UIImage? {
+        
+        let imageSize = image.size
+        let scale: CGFloat = 0
+        UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
+        
+        image.draw(at: CGPoint(x: 0,y :0))
+        
+        UIGraphicsGetCurrentContext()?.setLineWidth(3.0)
+        
+        UIColor.green.setStroke()
+        for characterBox in characterBoxes {
+            UIRectFrame(characterBox)
+        }
+        
+        UIColor.blue.setStroke()
+        for characterBox in embossedCharacterBoxes {
+            UIRectFrame(characterBox)
+        }
+        
+        UIColor.red.setStroke()
+        for characterBox in appleBoxes {
+            UIRectFrame(characterBox)
+        }
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
     @available(iOS 11.0, *)
     func blockingOcrModel(rawImage: CGImage) {
         let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: rawImage)
@@ -459,6 +498,20 @@ import Vision
             self.showCardNumber(number, expiry: expiry?.display())
             if self.includeCardImage && foundNumberInThisScan {
                 self.scannedCardImage = UIImage(cgImage: rawImage)
+            }
+        }
+        
+        if self.showDebugImageView {
+            let flatBoxes = self.ocr.scanStats.lastFlatBoxes ?? []
+            let embossedBoxes = self.ocr.scanStats.lastEmbossedBoxes ?? []
+            let expiryBoxes = self.ocr.scanStats.expiryBoxes ?? []
+            
+            DispatchQueue.main.async {
+                if self.debugImageView.isHidden {
+                    self.debugImageView.isHidden = false
+                }
+                
+                self.debugImageView.image = self.drawBoundingBoxesOnImage(image: UIImage(cgImage: rawImage), embossedCharacterBoxes: embossedBoxes, characterBoxes: flatBoxes, appleBoxes: expiryBoxes)
             }
         }
         
@@ -501,11 +554,15 @@ import Vision
             return
         }
         
+        // we allow apps that integrate to supply their own sequence of images
+        // for use in testing
+        let image = self.testingImageDataSource?.nextImage() ?? rawImage
+        
         if #available(iOS 11.0, *) {
             if self.scanQrCode {
                 self.blockingQrModel(pixelBuffer: pixelBuffer)
             } else {
-                self.blockingOcrModel(rawImage: rawImage)
+                self.blockingOcrModel(rawImage: image)
             }
         }
         

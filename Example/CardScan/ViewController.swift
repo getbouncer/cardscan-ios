@@ -9,7 +9,27 @@
 import UIKit
 import CardScan
 
-class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
+class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource, TestingImageDataSource {
+    
+    let testImages = [UIImage(imageLiteralResourceName: "frame0"),
+                      UIImage(imageLiteralResourceName: "frame19"),
+                      UIImage(imageLiteralResourceName: "frame38"),
+                      UIImage(imageLiteralResourceName: "frame57"),
+                      UIImage(imageLiteralResourceName: "frame73"),
+                      UIImage(imageLiteralResourceName: "frame76"),
+                      UIImage(imageLiteralResourceName: "frame95"),
+                      UIImage(imageLiteralResourceName: "frame99"),
+                      UIImage(imageLiteralResourceName: "frame114"),
+                      UIImage(imageLiteralResourceName: "frame133")]
+    
+    var currentTestImages: [CGImage]?
+    
+    func nextImage() -> CGImage? {
+        let nextImage = self.currentTestImages?.first
+        self.currentTestImages = self.currentTestImages?.dropFirst().map { $0 }
+        return nextImage
+    }
+    
     func scanCard() -> String { return "New Scan Card" }
     func positionCard() -> String { return "New Position Card" }
     func backButton() -> String { return "New Back" }
@@ -114,5 +134,28 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource {
         super.didReceiveMemoryWarning()
     }
 
+    @IBAction func customVideoPress() {
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
+        
+        let cgImages = self.testImages.compactMap { $0.cgImage }
+        
+        // pull the images from the center, use the full width but keep the
+        // aspect ratio consistent with what the model is expecting
+        self.currentTestImages = cgImages.compactMap { image in
+            let width = CGFloat(image.width)
+            let height = 302.0 * width / 480.0
+            let x = CGFloat(0)
+            let y = CGFloat(image.height) * 0.5 - height * 0.5
+            
+            return image.cropping(to: CGRect(x: x, y: y, width: width, height: height))
+        }
+        
+        vc.testingImageDataSource = self
+        vc.showDebugImageView = true
+        self.present(vc, animated: true)
+    }
 }
 

@@ -24,10 +24,12 @@ class VideoFeed {
             break
             
         case .notDetermined:
+            self.sessionQueue.suspend()
             AVCaptureDevice.requestAccess(for: .video, completionHandler: { granted in
                 if !granted {
                     self.setupResult = .notAuthorized
                 }
+                self.sessionQueue.resume()
             })
             
         default:
