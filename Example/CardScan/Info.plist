@@ -36,6 +36,31 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NSAppTransportSecurity</key>
+        <dict>
+                <key>NSExceptionDomains</key>
+                <dict>
+                        <key>localhost</key>
+                        <dict>
+                                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                                <true/>
+                                <key>NSExceptionMinimumTLSVersion</key>
+                                <string>TLSv1.2</string>
+                                <key>NSExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                                <key>NSIncludesSubdomains</key>
+                                <true/>
+                                <key>NSRequiresCertificateTransparency</key>
+                                <false/>
+                                <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+                                <false/>
+                                <key>NSThirdPartyExceptionMinimumTLSVersion</key>
+                                <string>TLSv1.2</string>
+                                <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                        </dict>
+                </dict>
+        </dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

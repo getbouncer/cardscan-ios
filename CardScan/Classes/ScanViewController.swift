@@ -131,7 +131,11 @@ import Vision
         return viewController
     }
     
-    @objc static public func configure() {
+    @objc static public func configure(apiKey: String? = nil) {
+        if let apiKey = apiKey {
+            Api.apiKey = apiKey
+        }
+        
         self.machineLearningQueue.async {
             if #available(iOS 11.0, *) {
                 registerAppNotifications()
@@ -197,6 +201,9 @@ import Vision
         // user with a way to get out.
         self.ocr.userCancelled()
         self.calledDelegate = true
+        
+        // fire and forget
+        Api.fraudCheck(scanStats: self.ocr.scanStats, completion: {_, _ in })
         self.scanDelegate?.userDidCancel(self)
     }
     
@@ -205,6 +212,9 @@ import Vision
         // delegate function even if it's already been called
         self.ocr.userCancelled()
         self.calledDelegate = true
+        
+        // fire and forget
+        Api.fraudCheck(scanStats: self.ocr.scanStats, completion: {_, _ in })
         self.scanDelegate?.userDidSkip(self)
     }
 
@@ -212,9 +222,12 @@ import Vision
         if !self.calledDelegate {
             self.ocr.userCancelled()
             self.calledDelegate = true
+            
+            // fire and forget
+            Api.fraudCheck(scanStats: self.ocr.scanStats, completion: {_, _ in })
         }
-
-        if calledDelegate {
+        
+        if callDelegate {
             self.scanDelegate?.userDidCancel(self)
         }
     }
@@ -536,6 +549,9 @@ import Vision
                 card.expiryMonth = expiry.map { String($0.month) }
                 card.expiryYear = expiry.map { String($0.year) }
                 card.image = self.scannedCardImage
+                
+                // fire and forget
+                Api.fraudCheck(scanStats: self.ocr.scanStats, completion: {_, _ in })
                 self.scanDelegate?.userDidScanCard(self, creditCard: card)
             }
         }
