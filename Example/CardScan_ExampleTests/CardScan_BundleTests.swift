@@ -1,16 +1,14 @@
 //
-//  BundleUrlValidator.swift
+//  CardScan_BundleTests.swift
 //  CardScan_ExampleTests
 //
-//  Created by Jaime Park on 6/28/19.
+//  Created by Jaime Park on 7/9/19.
 //  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
 import XCTest
 @testable import CardScan
-
-class BundleUrlValidator: XCTestCase {
-
+class CardScan_BundleTests: XCTestCase {
     override func setUp() {
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
         
@@ -18,11 +16,11 @@ class BundleUrlValidator: XCTestCase {
         
         let _ = try? FileManager.default.removeItem(at: detectModelc)
     }
-
+    
     override func tearDown() {
         setUp()
     }
-
+    
     func testForResource() {
         var findFourURl = BundleURL.compiledModel(forResource: "feefifofum", withExtension: "bin", modelName: "FindFour.mlmodelc")
         XCTAssert(findFourURl == nil)
@@ -30,7 +28,7 @@ class BundleUrlValidator: XCTestCase {
         findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "bin", modelName: "FindFour.mlmodelc")
         XCTAssert(findFourURl != nil)
     }
-
+    
     func testWithExtension() {
         var findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "fee", modelName: "FindFour.mlmodelc")
         XCTAssert(findFourURl == nil)
@@ -46,8 +44,4 @@ class BundleUrlValidator: XCTestCase {
         findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "bin", modelName: "FindFour.mlmodelc")
         XCTAssert(findFourURl != nil)
     }
-    
-    
-    
-
 }
