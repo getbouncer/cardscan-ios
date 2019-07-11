@@ -101,14 +101,16 @@ public struct Api {
                 let deviceCheck = data?.base64EncodedString() ?? ""
                 
                 ApiCall(endpoint: "/fraud_check",
-                        parameters: ["vendor_id": vendorId,
+                        parameters: ["platform": "ios",
+                                     "vendor_id": vendorId,
                                      "device_check": deviceCheck,
                                      "scan_stats": scanStats.toDictionaryForFraudCheck()],
                         completion: completion)
             }
         } else {
             ApiCall(endpoint: "/fraud_check",
-                    parameters: ["vendor_id": vendorId,
+                    parameters: ["platform": "ios",
+                                 "vendor_id": vendorId,
                                  "device_check": "",
                                  "scan_stats": scanStats.toDictionaryForFraudCheck()],
                     completion: completion)
