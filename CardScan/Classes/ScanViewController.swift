@@ -103,6 +103,10 @@ import UIKit
         return viewController
     }
     
+    @objc static public func testingApi(endpoint: String, parameters: [String: Any]) {
+        Api.apiCallWithDeviceCheck(endpoint: endpoint, parameters: parameters, completion: { _, _ in })
+    }
+    
     @IBAction func backTextPress() {
         self.backButtonPress("")
     }
