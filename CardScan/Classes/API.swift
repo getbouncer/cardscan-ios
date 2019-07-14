@@ -111,6 +111,7 @@ public struct Api {
         
         let version = ProcessInfo().operatingSystemVersion
         let osVersion = "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"].flatMap { $0 as? String } ?? "0000"
         
         // For deviceIds we use the vendorId because it gives end-users the ability
         // to change deviceIds by uninstalling the app. This is Apple's preferred
@@ -124,7 +125,7 @@ public struct Api {
         apiParameters["vendor_id"] = vendorId
         apiParameters["os"] = osVersion
         apiParameters["device_type"] = deviceType()
-        
+        apiParameters["build"] = build
         
         if #available(iOS 11.0, *) {
             DCDevice.current.generateToken { data, _ in
