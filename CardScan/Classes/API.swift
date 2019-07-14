@@ -11,7 +11,7 @@ import DeviceCheck
 
 public struct Api {
     
-    struct ApiError: Error {
+    public struct ApiError: Error {
         var message: String
         var code: String
         
@@ -26,7 +26,7 @@ public struct Api {
     public static var lastFraudCheckSuccess: Date?
     
     // XXX FIXME we should move to a more traditional error handling method
-    typealias ApiCompletion = ((_ response: [String: Any]?, _ error: ApiError?) -> Void)
+    public typealias ApiCompletion = ((_ response: [String: Any]?, _ error: ApiError?) -> Void)
     
     static var baseUrl: String? = "https://api.getbouncer.com"
     static let defaultError = ApiError(response: [:])
@@ -42,7 +42,7 @@ public struct Api {
         return config
     }
     
-    static func ApiCall(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
+    static func apiCall(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         guard let baseUrl = self.baseUrl else {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
@@ -84,11 +84,33 @@ public struct Api {
         }.resume()
     }
     
-    static func fraudCheck(scanStats: ScanStats, completion: @escaping ApiCompletion) {
+    static func deviceType() -> String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        var deviceType = ""
+        for char in Mirror(reflecting: systemInfo.machine).children {
+            guard let charDigit = (char.value as? Int8) else {
+                return ""
+            }
+            
+            if charDigit == 0 {
+                break
+            }
+            
+            deviceType += String(UnicodeScalar(UInt8(charDigit)))
+        }
+        
+        return deviceType
+    }
+    
+    static public func apiCallWithDeviceCheck(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         if baseUrl == nil || apiKey == nil {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
         }
+        
+        let version = ProcessInfo().operatingSystemVersion
+        let osVersion = "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
         
         // For deviceIds we use the vendorId because it gives end-users the ability
         // to change deviceIds by uninstalling the app. This is Apple's preferred
@@ -96,25 +118,38 @@ public struct Api {
         //
         // https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor
         let vendorId = UIDevice.current.identifierForVendor?.uuidString ?? ""
+        
+        var apiParameters = parameters
+        apiParameters["platform"] = "ios"
+        apiParameters["vendor_id"] = vendorId
+        apiParameters["os"] = osVersion
+        apiParameters["device_type"] = deviceType()
+        
+        
         if #available(iOS 11.0, *) {
             DCDevice.current.generateToken { data, _ in
-                let deviceCheck = data?.base64EncodedString() ?? ""
-                
-                ApiCall(endpoint: "/fraud_check",
-                        parameters: ["platform": "ios",
-                                     "vendor_id": vendorId,
-                                     "device_check": deviceCheck,
-                                     "scan_stats": scanStats.toDictionaryForFraudCheck()],
+                apiParameters["device_check"] = data?.base64EncodedString() ?? ""
+                apiCall(endpoint: endpoint,
+                        parameters: apiParameters,
                         completion: completion)
             }
         } else {
-            ApiCall(endpoint: "/fraud_check",
-                    parameters: ["platform": "ios",
-                                 "vendor_id": vendorId,
-                                 "device_check": "",
-                                 "scan_stats": scanStats.toDictionaryForFraudCheck()],
+            apiParameters["device_check"] = ""
+            apiCall(endpoint: endpoint,
+                    parameters: apiParameters,
                     completion: completion)
         }
+    }
+    
+    static func fraudCheck(scanStats: ScanStats, completion: @escaping ApiCompletion) {
+        if baseUrl == nil || apiKey == nil {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+        
+        self.apiCallWithDeviceCheck(endpoint: "/fraud_check",
+                                    parameters: ["scan_stats": scanStats.toDictionaryForFraudCheck()],
+                                    completion: completion)
     }
 }
 
