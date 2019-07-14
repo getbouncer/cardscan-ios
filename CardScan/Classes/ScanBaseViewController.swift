@@ -239,38 +239,41 @@ import Vision
         }
     }
     
+    
+    /* We're not ready for bardcodes again yet
     @available(iOS 11.0, *)
     func handleBarcodeResults(_ results: [Any]) {
         for result in results {
             // Cast the result to a barcode-observation
             
             if let barcode = result as? VNBarcodeObservation, barcode.symbology == .QR {
+                
                 if let payload = barcode.payloadStringValue {
                     DispatchQueue.main.async {
                         // XXX FIXME get QR Codes working again
-                        /*
                         if self.calledDelegate {
                             return
                         }
                         self.calledDelegate = true
                         self.scanDelegate?.userDidScanQrCode.map { $0(self, payload) }
-                         */
+
                     }
                 }
             }
         }
-    }
+    }*/
     
     @available(iOS 11.0, *)
     func blockingQrModel(pixelBuffer: CVPixelBuffer) {
         let semaphore = DispatchSemaphore(value: 0)
         DispatchQueue.global(qos: .userInteractive).async {
             let barcodeRequest = VNDetectBarcodesRequest(completionHandler: { request, error in
-                guard let results = request.results else {
+                guard let _ = request.results else {
                     semaphore.signal()
                     return
                 }
-                self.handleBarcodeResults(results)
+                // We took out QR code scanning for now
+                //self.handleBarcodeResults(results)
                 semaphore.signal()
             })
 
