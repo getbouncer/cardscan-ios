@@ -1,8 +1,39 @@
 import UIKit
 
 public class CornerView: UIView {
+    var innerFrame: CGRect
+
+    public required init?(coder aDecoder: NSCoder) {
+        self.innerFrame = .zero
+        super.init(coder: aDecoder)
+        setUpView()
+    }
     
-    func drawCorners(_ regionFrame: CGRect){
+    public override init(frame: CGRect) {
+        self.innerFrame = frame
+        super.init(frame: frame)
+        setUpView()
+    }
+    
+    public convenience init(frame: CGRect, borderWidth: CGFloat) {
+        let cornerRectFrame =  CGRect(x: frame.origin.x - borderWidth,
+                                      y: frame.origin.y - borderWidth,
+                                      width: frame.width + (2.0 * borderWidth),
+                                      height: frame.height + (2.0 * borderWidth))
+        self.init(frame: cornerRectFrame)
+        self.innerFrame = frame
+        self.layer.borderWidth = borderWidth
+        self.backgroundColor = UIColor.clear
+
+    }
+    
+    private func setUpView(){
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func drawCorners(cornerColor: UIColor){
+        self.layer.borderColor = cornerColor.cgColor
+        
         let maskShapeLayer = CAShapeLayer()
         let maskPath = CGMutablePath()
         
@@ -12,7 +43,7 @@ public class CornerView: UIView {
         let boundHeight = self.bounds.height
         
         let cornerMultiplier = CGFloat(0.1)
-        let cornerLength = regionFrame.width * cornerMultiplier
+        let cornerLength = self.innerFrame.width * cornerMultiplier
         
         //top left corner
         maskPath.move(to: self.bounds.origin)
