@@ -116,8 +116,8 @@ import Vision
     func maskPreviewView(viewToMask: UIView, maskRect: CGRect) {
         let maskLayer = CAShapeLayer()
         let path = CGMutablePath()
-        path.addRect(viewToMask.bounds)
         let roundedRectpath = UIBezierPath.init(roundedRect: maskRect, cornerRadius: regionCornerRadius).cgPath
+        path.addRect(viewToMask.bounds)
         path.addPath(roundedRectpath)
         maskLayer.path = path
         #if swift(>=4.2)
@@ -134,41 +134,27 @@ import Vision
             print("could not get frame")
             return
         }
+        
         self.regionOfInterestLabelFrame = roiFrame
         
-        let regionOfInterestCenterY = roiFrame.origin.y + roiFrame.size.height / 2.0
-        
-        let x = roiFrame.origin.x
-        let width = self.view.frame.width - (2.0 * x)
-        let height = width * 226.0 / 359.0
-        let y = regionOfInterestCenterY - height / 2.0
-        
-        let frame = CGRect(x: x, y: y, width: width, height: height)
+        guard let frame = self.regionOfInterestLabelFrame else {
+            print("no ROI frame found")
+            return
+        }
+
         guard let blurView = self.blurView else {
             print("no blur view")
             return
         }
+        
         self.maskPreviewView(viewToMask: blurView, maskRect: frame)
         
-        let cornerBorderWidth = CGFloat(5.0)
-        let cornerRect = CGRect(x: frame.origin.x - cornerBorderWidth,
-                                y: frame.origin.y - cornerBorderWidth,
-                                width: frame.width + (2.0 * cornerBorderWidth),
-                                height: frame.height + (2.0 * cornerBorderWidth))
-        
-        let cornersView = CornerView(frame: cornerRect)
-        cornersView.layer.borderWidth = cornerBorderWidth
-        cornersView.layer.cornerRadius = self.regionCornerRadius + cornerBorderWidth
+        let borderWidth = CGFloat(5.0)
+        let cornersView = CornerView(frame: frame, borderWidth: borderWidth)
+        cornersView.layer.cornerRadius = self.regionCornerRadius + borderWidth
         cornersView.layer.masksToBounds = true
-        cornersView.backgroundColor = UIColor.clear
-        cornersView.layer.borderColor = UIColor.green.cgColor
-        
-        guard let cornerFrame = self.regionOfInterestLabel?.layer.frame else {
-            print("could not get layer frame")
-            return
-        }
-        
-        cornersView.drawCorners(cornerFrame)
+
+        cornersView.drawCorners(cornerColor: UIColor.green)
         self.previewView?.addSubview(cornersView)
     }
     
