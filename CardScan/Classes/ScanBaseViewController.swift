@@ -8,7 +8,7 @@ import Vision
     @objc func nextImage() -> CGImage?
 }
 
-@objc public class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     @objc public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
@@ -37,8 +37,8 @@ import Vision
     private var ocr = Ocr()
     
     // Child classes should override these two functions
-    @objc public func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
-    @objc public func showCardNumber(_ number: String, expiry: String?) { }
+    @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
+    @objc open func showCardNumber(_ number: String, expiry: String?) { }
     
     func toggleTorch() {
         self.ocr.scanStats.torchOn = !self.ocr.scanStats.torchOn
@@ -176,19 +176,19 @@ import Vision
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
     }
     
-    override public var shouldAutorotate: Bool {
+    override open var shouldAutorotate: Bool {
         return false
     }
     
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
     
-    override public var preferredStatusBarStyle: UIStatusBarStyle {
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    override public func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.videoFeed.setup(captureDelegate: self) { success in
@@ -202,7 +202,7 @@ import Vision
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    override public func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         self.videoFeed.willDisappear()
         
         super.viewWillDisappear(animated)
