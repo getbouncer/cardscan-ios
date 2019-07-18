@@ -196,7 +196,7 @@ import UIKit
         
         let debugImageView = self.showDebugImageView ? self.debugImageView : nil
         self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, debugImageView: debugImageView)
-        self.videoFeed.requestCameraAccess()
+        self.startCameraPreview()
     }
     
     override public func showCardNumber(_ number: String, expiry: String?) {

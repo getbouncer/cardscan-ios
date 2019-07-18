@@ -158,6 +158,12 @@ import Vision
         self.previewView?.addSubview(cornersView)
     }
     
+    // you must call setupOnViewDidLoad before calling this function and you have to call
+    // this function to get the camera going
+    public func startCameraPreview() {
+        self.videoFeed.requestCameraAccess()
+    }
+    
     public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: UIView, previewView: PreviewView, debugImageView: UIImageView?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
