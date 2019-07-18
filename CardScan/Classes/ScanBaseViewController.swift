@@ -171,9 +171,9 @@ import Vision
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
         self.ocr.errorCorrectionDuration = self.errorCorrectionDuration
-        
-        self.videoFeed.requestCameraAccess()
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
+        
+        self.videoFeed.pauseSession()
     }
     
     override open var shouldAutorotate: Bool {

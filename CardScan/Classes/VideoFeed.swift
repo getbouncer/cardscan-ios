@@ -17,14 +17,17 @@ class VideoFeed {
     
     var torch: Torch?
     
+    func pauseSession() {
+        self.sessionQueue.suspend()
+    }
+    
     func requestCameraAccess() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            // The user has previously granted access to the camera.
+            self.sessionQueue.resume()
             break
             
         case .notDetermined:
-            self.sessionQueue.suspend()
             AVCaptureDevice.requestAccess(for: .video, completionHandler: { granted in
                 if !granted {
                     self.setupResult = .notAuthorized
