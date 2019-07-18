@@ -158,6 +158,12 @@ import Vision
         self.previewView?.addSubview(cornersView)
     }
     
+    // you must call setupOnViewDidLoad before calling this function and you have to call
+    // this function to get the camera going
+    public func startCameraPreview() {
+        self.videoFeed.requestCameraAccess()
+    }
+    
     public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: UIView, previewView: PreviewView, debugImageView: UIImageView?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
@@ -171,9 +177,9 @@ import Vision
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
         self.ocr.errorCorrectionDuration = self.errorCorrectionDuration
-        
-        self.videoFeed.requestCameraAccess()
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
+        
+        self.videoFeed.pauseSession()
     }
     
     override open var shouldAutorotate: Bool {
