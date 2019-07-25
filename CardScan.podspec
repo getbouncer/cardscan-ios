@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'CardScan'
-  s.version          = '1.0.5000'
+  s.version          = '1.0.5001'
   s.summary          = 'Scan credit cards'
   s.description      = <<-DESC
 CardScan is a library for scanning credit cards.
@@ -10,7 +10,8 @@ CardScan is a library for scanning credit cards.
   s.license          = { :type => 'BSD', :file => 'LICENSE' }
   s.author           = { 'Sam King' => 'kingst@gmail.com' }
   s.source           = { :git => 'https://github.com/getbouncer/cardscan-ios.git', :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/stk'
+  # lint warning, who knows
+  #s.social_media_url = 'https://twitter.com/stk'
   s.default_subspec = 'Core'
   s.ios.deployment_target = '10.0'
   s.swift_version = '4.2'
