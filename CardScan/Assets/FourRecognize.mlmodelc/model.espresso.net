@@ -40,7 +40,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv1_relu_output_relu",
-      "blob_weights" : 3,
       "K" : 3,
       "blob_biases" : 1,
       "stride_x" : 2,
@@ -51,7 +50,7 @@
       "pad_t" : 0,
       "stride_y" : 2,
       "has_biases" : 1,
-      "C" : 8,
+      "C" : 12,
       "bottom" : "conv1_pad_output",
       "weights" : {
 
@@ -60,7 +59,8 @@
       "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 3
     },
     {
       "alpha" : -1,
@@ -107,16 +107,15 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_1_relu_output_relu",
-      "blob_weights" : 7,
-      "K" : 8,
+      "K" : 12,
       "blob_biases" : 5,
       "name" : "conv_dw_1",
       "has_batch_norm" : 0,
       "type" : "convolution",
-      "n_groups" : 8,
+      "n_groups" : 12,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 8,
+      "C" : 12,
       "bottom" : "conv1_relu_output",
       "weights" : {
 
@@ -125,7 +124,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 7
     },
     {
       "alpha" : -1,
@@ -172,8 +172,7 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_1_relu_output_relu",
-      "blob_weights" : 11,
-      "K" : 8,
+      "K" : 12,
       "blob_biases" : 9,
       "name" : "conv_pw_1",
       "has_batch_norm" : 0,
@@ -181,7 +180,7 @@
       "n_groups" : 1,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 32,
+      "C" : 51,
       "bottom" : "conv_dw_1_relu_output",
       "weights" : {
 
@@ -190,7 +189,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 11
     },
     {
       "alpha" : -1,
@@ -237,16 +237,15 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_7_relu_output_relu",
-      "blob_weights" : 15,
-      "K" : 32,
+      "K" : 51,
       "blob_biases" : 13,
       "name" : "conv_dw_7",
       "has_batch_norm" : 0,
       "type" : "convolution",
-      "n_groups" : 32,
+      "n_groups" : 51,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 32,
+      "C" : 51,
       "bottom" : "conv_pw_1_relu_output",
       "weights" : {
 
@@ -255,7 +254,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 15
     },
     {
       "alpha" : -1,
@@ -302,8 +302,7 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_7_relu_output_relu",
-      "blob_weights" : 19,
-      "K" : 32,
+      "K" : 51,
       "blob_biases" : 17,
       "name" : "conv_pw_7",
       "has_batch_norm" : 0,
@@ -311,7 +310,7 @@
       "n_groups" : 1,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_dw_7_relu_output",
       "weights" : {
 
@@ -320,7 +319,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 19
     },
     {
       "alpha" : -1,
@@ -367,16 +367,15 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_8_relu_output_relu",
-      "blob_weights" : 23,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 21,
       "name" : "conv_dw_8",
       "has_batch_norm" : 0,
       "type" : "convolution",
-      "n_groups" : 128,
+      "n_groups" : 204,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_pw_7_relu_output",
       "weights" : {
 
@@ -385,7 +384,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 23
     },
     {
       "alpha" : -1,
@@ -432,8 +432,7 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_8_relu_output_relu",
-      "blob_weights" : 27,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 25,
       "name" : "conv_pw_8",
       "has_batch_norm" : 0,
@@ -441,7 +440,7 @@
       "n_groups" : 1,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_dw_8_relu_output",
       "weights" : {
 
@@ -450,7 +449,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 27
     },
     {
       "alpha" : -1,
@@ -497,16 +497,15 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_9_relu_output_relu",
-      "blob_weights" : 31,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 29,
       "name" : "conv_dw_9",
       "has_batch_norm" : 0,
       "type" : "convolution",
-      "n_groups" : 128,
+      "n_groups" : 204,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_pw_8_relu_output",
       "weights" : {
 
@@ -515,7 +514,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 31
     },
     {
       "alpha" : -1,
@@ -562,8 +562,7 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_9_relu_output_relu",
-      "blob_weights" : 35,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 33,
       "name" : "conv_pw_9",
       "has_batch_norm" : 0,
@@ -571,7 +570,7 @@
       "n_groups" : 1,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_dw_9_relu_output",
       "weights" : {
 
@@ -580,7 +579,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 35
     },
     {
       "alpha" : -1,
@@ -627,16 +627,15 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_10_relu_output_relu",
-      "blob_weights" : 39,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 37,
       "name" : "conv_dw_10",
       "has_batch_norm" : 0,
       "type" : "convolution",
-      "n_groups" : 128,
+      "n_groups" : 204,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_pw_9_relu_output",
       "weights" : {
 
@@ -645,7 +644,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 39
     },
     {
       "alpha" : -1,
@@ -692,8 +692,7 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_10_relu_output_relu",
-      "blob_weights" : 43,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 41,
       "name" : "conv_pw_10",
       "has_batch_norm" : 0,
@@ -701,7 +700,7 @@
       "n_groups" : 1,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_dw_10_relu_output",
       "weights" : {
 
@@ -710,7 +709,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 43
     },
     {
       "alpha" : -1,
@@ -757,16 +757,15 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_11_relu_output_relu",
-      "blob_weights" : 47,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 45,
       "name" : "conv_dw_11",
       "has_batch_norm" : 0,
       "type" : "convolution",
-      "n_groups" : 128,
+      "n_groups" : 204,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_pw_10_relu_output",
       "weights" : {
 
@@ -775,7 +774,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 47
     },
     {
       "alpha" : -1,
@@ -822,8 +822,7 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_11_relu_output_relu",
-      "blob_weights" : 51,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 49,
       "name" : "conv_pw_11",
       "has_batch_norm" : 0,
@@ -831,7 +830,7 @@
       "n_groups" : 1,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_dw_11_relu_output",
       "weights" : {
 
@@ -840,7 +839,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 51
     },
     {
       "alpha" : -1,
@@ -903,18 +903,17 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_12_relu_output_relu",
-      "blob_weights" : 55,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 53,
       "stride_x" : 2,
       "name" : "conv_dw_12",
       "has_batch_norm" : 0,
       "type" : "convolution",
-      "n_groups" : 128,
+      "n_groups" : 204,
       "pad_t" : 0,
       "stride_y" : 2,
       "has_biases" : 1,
-      "C" : 128,
+      "C" : 204,
       "bottom" : "conv_pad_12_output",
       "weights" : {
 
@@ -923,7 +922,8 @@
       "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 55
     },
     {
       "alpha" : -1,
@@ -970,8 +970,7 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_12_relu_output_relu",
-      "blob_weights" : 59,
-      "K" : 128,
+      "K" : 204,
       "blob_biases" : 57,
       "name" : "conv_pw_12",
       "has_batch_norm" : 0,
@@ -979,7 +978,7 @@
       "n_groups" : 1,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 256,
+      "C" : 409,
       "bottom" : "conv_dw_12_relu_output",
       "weights" : {
 
@@ -988,7 +987,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 59
     },
     {
       "alpha" : -1,
@@ -1035,16 +1035,15 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_13_relu_output_relu",
-      "blob_weights" : 63,
-      "K" : 256,
+      "K" : 409,
       "blob_biases" : 61,
       "name" : "conv_dw_13",
       "has_batch_norm" : 0,
       "type" : "convolution",
-      "n_groups" : 256,
+      "n_groups" : 409,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 256,
+      "C" : 409,
       "bottom" : "conv_pw_12_relu_output",
       "weights" : {
 
@@ -1053,7 +1052,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 63
     },
     {
       "alpha" : -1,
@@ -1100,8 +1100,7 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_13_relu_output_relu",
-      "blob_weights" : 67,
-      "K" : 256,
+      "K" : 409,
       "blob_biases" : 65,
       "name" : "conv_pw_13",
       "has_batch_norm" : 0,
@@ -1109,7 +1108,7 @@
       "n_groups" : 1,
       "pad_t" : 0,
       "has_biases" : 1,
-      "C" : 256,
+      "C" : 409,
       "bottom" : "conv_dw_13_relu_output",
       "weights" : {
 
@@ -1118,7 +1117,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 67
     },
     {
       "alpha" : -1,
@@ -1165,8 +1165,7 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "resize1_output",
-      "blob_weights" : 71,
-      "K" : 256,
+      "K" : 409,
       "blob_biases" : 69,
       "name" : "resize1",
       "has_batch_norm" : 0,
@@ -1183,7 +1182,8 @@
       "Nx" : 2,
       "pad_value" : 0,
       "Ny" : 2,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 71
     },
     {
       "pad_r" : 0,
@@ -1193,7 +1193,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "resize2_output",
-      "blob_weights" : 75,
       "K" : 64,
       "blob_biases" : 73,
       "name" : "resize2",
@@ -1211,7 +1210,8 @@
       "Nx" : 2,
       "pad_value" : 0,
       "Ny" : 2,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 75
     },
     {
       "pad_r" : 0,
@@ -1221,7 +1221,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "resize3_output",
-      "blob_weights" : 79,
       "K" : 64,
       "blob_biases" : 77,
       "name" : "resize3",
@@ -1239,7 +1238,8 @@
       "Nx" : 2,
       "pad_value" : 0,
       "Ny" : 2,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 79
     },
     {
       "pad_r" : 0,
@@ -1249,7 +1249,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "resize4_output",
-      "blob_weights" : 83,
       "K" : 64,
       "blob_biases" : 81,
       "name" : "resize4",
@@ -1267,7 +1266,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 6,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 83
     },
     {
       "pad_r" : 0,
@@ -1277,7 +1277,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_preds_output",
-      "blob_weights" : 87,
       "K" : 64,
       "blob_biases" : 85,
       "name" : "conv_preds",
@@ -1295,7 +1294,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 87
     },
     {
       "C" : 2,

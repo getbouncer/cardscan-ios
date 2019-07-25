@@ -8,7 +8,7 @@ import Foundation
  */
 
 // For the detection output, know if we have digits and our confidence
-@available(iOS 11.0, *)
+@available(iOS 11.2, *)
 extension FindFourOutput {
     func hasDigits(row: Int, col: Int) -> Bool {
         return digitConfidence(row: row, col: col) >= 0.5
@@ -30,7 +30,7 @@ extension FindFourOutput {
 }
 
 // traditional argmax and confidence for recognition classifier
-@available(iOS 11.0, *)
+@available(iOS 11.2, *)
 extension FourRecognizeOutput {
     func argMax(row: Int, col: Int) -> Int {
         return self.argAndValueMax(row: row, col: col).0

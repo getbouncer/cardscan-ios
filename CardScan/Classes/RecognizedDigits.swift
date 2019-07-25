@@ -1,6 +1,6 @@
 import Foundation
 
-@available(iOS 11.0, *)
+@available(iOS 11.2, *)
 struct RecognizedDigits {
     static let kImageWidth = 80
     static let kImageHeight = 36
