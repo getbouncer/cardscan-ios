@@ -76,11 +76,13 @@ struct RecognizedDigits {
         return (digits.filter { $0 != RecognizedDigits.kBackgroundClass }.map { String($0) }.joined(), digits)
     }
     
-    func four() -> String {
+    func four() -> (String, Bool) {
         var (result, digits) = self.toString()
         
+        let detectedDigits = result.count > 0
+        
         if result.count < 4 {
-            return ""
+            return ("", detectedDigits)
         }
         
         // since we know that we have too many digits, trim from the outer most digits. Since we
@@ -123,10 +125,10 @@ struct RecognizedDigits {
         let maxDelta = deltas.max() ?? 0
         
         if maxDelta > (minDelta+1) {
-            return ""
+            return ("", detectedDigits)
         }
         
-        return result
+        return (result, detectedDigits)
     }
     
 }

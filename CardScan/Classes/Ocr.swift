@@ -90,6 +90,13 @@ public class Ocr {
         self.scanStats.lastFlatBoxes = findFour.lastDetectedBoxes
         self.scanStats.expiryBoxes = findFour.expiryBoxes
         
+        if findFour.cardDetected ?? false {
+            print("Card detected")
+            self.scanStats.cardsDetected += 1
+        } else {
+            print("No card detected")
+        }
+        
         if let number = number {
             self.scanStats.algorithm = findFour.algorithm
             self.updateStats(model: findFour.modelString, boxes: findFour.predictedBoxes, image: rawImage, number: number, cvvBoxes: findFour.cvvBoxes)

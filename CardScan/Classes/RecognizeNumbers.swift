@@ -25,23 +25,35 @@ struct RecognizeNumbers {
     }
     
     @available(iOS 11.2, *)
-    mutating func number(lines: [[DetectedBox]]) -> (String?, [CGRect]?) {
+    mutating func number(lines: [[DetectedBox]]) -> (String?, [CGRect]?, Bool) {
         let maxRow = lines.map { $0.map { $0.row }}.flatMap { $0 }.max() ?? 0
         let maxCol = lines.map { $0.map { $0.col }}.flatMap { $0 }.max() ?? 0
         
+        var detectedCard = false
+        
         if maxRow >= self.numRows || maxCol >= self.numCols {
             print("card grid size mismatch, bailing")
-            return (nil, nil)
+            return (nil, nil, detectedCard)
         }
         
         for line in lines {
             var candidateNumber = ""
+            var detectedDigitsCount = 0
             
             for word in line {
                 guard let recognized = self.cachedDigits(box: word) else {
-                    return (nil, nil)
+                    return (nil, nil, false)
                 }
-                candidateNumber += recognized.four()
+                
+                let (number, detectedDigits) = recognized.four()
+                candidateNumber += number
+                if detectedDigits {
+                    detectedDigitsCount += 1
+                }
+            }
+            
+            if (detectedDigitsCount >= 4) {
+                detectedCard = true
             }
             
             if candidateNumber.count == 16  && CreditCardUtils.luhnCheck(candidateNumber) {
@@ -50,7 +62,7 @@ struct RecognizeNumbers {
             }
         }
         
-        return (self.number, self.numberBoxes)
+        return (self.number, self.numberBoxes, detectedCard)
     }
     
     @available(iOS 11.2, *)
