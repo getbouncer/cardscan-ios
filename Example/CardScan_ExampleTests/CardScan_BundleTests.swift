@@ -22,26 +22,18 @@ class CardScan_BundleTests: XCTestCase {
     }
     
     func testForResource() {
-        var findFourURl = BundleURL.compiledModel(forResource: "feefifofum", withExtension: "bin", modelName: "FindFour.mlmodelc")
+        var findFourURl = BundleURL.compiledModel(forResource: "feefifofum", withExtension: "bin")
         XCTAssert(findFourURl == nil)
         
-        findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "bin", modelName: "FindFour.mlmodelc")
+        findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "mlmodelc")
         XCTAssert(findFourURl != nil)
     }
     
     func testWithExtension() {
-        var findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "fee", modelName: "FindFour.mlmodelc")
+        var findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "fee")
         XCTAssert(findFourURl == nil)
         
-        findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "bin", modelName: "FindFour.mlmodelc")
-        XCTAssert(findFourURl != nil)
-    }
-    
-    func testModelName() {
-        var findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "bin", modelName: "feefifofum")
-        XCTAssert(findFourURl != nil)
-        
-        findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "bin", modelName: "FindFour.mlmodelc")
+        findFourURl = BundleURL.compiledModel(forResource: "FindFour", withExtension: "mlmodelc")
         XCTAssert(findFourURl != nil)
     }
 }
