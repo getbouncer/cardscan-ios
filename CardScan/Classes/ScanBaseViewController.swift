@@ -51,7 +51,7 @@ import Vision
         }
         
         self.machineLearningQueue.async {
-            if #available(iOS 11.0, *) {
+            if #available(iOS 11.2, *) {
                 registerAppNotifications()
                 Ocr.configure()
             }
@@ -91,7 +91,7 @@ import Vision
     }
     
     @objc static public func isCompatible() -> Bool {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.2, *) {
             return true
         } else {
             return false
@@ -255,7 +255,7 @@ import Vision
         }
     }*/
     
-    @available(iOS 11.0, *)
+    @available(iOS 11.2, *)
     func blockingQrModel(pixelBuffer: CVPixelBuffer) {
         let semaphore = DispatchSemaphore(value: 0)
         DispatchQueue.global(qos: .userInteractive).async {
