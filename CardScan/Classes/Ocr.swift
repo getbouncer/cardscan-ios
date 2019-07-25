@@ -91,10 +91,7 @@ public class Ocr {
         self.scanStats.expiryBoxes = findFour.expiryBoxes
         
         if findFour.cardDetected ?? false {
-            print("Card detected")
             self.scanStats.cardsDetected += 1
-        } else {
-            print("No card detected")
         }
         
         if let number = number {
