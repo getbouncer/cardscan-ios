@@ -1,6 +1,6 @@
 import CoreML
 
-@available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
+@available(macOS 10.13, iOS 11.2, tvOS 11.2, watchOS 4.0, *)
 struct BundleURL{
     static func compiledModel(forResource: String, withExtension: String) -> URL? {
     

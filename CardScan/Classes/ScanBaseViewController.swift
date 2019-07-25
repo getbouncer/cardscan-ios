@@ -315,7 +315,7 @@ import Vision
         return newImage
     }
     
-    @available(iOS 11.0, *)
+    @available(iOS 11.2, *)
     func blockingOcrModel(rawImage: CGImage) {
         let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: rawImage)
         if let number = number {
@@ -379,7 +379,7 @@ import Vision
         // for use in testing
         let image = self.testingImageDataSource?.nextImage() ?? rawImage
         
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.2, *) {
             if self.scanQrCode {
                 self.blockingQrModel(pixelBuffer: pixelBuffer)
             } else {

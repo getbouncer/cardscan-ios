@@ -24,7 +24,7 @@ import Foundation
  of these functions from the same serial queue or thread.
  
  */
-@available(iOS 11.0, *)
+@available(iOS 11.2, *)
 struct FindFourOcr {
     static var recognizeModel: FourRecognize? = nil
     static var detectModel: FindFour? = nil

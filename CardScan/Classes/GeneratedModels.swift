@@ -8,7 +8,7 @@ import CoreML
 
 
 /// Model Prediction Input Type
-@available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
+@available(macOS 10.13.2, iOS 11.2, tvOS 11.2, watchOS 4.2, *)
 class FindFourInput : MLFeatureProvider {
     
     /// input1 as color (kCVPixelFormatType_32BGRA) image buffer, 480 pixels wide by 302 pixels high
@@ -33,7 +33,7 @@ class FindFourInput : MLFeatureProvider {
 }
 
 /// Model Prediction Output Type
-@available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
+@available(macOS 10.13.2, iOS 11.2, tvOS 11.2, watchOS 4.2, *)
 class FindFourOutput : MLFeatureProvider {
     
     /// Source provided by CoreML
@@ -65,7 +65,7 @@ class FindFourOutput : MLFeatureProvider {
 
 
 /// Class for model loading and prediction
-@available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
+@available(macOS 10.13.2, iOS 11.2, tvOS 11.2, watchOS 4.2, *)
 class FindFour {
     var model: MLModel
     
@@ -173,7 +173,7 @@ class FindFour {
 }
 
 /// Model Prediction Input Type
-@available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
+@available(macOS 10.13.2, iOS 11.2, tvOS 11.2, watchOS 4.2, *)
 class FourRecognizeInput : MLFeatureProvider {
     
     /// input1 as color (kCVPixelFormatType_32BGRA) image buffer, 80 pixels wide by 36 pixels high
@@ -198,7 +198,7 @@ class FourRecognizeInput : MLFeatureProvider {
 }
 
 /// Model Prediction Output Type
-@available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
+@available(macOS 10.13.2, iOS 11.2, tvOS 11.2, watchOS 4.2, *)
 class FourRecognizeOutput : MLFeatureProvider {
     
     /// Source provided by CoreML
@@ -230,7 +230,7 @@ class FourRecognizeOutput : MLFeatureProvider {
 
 
 /// Class for model loading and prediction
-@available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
+@available(macOS 10.13.2, iOS 11.2, tvOS 11.2, watchOS 4.2, *)
 class FourRecognize {
     var model: MLModel
     
@@ -336,3 +336,4 @@ class FourRecognize {
         return results
     }
 }
+
