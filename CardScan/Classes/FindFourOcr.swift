@@ -54,6 +54,7 @@ struct FindFourOcr {
     var lastDetectedBoxes: [CGRect] = []
     var expiryBoxes: [CGRect] = []
     var expiry: Expiry?
+    var cardDetected: Bool?
     
     /**
      Run prediction on blank images to warm up the GPU and ML hardware.
@@ -114,11 +115,12 @@ struct FindFourOcr {
     }
     
     mutating func predict(image: UIImage) -> String? {
-        let (number, numberBoxes, allBoxes, expiryBoxes, expiry, algorithm) = self.findFourNumber(image: image)
+        let (number, numberBoxes, allBoxes, expiryBoxes, expiry, algorithm, cardDetected) = self.findFourNumber(image: image)
         self.lastDetectedBoxes = allBoxes ?? []
         self.expiry = expiry
         self.algorithm = algorithm
         self.expiryBoxes = expiryBoxes ?? []
+        self.cardDetected = cardDetected
         if number != nil {
             self.predictedBoxes = numberBoxes ?? []
         }
@@ -147,26 +149,26 @@ struct FindFourOcr {
         return (boxes, expiryBoxes)
     }
     
-    func findFourNumber(image: UIImage) -> (String?, [CGRect]?, [CGRect]?, [CGRect]?, Expiry?, String?) {
+    func findFourNumber(image: UIImage) -> (String?, [CGRect]?, [CGRect]?, [CGRect]?, Expiry?, String?, Bool?) {
         var algorithm: String?
         
         FindFourOcr.initializeModels()
         
         guard let pixelBuffer = image.pixelBuffer(width: kCardWidth, height: kCardHeight) else {
-            return (nil, nil, nil, nil, nil, nil)
+            return (nil, nil, nil, nil, nil, nil, nil)
         }
         
         guard let detectModel = FindFourOcr.detectModel else {
             print("Models not initialized")
-            return (nil, nil, nil, nil, nil, nil)
+            return (nil, nil, nil, nil, nil, nil, nil)
         }
         
         let modelInput = FindFourInput(input1: pixelBuffer)
         guard let prediction = try? detectModel.prediction(input: modelInput) else {
-            return (nil, nil, nil, nil, nil, nil)
+            return (nil, nil, nil, nil, nil, nil, nil)
         }
         guard let cgImage = image.cgImage else {
-            return (nil, nil, nil, nil, nil, nil)
+            return (nil, nil, nil, nil, nil, nil, nil)
         }
         
         let (boxes, expiryBoxes) = self.detectBoxes(prediction: prediction, image: image)
@@ -175,16 +177,21 @@ struct FindFourOcr {
                                                 numCols: kDetectionModelCols)
 
         var lines = postDetectionAlgorithm.horizontalNumbers()
-        var (number, numberBoxes) = recognizeNumbers.number(lines: lines)
+        var (number, numberBoxes, detectedCard) = recognizeNumbers.number(lines: lines)
+        var didDetectCard = detectedCard
         if number == nil {
             let verticalLines = postDetectionAlgorithm.verticalNumbers()
-            (number, numberBoxes) = recognizeNumbers.number(lines: verticalLines)
+            (number, numberBoxes, detectedCard) = recognizeNumbers.number(lines: verticalLines)
+            if detectedCard {
+                didDetectCard = true
+            }
             lines += verticalLines
         } else {
             algorithm = "horizontal"
         }
     
         if number == nil {
+            // XXX FIXME we should add card detection to amex
             let amexLines = postDetectionAlgorithm.amexNumbers()
             (number, numberBoxes) = recognizeNumbers.amexNumber(lines: amexLines)
             lines += amexLines
@@ -209,6 +216,6 @@ struct FindFourOcr {
 
         let expiry = candidateExpiry.first.flatMap { Expiry.from(image: cgImage, within: $0) }
         
-        return (number, numberBoxes, allBoxes, candidateExpiry, expiry, algorithm)
+        return (number, numberBoxes, allBoxes, candidateExpiry, expiry, algorithm, didDetectCard)
     }
 }
