@@ -31,11 +31,9 @@ struct FindFourOcr {
     
     // These should all be `let` but setting as var for testing
     static var findFourResource = "FindFour"
-    static let findFourExtension = "bin"
-    static let findFourModelc = "FindFour.mlmodelc"
+    static let findFourExtension = "mlmodelc"
     static var fourRecognizeResource = "FourRecognize"
-    static let fourRecognizeExtension = "bin"
-    static let fourRecognizeModelc = "FourRecognize.mlmodelc"
+    static let fourRecognizeExtension = "mlmodelc"
     
     let modelString = "findFour"
     var algorithm: String?
@@ -89,7 +87,7 @@ struct FindFourOcr {
     
     static func initializeModels() {
         if FindFourOcr.recognizeModel == nil {
-            guard let fourRecognizeUrl = BundleURL.compiledModel(forResource: fourRecognizeResource, withExtension: fourRecognizeExtension, modelName: fourRecognizeModelc) else {
+            guard let fourRecognizeUrl = BundleURL.compiledModel(forResource: fourRecognizeResource, withExtension: fourRecognizeExtension) else {
                 print("Could not find URL for FourRecognize")
                 return
             }
@@ -102,7 +100,7 @@ struct FindFourOcr {
             FindFourOcr.recognizeModel = recognizeModel
         }
         if FindFourOcr.detectModel == nil {
-            guard let findFourUrl = BundleURL.compiledModel(forResource: findFourResource, withExtension: findFourExtension, modelName: findFourModelc) else {
+            guard let findFourUrl = BundleURL.compiledModel(forResource: findFourResource, withExtension: findFourExtension) else {
                 print("Could not find URL for FindFour")
                 return
             }
