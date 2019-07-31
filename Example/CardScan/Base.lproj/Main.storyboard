@@ -193,6 +193,12 @@
                                     <constraint firstAttribute="height" constant="46" id="oBS-bY-iSC"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuH-z7-S5E">
+                                <rect key="frame" x="16" y="466" width="343" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -200,13 +206,16 @@
                             <constraint firstItem="ci9-Th-M77" firstAttribute="trailing" secondItem="w7i-ie-yVr" secondAttribute="trailingMargin" id="3jq-Jm-Zrg"/>
                             <constraint firstItem="aU5-W8-fum" firstAttribute="top" secondItem="Dpc-u0-9nd" secondAttribute="bottom" constant="8" id="OfT-62-U7S"/>
                             <constraint firstItem="7Cr-oD-9K4" firstAttribute="leading" secondItem="w7i-ie-yVr" secondAttribute="leadingMargin" id="R7L-gg-VxX"/>
+                            <constraint firstItem="wuH-z7-S5E" firstAttribute="trailing" secondItem="w7i-ie-yVr" secondAttribute="trailingMargin" id="TRc-6G-Rdn"/>
                             <constraint firstItem="Dpc-u0-9nd" firstAttribute="top" secondItem="hGU-AQ-XEE" secondAttribute="bottom" constant="8" id="UiL-ZP-vDM"/>
                             <constraint firstAttribute="trailing" secondItem="hGU-AQ-XEE" secondAttribute="trailing" constant="8" id="a89-ZR-khs"/>
+                            <constraint firstItem="wuH-z7-S5E" firstAttribute="top" secondItem="7Cr-oD-9K4" secondAttribute="bottom" constant="8" id="ahr-1l-vcq"/>
                             <constraint firstItem="ci9-Th-M77" firstAttribute="leading" secondItem="w7i-ie-yVr" secondAttribute="leadingMargin" id="atz-7W-UZe"/>
                             <constraint firstItem="7Cr-oD-9K4" firstAttribute="top" secondItem="aU5-W8-fum" secondAttribute="bottom" constant="75" id="bxS-c9-iJB"/>
                             <constraint firstItem="aU5-W8-fum" firstAttribute="leading" secondItem="w7i-ie-yVr" secondAttribute="leading" constant="8" id="huR-D1-Wkw"/>
                             <constraint firstItem="Dpc-u0-9nd" firstAttribute="leading" secondItem="w7i-ie-yVr" secondAttribute="leading" constant="8" id="imm-Rq-kdl"/>
                             <constraint firstItem="WyV-H4-nAt" firstAttribute="top" secondItem="ci9-Th-M77" secondAttribute="bottom" constant="20" id="oDP-fX-0gh"/>
+                            <constraint firstItem="wuH-z7-S5E" firstAttribute="leading" secondItem="w7i-ie-yVr" secondAttribute="leadingMargin" id="pMQ-qV-ROc"/>
                             <constraint firstItem="7Cr-oD-9K4" firstAttribute="trailing" secondItem="w7i-ie-yVr" secondAttribute="trailingMargin" id="sYs-nY-KHX"/>
                             <constraint firstItem="hGU-AQ-XEE" firstAttribute="leading" secondItem="w7i-ie-yVr" secondAttribute="leading" constant="8" id="vd7-mQ-R98"/>
                         </constraints>
@@ -214,6 +223,7 @@
                     <connections>
                         <outlet property="backgroundImage" destination="hGU-AQ-XEE" id="Rq6-f5-rlh"/>
                         <outlet property="bin0" destination="Dpc-u0-9nd" id="jH7-ua-kfh"/>
+                        <outlet property="expirationLabel" destination="wuH-z7-S5E" id="nvM-8j-rAP"/>
                         <outlet property="last0" destination="aU5-W8-fum" id="Enj-Nu-986"/>
                         <outlet property="numberLabel" destination="7Cr-oD-9K4" id="0eQ-EL-bBK"/>
                     </connections>

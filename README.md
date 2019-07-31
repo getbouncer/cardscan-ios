@@ -20,6 +20,7 @@ CardScan iOS installation guide
 
 * Objective C or Swift 4.0 or higher
 * iOS 11 or higher (supports development target of iOS 10.0 or higher)
+* iPhone 6s or newer (iPhone 6 and iPhone 6 plus are no longer supported)
 
 ## Installation
 
@@ -99,6 +100,13 @@ import UIKit
 import CardScan
 
 class ViewController: UIViewController, ScanDelegate {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if !ScanViewController.isCompatible() {
+	    // Hide your "scan card" button because this device isn't compatible with CardScan
+        }
+    }
+    
     @IBAction func scanCardButtonPressed() {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
 	    print("This device is incompatible with CardScan")
@@ -183,6 +191,13 @@ implement the `ScanDelegate` protocol to get the results.
 @end
 
 @implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    if (![ScanViewController isCompatible]) {
+ 	// Hide the "scan card" button because this device isn't compatible with CardScan       
+    }
+}
 
 - (IBAction)scanCardPress:(id)sender {
     UIViewController *vc = [ScanViewController createViewControllerWithDelegate:self];
