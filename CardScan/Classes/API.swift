@@ -152,5 +152,17 @@ public struct Api {
                                     parameters: ["scan_stats": scanStats.toDictionaryForFraudCheck()],
                                     completion: completion)
     }
+    
+    public static func cardTokenizedEvent(token: String, completion: @escaping ApiCompletion) {
+        if baseUrl == nil || apiKey == nil {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+
+        self.apiCallWithDeviceCheck(endpoint: "/counter/increment",
+                                    parameters: ["token": token,
+                                                 "event": "card_tokenized"],
+                                    completion: completion)
+    }
 }
 
