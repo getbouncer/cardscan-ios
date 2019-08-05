@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import DeviceCheck
 
 public struct Api {
     
@@ -23,7 +22,7 @@ public struct Api {
     
     // we use this for testing just to make sure that our fraudCheck APIs post
     // successfully
-    public static var lastFraudCheckSuccess: Date?
+    public static var lastScanStatsSuccess: Date?
     
     // XXX FIXME we should move to a more traditional error handling method
     public typealias ApiCompletion = ((_ response: [String: Any]?, _ error: ApiError?) -> Void)
@@ -75,7 +74,7 @@ public struct Api {
             
             DispatchQueue.main.async {
                 if "ok" == responseData["status"] as? String {
-                    Api.lastFraudCheckSuccess = Date()
+                    Api.lastScanStatsSuccess = Date()
                     completion(responseData, nil)
                 } else {
                     completion(nil, ApiError(response: responseData))
@@ -103,7 +102,19 @@ public struct Api {
         return deviceType
     }
     
-    static public func apiCallWithDeviceCheck(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
+    static func getSdkVersion() -> String? {
+        guard let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: "CardScan", withExtension: "bundle") else {
+            return nil
+        }
+        
+        guard let bundle = Bundle(url: bundleUrl) else {
+            return nil
+        }
+        
+        return bundle.infoDictionary?["CFBundleShortVersionString"].flatMap { $0 as? String }
+    }
+    
+    static public func apiCallWithDeviceInfo(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         if baseUrl == nil || apiKey == nil {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
@@ -113,56 +124,18 @@ public struct Api {
         let osVersion = "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
         let build = Bundle.main.infoDictionary?["CFBundleVersion"].flatMap { $0 as? String } ?? "0000"
         
-        // For deviceIds we use the vendorId because it gives end-users the ability
-        // to change deviceIds by uninstalling the app. This is Apple's preferred
-        // mechanisms for exposing privacy-friendly deviceIds:
-        //
-        // https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor
-        let vendorId = UIDevice.current.identifierForVendor?.uuidString ?? ""
-        
         var apiParameters = parameters
         apiParameters["platform"] = "ios"
-        apiParameters["vendor_id"] = vendorId
         apiParameters["os"] = osVersion
         apiParameters["device_type"] = deviceType()
         apiParameters["build"] = build
+        apiParameters["sdk_version"] = getSdkVersion()
         
-        if #available(iOS 11.0, *) {
-            DCDevice.current.generateToken { data, _ in
-                apiParameters["device_check"] = data?.base64EncodedString() ?? ""
-                apiCall(endpoint: endpoint,
-                        parameters: apiParameters,
-                        completion: completion)
-            }
-        } else {
-            apiParameters["device_check"] = ""
-            apiCall(endpoint: endpoint,
-                    parameters: apiParameters,
-                    completion: completion)
-        }
+        apiCall(endpoint: endpoint, parameters: apiParameters, completion: completion)
     }
     
-    static func fraudCheck(scanStats: ScanStats, completion: @escaping ApiCompletion) {
-        if baseUrl == nil || apiKey == nil {
-            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
-            return
-        }
-        
-        self.apiCallWithDeviceCheck(endpoint: "/fraud_check",
-                                    parameters: ["scan_stats": scanStats.toDictionaryForFraudCheck()],
-                                    completion: completion)
-    }
-    
-    public static func cardTokenizedEvent(token: String, completion: @escaping ApiCompletion) {
-        if baseUrl == nil || apiKey == nil {
-            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
-            return
-        }
-
-        self.apiCallWithDeviceCheck(endpoint: "/counter/increment",
-                                    parameters: ["token": token,
-                                                 "event": "card_tokenized"],
-                                    completion: completion)
+    static func scanStats(scanStats: ScanStats, completion: @escaping ApiCompletion) {
+        self.apiCallWithDeviceInfo(endpoint: "/scan_stats", parameters: ["scan_stats": scanStats.toDictionaryForAnalytics()], completion: completion)
     }
 }
 

@@ -114,7 +114,7 @@ import Vision
     public func cancelScan() {
         self.ocr.userCancelled()
         // fire and forget
-        Api.fraudCheck(scanStats: self.ocr.scanStats, completion: {_, _ in })
+        Api.scanStats(scanStats: self.ocr.scanStats, completion: {_, _ in })
     }
     
     //jaime: added function to create blur mask
@@ -362,7 +362,7 @@ import Vision
                 let image = self.scannedCardImage
                 
                 // fire and forget
-                Api.fraudCheck(scanStats: self.ocr.scanStats, completion: {_, _ in })
+                Api.scanStats(scanStats: self.ocr.scanStats, completion: {_, _ in })
                 self.onScannedCard(number: number, expiryYear: expiryYear, expiryMonth: expiryMonth, scannedImage: image)
             }
         }

@@ -161,5 +161,14 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource, Tes
         vc.showDebugImageView = true
         self.present(vc, animated: true)
     }
+    
+    @IBAction func scanWithStatsPress() {
+        ScanViewController.configure(apiKey: "0xdeadbeef")
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
+        self.present(vc, animated: true)
+    }
 }
 
