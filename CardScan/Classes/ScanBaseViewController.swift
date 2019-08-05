@@ -32,6 +32,7 @@ import Vision
     var scannedCardImage: UIImage?
     var isNavigationBarHidden = false
     private let scanQrCode = false
+    private let regionCornerRadius = CGFloat(10.0)
     private var calledOnScannedCard = false
     
     private var ocr = Ocr()
@@ -116,9 +117,7 @@ import Vision
         // fire and forget
         Api.scanStats(scanStats: self.ocr.scanStats, completion: {_, _ in })
     }
-    
-    //jaime: added function to create blur mask
-    let regionCornerRadius = CGFloat(10.0)
+ 
     func maskPreviewView(viewToMask: UIView, maskRect: CGRect) {
         let maskLayer = CAShapeLayer()
         let path = CGMutablePath()
@@ -154,14 +153,6 @@ import Vision
         }
         
         self.maskPreviewView(viewToMask: blurView, maskRect: frame)
-        
-        let borderWidth = CGFloat(5.0)
-        let cornersView = CornerView(frame: frame, borderWidth: borderWidth)
-        cornersView.layer.cornerRadius = self.regionCornerRadius + borderWidth
-        cornersView.layer.masksToBounds = true
-
-        cornersView.drawCorners(cornerColor: UIColor.green)
-        self.previewView?.addSubview(cornersView)
     }
     
     // you must call setupOnViewDidLoad before calling this function and you have to call
@@ -182,6 +173,10 @@ import Vision
         regionOfInterestLabel.layer.cornerRadius = self.regionCornerRadius
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
+
+        //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
+        self.videoFeed.setup(captureDelegate: self, completion: { success in })
+  
         self.ocr.errorCorrectionDuration = self.errorCorrectionDuration
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
@@ -203,17 +198,24 @@ import Vision
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.videoFeed.setup(captureDelegate: self) { success in
-            if success {
-                self.setupMask()
-            }
+        if self.ocr.numbers.count > 0 && self.ocr.expiries.count > 0 {
+            self.ocr.numbers.removeAll()
+            self.ocr.expiries.removeAll()
+            self.ocr.firstResult = nil
         }
-        
+        self.calledOnScannedCard = false
         self.videoFeed.willAppear()
         self.isNavigationBarHidden = self.navigationController?.isNavigationBarHidden ?? true
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    // Views are lazily loaded (View Management in doc) : https://developer.apple.com/documentation/uikit/uiviewcontroller
+    // Once added to the app view's hierarchy, can you fetch view data https://developer.apple.com/library/archive/referencelibrary/GettingStarted/DevelopiOSAppsSwift/WorkWithViewControllers.html
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.setupMask()
+    }
+
     override open func viewWillDisappear(_ animated: Bool) {
         self.videoFeed.willDisappear()
         
