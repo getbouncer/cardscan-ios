@@ -30,11 +30,7 @@ public class Ocr {
                                                 numberBoxes: boxes,
                                                 number: number,
                                                 cvvBoxes: cvvBoxes)
-        self.scanStats.backgroundImageJpeg = predictionResult.backgroundImageJpeg(originalImage: image)
         self.scanStats.bin = predictionResult.bin()
-        self.scanStats.binImagePng = predictionResult.binImagePng(originalImage: image)
-        self.scanStats.last4 = predictionResult.last4()
-        self.scanStats.last4ImagePng = predictionResult.last4ImagePng(originalImage: image)
         
         let xMin = boxes.map { $0.minX }.min() ?? 0
         let xMax = boxes.map { $0.maxX }.max() ?? 0
