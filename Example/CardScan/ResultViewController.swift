@@ -25,18 +25,10 @@ class ResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        guard let scanStats = self.scanStats else {
-            return
-        }
         
         if let image = self.cardImage {
             self.backgroundImage.image = image
-        } else {
-            self.backgroundImage.image = scanStats.backgroundImage()
         }
-        self.bin0.image = scanStats.binImage()
-        self.last0.image = scanStats.last4Image()
       
         self.numberLabel.text = format(number: self.number ?? "")
         self.expirationLabel.text = expiration ?? ""

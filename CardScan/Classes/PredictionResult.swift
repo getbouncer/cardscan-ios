@@ -53,22 +53,6 @@ struct PredictionResult {
             return nil
         #endif
     }
-        
-    func binImagePng(originalImage: CGImage) -> String? {
-        let boxes = translateNumber(to: originalImage)
-        guard let box = boxes.prefix(1).first else {
-            return nil
-        }
-        return extractImagePng(from: originalImage, for: box)
-    }
-    
-    func last4ImagePng(originalImage: CGImage) -> String? {
-        let boxes = translateNumber(to: originalImage)
-        guard let box = boxes.suffix(1).first else {
-            return nil
-        }
-        return extractImagePng(from: originalImage, for: box)
-    }
     
     func resizeImage(image: UIImage, to size: CGSize) -> UIImage? {
         UIGraphicsBeginImageContext(CGSize(width: size.width, height: size.height))
@@ -77,52 +61,5 @@ struct PredictionResult {
         UIGraphicsEndImageContext()
         
         return newImage
-    }
-    
-    func backgroundImageJpeg(originalImage: CGImage) -> String? {
-        guard let resizedImage = self.resizeImage(image: UIImage(cgImage:originalImage), to: CGSize(width: 600, height: 378)) else {
-            print("couldn't resize image")
-            return nil
-        }
-        
-        guard let cgImage = resizedImage.cgImage else {
-            print("no cgImage")
-            return nil
-        }
-        
-        let boxes = self.translateNumber(to: cgImage)
-        let xmin = boxes.map { $0.minX }.min() ?? 0.0
-        let ymin = boxes.map { $0.minY }.min() ?? 0.0
-        let xmax = boxes.map { $0.maxX }.max() ?? CGFloat(cgImage.width)
-        let ymax = boxes.map { $0.maxY }.max() ?? CGFloat(cgImage.height)
-        
-        let box = CGRect(x: xmin, y: ymin, width: xmax - xmin, height: ymax - ymin)
-        
-        let imageSize = CGSize(width: cgImage.width, height: cgImage.height)
-        let scale: CGFloat = 0
-        UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
-        
-        resizedImage.draw(at: CGPoint(x: 0,y :0))
-        UIColor.black.setStroke()
-        UIColor.black.setFill()
-        
-        UIRectFill(box)
-    
-        let originalImageSize = CGSize(width: originalImage.width, height: originalImage.height)
-        for cvvBox in PredictionResult.translateBoxes(from: originalImageSize, to: resizedImage.size, for: self.cvvBoxes) {
-            UIRectFill( cvvBox)
-        }
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        #if swift(>=4.2)
-            let uiImage = newImage?.cgImage.map { UIImage(cgImage: $0) }
-            return uiImage?.jpegData(compressionQuality: 0.75)?.base64EncodedString()
-        #else
-            // just to make the compiler happy
-            let _ = newImage?.cgImage.map { UIImage(cgImage: $0) }
-            return nil
-        #endif
     }
 }
