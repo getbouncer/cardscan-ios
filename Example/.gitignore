@@ -1,3 +1,6 @@
-CardScan.xcworkspace/
+CardScan.xcworkspace/xcuserdata
 Podfile.lock
-Pods/
+
+Pods/*
+!Pods/Pods.xcodeproj
+!Pods/Target\ Support\ Files
