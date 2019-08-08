@@ -192,7 +192,7 @@ import Vision
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if self.ocr.numbers.count > 0 && self.ocr.expiries.count > 0 {
+        if self.ocr.numbers.count > 0 || self.ocr.expiries.count > 0 {
             self.ocr.numbers.removeAll()
             self.ocr.expiries.removeAll()
             self.ocr.firstResult = nil
