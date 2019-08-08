@@ -9,7 +9,7 @@ Once we have a build on master we want to publish:
 2. Tag release
 
    ```bash
-   git tag <version>`
+   git tag <version>
    git push --tags
    ```
 
