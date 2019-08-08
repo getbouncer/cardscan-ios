@@ -24,6 +24,8 @@ CardScan iOS installation guide
 
 ## Installation
 
+### CocoaPods
+
 CardScan is available through [CocoaPods](https://cocoapods.org). To install
 it, add the following line to your Podfile:
 
@@ -50,6 +52,16 @@ When using Cocoapods, you use the `.xcworkspace` instead of the
 ```
 open YourProject.xcworkspace
 ```
+
+### Carthage
+
+CardScan is also available through [Carthage](https://github.com/Carthage/Carthage). To install it, add the following line to your Cartfile:
+
+```ruby
+github "getbouncer/cardscan-ios" "master"
+```
+
+Follow the [Carthage instructions for building for iOS](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos) 
 
 ## Permissions
 
