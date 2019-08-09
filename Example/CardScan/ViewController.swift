@@ -9,8 +9,8 @@
 import UIKit
 import CardScan
 
-class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource, TestingImageDataSource {
-    
+class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDataSource, TestingImageDataSource {
+
     let testImages = [UIImage(imageLiteralResourceName: "frame0"),
                       UIImage(imageLiteralResourceName: "frame19"),
                       UIImage(imageLiteralResourceName: "frame38"),
@@ -162,12 +162,22 @@ class ViewController: UIViewController, ScanDelegate, ScanStringsDataSource, Tes
         self.present(vc, animated: true)
     }
     
+    func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?) {
+        print("number recognized")
+    }
+    
+    func onScanComplete() {
+        print("scan complete")
+    }
+    
     @IBAction func scanWithStatsPress() {
         ScanViewController.configure(apiKey: "0xdeadbeef")
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
             print("scan view controller not supported on this hardware")
             return
         }
+        vc.scanEventsDelegate = self
+        
         self.present(vc, animated: true)
     }
 }

@@ -15,6 +15,8 @@ import Vision
     @objc public var includeCardImage = false
     @objc public var showDebugImageView = false
     
+    public var scanEventsDelegate: ScanEvents?
+    
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     // Only access this variable from the machineLearningQueue
     static var hasRegisteredAppNotifications = false
@@ -41,7 +43,7 @@ import Vision
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
     
-    func toggleTorch() {
+    public func toggleTorch() {
         self.ocr.scanStats.torchOn = !self.ocr.scanStats.torchOn
         self.videoFeed.toggleTorch()
     }
@@ -178,6 +180,10 @@ import Vision
         self.videoFeed.setup(captureDelegate: self, completion: { success in })
   
         self.ocr.errorCorrectionDuration = self.errorCorrectionDuration
+
+        // we split the implementation between OCR, which calls `onNumberRecognized`
+        // and ScanBaseViewController, which calls `onScanComplete`
+        self.ocr.scanEventsDelegate = self.scanEventsDelegate
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
         self.videoFeed.pauseSession()
@@ -354,8 +360,9 @@ import Vision
                 if self.calledOnScannedCard {
                     return
                 }
-                
                 self.calledOnScannedCard = true
+                // Note: the onNumberRecognized method is called on Ocr
+                self.scanEventsDelegate?.onScanComplete()
                 
                 let expiryMonth = expiry.map { String($0.month) }
                 let expiryYear = expiry.map { String($0.year) }
