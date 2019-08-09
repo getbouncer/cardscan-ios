@@ -43,7 +43,7 @@ import Vision
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
     
-    func toggleTorch() {
+    public func toggleTorch() {
         self.ocr.scanStats.torchOn = !self.ocr.scanStats.torchOn
         self.videoFeed.toggleTorch()
     }
