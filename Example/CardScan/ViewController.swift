@@ -166,7 +166,7 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
         print("number recognized")
     }
     
-    func onScanComplete() {
+    func onScanComplete(scanStats: ScanStats) {
         print("scan complete")
     }
     

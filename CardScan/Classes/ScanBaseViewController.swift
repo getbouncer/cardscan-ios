@@ -361,8 +361,11 @@ import Vision
                     return
                 }
                 self.calledOnScannedCard = true
-                // Note: the onNumberRecognized method is called on Ocr
-                self.scanEventsDelegate?.onScanComplete()
+                
+                ScanBaseViewController.machineLearningQueue.async {
+                    // Note: the onNumberRecognized method is called on Ocr
+                    self.scanEventsDelegate?.onScanComplete(scanStats: self.ocr.scanStats)
+                }
                 
                 let expiryMonth = expiry.map { String($0.month) }
                 let expiryYear = expiry.map { String($0.year) }
