@@ -8,6 +8,6 @@
 import Foundation
 
 public protocol ScanEvents {
-    func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?)
-    func onScanComplete()
+    mutating func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?)
+    mutating func onScanComplete()
 }
