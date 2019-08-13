@@ -50,10 +50,7 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
         vc.scanStats = scanViewController.getScanStats()
         vc.number = creditCard.number
         vc.cardImage = creditCard.image
-
-        if let month = creditCard.expiryMonth, let year = creditCard.expiryYear {
-            vc.expiration = month + "/" + year
-        }
+        vc.expiration = creditCard.expiryForDisplay()
         
         self.dismiss(animated: true)
         self.present(vc, animated: true)
