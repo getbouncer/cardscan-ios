@@ -39,7 +39,7 @@ public struct SsdDetect {
     
     
     func warmUp() {
-        SsdDetect.initializeModels()
+        //SsdDetect.initializeModels()
         
         UIGraphicsBeginImageContext(CGSize(width: SSDCardWidth, height: SSDCardHeight))
         UIColor.white.setFill()
@@ -58,9 +58,9 @@ public struct SsdDetect {
         
     }
     
-    static func initializeModels() {
+    public static func initializeModels( contentsOf url: URL) throws {
         if SsdDetect.ssdModel == nil {
-            SsdDetect.ssdModel = SSD()
+            SsdDetect.ssdModel = try SSD(contentsOf: url)
             }
         if SsdDetect.priors == nil{
             SsdDetect.priors = PriorsGen.combinePriors()
@@ -96,8 +96,8 @@ public struct SsdDetect {
     }
     
     
-    mutating func predict(image: UIImage) -> String? {
-        SsdDetect.initializeModels()
+    public mutating func predict(image: UIImage) -> String? {
+        //SsdDetect.initializeModels()
         
         guard let pixelBuffer = image.pixelBuffer(width: SSDCardWidth, height: SSDCardHeight) else {
             os_log("Couldn't convert to pixel buffer", type: .error)
