@@ -38,6 +38,22 @@ import UIKit
         self.number = number
     }
     
+    @objc public func expiryForDisplay() -> String? {
+        guard var month = self.expiryMonth, var year = self.expiryYear else {
+            return nil
+        }
+        
+        if month.count == 1 {
+            month = "0" + month
+        }
+        
+        if year.count == 4 {
+            year = String(year.suffix(2))
+        }
+        
+        return "\(month)/\(year)"
+    }
+    
     #if canImport(Stripe)
     @objc public func cardParams() -> STPCardParams {
         let cardParam = STPCardParams()
