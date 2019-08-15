@@ -214,7 +214,7 @@ import UIKit
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.cornerView.layer.borderColor = UIColor.orange.cgColor
+        self.cornerView.layer.borderColor = UIColor.green.cgColor
     }
     
     public override func viewDidLayoutSubviews() {
