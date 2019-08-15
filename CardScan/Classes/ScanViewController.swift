@@ -87,7 +87,7 @@ import UIKit
     
     @IBOutlet weak var expiryLabel: UILabel!
     @IBOutlet weak var cardNumberLabel: UILabel!
-    @IBOutlet weak var blurView: UIView!
+    @IBOutlet weak var blurView: BlurView!
     
     @IBOutlet weak var scanCardLabel: UILabel!
     @IBOutlet weak var positionCardLabel: UILabel!
@@ -208,7 +208,7 @@ import UIKit
         }
         
         let debugImageView = self.showDebugImageView ? self.debugImageView : nil
-        self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, debugImageView: debugImageView)
+        self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView)
         self.startCameraPreview()
     }
     
@@ -219,7 +219,6 @@ import UIKit
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.cornerView.drawCorners()
     }
     
     override public func showCardNumber(_ number: String, expiry: String?) {

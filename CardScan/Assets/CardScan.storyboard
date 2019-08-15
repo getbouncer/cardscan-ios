@@ -21,7 +21,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZr-lh-2mZ" customClass="PreviewView" customModule="CardScan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aju-0L-PxB">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aju-0L-PxB" customClass="BlurView" customModule="CardScan" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" red="0.18431372549019609" green="0.20784313725490194" blue="0.25882352941176467" alpha="0.70205479452054798" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     </view>
@@ -137,15 +137,6 @@
                                     <constraint firstItem="FbV-Jw-mRi" firstAttribute="top" secondItem="NRD-Sd-k9r" secondAttribute="top" id="yx5-KZ-MVe"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xu-ZF-zZr">
-                                <rect key="frame" x="16" y="225.5" width="343" height="216"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="2Xu-ZF-zZr" secondAttribute="height" multiplier="359:226" id="dV2-Th-3ei"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.18039215689999999" green="0.81568627449999997" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJ3-a3-k94" customClass="CornerView" customModule="CardScan" customModuleProvider="target">
                                 <rect key="frame" x="11" y="220.5" width="353" height="226"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -162,6 +153,16 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xu-ZF-zZr">
+                                <rect key="frame" x="16" y="225.5" width="343" height="216"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2Xu-ZF-zZr" secondAttribute="height" multiplier="359:226" id="dV2-Th-3ei"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.18039215689999999" green="0.81568627449999997" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAV-bO-0Cf">
                                 <rect key="frame" x="8" y="36" width="32" height="32"/>
                                 <constraints>
@@ -186,22 +187,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="2Xu-ZF-zZr" firstAttribute="centerY" secondItem="KJ3-a3-k94" secondAttribute="centerY" id="6bT-aK-zwi"/>
                             <constraint firstItem="2Xu-ZF-zZr" firstAttribute="centerY" secondItem="dia-FZ-zQY" secondAttribute="centerY" id="9tw-xc-5pe"/>
                             <constraint firstItem="cAV-bO-0Cf" firstAttribute="top" secondItem="JcX-sc-atK" secondAttribute="top" constant="16" id="Cjz-Yq-gTl"/>
                             <constraint firstAttribute="bottom" secondItem="JZr-lh-2mZ" secondAttribute="bottom" id="Cly-Ge-Pnk"/>
-                            <constraint firstItem="KJ3-a3-k94" firstAttribute="leading" secondItem="JcX-sc-atK" secondAttribute="leading" constant="11" id="Dnp-K4-oKx"/>
                             <constraint firstItem="2Xu-ZF-zZr" firstAttribute="centerX" secondItem="dia-FZ-zQY" secondAttribute="centerX" id="GIu-68-Eod"/>
                             <constraint firstItem="JZr-lh-2mZ" firstAttribute="trailing" secondItem="JcX-sc-atK" secondAttribute="trailing" id="H8H-SY-ZVr"/>
                             <constraint firstAttribute="trailing" secondItem="2Xu-ZF-zZr" secondAttribute="trailing" constant="16" id="MMw-8z-ePv"/>
+                            <constraint firstItem="JcX-sc-atK" firstAttribute="trailing" secondItem="KJ3-a3-k94" secondAttribute="trailing" constant="11" id="Nn1-04-ziU"/>
                             <constraint firstItem="2Xu-ZF-zZr" firstAttribute="leading" secondItem="JcX-sc-atK" secondAttribute="leading" constant="16" id="OTn-gs-xZV"/>
+                            <constraint firstItem="2Xu-ZF-zZr" firstAttribute="centerX" secondItem="KJ3-a3-k94" secondAttribute="centerX" id="Ocl-n4-adh"/>
                             <constraint firstItem="cAV-bO-0Cf" firstAttribute="leading" secondItem="JcX-sc-atK" secondAttribute="leading" constant="8" id="Phv-cQ-Tcx"/>
-                            <constraint firstAttribute="trailing" secondItem="KJ3-a3-k94" secondAttribute="trailing" constant="11" id="crA-tj-ugH"/>
-                            <constraint firstItem="KJ3-a3-k94" firstAttribute="centerX" secondItem="2Xu-ZF-zZr" secondAttribute="centerX" id="jnv-8C-RkS"/>
+                            <constraint firstItem="KJ3-a3-k94" firstAttribute="leading" secondItem="JcX-sc-atK" secondAttribute="leading" constant="11" id="eKv-If-wZv"/>
                             <constraint firstItem="JZr-lh-2mZ" firstAttribute="leading" secondItem="JcX-sc-atK" secondAttribute="leading" id="nSQ-BB-hSb"/>
                             <constraint firstItem="aTS-Jy-HLZ" firstAttribute="centerY" secondItem="cAV-bO-0Cf" secondAttribute="centerY" id="oR8-l5-AvK"/>
                             <constraint firstItem="JZr-lh-2mZ" firstAttribute="top" secondItem="dia-FZ-zQY" secondAttribute="top" id="ov6-QA-4UQ"/>
                             <constraint firstItem="aTS-Jy-HLZ" firstAttribute="leading" secondItem="cAV-bO-0Cf" secondAttribute="trailing" constant="-11" id="vaf-qc-blT"/>
-                            <constraint firstItem="KJ3-a3-k94" firstAttribute="centerY" secondItem="2Xu-ZF-zZr" secondAttribute="centerY" id="yr7-v6-vnf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JcX-sc-atK"/>
                     </view>
@@ -210,7 +211,7 @@
                         <outlet property="backButtonImageButton" destination="cAV-bO-0Cf" id="5jh-fo-Z7b"/>
                         <outlet property="backButtonImageToTextConstraint" destination="vaf-qc-blT" id="5Bl-x6-vIr"/>
                         <outlet property="backButtonWidthConstraint" destination="EaN-bi-nZq" id="3GV-jN-upY"/>
-                        <outlet property="blurView" destination="aju-0L-PxB" id="O2s-Pr-FEO"/>
+                        <outlet property="blurView" destination="aju-0L-PxB" id="Lo0-KK-LRH"/>
                         <outlet property="cardNumberLabel" destination="mhR-St-yeE" id="Zwu-8I-mT9"/>
                         <outlet property="cornerView" destination="KJ3-a3-k94" id="omZ-WY-02b"/>
                         <outlet property="debugImageView" destination="FbV-Jw-mRi" id="Hhh-cL-znj"/>
