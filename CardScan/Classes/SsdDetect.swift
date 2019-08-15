@@ -91,7 +91,7 @@ public struct SsdDetect {
         os_log("%@", type: .debug, "Rest of the forward pass time: \(endTime)")
         
         for idx in 0..<result.pickedBoxes.count{
-            DetectedSSDBoxes.append(DetectedSSDBox(category: result.pickedLabels[idx], XMin: Double(result.pickedBoxes[idx][0]), YMin: Double(result.pickedBoxes[idx][1]), XMax: Double(result.pickedBoxes[idx][2]), YMax: Double(result.pickedBoxes[idx][3]), imageSize: image.size))
+            DetectedSSDBoxes.append(DetectedSSDBox(category: result.pickedLabels[idx], conf: result.pickedBoxProbs[idx], XMin: Double(result.pickedBoxes[idx][0]), YMin: Double(result.pickedBoxes[idx][1]), XMax: Double(result.pickedBoxes[idx][2]), YMax: Double(result.pickedBoxes[idx][3]), imageSize: image.size))
         }
 
 
