@@ -8,7 +8,17 @@ import Vision
     @objc func nextImage() -> CGImage?
 }
 
-@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents {
+    
+    public func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?) {
+        // relay this data to our own delegate object
+        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, cardImage: cardImage, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox)
+    }
+    
+    public func onScanComplete(scanStats: ScanStats) {
+        // this shouldn't get called
+    }
+    
     
     @objc public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
@@ -182,8 +192,9 @@ import Vision
         self.ocr.errorCorrectionDuration = self.errorCorrectionDuration
 
         // we split the implementation between OCR, which calls `onNumberRecognized`
-        // and ScanBaseViewController, which calls `onScanComplete`
-        self.ocr.scanEventsDelegate = self.scanEventsDelegate
+        // and ScanBaseViewController, which calls `onScanComplete`. We register ourselves
+        // as a delegate so that we can keep a single copy of the delegate object.
+        self.ocr.scanEventsDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
         self.videoFeed.pauseSession()
