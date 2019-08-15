@@ -8,9 +8,9 @@
 import Foundation
 
 public struct DetectedSSDBox{
-    let rect: CGRect
-    let label: Int
-    let confidence: Float
+    public let rect: CGRect
+    public let label: Int
+    public let confidence: Float
     
     init(category: Int, conf: Float, XMin: Double, YMin: Double, XMax: Double, YMax: Double, imageSize: CGSize){
         let XMin_ = XMin * Double(imageSize.width)
