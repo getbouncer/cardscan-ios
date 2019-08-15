@@ -34,13 +34,11 @@ public struct SsdDetect {
     let iouThreshold: Float = 0.45
     let candidateSize = 200
     let topK = 10
-    var ssdBoxes:[DetectedSSDBox] = []
-    
-    
+    public private(set) var ssdBoxes:[DetectedSSDBox] = []
+
     
     func warmUp() {
-        //SsdDetect.initializeModels()
-        
+
         UIGraphicsBeginImageContext(CGSize(width: SSDCardWidth, height: SSDCardHeight))
         UIColor.white.setFill()
         UIRectFill(CGRect(x: 0, y: 0, width: SSDCardWidth, height: SSDCardHeight))
@@ -58,15 +56,21 @@ public struct SsdDetect {
         
     }
     
-    public static func initializeModels( contentsOf url: URL) throws {
-        if SsdDetect.ssdModel == nil {
-            SsdDetect.ssdModel = try SSD(contentsOf: url)
-            }
+    public init(){
         if SsdDetect.priors == nil{
             SsdDetect.priors = PriorsGen.combinePriors()
         }
+        
+    }
+    
+    public static func initializeModels( contentsOf url: URL) {
+        if SsdDetect.ssdModel == nil {
+            SsdDetect.ssdModel = try? SSD(contentsOf: url)
         }
-   
+        
+    }
+    
+    
     func detectObjects(prediction: SSDOutput, image: UIImage) -> [DetectedSSDBox]{
         var DetectedSSDBoxes : [DetectedSSDBox] = []
         
@@ -97,22 +101,21 @@ public struct SsdDetect {
     
     
     public mutating func predict(image: UIImage) -> String? {
-        //SsdDetect.initializeModels()
-        
+
         guard let pixelBuffer = image.pixelBuffer(width: SSDCardWidth, height: SSDCardHeight) else {
-            os_log("Couldn't convert to pixel buffer", type: .error)
+            os_log("Couldn't convert to pixel buffer", type: .debug)
             return nil
         }
         
         
         guard let detectModel = SsdDetect.ssdModel else {
-            os_log("Model not initialized", type: .error)
+            os_log("Model not initialized", type: .debug)
             return nil
         }
        
         let startTime = CFAbsoluteTimeGetCurrent()
         guard let prediction = try? detectModel.prediction(_0: pixelBuffer) else {
-            os_log("Couldn't predict", type: .error)
+            os_log("Couldn't predict", type: .debug)
             return nil
         }
         let endTime = CFAbsoluteTimeGetCurrent() - startTime
