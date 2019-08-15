@@ -85,6 +85,7 @@ import UIKit
     @IBOutlet weak var regionOfInterestAspectConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var torchButton: UIButton!
+    @IBOutlet weak var cornerView: CornerView!
     
     var calledDelegate = false
     
@@ -181,7 +182,7 @@ import UIKit
         }
     }
     
-    override public func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setStrings()
@@ -197,6 +198,16 @@ import UIKit
         let debugImageView = self.showDebugImageView ? self.debugImageView : nil
         self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, debugImageView: debugImageView)
         self.startCameraPreview()
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.cornerView.layer.borderColor = UIColor.green.cgColor
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.cornerView.drawCorners()
     }
     
     override public func showCardNumber(_ number: String, expiry: String?) {
