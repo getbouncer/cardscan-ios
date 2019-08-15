@@ -34,7 +34,8 @@ import Vision
     private weak var debugImageView: UIImageView?
     private weak var previewView: PreviewView?
     private weak var regionOfInterestLabel: UILabel?
-    private weak var blurView: UIView?
+    private weak var blurView: BlurView?
+    private weak var cornerView: CornerView?
     private var regionOfInterestLabelFrame: CGRect?
     
     var videoFeed = VideoFeed()
@@ -129,42 +130,18 @@ import Vision
         // fire and forget
         Api.scanStats(scanStats: self.ocr.scanStats, completion: {_, _ in })
     }
- 
-    func maskPreviewView(viewToMask: UIView, maskRect: CGRect) {
-        let maskLayer = CAShapeLayer()
-        let path = CGMutablePath()
-        let roundedRectpath = UIBezierPath.init(roundedRect: maskRect, cornerRadius: regionCornerRadius).cgPath
-        path.addRect(viewToMask.bounds)
-        path.addPath(roundedRectpath)
-        maskLayer.path = path
-        #if swift(>=4.2)
-            maskLayer.fillRule = .evenOdd
-        #else
-            maskLayer.fillRule = kCAFillRuleEvenOdd
-        #endif
-        viewToMask.layer.mask = maskLayer
+     
+    func setupMask() {
+        guard let roi = self.regionOfInterestLabel else { return }
+        guard let blurView = self.blurView else { return }
+        blurView.maskToRoi(roi: roi)
     }
     
-    func setupMask() {
-        // store .frame to avoid accessing UI APIs in the machineLearningQueue
-        guard let roiFrame = self.regionOfInterestLabel?.frame else {
-            print("could not get frame")
-            return
-        }
-        
-        self.regionOfInterestLabelFrame = roiFrame
-        
-        guard let frame = self.regionOfInterestLabelFrame else {
-            print("no ROI frame found")
-            return
-        }
-
-        guard let blurView = self.blurView else {
-            print("no blur view")
-            return
-        }
-        
-        self.maskPreviewView(viewToMask: blurView, maskRect: frame)
+    public func setUpCorners() {
+        guard let roi = self.regionOfInterestLabel else { return }
+        guard let corners = self.cornerView else { return }
+        corners.setFrameSize(roi: roi)
+        corners.drawCorners()
     }
     
     // you must call setupOnViewDidLoad before calling this function and you have to call
@@ -173,12 +150,13 @@ import Vision
         self.videoFeed.requestCameraAccess()
     }
     
-    public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: UIView, previewView: PreviewView, debugImageView: UIImageView?) {
+    public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
         self.blurView = blurView
         self.previewView = previewView
         self.debugImageView = debugImageView
+        self.cornerView = cornerView
         
         setNeedsStatusBarAppearanceUpdate()
         regionOfInterestLabel.layer.masksToBounds = true
@@ -214,7 +192,6 @@ import Vision
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         self.ocr.numbers.removeAll()
         self.ocr.expiries.removeAll()
         self.ocr.firstResult = nil
@@ -224,17 +201,18 @@ import Vision
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    // Views are lazily loaded (View Management in doc) : https://developer.apple.com/documentation/uikit/uiviewcontroller
-    // Once added to the app view's hierarchy, can you fetch view data https://developer.apple.com/library/archive/referencelibrary/GettingStarted/DevelopiOSAppsSwift/WorkWithViewControllers.html
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override open func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard let roiFrame = self.regionOfInterestLabel?.frame else { return }
+         // store .frame to avoid accessing UI APIs in the machineLearningQueue
+        self.regionOfInterestLabelFrame = roiFrame
+        self.setUpCorners()
         self.setupMask()
     }
-
+    
     override open func viewWillDisappear(_ animated: Bool) {
-        self.videoFeed.willDisappear()
-        
         super.viewWillDisappear(animated)
+        self.videoFeed.willDisappear()
         
         if !self.isNavigationBarHidden {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)

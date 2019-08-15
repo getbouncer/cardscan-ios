@@ -9,6 +9,14 @@ public class CornerView: UIView {
         super.init(frame: frame)
     }
 
+    public func setFrameSize(roi: UIView) {
+        let borderWidth = self.layer.borderWidth
+        let width = roi.layer.bounds.width + 2*borderWidth
+        let height = roi.layer.bounds.height + 2*borderWidth
+        let cornerViewBoundRect = CGRect(x: self.layer.bounds.origin.x, y: self.layer.bounds.origin.y, width: width, height: height)
+        self.layer.bounds = cornerViewBoundRect
+    }
+    
     public func drawCorners(){
         let maskShapeLayer = CAShapeLayer()
         let maskPath = CGMutablePath()
