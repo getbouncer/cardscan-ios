@@ -63,9 +63,9 @@ public struct SsdDetect {
         
     }
     
-    public static func initializeModels( contentsOf url: URL) throws {
+    public static func initializeModels( contentsOf url: URL) {
         if SsdDetect.ssdModel == nil {
-            SsdDetect.ssdModel = try SSD(contentsOf: url)
+            SsdDetect.ssdModel = try? SSD(contentsOf: url)
         }
         
     }
@@ -103,19 +103,19 @@ public struct SsdDetect {
     public mutating func predict(image: UIImage) -> String? {
 
         guard let pixelBuffer = image.pixelBuffer(width: SSDCardWidth, height: SSDCardHeight) else {
-            os_log("Couldn't convert to pixel buffer", type: .error)
+            os_log("Couldn't convert to pixel buffer", type: .debug)
             return nil
         }
         
         
         guard let detectModel = SsdDetect.ssdModel else {
-            os_log("Model not initialized", type: .error)
+            os_log("Model not initialized", type: .debug)
             return nil
         }
        
         let startTime = CFAbsoluteTimeGetCurrent()
         guard let prediction = try? detectModel.prediction(_0: pixelBuffer) else {
-            os_log("Couldn't predict", type: .error)
+            os_log("Couldn't predict", type: .debug)
             return nil
         }
         let endTime = CFAbsoluteTimeGetCurrent() - startTime
