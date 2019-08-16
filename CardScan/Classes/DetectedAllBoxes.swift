@@ -12,10 +12,15 @@ import Foundation
  
  */
 
-public struct DetectedAllBoxes{
+public struct DetectedAllBoxes : Codable{
     public internal(set) var allBoxes: [DetectedSSDBox]
     
     init(){
         allBoxes = [DetectedSSDBox]()
+    }
+    
+    public func convertToJson() -> [Data?]{
+        let jsonData = self.allBoxes.map{$0.convertToJson()}
+        return jsonData
     }
 }

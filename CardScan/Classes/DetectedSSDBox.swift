@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DetectedSSDBox{
+public struct DetectedSSDBox : Codable{
     public let rect: CGRect
     public let label: Int
     public let confidence: Float
@@ -21,5 +21,10 @@ public struct DetectedSSDBox{
         self.label = category
         self.confidence = conf
         self.rect = CGRect(x: XMin_, y: YMin_, width: XMax_ - XMin_, height: YMax_ - YMin_)
+    }
+    
+    public func convertToJson() -> Data?{
+        let jsonData = try? JSONEncoder().encode(self)
+        return jsonData
     }
 }
