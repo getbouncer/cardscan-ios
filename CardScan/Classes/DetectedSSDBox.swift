@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DetectedSSDBox{
+struct DetectedSSDBox {
     let rect: CGRect
     let label: Int
     let confidence: Float
@@ -21,5 +21,12 @@ public struct DetectedSSDBox{
         self.label = category
         self.confidence = conf
         self.rect = CGRect(x: XMin_, y: YMin_, width: XMax_ - XMin_, height: YMax_ - YMin_)
+    }
+    
+     func toDict() -> [String:Any]{
+        let objectDict = ["XMin": self.rect.minX, "YMin": self.rect.minY, "Height": self.rect.height, "Width":self.rect.width, "Label": self.label, "Confidence": self.confidence] as [String : Any]
+        
+        
+        return objectDict
     }
 }

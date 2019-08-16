@@ -34,7 +34,8 @@ public struct SsdDetect {
     let iouThreshold: Float = 0.45
     let candidateSize = 200
     let topK = 10
-    public private(set) var ssdBoxes:[DetectedSSDBox] = []
+    
+    public private(set) var allSSDBoxes = DetectedAllBoxes()
 
     
     func warmUp() {
@@ -71,9 +72,8 @@ public struct SsdDetect {
     }
     
     
-    func detectObjects(prediction: SSDOutput, image: UIImage) -> [DetectedSSDBox]{
-        var DetectedSSDBoxes : [DetectedSSDBox] = []
-        
+    func detectObjects(prediction: SSDOutput, image: UIImage) -> DetectedAllBoxes{
+        var DetectedSSDBoxes = DetectedAllBoxes()
         var startTime = CFAbsoluteTimeGetCurrent()
         let boxes = prediction.getBoxes()
         let scores = prediction.getScores()
@@ -91,7 +91,7 @@ public struct SsdDetect {
         os_log("%@", type: .debug, "Rest of the forward pass time: \(endTime)")
         
         for idx in 0..<result.pickedBoxes.count{
-            DetectedSSDBoxes.append(DetectedSSDBox(category: result.pickedLabels[idx], conf: result.pickedBoxProbs[idx], XMin: Double(result.pickedBoxes[idx][0]), YMin: Double(result.pickedBoxes[idx][1]), XMax: Double(result.pickedBoxes[idx][2]), YMax: Double(result.pickedBoxes[idx][3]), imageSize: image.size))
+            DetectedSSDBoxes.allBoxes.append(DetectedSSDBox(category: result.pickedLabels[idx], conf: result.pickedBoxProbs[idx], XMin: Double(result.pickedBoxes[idx][0]), YMin: Double(result.pickedBoxes[idx][1]), XMax: Double(result.pickedBoxes[idx][2]), YMax: Double(result.pickedBoxes[idx][3]), imageSize: image.size))
         }
 
 
@@ -121,7 +121,7 @@ public struct SsdDetect {
         let endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "Model Run without post-process time: \(endTime)")
 
-        self.ssdBoxes = self.detectObjects(prediction: prediction, image: image)
+        self.allSSDBoxes = self.detectObjects(prediction: prediction, image: image)
         return "Sucess"
     }
     
