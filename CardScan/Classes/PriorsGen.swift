@@ -9,101 +9,77 @@ import Foundation
 
 struct PriorsGen{
     
-    static func genPriors(featureMapSize: Int, shrinkage: Int, boxSizeMin: Int, boxSizeMax: Int, aspectRatioOne : Int, aspectRatioTwo: Int, noOfPriors: Int) -> [[Float]]{
+    static func genPriors(featureMapSize: Int, shrinkage: Int, boxSizeMin: Int, boxSizeMax: Int, aspectRatioOne : Int, aspectRatioTwo: Int, noOfPriors: Int) -> [CGRect]{
         
-        var boxes: [[Float]] = [[Float]](repeating: [Float](repeating: 0.0, count: 4), count: featureMapSize*featureMapSize*noOfPriors)
-        var x_center: Float; var y_center: Float ; let image_size: Int = 300;
-        var size: Float;
-        let scale: Float = Float(image_size) / Float(shrinkage);
+        let image_size = 300
+        let scale = Float(image_size) / Float(shrinkage);
+        var boxes = [CGRect]()
+        var x_center: Float; var y_center: Float
+        var size: Float
+        var ratioOne: Float; var ratioTwo : Float
         var h: Float; var w: Float;
-        var priorIndex: Int = 0; var ratioOne: Float; var ratioTwo: Float;
         
         for j in 0..<featureMapSize{
             for i in 0..<featureMapSize{
-                x_center = (Float(i) + 0.5) / scale
-                y_center = (Float(j) + 0.5) / scale
+                x_center = ((Float(i) + 0.5) / scale).clamp()
+                y_center = ((Float(j) + 0.5) / scale).clamp()
+                
                 
                 size = Float(boxSizeMin)
-                h = size / Float(image_size)
-                w = size / Float(image_size)
+                h = (size / Float(image_size)).clamp()
+                w = (size / Float(image_size)).clamp()
                 
-                boxes[priorIndex][0] = x_center
-                boxes[priorIndex][1] = y_center;
-                boxes[priorIndex][2] = h;
-                boxes[priorIndex][3] = w;
                 
-                priorIndex += 1
+                boxes.append(CGRect(x: CGFloat(x_center), y: CGFloat(y_center), width: CGFloat(w), height: CGFloat(h)))
                 
                 size = sqrt(Float(boxSizeMax) * Float(boxSizeMin))
-                h = size / Float(image_size)
-                w = size / Float(image_size)
+                h = (size / Float(image_size)).clamp()
+                w = (size / Float(image_size)).clamp()
                 
-                boxes[priorIndex][0] = x_center
-                boxes[priorIndex][1] = y_center;
-                boxes[priorIndex][2] = h;
-                boxes[priorIndex][3] = w;
                 
-                priorIndex += 1
+                boxes.append(CGRect(x: CGFloat(x_center), y: CGFloat(y_center), width: CGFloat(w), height: CGFloat(h)))
                 
                 size = Float(boxSizeMin)
-                h = size / Float(image_size)
-                w = size / Float(image_size)
-               
+                h = (size / Float(image_size)).clamp()
+                w = (size / Float(image_size)).clamp()
+                
                 ratioOne = sqrt(Float(aspectRatioOne))
                 ratioTwo = sqrt(Float(aspectRatioTwo))
                 
-                boxes[priorIndex][0] = x_center;
-                boxes[priorIndex][1] = y_center;
-                boxes[priorIndex][2] = h * ratioOne;
-                boxes[priorIndex][3] = w / ratioOne;
-                priorIndex += 1
                 
-                boxes[priorIndex][0] = x_center;
-                boxes[priorIndex][1] = y_center;
-                boxes[priorIndex][2] = h / ratioOne;
-                boxes[priorIndex][3] = w * ratioOne;
-                priorIndex += 1
+                boxes.append(CGRect(x: CGFloat(x_center), y: CGFloat(y_center),
+                                    width: CGFloat((w / ratioOne).clamp()), height: CGFloat((h * ratioOne).clamp())))
                 
-                boxes[priorIndex][0] = x_center;
-                boxes[priorIndex][1] = y_center;
-                boxes[priorIndex][2] = h * ratioTwo;
-                boxes[priorIndex][3] = w / ratioTwo;
-                priorIndex += 1
+                boxes.append(CGRect(x: CGFloat(x_center), y: CGFloat(y_center),
+                                    width: CGFloat((w * ratioOne).clamp()), height: CGFloat((h / ratioOne).clamp())))
                 
-                boxes[priorIndex][0] = x_center;
-                boxes[priorIndex][1] = y_center;
-                boxes[priorIndex][2] = h / ratioTwo;
-                boxes[priorIndex][3] = w * ratioTwo;
-                priorIndex += 1
+                
+                boxes.append(CGRect(x: CGFloat(x_center), y: CGFloat(y_center),
+                                    width: CGFloat((w / ratioTwo).clamp()), height: CGFloat((h * ratioTwo).clamp())))
+                
+                
+                boxes.append(CGRect(x: CGFloat(x_center), y: CGFloat(y_center),
+                                    width: CGFloat(( w * ratioTwo).clamp()), height: CGFloat((h / ratioTwo).clamp())))
             }
         }
         return boxes
     }
     
-    static func clamp(value: Float, minimum: Float, maximum: Float) -> Float{
-        return max(minimum, min(maximum, value))
-    }
-    
-    static func combinePriors() -> [[Float]]{
-
+    static func combinePriors() -> [CGRect]{
+        
         let priorsOne = PriorsGen.genPriors(featureMapSize: 19, shrinkage: 16, boxSizeMin: 60, boxSizeMax: 105, aspectRatioOne: 2, aspectRatioTwo: 3, noOfPriors: 6)
         let priorsTwo = PriorsGen.genPriors(featureMapSize: 10, shrinkage: 32, boxSizeMin: 105, boxSizeMax: 150, aspectRatioOne: 2, aspectRatioTwo: 3, noOfPriors: 6)
-        
-        var priorsCombined: [[Float]] = [[Float]](repeating: [Float](repeating: 0.0, count: 4), count: priorsOne.count + priorsTwo.count)
-        
-        for i in 0..<priorsOne.count{
-            for j in 0..<priorsOne[0].count{
-                priorsCombined[i][j] = PriorsGen.clamp(value: priorsOne[i][j], minimum: 0.0, maximum: 1.0)
-            }
-        }
-        for i in 0..<priorsTwo.count{
-            for j in 0..<priorsTwo[0].count{
-                priorsCombined[i+priorsOne.count][j] = PriorsGen.clamp(value: priorsTwo[i][j], minimum: 0.0, maximum: 1.0)
-            }
-        }
+        let priorsCombined = priorsOne + priorsTwo
         
         return priorsCombined
         
         
     }
+}
+
+extension Float {
+    func clamp(minimum: Float =  0.0, maximum: Float =  1.0) -> Float {
+        return max(minimum, min(maximum, self))
+    }
+    
 }
