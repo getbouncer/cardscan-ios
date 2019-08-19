@@ -95,24 +95,23 @@ extension SSDOutput{
         return normalizedScores
     }
     
-    func convertLocationsToBoxes(locations: [[Float]], priors: [[Float]], centerVariance: Float, sizeVariance : Float) -> [[Float]]{
+    func convertLocationsToBoxes(locations: [[Float]], priors: [CGRect], centerVariance: Float, sizeVariance : Float) -> [[Float]]{
         
         /** Convert regressional location results of
          SSD into boxes in the form of (center_x, center_y, h, w)
          */
-        
-        var boxes = locations
+        var boxes = [[Float]]()
         
         for i in 0..<locations.count{
-            for j in 0..<2{
-                boxes[i][j] = locations[i][j] * centerVariance * priors[i][j+2] + priors[i][j]
-                boxes[i][j+2] = exp(locations[i][j+2] * sizeVariance) * priors[i][j+2];
-                
-            }
+            let box = [locations[i][0] * centerVariance * Float(priors[i].height) + Float(priors[i].minX),
+                       locations[i][1] * centerVariance * Float(priors[i].width) + Float(priors[i].minY),
+                       exp(locations[i][2] * sizeVariance) * Float(priors[i].height),
+                       exp(locations[i][3] * sizeVariance) * Float(priors[i].width)]
+            boxes.append(box)
         }
+        
         return boxes
     }
-    
     func centerFormToCornerForm( regularBoxes: [[Float]]) -> [[Float]]{
         
         /** Convert center from (center_x, center_y, h, w) to

@@ -17,7 +17,7 @@ import os.log
 @available(iOS 11.2, *)
 public struct SsdDetect {
     static var ssdModel: SSD? = nil
-    static var priors:[[Float]]? = nil
+    static var priors:[CGRect]? = nil
     
     // SSD Model Parameters
     
