@@ -79,8 +79,20 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
         vc.scanQrCode = true
         self.present(vc, animated: true)
     }
-    @IBAction func scanCardFakeOnly() {
+    @IBAction func scanCardPress() {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
+        
+        vc.allowSkip = true
+        self.present(vc, animated: true)
+    }
+    
+    @IBAction func scanCardOldDevicePress() {
+        let config = ScanConfiguration()
+        config.runOnOldDevices = true
+        guard let vc = ScanViewController.createViewController(withDelegate: self, configuration: config) else {
             print("scan view controller not supported on this hardware")
             return
         }

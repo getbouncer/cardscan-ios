@@ -106,8 +106,13 @@ import UIKit
     var calledDelegate = false
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
+        // use default config
+        return self.createViewController(withDelegate: delegate, configuration: ScanConfiguration())
+    }
+    
+    @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil, configuration: ScanConfiguration) -> ScanViewController? {
         
-        if !self.isCompatible() {
+        if !self.isCompatible(runOnOldDevices: configuration.runOnOldDevices) {
             return nil
         }
         

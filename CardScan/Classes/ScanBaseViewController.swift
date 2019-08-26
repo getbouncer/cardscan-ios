@@ -104,9 +104,12 @@ import Vision
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
-    @objc static public func isCompatible() -> Bool {
+    @objc static public func isCompatible(runOnOldDevices: Bool = false) -> Bool {
         if #available(iOS 11.2, *) {
             // make sure that we don't run on iPhone 6 / 6plus or older
+            if runOnOldDevices {
+                return true
+            }
             switch Api.deviceType() {
             case "iPhone3,1", "iPhone3,2", "iPhone3,3", "iPhone4,1", "iPhone5,1", "iPhone5,2", "iPhone5,3", "iPhone5,4", "iPhone6,1", "iPhone6,2", "iPhone7,2", "iPhone7,1":
                 return false
