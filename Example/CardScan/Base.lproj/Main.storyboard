@@ -33,7 +33,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="scanCardFakeOnly" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dje-0L-2QO"/>
+                                    <action selector="scanCardPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dje-0L-2QO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6NY-p4-OvD">
@@ -114,11 +114,20 @@
                                     <action selector="scanWithStatsPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="jE8-iT-1in"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3P-G8-yKq">
+                                <rect key="frame" x="119.5" y="189.5" width="136" height="30"/>
+                                <state key="normal" title="Scan on old phones"/>
+                                <connections>
+                                    <action selector="scanCardOldDevicePress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lSb-gT-iHT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="top" secondItem="9tR-DO-gyb" secondAttribute="bottom" constant="16" id="1PH-rJ-mXS"/>
+                            <constraint firstItem="ohs-2Q-mlC" firstAttribute="top" secondItem="f3P-G8-yKq" secondAttribute="bottom" constant="8" id="2fc-SR-27T"/>
                             <constraint firstItem="ohs-2Q-mlC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="16" id="420-Q5-1Ny"/>
+                            <constraint firstItem="f3P-G8-yKq" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="8CR-et-Rxz"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="AkZ-f5-Cw0"/>
                             <constraint firstItem="LBI-Nj-Ojb" firstAttribute="top" secondItem="pIK-as-bko" secondAttribute="bottom" constant="8" id="DKk-6B-vtM"/>
                             <constraint firstItem="9tR-DO-gyb" firstAttribute="top" secondItem="ohs-2Q-mlC" secondAttribute="bottom" constant="8" id="Fjf-BO-ZHs"/>
