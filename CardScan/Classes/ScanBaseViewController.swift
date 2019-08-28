@@ -8,7 +8,7 @@ import Vision
     @objc func nextImage() -> CGImage?
 }
 
-@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents {
+@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
     
     public func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?) {
         // relay this data to our own delegate object
@@ -104,10 +104,20 @@ import Vision
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
-    @objc static public func isCompatible(runOnOldDevices: Bool = false) -> Bool {
+    @objc static public func isCompatible() -> Bool {
+        return self.isCompatible(configuration: ScanConfiguration())
+    }
+    
+    @objc static public func isCompatible(configuration: ScanConfiguration) -> Bool {
+        // check to see if the user has already denined camera permission
+        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        if authorizationStatus != .authorized && authorizationStatus != .notDetermined && configuration.setPreviouslyDeniedDevicesAsIncompatible {
+            return false
+        }
+        
         if #available(iOS 11.2, *) {
             // make sure that we don't run on iPhone 6 / 6plus or older
-            if runOnOldDevices {
+            if configuration.runOnOldDevices {
                 return true
             }
             switch Api.deviceType() {
@@ -147,10 +157,14 @@ import Vision
         corners.drawCorners()
     }
     
+    func permissionDidComplete(granted: Bool) {
+        self.ocr.scanStats.permissionGranted = granted
+    }
+    
     // you must call setupOnViewDidLoad before calling this function and you have to call
     // this function to get the camera going
     public func startCameraPreview() {
-        self.videoFeed.requestCameraAccess()
+        self.videoFeed.requestCameraAccess(permissionDelegate: self)
     }
     
     public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?) {
