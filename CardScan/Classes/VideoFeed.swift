@@ -1,6 +1,10 @@
 import AVKit
 import VideoToolbox
 
+protocol AfterPermissions {
+    func permissionDidComplete(granted: Bool)
+}
+
 class VideoFeed {
     private enum SessionSetupResult {
         case success
@@ -21,10 +25,11 @@ class VideoFeed {
         self.sessionQueue.suspend()
     }
     
-    func requestCameraAccess() {
+    func requestCameraAccess(permissionDelegate: AfterPermissions?) {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             self.sessionQueue.resume()
+            DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: true) }
             break
             
         case .notDetermined:
@@ -33,11 +38,13 @@ class VideoFeed {
                     self.setupResult = .notAuthorized
                 }
                 self.sessionQueue.resume()
+                DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: granted) }
             })
             
         default:
             // The user has previously denied access.
             self.setupResult = .notAuthorized
+            DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: false) }
         }
     }
     

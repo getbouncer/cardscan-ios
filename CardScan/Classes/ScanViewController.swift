@@ -112,7 +112,7 @@ import UIKit
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil, configuration: ScanConfiguration) -> ScanViewController? {
         
-        if !self.isCompatible(runOnOldDevices: configuration.runOnOldDevices) {
+        if !self.isCompatible(configuration: configuration) {
             return nil
         }
         
