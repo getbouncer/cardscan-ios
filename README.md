@@ -112,8 +112,12 @@ import UIKit
 import CardScan
 
 class ViewController: UIViewController, ScanDelegate {
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear() {
+        super.viewWillAppear()
+	
+	// It's important that this goes in viewWillAppear because the user may deny permission
+	// on the ScanViewController, in which case you'd want to hide the button to avoid
+	// future presses
         if !ScanViewController.isCompatible() {
 	    // Hide your "scan card" button because this device isn't compatible with CardScan
         }
