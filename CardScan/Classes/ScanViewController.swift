@@ -5,7 +5,7 @@
 //  Created by Sam King on 10/11/18.
 //  Copyright © 2018 Sam King. All rights reserved.
 //
-
+import AVKit
 import UIKit
 
 #if canImport(Stripe)
@@ -104,6 +104,7 @@ import UIKit
     @IBOutlet weak var cornerView: CornerView!
     
     var calledDelegate = false
+    var needToShowDenyAlert = false
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
         // use default config
@@ -199,6 +200,28 @@ import UIKit
         }
     }
     
+    func showDenyAlert() {
+        let alert = UIAlertController(title: "Need camera accesss", message: "Please enable camera access in your settings to scan your card", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            switch action.style{
+            case .default:
+                self.backButtonPress("")
+                
+            case .cancel:
+                print("cancel")
+                
+            case .destructive:
+                print("destructive")
+            }}))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    override public func onCameraPermissionDenied(showedPrompt: Bool) {
+        if showedPrompt {
+            self.showDenyAlert()
+        }
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -212,6 +235,11 @@ import UIKit
             self.skipButton.isHidden = true
         }
         
+        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        if authorizationStatus != .authorized && authorizationStatus != .notDetermined {
+            self.needToShowDenyAlert = true
+        }
+        
         let debugImageView = self.showDebugImageView ? self.debugImageView : nil
         self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView)
         self.startCameraPreview()
@@ -220,6 +248,10 @@ import UIKit
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.cornerView.layer.borderColor = UIColor.green.cgColor
+        if self.needToShowDenyAlert {
+            self.needToShowDenyAlert = false
+            self.showDenyAlert()
+        }
     }
     
     public override func viewDidLayoutSubviews() {

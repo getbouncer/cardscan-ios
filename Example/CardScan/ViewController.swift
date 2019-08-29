@@ -67,6 +67,13 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
         self.cameraImage.image = ScanViewController.cameraImage()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !ScanViewController.isCompatible() {
+            self.scanCardButton.isHidden = true
+        }
+    }
+    
     
     @IBOutlet weak var cameraImage: UIImageView!
     @IBOutlet weak var scanCardButton: UIButton!
