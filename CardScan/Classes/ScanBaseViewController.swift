@@ -50,9 +50,10 @@ import Vision
     
     private var ocr = Ocr()
     
-    // Child classes should override these two functions
+    // Child classes should override these three functions
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
+    @objc open func onCameraPermissionDenied(showedPrompt: Bool) { }
     
     public func toggleTorch() {
         self.ocr.scanStats.torchOn = !self.ocr.scanStats.torchOn
@@ -156,9 +157,12 @@ import Vision
         corners.setFrameSize(roi: roi)
         corners.drawCorners()
     }
-    
-    func permissionDidComplete(granted: Bool) {
+
+    func permissionDidComplete(granted: Bool, showedPrompt: Bool) {
         self.ocr.scanStats.permissionGranted = granted
+        if !granted {
+            self.onCameraPermissionDenied(showedPrompt: showedPrompt)
+        }
     }
     
     // you must call setupOnViewDidLoad before calling this function and you have to call

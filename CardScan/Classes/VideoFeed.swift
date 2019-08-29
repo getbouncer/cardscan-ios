@@ -2,7 +2,7 @@ import AVKit
 import VideoToolbox
 
 protocol AfterPermissions {
-    func permissionDidComplete(granted: Bool)
+    func permissionDidComplete(granted: Bool, showedPrompt: Bool)
 }
 
 class VideoFeed {
@@ -29,7 +29,7 @@ class VideoFeed {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             self.sessionQueue.resume()
-            DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: true) }
+            DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: true, showedPrompt: false) }
             break
             
         case .notDetermined:
@@ -38,13 +38,13 @@ class VideoFeed {
                     self.setupResult = .notAuthorized
                 }
                 self.sessionQueue.resume()
-                DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: granted) }
+                DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: granted, showedPrompt: true) }
             })
             
         default:
             // The user has previously denied access.
             self.setupResult = .notAuthorized
-            DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: false) }
+            DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: false, showedPrompt: false) }
         }
     }
     
