@@ -125,6 +125,9 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
         vc.positionCardFont = UIFont(name: "Chalkduster", size: CGFloat(17.0))
         vc.skipButtonFont = UIFont(name: "Chalkduster", size: CGFloat(17.0))
         
+        vc.cornerColor = UIColor.blue
+        vc.torchButtonImage = ScanViewController.cameraImage()
+        
         self.present(vc, animated: true)
     }
     
