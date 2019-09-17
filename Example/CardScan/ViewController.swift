@@ -9,7 +9,7 @@
 import UIKit
 import CardScan
 
-class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDataSource, TestingImageDataSource {
+class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanStringsDataSource, TestingImageDataSource {
 
     let testImages = [UIImage(imageLiteralResourceName: "frame0"),
                       UIImage(imageLiteralResourceName: "frame19"),
@@ -34,6 +34,8 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
     func positionCard() -> String { return "New Position Card" }
     func backButton() -> String { return "New Back" }
     func skipButton() -> String { return "New Skip" }
+    func denyPermissionTitle() -> String { return "New Deny" }
+    func denyPermissionMessage() -> String { return "New Deny Message" }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
         self.dismiss(animated: true)
