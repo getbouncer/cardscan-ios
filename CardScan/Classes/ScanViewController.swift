@@ -27,6 +27,19 @@ import UIKit
     @objc func skipButton() -> String
 }
 
+// The FullScanStringsDataSource protocol defines all of the strings
+// that the viewcontroller uses. As we add more strings we will update
+// this protocol, which will require you to update your integration on
+// an update that includes new strings.
+//
+// If you prefer to just set the main strings on the ScanViewController
+// the ScanStringsDataSource protocol is stable and won't change, but
+// might be incomplete.
+@objc public protocol FullScanStringsDataSource: ScanStringsDataSource {
+    @objc func denyPermissionTitle() -> String
+    @objc func denyPermissionMessage() -> String
+}
+
 @objc public class CreditCard: NSObject {
     @objc public var number: String
     @objc public var expiryMonth: String?
@@ -105,6 +118,8 @@ import UIKit
     @IBOutlet weak var torchButton: UIButton!
     @IBOutlet weak var cornerView: CornerView!
     var cornerBorderColor = UIColor.green.cgColor
+    var denyPermissionTitle = "Need camera accesss"
+    var denyPermissionMessage = "Please enable camera access in your settings to scan your card"
     
     var calledDelegate = false
     var needToShowDenyAlert = false
@@ -170,6 +185,13 @@ import UIKit
         self.positionCardLabel.text = dataSource.positionCard()
         self.skipButton.setTitle(dataSource.skipButton(), for: .normal)
         self.backButton.setTitle(dataSource.backButton(), for: .normal)
+        
+        guard let fullDataSource = dataSource as? FullScanStringsDataSource else {
+            return
+        }
+        
+        self.denyPermissionMessage = fullDataSource.denyPermissionMessage()
+        self.denyPermissionTitle = fullDataSource.denyPermissionTitle()
     }
     
     func setUiCustomization() {
@@ -210,7 +232,7 @@ import UIKit
     }
     
     func showDenyAlert() {
-        let alert = UIAlertController(title: "Need camera accesss", message: "Please enable camera access in your settings to scan your card", preferredStyle: .alert)
+        let alert = UIAlertController(title: self.denyPermissionTitle, message: self.denyPermissionMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch action.style{
             case .default:
