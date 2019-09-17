@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // if you need to get an API key you can get one from here:
 	// https://api.getbouncer.com/console
-    	ScanViewController.configure(apiKey = "YOUR_API_KEY_HERE") 
+    	ScanViewController.configure(apiKey: "YOUR_API_KEY_HERE") 
         // do any other necessary launch configuration
         return true
     }
