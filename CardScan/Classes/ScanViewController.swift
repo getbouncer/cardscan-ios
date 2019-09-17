@@ -84,6 +84,8 @@ import UIKit
     @objc public var positionCardFont: UIFont?
     @objc public var skipButtonFont: UIFont?
     @objc public var backButtonImageToTextDelta: NSNumber?
+    @objc public var torchButtonImage: UIImage?
+    @objc public var cornerColor: UIColor?
     
     @IBOutlet weak var expiryLabel: UILabel!
     @IBOutlet weak var cardNumberLabel: UILabel!
@@ -102,6 +104,7 @@ import UIKit
     
     @IBOutlet weak var torchButton: UIButton!
     @IBOutlet weak var cornerView: CornerView!
+    var cornerBorderColor = UIColor.green.cgColor
     
     var calledDelegate = false
     var needToShowDenyAlert = false
@@ -198,6 +201,12 @@ import UIKit
         if let delta = self.backButtonImageToTextDelta.map({ CGFloat($0.floatValue) }) {
             self.backButtonImageToTextConstraint.constant += delta
         }
+        if let image = self.torchButtonImage {
+            self.torchButton.setImage(image, for: .normal)
+        }
+        if let color = self.cornerColor {
+            self.cornerBorderColor = color.cgColor
+        }
     }
     
     func showDenyAlert() {
@@ -247,7 +256,7 @@ import UIKit
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.cornerView.layer.borderColor = UIColor.green.cgColor
+        self.cornerView.layer.borderColor = self.cornerBorderColor
         if self.needToShowDenyAlert {
             self.needToShowDenyAlert = false
             self.showDenyAlert()
