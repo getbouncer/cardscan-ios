@@ -85,7 +85,9 @@ file:
 
 ## Configure CardScan (Swift)
 
-Configure the library when your application launches:
+Make sure that you get an [API
+key](https://api.getbouncer.com/console) and configure the library
+when your application launches:
 
 ```swift
 import UIKit
@@ -95,12 +97,19 @@ import CardScan
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    	ScanViewController.configure() 
+        // if you need to get an API key you can get one from here:
+	// https://api.getbouncer.com/console
+    	ScanViewController.configure(apiKey: "YOUR_API_KEY_HERE") 
         // do any other necessary launch configuration
         return true
     }
 }
 ```
+
+By setting the API key the SDK will send anonymous stats to Bouncer's
+servers. [This code
+snippet](https://github.com/getbouncer/cardscan-ios/blob/da77e36c49f1de4b678e7ecaab56cc1466602716/CardScan/Classes/ScanStats.swift#L50)
+shows what we send.
 
 ## Using CardScan (Swift)
 
@@ -177,7 +186,9 @@ if !ScanViewController.isCompatible() {
 
 ## Configure CardScan (Objective C)
 
-Configure the library when your application launches:
+Make sure that you get an [API
+key](https://api.getbouncer.com/console) and configure the library
+when your application launches:
 
 ```objective-c
 #import "AppDelegate.h"
@@ -186,12 +197,19 @@ Configure the library when your application launches:
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [ScanViewController configure];
+    // if you need to get an API key you can get one from here:
+    // https://api.getbouncer.com/console
+    [ScanViewController configureWithApiKey:@"YOUR_API_KEY_HERE"];
     return YES;
 }
 
 @end
 ```
+
+By setting the API key the SDK will send anonymous stats to Bouncer's
+servers. [This code
+snippet](https://github.com/getbouncer/cardscan-ios/blob/da77e36c49f1de4b678e7ecaab56cc1466602716/CardScan/Classes/ScanStats.swift#L50)
+shows what we send.
 
 ## Using CardScan (Objective C)
 
