@@ -25,7 +25,7 @@ struct CreditCardUtils {
     }
     
     static func isValidBin(number: String) -> Bool {
-        return isAmex(number: number) || isDiscover(number: number) || isVisa(number: number) || isMastercard(number: number)
+        return isAmex(number: number) || isDiscover(number: number) || isVisa(number: number) || isMastercard(number: number) || isUnionPay(number: number)
     }
     
     static func isAmex(number: String) -> Bool {
@@ -36,15 +36,38 @@ struct CreditCardUtils {
         return number.count == 15 && (prefix == 34 || prefix == 37)
     }
     
+    static func isUnionPay(number: String) -> Bool {
+        // Note: there is a little confusion over discover vs unionpay
+        // since some of the bin ranges overlap, but my guess is that
+        // it's unionpay but might be using the discover network
+        // behind the scenes.
+        // https://www.unionpayintl.com/en/mediaCenter/brandCenter/brandEmbodiment/
+        guard let prefix2 = Int(String(number.prefix(2))) else {
+            return false
+        }
+        
+        if number.count != 16 {
+            return false
+        }
+        
+        return prefix2 == 62
+    }
+    
     static func isDiscover(number: String) -> Bool {
         guard let prefix2 = Int(String(number.prefix(2))), let prefix4 = Int(String(number.prefix(4))), let prefix6 = Int(String(number.prefix(6))) else {
             return false
         }
         
-        return prefix2 == 64 || prefix2 == 65 || prefix4 == 6011 ||
-            (prefix6 >= 622126 && prefix6 <= 622925) ||
-            (prefix6 >= 624000 && prefix6 <= 626999) ||
-            (prefix6 >= 628200 && prefix6 <= 628899)
+        if number.count != 16 {
+            return false
+        }
+        
+        // Removing this prefix range because it's UnionPay
+        // (prefix6 >= 622126 && prefix6 <= 622925) ||
+        // (prefix6 >= 624000 && prefix6 <= 626999) ||
+        // (prefix6 >= 628200 && prefix6 <= 628899)
+        
+        return prefix2 == 64 || prefix2 == 65 || prefix4 == 6011
     }
     
     static func isMastercard(number: String) -> Bool {
