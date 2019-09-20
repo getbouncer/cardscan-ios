@@ -54,7 +54,7 @@ public struct CreditCardUtils {
     }
     
     public static func isDiscover(number: String) -> Bool {
-        guard let prefix2 = Int(String(number.prefix(2))), let prefix4 = Int(String(number.prefix(4))), let prefix6 = Int(String(number.prefix(6))) else {
+        guard let prefix2 = Int(String(number.prefix(2))), let prefix4 = Int(String(number.prefix(4))) else {
             return false
         }
         
