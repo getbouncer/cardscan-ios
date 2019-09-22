@@ -184,9 +184,6 @@ import Vision
         regionOfInterestLabel.layer.cornerRadius = self.regionCornerRadius
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
-
-        //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
-        self.videoFeed.setup(captureDelegate: self, completion: { success in })
   
         self.ocr.errorCorrectionDuration = self.errorCorrectionDuration
 
@@ -197,6 +194,8 @@ import Vision
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
         self.videoFeed.pauseSession()
+        //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
+        self.videoFeed.setup(captureDelegate: self, completion: { success in })
     }
     
     override open var shouldAutorotate: Bool {
