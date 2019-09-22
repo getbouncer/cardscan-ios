@@ -122,7 +122,6 @@ import UIKit
     var denyPermissionMessage = "Please enable camera access in your settings to scan your card"
     
     var calledDelegate = false
-    var needToShowDenyAlert = false
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
         // use default config
@@ -248,8 +247,10 @@ import UIKit
     }
     
     override public func onCameraPermissionDenied(showedPrompt: Bool) {
-        if showedPrompt {
+        if !showedPrompt {
             self.showDenyAlert()
+        } else {
+            self.backButtonPress("")
         }
     }
     
@@ -266,11 +267,6 @@ import UIKit
             self.skipButton.isHidden = true
         }
         
-        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
-        if authorizationStatus != .authorized && authorizationStatus != .notDetermined {
-            self.needToShowDenyAlert = true
-        }
-        
         let debugImageView = self.showDebugImageView ? self.debugImageView : nil
         self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView)
         self.startCameraPreview()
@@ -279,10 +275,6 @@ import UIKit
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.cornerView.layer.borderColor = self.cornerBorderColor
-        if self.needToShowDenyAlert {
-            self.needToShowDenyAlert = false
-            self.showDenyAlert()
-        }
     }
     
     public override func viewDidLayoutSubviews() {
