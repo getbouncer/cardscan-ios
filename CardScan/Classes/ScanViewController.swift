@@ -248,8 +248,10 @@ import UIKit
     }
     
     override public func onCameraPermissionDenied(showedPrompt: Bool) {
-        if showedPrompt {
+        if !showedPrompt {
             self.showDenyAlert()
+        } else {
+            self.backButtonPress("")
         }
     }
     
