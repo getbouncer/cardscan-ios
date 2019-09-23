@@ -38,6 +38,7 @@ import UIKit
 @objc public protocol FullScanStringsDataSource: ScanStringsDataSource {
     @objc func denyPermissionTitle() -> String
     @objc func denyPermissionMessage() -> String
+    @objc func denyPermissionButton() -> String
 }
 
 @objc public class CreditCard: NSObject {
@@ -120,6 +121,7 @@ import UIKit
     var cornerBorderColor = UIColor.green.cgColor
     var denyPermissionTitle = "Need camera accesss"
     var denyPermissionMessage = "Please enable camera access in your settings to scan your card"
+    var denyPermissionButtonText = "OK"
     
     var calledDelegate = false
     
@@ -191,6 +193,7 @@ import UIKit
         
         self.denyPermissionMessage = fullDataSource.denyPermissionMessage()
         self.denyPermissionTitle = fullDataSource.denyPermissionTitle()
+        self.denyPermissionButtonText = fullDataSource.denyPermissionButton()
     }
     
     func setUiCustomization() {
@@ -232,7 +235,7 @@ import UIKit
     
     func showDenyAlert() {
         let alert = UIAlertController(title: self.denyPermissionTitle, message: self.denyPermissionMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: self.denyPermissionButtonText, style: .default, handler: { action in
             switch action.style{
             case .default:
                 self.backButtonPress("")

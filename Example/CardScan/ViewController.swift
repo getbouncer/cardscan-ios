@@ -36,6 +36,7 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
     func skipButton() -> String { return "New Skip" }
     func denyPermissionTitle() -> String { return "New Deny" }
     func denyPermissionMessage() -> String { return "New Deny Message" }
+    func denyPermissionButton() -> String { return "GO" }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
         self.dismiss(animated: true)
