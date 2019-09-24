@@ -61,11 +61,7 @@ class VideoFeed {
         
         session.beginConfiguration()
         
-        if session.canSetSessionPreset(.iFrame960x540) {
-            session.sessionPreset = .iFrame960x540
-        }
-        
-        do {
+         do {
             var defaultVideoDevice: AVCaptureDevice?
             
             // Choose the back dual camera if available, otherwise default to a wide angle camera.
@@ -127,6 +123,10 @@ class VideoFeed {
                 return
             }
             session.addOutput(videoDeviceOutput)
+            
+            if session.canSetSessionPreset(.iFrame960x540) {
+                 session.sessionPreset = .iFrame960x540
+             }
             
             let connection = videoDeviceOutput.connection(with: .video)
             if connection?.isVideoOrientationSupported ?? false {
