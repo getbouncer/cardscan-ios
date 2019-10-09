@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="vXZ-lx-hvc" customClass="ViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -163,7 +161,7 @@
         <!--Result View Controller-->
         <scene sceneID="QQj-aS-VAE">
             <objects>
-                <viewController storyboardIdentifier="results" id="mw5-ZK-itv" customClass="ResultViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="results" modalPresentationStyle="fullScreen" id="mw5-ZK-itv" customClass="ResultViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xXx-1S-0Fk"/>
                         <viewControllerLayoutGuide type="bottom" id="WyV-H4-nAt"/>
@@ -173,20 +171,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hGU-AQ-XEE">
-                                <rect key="frame" x="8" y="28" width="359" height="226"/>
+                                <rect key="frame" x="8" y="8" width="359" height="226"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="hGU-AQ-XEE" secondAttribute="height" multiplier="359:226" id="ivI-g2-riQ"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dpc-u0-9nd">
-                                <rect key="frame" x="8" y="262" width="183" height="47"/>
+                                <rect key="frame" x="8" y="242" width="183" height="47"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="183" id="HNW-LK-0ct"/>
                                     <constraint firstAttribute="height" constant="47" id="nma-PS-KS6"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Cr-oD-9K4">
-                                <rect key="frame" x="16" y="438" width="343" height="20"/>
+                                <rect key="frame" x="16" y="418" width="343" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -206,14 +204,14 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aU5-W8-fum">
-                                <rect key="frame" x="8" y="317" width="183" height="46"/>
+                                <rect key="frame" x="8" y="297" width="183" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="183" id="F0A-a9-VRi"/>
                                     <constraint firstAttribute="height" constant="46" id="oBS-bY-iSC"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuH-z7-S5E">
-                                <rect key="frame" x="16" y="466" width="343" height="20"/>
+                                <rect key="frame" x="16" y="446" width="343" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
