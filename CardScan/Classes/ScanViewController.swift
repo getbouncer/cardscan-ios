@@ -119,7 +119,7 @@ import UIKit
     @IBOutlet weak var torchButton: UIButton!
     @IBOutlet weak var cornerView: CornerView!
     var cornerBorderColor = UIColor.green.cgColor
-    var denyPermissionTitle = "Need camera accesss"
+    var denyPermissionTitle = "Need camera access"
     var denyPermissionMessage = "Please enable camera access in your settings to scan your card"
     var denyPermissionButtonText = "OK"
     
