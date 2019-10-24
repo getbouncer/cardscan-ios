@@ -89,7 +89,7 @@ public struct SsdDetect {
         let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
 
         let predAPI = PredictionAPI()
-        var result:Result = predAPI.predictionAPI(scores:normalizedScores, boxes: cornerFormBoxes, probThreshold: probThreshold, iouThreshold: iouThreshold, candidateSize:candidateSize, topK: topK)
+        let result:Result = predAPI.predictionAPI(scores:normalizedScores, boxes: cornerFormBoxes, probThreshold: probThreshold, iouThreshold: iouThreshold, candidateSize:candidateSize, topK: topK)
         endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "Rest of the forward pass time: \(endTime)")
         
