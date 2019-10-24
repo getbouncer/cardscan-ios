@@ -1,10 +1,10 @@
 import Foundation
 
-struct CreditCardUtils {
+public struct CreditCardUtils {
     // https://en.wikipedia.org/wiki/Luhn_algorithm
     // assume 16 digits are for MC and Visa (start with 4, 5) and 15 is for Amex
     // which starts with 3
-    static func luhnCheck(_ cardNumber: String) -> Bool {
+    public static func luhnCheck(_ cardNumber: String) -> Bool {
         if cardNumber.count == 0 {
             return false
         } else if !isValidBin(number: cardNumber) {
@@ -24,11 +24,11 @@ struct CreditCardUtils {
         return sum % 10 == 0
     }
     
-    static func isValidBin(number: String) -> Bool {
-        return isAmex(number: number) || isDiscover(number: number) || isVisa(number: number) || isMastercard(number: number)
+    public static func isValidBin(number: String) -> Bool {
+        return isAmex(number: number) || isDiscover(number: number) || isVisa(number: number) || isMastercard(number: number) || isUnionPay(number: number)
     }
     
-    static func isAmex(number: String) -> Bool {
+    public static func isAmex(number: String) -> Bool {
         guard let prefix = Int(String(number.prefix(2))) else {
             return false
         }
@@ -36,18 +36,41 @@ struct CreditCardUtils {
         return number.count == 15 && (prefix == 34 || prefix == 37)
     }
     
-    static func isDiscover(number: String) -> Bool {
-        guard let prefix2 = Int(String(number.prefix(2))), let prefix4 = Int(String(number.prefix(4))), let prefix6 = Int(String(number.prefix(6))) else {
+    public static func isUnionPay(number: String) -> Bool {
+        // Note: there is a little confusion over discover vs unionpay
+        // since some of the bin ranges overlap, but my guess is that
+        // it's unionpay but might be using the discover network
+        // behind the scenes.
+        // https://www.unionpayintl.com/en/mediaCenter/brandCenter/brandEmbodiment/
+        guard let prefix2 = Int(String(number.prefix(2))) else {
             return false
         }
         
-        return prefix2 == 64 || prefix2 == 65 || prefix4 == 6011 ||
-            (prefix6 >= 622126 && prefix6 <= 622925) ||
-            (prefix6 >= 624000 && prefix6 <= 626999) ||
-            (prefix6 >= 628200 && prefix6 <= 628899)
+        if number.count != 16 {
+            return false
+        }
+        
+        return prefix2 == 62
     }
     
-    static func isMastercard(number: String) -> Bool {
+    public static func isDiscover(number: String) -> Bool {
+        guard let prefix2 = Int(String(number.prefix(2))), let prefix4 = Int(String(number.prefix(4))) else {
+            return false
+        }
+        
+        if number.count != 16 {
+            return false
+        }
+        
+        // Removing this prefix range because it's UnionPay
+        // (prefix6 >= 622126 && prefix6 <= 622925) ||
+        // (prefix6 >= 624000 && prefix6 <= 626999) ||
+        // (prefix6 >= 628200 && prefix6 <= 628899)
+        
+        return prefix2 == 64 || prefix2 == 65 || prefix4 == 6011
+    }
+    
+    public static func isMastercard(number: String) -> Bool {
         guard let prefix2 = Int(String(number.prefix(2))), let prefix4 = Int(String(number.prefix(4))) else {
             return false
         }
@@ -59,12 +82,12 @@ struct CreditCardUtils {
         return (prefix2 >= 51 && prefix2 <= 55) || (prefix4 >= 2221 && prefix4 <= 2720)
     }
     
-    static func isVisa(number: String) -> Bool {
+    public static func isVisa(number: String) -> Bool {
         return number.count == 16 && number.starts(with: "4")
     }
     
     
-    static func format(number: String) -> String {
+    public static func format(number: String) -> String {
         if number.count == 16 {
             return format16(number: number)
         } else if number.count == 15 {

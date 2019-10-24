@@ -8,7 +8,7 @@ import Vision
     @objc func nextImage() -> CGImage?
 }
 
-@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents {
+@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
     
     public func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?) {
         // relay this data to our own delegate object
@@ -50,9 +50,10 @@ import Vision
     
     private var ocr = Ocr()
     
-    // Child classes should override these two functions
+    // Child classes should override these three functions
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
+    @objc open func onCameraPermissionDenied(showedPrompt: Bool) { }
     
     public func toggleTorch() {
         self.ocr.scanStats.torchOn = !self.ocr.scanStats.torchOn
@@ -105,8 +106,21 @@ import Vision
     }
     
     @objc static public func isCompatible() -> Bool {
+        return self.isCompatible(configuration: ScanConfiguration())
+    }
+    
+    @objc static public func isCompatible(configuration: ScanConfiguration) -> Bool {
+        // check to see if the user has already denined camera permission
+        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        if authorizationStatus != .authorized && authorizationStatus != .notDetermined && configuration.setPreviouslyDeniedDevicesAsIncompatible {
+            return false
+        }
+        
         if #available(iOS 11.2, *) {
             // make sure that we don't run on iPhone 6 / 6plus or older
+            if configuration.runOnOldDevices {
+                return true
+            }
             switch Api.deviceType() {
             case "iPhone3,1", "iPhone3,2", "iPhone3,3", "iPhone4,1", "iPhone5,1", "iPhone5,2", "iPhone5,3", "iPhone5,4", "iPhone6,1", "iPhone6,2", "iPhone7,2", "iPhone7,1":
                 return false
@@ -143,11 +157,18 @@ import Vision
         corners.setFrameSize(roi: roi)
         corners.drawCorners()
     }
+
+    func permissionDidComplete(granted: Bool, showedPrompt: Bool) {
+        self.ocr.scanStats.permissionGranted = granted
+        if !granted {
+            self.onCameraPermissionDenied(showedPrompt: showedPrompt)
+        }
+    }
     
     // you must call setupOnViewDidLoad before calling this function and you have to call
     // this function to get the camera going
     public func startCameraPreview() {
-        self.videoFeed.requestCameraAccess()
+        self.videoFeed.requestCameraAccess(permissionDelegate: self)
     }
     
     public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?) {
@@ -163,9 +184,6 @@ import Vision
         regionOfInterestLabel.layer.cornerRadius = self.regionCornerRadius
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
-
-        //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
-        self.videoFeed.setup(captureDelegate: self, completion: { success in })
   
         self.ocr.errorCorrectionDuration = self.errorCorrectionDuration
 
@@ -176,6 +194,8 @@ import Vision
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
         self.videoFeed.pauseSession()
+        //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
+        self.videoFeed.setup(captureDelegate: self, completion: { success in })
     }
     
     override open var shouldAutorotate: Bool {

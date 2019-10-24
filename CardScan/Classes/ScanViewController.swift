@@ -5,7 +5,7 @@
 //  Created by Sam King on 10/11/18.
 //  Copyright © 2018 Sam King. All rights reserved.
 //
-
+import AVKit
 import UIKit
 
 #if canImport(Stripe)
@@ -25,6 +25,20 @@ import UIKit
     @objc func positionCard() -> String
     @objc func backButton() -> String
     @objc func skipButton() -> String
+}
+
+// The FullScanStringsDataSource protocol defines all of the strings
+// that the viewcontroller uses. As we add more strings we will update
+// this protocol, which will require you to update your integration on
+// an update that includes new strings.
+//
+// If you prefer to just set the main strings on the ScanViewController
+// the ScanStringsDataSource protocol is stable and won't change, but
+// might be incomplete.
+@objc public protocol FullScanStringsDataSource: ScanStringsDataSource {
+    @objc func denyPermissionTitle() -> String
+    @objc func denyPermissionMessage() -> String
+    @objc func denyPermissionButton() -> String
 }
 
 @objc public class CreditCard: NSObject {
@@ -84,6 +98,8 @@ import UIKit
     @objc public var positionCardFont: UIFont?
     @objc public var skipButtonFont: UIFont?
     @objc public var backButtonImageToTextDelta: NSNumber?
+    @objc public var torchButtonImage: UIImage?
+    @objc public var cornerColor: UIColor?
     
     @IBOutlet weak var expiryLabel: UILabel!
     @IBOutlet weak var cardNumberLabel: UILabel!
@@ -102,12 +118,21 @@ import UIKit
     
     @IBOutlet weak var torchButton: UIButton!
     @IBOutlet weak var cornerView: CornerView!
+    var cornerBorderColor = UIColor.green.cgColor
+    var denyPermissionTitle = "Need camera access"
+    var denyPermissionMessage = "Please enable camera access in your settings to scan your card"
+    var denyPermissionButtonText = "OK"
     
     var calledDelegate = false
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
+        // use default config
+        return self.createViewController(withDelegate: delegate, configuration: ScanConfiguration())
+    }
+    
+    @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil, configuration: ScanConfiguration) -> ScanViewController? {
         
-        if !self.isCompatible() {
+        if !self.isCompatible(configuration: configuration) {
             return nil
         }
         
@@ -161,6 +186,14 @@ import UIKit
         self.positionCardLabel.text = dataSource.positionCard()
         self.skipButton.setTitle(dataSource.skipButton(), for: .normal)
         self.backButton.setTitle(dataSource.backButton(), for: .normal)
+        
+        guard let fullDataSource = dataSource as? FullScanStringsDataSource else {
+            return
+        }
+        
+        self.denyPermissionMessage = fullDataSource.denyPermissionMessage()
+        self.denyPermissionTitle = fullDataSource.denyPermissionTitle()
+        self.denyPermissionButtonText = fullDataSource.denyPermissionButton()
     }
     
     func setUiCustomization() {
@@ -192,6 +225,36 @@ import UIKit
         if let delta = self.backButtonImageToTextDelta.map({ CGFloat($0.floatValue) }) {
             self.backButtonImageToTextConstraint.constant += delta
         }
+        if let image = self.torchButtonImage {
+            self.torchButton.setImage(image, for: .normal)
+        }
+        if let color = self.cornerColor {
+            self.cornerBorderColor = color.cgColor
+        }
+    }
+    
+    func showDenyAlert() {
+        let alert = UIAlertController(title: self.denyPermissionTitle, message: self.denyPermissionMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: self.denyPermissionButtonText, style: .default, handler: { action in
+            switch action.style{
+            case .default:
+                self.backButtonPress("")
+                
+            case .cancel:
+                print("cancel")
+                
+            case .destructive:
+                print("destructive")
+            }}))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    override public func onCameraPermissionDenied(showedPrompt: Bool) {
+        if !showedPrompt {
+            self.showDenyAlert()
+        } else {
+            self.backButtonPress("")
+        }
     }
     
     public override func viewDidLoad() {
@@ -214,7 +277,7 @@ import UIKit
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.cornerView.layer.borderColor = UIColor.green.cgColor
+        self.cornerView.layer.borderColor = self.cornerBorderColor
     }
     
     public override func viewDidLayoutSubviews() {

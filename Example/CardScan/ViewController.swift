@@ -9,7 +9,7 @@
 import UIKit
 import CardScan
 
-class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDataSource, TestingImageDataSource {
+class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanStringsDataSource, TestingImageDataSource {
 
     let testImages = [UIImage(imageLiteralResourceName: "frame0"),
                       UIImage(imageLiteralResourceName: "frame19"),
@@ -34,6 +34,9 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
     func positionCard() -> String { return "New Position Card" }
     func backButton() -> String { return "New Back" }
     func skipButton() -> String { return "New Skip" }
+    func denyPermissionTitle() -> String { return "New Deny" }
+    func denyPermissionMessage() -> String { return "New Deny Message" }
+    func denyPermissionButton() -> String { return "GO" }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
         self.dismiss(animated: true)
@@ -67,6 +70,13 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
         self.cameraImage.image = ScanViewController.cameraImage()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !ScanViewController.isCompatible() {
+            self.scanCardButton.isHidden = true
+        }
+    }
+    
     
     @IBOutlet weak var cameraImage: UIImageView!
     @IBOutlet weak var scanCardButton: UIButton!
@@ -79,8 +89,20 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
         vc.scanQrCode = true
         self.present(vc, animated: true)
     }
-    @IBAction func scanCardFakeOnly() {
+    @IBAction func scanCardPress() {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
+        
+        vc.allowSkip = true
+        self.present(vc, animated: true)
+    }
+    
+    @IBAction func scanCardOldDevicePress() {
+        let config = ScanConfiguration()
+        config.runOnOldDevices = true
+        guard let vc = ScanViewController.createViewController(withDelegate: self, configuration: config) else {
             print("scan view controller not supported on this hardware")
             return
         }
@@ -105,6 +127,9 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, ScanStringsDat
         vc.scanCardFont = UIFont(name: "Chalkduster", size: CGFloat(24.0))
         vc.positionCardFont = UIFont(name: "Chalkduster", size: CGFloat(17.0))
         vc.skipButtonFont = UIFont(name: "Chalkduster", size: CGFloat(17.0))
+        
+        vc.cornerColor = UIColor.blue
+        vc.torchButtonImage = ScanViewController.cameraImage()
         
         self.present(vc, animated: true)
     }

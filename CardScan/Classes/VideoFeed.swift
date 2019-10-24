@@ -1,6 +1,10 @@
 import AVKit
 import VideoToolbox
 
+protocol AfterPermissions {
+    func permissionDidComplete(granted: Bool, showedPrompt: Bool)
+}
+
 class VideoFeed {
     private enum SessionSetupResult {
         case success
@@ -21,10 +25,11 @@ class VideoFeed {
         self.sessionQueue.suspend()
     }
     
-    func requestCameraAccess() {
+    func requestCameraAccess(permissionDelegate: AfterPermissions?) {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             self.sessionQueue.resume()
+            DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: true, showedPrompt: false) }
             break
             
         case .notDetermined:
@@ -33,11 +38,13 @@ class VideoFeed {
                     self.setupResult = .notAuthorized
                 }
                 self.sessionQueue.resume()
+                DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: granted, showedPrompt: true) }
             })
             
         default:
             // The user has previously denied access.
             self.setupResult = .notAuthorized
+            DispatchQueue.main.async { permissionDelegate?.permissionDidComplete(granted: false, showedPrompt: false) }
         }
     }
     
@@ -54,11 +61,7 @@ class VideoFeed {
         
         session.beginConfiguration()
         
-        if session.canSetSessionPreset(.iFrame960x540) {
-            session.sessionPreset = .iFrame960x540
-        }
-        
-        do {
+         do {
             var defaultVideoDevice: AVCaptureDevice?
             
             // Choose the back dual camera if available, otherwise default to a wide angle camera.
@@ -120,6 +123,10 @@ class VideoFeed {
                 return
             }
             session.addOutput(videoDeviceOutput)
+            
+            if session.canSetSessionPreset(.iFrame960x540) {
+                 session.sessionPreset = .iFrame960x540
+             }
             
             let connection = videoDeviceOutput.connection(with: .video)
             if connection?.isVideoOrientationSupported ?? false {
