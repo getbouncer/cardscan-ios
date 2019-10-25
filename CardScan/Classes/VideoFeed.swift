@@ -124,9 +124,9 @@ class VideoFeed {
             }
             session.addOutput(videoDeviceOutput)
             
-            if session.canSetSessionPreset(.iFrame960x540) {
-                 session.sessionPreset = .iFrame960x540
-             }
+            if session.canSetSessionPreset(.high) {
+                session.sessionPreset = .high
+            }
             
             let connection = videoDeviceOutput.connection(with: .video)
             if connection?.isVideoOrientationSupported ?? false {
