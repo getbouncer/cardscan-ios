@@ -7,11 +7,23 @@
 
 import Foundation
 
+@available(iOS 11.2, *)
 struct PriorsGen{
+    static let featureMapSizeBig = 19
+    static let featureMapSizeSmall = 10
+    static let shrinkageBig = 32
+    static let shrinkageSmall = 16
+    static let aspectRatioOne = 2
+    static let aspectRationTwo = 3
+    static let noOfPriorsPerLocation = 6
+    static let boxSizeSmallLayerOne = 60
+    static let boxSizeBigLayerOne = 105
+    static let boxSizeBigLayerTwo = 150
     
+    @available(iOS 11.2, *)
     static func genPriors(featureMapSize: Int, shrinkage: Int, boxSizeMin: Int, boxSizeMax: Int, aspectRatioOne : Int, aspectRatioTwo: Int, noOfPriors: Int) -> [CGRect]{
         
-        let image_size = 300
+        let image_size = SsdDetect.SSDCardWidth
         let scale = Float(image_size) / Float(shrinkage);
         var boxes = [CGRect]()
         var x_center: Float; var y_center: Float
@@ -67,8 +79,8 @@ struct PriorsGen{
     
     static func combinePriors() -> [CGRect]{
         
-        let priorsOne = PriorsGen.genPriors(featureMapSize: 19, shrinkage: 16, boxSizeMin: 60, boxSizeMax: 105, aspectRatioOne: 2, aspectRatioTwo: 3, noOfPriors: 6)
-        let priorsTwo = PriorsGen.genPriors(featureMapSize: 10, shrinkage: 32, boxSizeMin: 105, boxSizeMax: 150, aspectRatioOne: 2, aspectRatioTwo: 3, noOfPriors: 6)
+        let priorsOne = PriorsGen.genPriors(featureMapSize: PriorsGen.featureMapSizeBig, shrinkage: PriorsGen.shrinkageSmall, boxSizeMin: PriorsGen.boxSizeSmallLayerOne, boxSizeMax: PriorsGen.boxSizeBigLayerOne, aspectRatioOne: PriorsGen.aspectRatioOne, aspectRatioTwo: PriorsGen.aspectRationTwo, noOfPriors: PriorsGen.noOfPriorsPerLocation)
+        let priorsTwo = PriorsGen.genPriors(featureMapSize: PriorsGen.featureMapSizeSmall, shrinkage: PriorsGen.shrinkageBig, boxSizeMin: PriorsGen.boxSizeBigLayerOne, boxSizeMax: PriorsGen.boxSizeBigLayerTwo, aspectRatioOne: PriorsGen.aspectRatioOne, aspectRatioTwo: PriorsGen.aspectRationTwo, noOfPriors: PriorsGen.noOfPriorsPerLocation)
         let priorsCombined = priorsOne + priorsTwo
         
         return priorsCombined

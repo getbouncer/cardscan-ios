@@ -20,29 +20,29 @@ public struct SsdDetect {
     static var priors:[CGRect]? = nil
     
     // SSD Model Parameters
-    
-    let SSDCardWidth = 300
-    let SSDCardHeight = 300
-   
-    
-    let NoOfPriorsPerLocation = 6
-    let NoOfClasses = 8
-    let TotalNumberOfPriors = 2766
-    let NoOfCordinates = 4
-    let featureMapSizes = [19, 10]
-    let probThreshold: Float = 0.2
-    let iouThreshold: Float = 0.45
-    let candidateSize = 200
-    let topK = 10
+    static let SSDCardWidth = 300
+    static let SSDCardHeight = 300
+    static let probThreshold: Float = 0.2
+    static let iouThreshold: Float = 0.45
+    static let candidateSize = 200
+    static let topK = 10
+
+    /* We don't use the following constants, these values are deterimined at run time
+    *  Regardless, this is good information to keep around.
+    *  let NoOfPriorsPerLocation = 6
+    *  let NoOfClasses = 13
+    *  let TotalNumberOfPriors = 2766
+    *  let NoOfCordinates = 4
+    */
     
     public private(set) var allSSDBoxes = DetectedAllBoxes()
 
     
     func warmUp() {
 
-        UIGraphicsBeginImageContext(CGSize(width: SSDCardWidth, height: SSDCardHeight))
+        UIGraphicsBeginImageContext(CGSize(width: SsdDetect.SSDCardWidth, height: SsdDetect.SSDCardHeight))
         UIColor.white.setFill()
-        UIRectFill(CGRect(x: 0, y: 0, width: SSDCardWidth, height: SSDCardHeight))
+        UIRectFill(CGRect(x: 0, y: 0, width: SsdDetect.SSDCardWidth, height: SsdDetect.SSDCardHeight))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -51,7 +51,7 @@ public struct SsdDetect {
             return
         }
         
-        if let pixelBuffer = newImage?.pixelBuffer(width: SSDCardWidth, height: SSDCardHeight) {
+        if let pixelBuffer = newImage?.pixelBuffer(width: SsdDetect.SSDCardWidth, height: SsdDetect.SSDCardHeight) {
             let _ = try? ssdModel.prediction(_0: pixelBuffer)
         }
         
@@ -89,7 +89,7 @@ public struct SsdDetect {
         let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
 
         let predAPI = PredictionAPI()
-        let result:Result = predAPI.predictionAPI(scores:normalizedScores, boxes: cornerFormBoxes, probThreshold: probThreshold, iouThreshold: iouThreshold, candidateSize:candidateSize, topK: topK)
+        let result:Result = predAPI.predictionAPI(scores:normalizedScores, boxes: cornerFormBoxes, probThreshold: SsdDetect.probThreshold, iouThreshold: SsdDetect.iouThreshold, candidateSize: SsdDetect.candidateSize, topK: SsdDetect.topK)
         endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "Rest of the forward pass time: \(endTime)")
         
@@ -105,7 +105,7 @@ public struct SsdDetect {
     
     public mutating func predict(image: UIImage) -> String? {
 
-        guard let pixelBuffer = image.pixelBuffer(width: SSDCardWidth, height: SSDCardHeight) else {
+        guard let pixelBuffer = image.pixelBuffer(width: SsdDetect.SSDCardWidth, height: SsdDetect.SSDCardHeight) else {
             os_log("Couldn't convert to pixel buffer", type: .debug)
             return nil
         }
