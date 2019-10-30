@@ -22,14 +22,13 @@ public struct SsdDetect {
     // SSD Model Parameters
     static let SSDCardWidth = 300
     static let SSDCardHeight = 300
-    static let probThreshold: Float = 0.2
+    static let probThreshold: Float = 0.3
     static let iouThreshold: Float = 0.45
     static let candidateSize = 200
     static let topK = 10
 
-    /* We don't use the following constants, these values are deterimined at run time
+    /* We don't use the following constants, these values are determined at run time
     *  Regardless, this is good information to keep around.
-    *  let NoOfPriorsPerLocation = 6
     *  let NoOfClasses = 13
     *  let TotalNumberOfPriors = 2766
     *  let NoOfCordinates = 4
