@@ -42,6 +42,13 @@ public class Ocr {
                                            width: xMax - xMin, height: yMax - yMin)
     }
     
+    // used just for testing
+    @available(iOS 11.2, *)
+    public static func updateDetectionModel(resourceName: String) {
+        FindFourOcr.detectModel = nil
+        FindFourOcr.findFourResource = resourceName
+    }
+    
     public func userCancelled() {
         self.scanStats.success = false
         self.scanStats.endTime = Date()
