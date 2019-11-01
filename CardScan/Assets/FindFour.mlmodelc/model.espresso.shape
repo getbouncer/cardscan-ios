@@ -186,12 +186,6 @@
       "n" : 1,
       "h" : 151
     },
-    "conv_pad_12_output" : {
-      "k" : 256,
-      "w" : 121,
-      "n" : 1,
-      "h" : 76
-    },
     "conv_dw_7_relu_output_relu_clip" : {
       "k" : 64,
       "w" : 120,
@@ -270,26 +264,14 @@
       "n" : 1,
       "h" : 151
     },
-    "conv1_pad_output" : {
-      "k" : 3,
-      "w" : 481,
-      "n" : 1,
-      "h" : 303
-    },
-    "conv_dw_11_relu_output_relu_clip" : {
-      "k" : 256,
+    "conv_dw_3_relu_output_relu_neg" : {
+      "k" : 64,
       "w" : 120,
       "n" : 1,
       "h" : 75
     },
-    "conv_pad_2_output" : {
-      "k" : 64,
-      "w" : 241,
-      "n" : 1,
-      "h" : 152
-    },
-    "conv_dw_3_relu_output_relu_neg" : {
-      "k" : 64,
+    "conv_dw_11_relu_output_relu_clip" : {
+      "k" : 256,
       "w" : 120,
       "n" : 1,
       "h" : 75
