@@ -24,7 +24,6 @@
       "pad_b" : 1,
       "pad_l" : 0,
       "top" : "conv1_relu_output_relu",
-      "blob_weights" : 3,
       "K" : 3,
       "blob_biases" : 1,
       "stride_x" : 2,
@@ -44,7 +43,8 @@
       "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 3
     },
     {
       "alpha" : -1,
@@ -91,7 +91,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_1_relu_output_relu",
-      "blob_weights" : 7,
       "K" : 16,
       "blob_biases" : 5,
       "name" : "conv_dw_1",
@@ -109,7 +108,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 7
     },
     {
       "alpha" : -1,
@@ -156,7 +156,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_1_relu_output_relu",
-      "blob_weights" : 11,
       "K" : 16,
       "blob_biases" : 9,
       "name" : "conv_pw_1",
@@ -174,7 +173,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 11
     },
     {
       "alpha" : -1,
@@ -221,7 +221,6 @@
       "pad_b" : 1,
       "pad_l" : 0,
       "top" : "conv_dw_2_relu_output_relu",
-      "blob_weights" : 15,
       "K" : 64,
       "blob_biases" : 13,
       "stride_x" : 2,
@@ -241,7 +240,8 @@
       "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 15
     },
     {
       "alpha" : -1,
@@ -288,7 +288,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_2_relu_output_relu",
-      "blob_weights" : 19,
       "K" : 64,
       "blob_biases" : 17,
       "name" : "conv_pw_2",
@@ -306,7 +305,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 19
     },
     {
       "alpha" : -1,
@@ -353,7 +353,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_3_relu_output_relu",
-      "blob_weights" : 23,
       "K" : 64,
       "blob_biases" : 21,
       "name" : "conv_dw_3",
@@ -371,7 +370,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 23
     },
     {
       "alpha" : -1,
@@ -418,7 +418,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_3_relu_output_relu",
-      "blob_weights" : 27,
       "K" : 64,
       "blob_biases" : 25,
       "name" : "conv_pw_3",
@@ -436,7 +435,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 27
     },
     {
       "alpha" : -1,
@@ -483,7 +483,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_7_relu_output_relu",
-      "blob_weights" : 31,
       "K" : 64,
       "blob_biases" : 29,
       "name" : "conv_dw_7",
@@ -501,7 +500,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 31
     },
     {
       "alpha" : -1,
@@ -548,7 +548,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_7_relu_output_relu",
-      "blob_weights" : 35,
       "K" : 64,
       "blob_biases" : 33,
       "name" : "conv_pw_7",
@@ -566,7 +565,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 35
     },
     {
       "alpha" : -1,
@@ -613,7 +613,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_8_relu_output_relu",
-      "blob_weights" : 39,
       "K" : 256,
       "blob_biases" : 37,
       "name" : "conv_dw_8",
@@ -631,7 +630,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 39
     },
     {
       "alpha" : -1,
@@ -678,7 +678,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_8_relu_output_relu",
-      "blob_weights" : 43,
       "K" : 256,
       "blob_biases" : 41,
       "name" : "conv_pw_8",
@@ -696,7 +695,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 43
     },
     {
       "alpha" : -1,
@@ -743,7 +743,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_9_relu_output_relu",
-      "blob_weights" : 47,
       "K" : 256,
       "blob_biases" : 45,
       "name" : "conv_dw_9",
@@ -761,7 +760,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 47
     },
     {
       "alpha" : -1,
@@ -808,7 +808,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_9_relu_output_relu",
-      "blob_weights" : 51,
       "K" : 256,
       "blob_biases" : 49,
       "name" : "conv_pw_9",
@@ -826,7 +825,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 51
     },
     {
       "alpha" : -1,
@@ -873,7 +873,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_10_relu_output_relu",
-      "blob_weights" : 55,
       "K" : 256,
       "blob_biases" : 53,
       "name" : "conv_dw_10",
@@ -891,7 +890,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 55
     },
     {
       "alpha" : -1,
@@ -938,7 +938,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_10_relu_output_relu",
-      "blob_weights" : 59,
       "K" : 256,
       "blob_biases" : 57,
       "name" : "conv_pw_10",
@@ -956,7 +955,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 59
     },
     {
       "alpha" : -1,
@@ -1003,7 +1003,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_11_relu_output_relu",
-      "blob_weights" : 63,
       "K" : 256,
       "blob_biases" : 61,
       "name" : "conv_dw_11",
@@ -1021,7 +1020,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 63
     },
     {
       "alpha" : -1,
@@ -1068,7 +1068,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_11_relu_output_relu",
-      "blob_weights" : 67,
       "K" : 256,
       "blob_biases" : 65,
       "name" : "conv_pw_11",
@@ -1086,7 +1085,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 67
     },
     {
       "alpha" : -1,
@@ -1133,7 +1133,6 @@
       "pad_b" : 1,
       "pad_l" : 0,
       "top" : "conv_dw_12_relu_output_relu",
-      "blob_weights" : 71,
       "K" : 256,
       "blob_biases" : 69,
       "stride_x" : 2,
@@ -1153,7 +1152,8 @@
       "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 71
     },
     {
       "alpha" : -1,
@@ -1200,7 +1200,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_12_relu_output_relu",
-      "blob_weights" : 75,
       "K" : 256,
       "blob_biases" : 73,
       "name" : "conv_pw_12",
@@ -1218,7 +1217,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 75
     },
     {
       "alpha" : -1,
@@ -1265,7 +1265,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_dw_13_relu_output_relu",
-      "blob_weights" : 79,
       "K" : 512,
       "blob_biases" : 77,
       "name" : "conv_dw_13",
@@ -1283,7 +1282,8 @@
       "Nx" : 3,
       "pad_value" : 0,
       "Ny" : 3,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 79
     },
     {
       "alpha" : -1,
@@ -1330,7 +1330,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_pw_13_relu_output_relu",
-      "blob_weights" : 83,
       "K" : 512,
       "blob_biases" : 81,
       "name" : "conv_pw_13",
@@ -1348,7 +1347,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 83
     },
     {
       "alpha" : -1,
@@ -1395,7 +1395,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "resize1_output",
-      "blob_weights" : 87,
       "K" : 512,
       "blob_biases" : 85,
       "name" : "resize1",
@@ -1413,7 +1412,8 @@
       "Nx" : 2,
       "pad_value" : 0,
       "Ny" : 2,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 87
     },
     {
       "pad_r" : 0,
@@ -1423,7 +1423,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "resize2_output",
-      "blob_weights" : 91,
       "K" : 64,
       "blob_biases" : 89,
       "name" : "resize2",
@@ -1441,7 +1440,8 @@
       "Nx" : 2,
       "pad_value" : 0,
       "Ny" : 2,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 91
     },
     {
       "pad_r" : 0,
@@ -1451,7 +1451,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "resize3_output",
-      "blob_weights" : 95,
       "K" : 64,
       "blob_biases" : 93,
       "name" : "resize3",
@@ -1469,7 +1468,8 @@
       "Nx" : 2,
       "pad_value" : 0,
       "Ny" : 2,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 95
     },
     {
       "pad_r" : 0,
@@ -1479,7 +1479,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "resize5_output",
-      "blob_weights" : 99,
       "K" : 64,
       "blob_biases" : 97,
       "name" : "resize5",
@@ -1497,7 +1496,8 @@
       "Nx" : 7,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 99
     },
     {
       "pad_r" : 0,
@@ -1507,7 +1507,6 @@
       "pad_b" : 0,
       "pad_l" : 0,
       "top" : "conv_preds_output",
-      "blob_weights" : 103,
       "K" : 64,
       "blob_biases" : 101,
       "name" : "conv_preds",
@@ -1525,7 +1524,8 @@
       "Nx" : 1,
       "pad_value" : 0,
       "Ny" : 1,
-      "n_parallel" : 1
+      "n_parallel" : 1,
+      "blob_weights_f16" : 103
     },
     {
       "C" : 2,

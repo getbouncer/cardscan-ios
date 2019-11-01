@@ -48,6 +48,11 @@ public class Ocr {
         FindFourOcr.detectModel = nil
         FindFourOcr.findFourResource = resourceName
     }
+    @available(iOS 11.2, *)
+    public static func updateRecognitionModel(resourceName: String) {
+        FindFourOcr.recognizeModel = nil
+        FindFourOcr.fourRecognizeResource = resourceName
+    }
     
     public func userCancelled() {
         self.scanStats.success = false
