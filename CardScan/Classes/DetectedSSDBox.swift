@@ -26,11 +26,12 @@ struct DetectedSSDBox {
         self.imgSize = imageSize
     }
     
-     func toDict() -> [String:Any]{
-        let objectDict = ["XMin": self.rect.minX/self.imgSize.width, "YMin": self.rect.minY/self.imgSize.height, "Height": self.rect.height/self.imgSize.height,
-                          "Width":self.rect.width/self.imgSize.width, "Label": self.label, "Confidence": self.confidence] as [String : Any]
-        
-        
-        return objectDict
+     func toDict() -> [String: Any] {
+        return ["x_min": self.rect.minX/self.imgSize.width,
+                "y_min": self.rect.minY/self.imgSize.height,
+                "height": self.rect.height/self.imgSize.height,
+                "width":self.rect.width/self.imgSize.width,
+                "label": self.label,
+                "confidence": self.confidence]
     }
 }
