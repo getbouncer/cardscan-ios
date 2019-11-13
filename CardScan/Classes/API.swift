@@ -103,11 +103,7 @@ public struct Api {
     }
     
     static func getSdkVersion() -> String? {
-        guard let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: "CardScan", withExtension: "bundle") else {
-            return nil
-        }
-        
-        guard let bundle = Bundle(url: bundleUrl) else {
+        guard let bundle = BundleURL.bundle() else {
             return nil
         }
         
