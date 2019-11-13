@@ -2,6 +2,8 @@ import CoreML
 
 @available(iOS 11.2, *)
 public struct BundleURL{
+    // If you change the bundle name make sure to set these before
+    // initializing the library
     public static var bundleName = "CardScan"
     public static var extensionName = "bundle"
     

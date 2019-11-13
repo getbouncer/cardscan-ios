@@ -136,7 +136,9 @@ import Vision
         guard let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: "CardScan", withExtension: "bundle") else {
             return nil
         }
-        let bundle = Bundle(url: bundleUrl)
+        guard let bundle = Bundle(url: bundleUrl) else {
+            return nil
+        }
         
         return UIImage(named: "camera", in: bundle, compatibleWith: nil)
     }
