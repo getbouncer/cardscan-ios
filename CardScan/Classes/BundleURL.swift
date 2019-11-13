@@ -1,10 +1,13 @@
 import CoreML
 
 @available(iOS 11.2, *)
-struct BundleURL{
+public struct BundleURL{
+    public static var bundleName = "CardScan"
+    public static var extensionName = "bundle"
+    
     static func compiledModel(forResource: String, withExtension: String) -> URL? {
     
-        guard let bundleUrl = Bundle(for: FindFour.self).url(forResource: "CardScan", withExtension: "bundle") else {
+        guard let bundleUrl = Bundle(for: FindFour.self).url(forResource: bundleName, withExtension: extensionName) else {
             print("bundleURL could not be found")
             return nil
         }

@@ -133,8 +133,10 @@ import Vision
     }
     
     @objc static public func cameraImage() -> UIImage? {
-        let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: "CardScan", withExtension: "bundle")!
-        let bundle = Bundle(url: bundleUrl)!
+        guard let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: "CardScan", withExtension: "bundle") else {
+            return nil
+        }
+        let bundle = Bundle(url: bundleUrl)
         
         return UIImage(named: "camera", in: bundle, compatibleWith: nil)
     }
