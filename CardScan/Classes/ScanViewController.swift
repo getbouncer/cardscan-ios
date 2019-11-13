@@ -136,8 +136,9 @@ import UIKit
             return nil
         }
         
-        let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: "CardScan", withExtension: "bundle")!
-        let bundle = Bundle(url: bundleUrl)!
+        // The forced unwrap here is intentional -- we expect this to crash
+        // if someone uses it with an invalid bundle
+        let bundle = BundleURL.bundle()!
         
         let storyboard = UIStoryboard(name: "CardScan", bundle: bundle)
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
