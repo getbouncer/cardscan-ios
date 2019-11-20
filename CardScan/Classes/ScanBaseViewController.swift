@@ -60,6 +60,18 @@ import Vision
         self.videoFeed.toggleTorch()
     }
     
+    public func isTorchOn() -> Bool{
+        return self.videoFeed.isTorchOn()
+    }
+    
+    public func hasTorch() -> Bool {
+        return self.videoFeed.hasTorch()
+    }
+        
+    public func setTorchLevel(level: Float) {
+        self.videoFeed.setTorchLevel(level: level)
+    }
+    
     @objc static public func configure(apiKey: String? = nil) {
         if let apiKey = apiKey {
             Api.apiKey = apiKey
@@ -172,7 +184,7 @@ import Vision
         self.videoFeed.requestCameraAccess(permissionDelegate: self)
     }
     
-    public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?) {
+    public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?, torchLevel: Float? = nil) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
         self.blurView = blurView
@@ -196,7 +208,11 @@ import Vision
         
         self.videoFeed.pauseSession()
         //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
-        self.videoFeed.setup(captureDelegate: self, completion: { success in })
+        self.videoFeed.setup(captureDelegate: self, completion: { success in
+            if let level = torchLevel {
+                self.setTorchLevel(level: level)
+            }
+        })
     }
     
     override open var shouldAutorotate: Bool {

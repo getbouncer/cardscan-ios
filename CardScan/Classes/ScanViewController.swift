@@ -272,7 +272,7 @@ import UIKit
         }
         
         let debugImageView = self.showDebugImageView ? self.debugImageView : nil
-        self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView)
+        self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView, torchLevel: 0.7)
         self.startCameraPreview()
     }
     
