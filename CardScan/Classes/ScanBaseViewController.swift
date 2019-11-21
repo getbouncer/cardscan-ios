@@ -55,6 +55,7 @@ import Vision
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
     @objc open func onCameraPermissionDenied(showedPrompt: Bool) { }
     
+    //MARK: -Torch Logic
     public func toggleTorch() {
         self.ocr.scanStats.torchOn = !self.ocr.scanStats.torchOn
         self.videoFeed.toggleTorch()
@@ -64,12 +65,16 @@ import Vision
         return self.videoFeed.isTorchOn()
     }
     
-    public func hasTorch() -> Bool {
-        return self.videoFeed.hasTorch()
+    public func hasTorchAndIsAvailable() -> Bool {
+        return self.videoFeed.hasTorchAndIsAvailable()
     }
         
     public func setTorchLevel(level: Float) {
-        self.videoFeed.setTorchLevel(level: level)
+        if 0.0...1.0 ~= level {
+            self.videoFeed.setTorchLevel(level: level)
+        } else {
+            print("Not a valid torch level")
+        }
     }
     
     @objc static public func configure(apiKey: String? = nil) {
@@ -184,7 +189,7 @@ import Vision
         self.videoFeed.requestCameraAccess(permissionDelegate: self)
     }
     
-    public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?, torchLevel: Float? = nil) {
+    public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?, torchLevel: Float?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
         self.blurView = blurView

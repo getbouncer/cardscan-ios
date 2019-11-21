@@ -182,11 +182,15 @@ class VideoFeed {
     }
     
     func isTorchOn() -> Bool {
-        return self.torch?.state ==  Torch.State.on ? true : false
+        return self.torch?.state == Torch.State.on 
     }
     
-    func hasTorch() -> Bool {
-        return self.torch?.device?.hasTorch ?? false
+    func hasTorchAndIsAvailable() -> Bool {
+        if let _ = self.torch?.device?.hasTorch, let _ = self.torch?.device?.isTorchAvailable {
+            return true
+        } else {
+            return false
+        }
     }
     
     func setTorchLevel(level: Float) {
