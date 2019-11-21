@@ -176,10 +176,26 @@ class VideoFeed {
         videoDevice.unlockForConfiguration()
     }
     
+    //MARK: -Torch Logic
     func toggleTorch() {
         self.torch?.toggle()
     }
     
+    func isTorchOn() -> Bool {
+        return self.torch?.state == Torch.State.on 
+    }
+    
+    func hasTorchAndIsAvailable() -> Bool {
+        let hasTorch = self.torch?.device?.hasTorch ?? false
+        let isTorchAvailable = self.torch?.device?.isTorchAvailable ?? false
+        return hasTorch && isTorchAvailable
+    }
+    
+    func setTorchLevel(level: Float) {
+        self.torch?.level = level
+    }
+    
+    //MARK: -VC Lifecycle Logic
     func willAppear() {
         sessionQueue.async {
             switch self.setupResult {

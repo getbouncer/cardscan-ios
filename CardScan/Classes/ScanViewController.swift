@@ -87,6 +87,7 @@ import UIKit
     public weak var scanDelegate: ScanDelegate?
     @objc public weak var stringDataSource: ScanStringsDataSource?
     @objc public var allowSkip = false
+    public var torchLevel: Float? 
     public var scanQrCode = false
     @objc public var hideBackButtonImage = false
     @IBOutlet weak var backButtonImageToTextConstraint: NSLayoutConstraint!
@@ -272,7 +273,7 @@ import UIKit
         }
         
         let debugImageView = self.showDebugImageView ? self.debugImageView : nil
-        self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView)
+        self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView, torchLevel: self.torchLevel)
         self.startCameraPreview()
     }
     

@@ -55,9 +55,26 @@ import Vision
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
     @objc open func onCameraPermissionDenied(showedPrompt: Bool) { }
     
+    //MARK: -Torch Logic
     public func toggleTorch() {
         self.ocr.scanStats.torchOn = !self.ocr.scanStats.torchOn
         self.videoFeed.toggleTorch()
+    }
+    
+    public func isTorchOn() -> Bool{
+        return self.videoFeed.isTorchOn()
+    }
+    
+    public func hasTorchAndIsAvailable() -> Bool {
+        return self.videoFeed.hasTorchAndIsAvailable()
+    }
+        
+    public func setTorchLevel(level: Float) {
+        if 0.0...1.0 ~= level {
+            self.videoFeed.setTorchLevel(level: level)
+        } else {
+            print("Not a valid torch level")
+        }
     }
     
     @objc static public func configure(apiKey: String? = nil) {
@@ -172,7 +189,7 @@ import Vision
         self.videoFeed.requestCameraAccess(permissionDelegate: self)
     }
     
-    public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?) {
+    public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?, torchLevel: Float?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
         self.blurView = blurView
@@ -196,7 +213,11 @@ import Vision
         
         self.videoFeed.pauseSession()
         //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
-        self.videoFeed.setup(captureDelegate: self, completion: { success in })
+        self.videoFeed.setup(captureDelegate: self, completion: { success in
+            if let level = torchLevel {
+                self.setTorchLevel(level: level)
+            }
+        })
     }
     
     override open var shouldAutorotate: Bool {
