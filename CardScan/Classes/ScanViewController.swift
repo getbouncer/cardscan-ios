@@ -310,10 +310,12 @@ import UIKit
             return
         }
         
-        let notification = UINotificationFeedbackGenerator()
-        notification.prepare()
-        notification.notificationOccurred(.success)
-        
+        if #available(iOS 10.0, *) {
+            let notification = UINotificationFeedbackGenerator()
+            notification.prepare()
+            notification.notificationOccurred(.success)
+        }
+                
         self.calledDelegate = true
         let card = CreditCard(number: number)
         card.expiryMonth = expiryMonth
