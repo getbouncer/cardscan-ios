@@ -13,13 +13,13 @@ struct NMS{
          * I highly recommend checkout SOFT NMS Implementation of Facebook Detectron Framework
          *
          *  Args:
-         *  box_scores (N, 5): boxes in corner-form and probabilities.
-         *  iou_threshold: intersection over union threshold.
-         *  top_k: keep top_k results. If k <= 0, keep all the results.
-         *  candidate_size: only consider the candidates with the highest scores.
+         *  subsetBoxes (N, 4): boxes in corner-form and probabilities.
+         *  iouThreshold: intersection over union threshold.
+         *  topK: keep topK results. If k <= 0, keep all the results.
+         *  candidateSize: only consider the candidates with the highest scores.
          *
          *  Returns:
-         *  picked: a list of indexes of the kept boxes
+         *  pickedIndices: a list of indexes of the kept boxes
          */
         
         

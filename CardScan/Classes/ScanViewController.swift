@@ -87,6 +87,7 @@ import UIKit
     public weak var scanDelegate: ScanDelegate?
     @objc public weak var stringDataSource: ScanStringsDataSource?
     @objc public var allowSkip = false
+    public var torchLevel: Float? 
     public var scanQrCode = false
     @objc public var hideBackButtonImage = false
     @IBOutlet weak var backButtonImageToTextConstraint: NSLayoutConstraint!
@@ -136,8 +137,9 @@ import UIKit
             return nil
         }
         
-        let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: "CardScan", withExtension: "bundle")!
-        let bundle = Bundle(url: bundleUrl)!
+        // The forced unwrap here is intentional -- we expect this to crash
+        // if someone uses it with an invalid bundle
+        let bundle = BundleURL.bundle()!
         
         let storyboard = UIStoryboard(name: "CardScan", bundle: bundle)
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
@@ -271,7 +273,7 @@ import UIKit
         }
         
         let debugImageView = self.showDebugImageView ? self.debugImageView : nil
-        self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView)
+        self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView, torchLevel: self.torchLevel)
         self.startCameraPreview()
     }
     

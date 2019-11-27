@@ -1,10 +1,17 @@
-import CoreML
-
-@available(iOS 11.2, *)
-struct BundleURL{
-    static func compiledModel(forResource: String, withExtension: String) -> URL? {
+public struct BundleURL {
+    // If you change the bundle name make sure to set these before
+    // initializing the library
+    public static var bundleName = "CardScan"
+    public static var extensionName = "bundle"
+    public static var cardScanBundle: Bundle?
     
-        guard let bundleUrl = Bundle(for: FindFour.self).url(forResource: "CardScan", withExtension: "bundle") else {
+    // Public for testing
+    public static func bundle() -> Bundle? {
+        if cardScanBundle != nil {
+            return cardScanBundle
+        }
+        
+        guard let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: bundleName, withExtension: extensionName) else {
             print("bundleURL could not be found")
             return nil
         }
@@ -13,7 +20,15 @@ struct BundleURL{
             print("bundle with bundleURL could not be found")
             return nil
         }
-            
+        
+        return bundle
+    }
+    
+    static func compiledModel(forResource: String, withExtension: String) -> URL? {
+        guard let bundle = bundle() else {
+            return nil
+        }
+        
         guard let modelcUrl = bundle.url(forResource: forResource, withExtension: withExtension) else {
             print("Could not find bundle named \"\(forResource).\(withExtension)\"")
             return nil

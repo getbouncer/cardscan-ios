@@ -17,27 +17,11 @@
   "format_version" : 200,
   "layers" : [
     {
-      "pad_value" : 0,
-      "top" : "conv1_pad_output",
-      "pad_pad_mode" : 0,
-      "pad_t" : 0,
       "pad_r" : 1,
-      "pad_b" : 1,
-      "type" : "general_padding",
-      "pad_fill_mode" : 0,
-      "bottom" : "input1",
-      "pad_l" : 0,
-      "name" : "conv1_pad",
-      "weights" : {
-
-      }
-    },
-    {
-      "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
       "pad_fill_mode" : 0,
-      "pad_b" : 0,
+      "pad_b" : 1,
       "pad_l" : 0,
       "top" : "conv1_relu_output_relu",
       "K" : 3,
@@ -51,7 +35,7 @@
       "stride_y" : 2,
       "has_biases" : 1,
       "C" : 16,
-      "bottom" : "conv1_pad_output",
+      "bottom" : "input1",
       "weights" : {
 
       },
@@ -230,27 +214,11 @@
       "beta" : 0
     },
     {
-      "pad_value" : 0,
-      "top" : "conv_pad_2_output",
-      "pad_pad_mode" : 0,
-      "pad_t" : 0,
       "pad_r" : 1,
-      "pad_b" : 1,
-      "type" : "general_padding",
-      "pad_fill_mode" : 0,
-      "bottom" : "conv_pw_1_relu_output",
-      "pad_l" : 0,
-      "name" : "conv_pad_2",
-      "weights" : {
-
-      }
-    },
-    {
-      "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
       "pad_fill_mode" : 0,
-      "pad_b" : 0,
+      "pad_b" : 1,
       "pad_l" : 0,
       "top" : "conv_dw_2_relu_output_relu",
       "K" : 64,
@@ -264,7 +232,7 @@
       "stride_y" : 2,
       "has_biases" : 1,
       "C" : 64,
-      "bottom" : "conv_pad_2_output",
+      "bottom" : "conv_pw_1_relu_output",
       "weights" : {
 
       },
@@ -1158,27 +1126,11 @@
       "beta" : 0
     },
     {
-      "pad_value" : 0,
-      "top" : "conv_pad_12_output",
-      "pad_pad_mode" : 0,
-      "pad_t" : 0,
       "pad_r" : 1,
-      "pad_b" : 1,
-      "type" : "general_padding",
-      "pad_fill_mode" : 0,
-      "bottom" : "conv_pw_11_relu_output",
-      "pad_l" : 0,
-      "name" : "conv_pad_12",
-      "weights" : {
-
-      }
-    },
-    {
-      "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
       "pad_fill_mode" : 0,
-      "pad_b" : 0,
+      "pad_b" : 1,
       "pad_l" : 0,
       "top" : "conv_dw_12_relu_output_relu",
       "K" : 256,
@@ -1192,7 +1144,7 @@
       "stride_y" : 2,
       "has_biases" : 1,
       "C" : 256,
-      "bottom" : "conv_pad_12_output",
+      "bottom" : "conv_pw_11_relu_output",
       "weights" : {
 
       },

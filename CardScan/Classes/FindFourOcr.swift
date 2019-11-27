@@ -177,7 +177,7 @@ struct FindFourOcr {
                                                 numCols: kDetectionModelCols)
 
         var lines = postDetectionAlgorithm.horizontalNumbers()
-        var (number, numberBoxes, detectedCard) = recognizeNumbers.number(lines: lines)
+        var (number, numberBoxes, detectedCard) = recognizeNumbers.number(lines: lines, useScale: true)
         var didDetectCard = detectedCard
         if number == nil {
             let verticalLines = postDetectionAlgorithm.verticalNumbers()

@@ -24,8 +24,26 @@ struct RecognizeNumbers {
         self.recognizedDigits = Array(repeating: Array(repeating: nil, count: numCols), count: numRows)
     }
     
+    func calculateScale(line: [DetectedBox]) -> Double? {
+        if line.count != 4 {
+            return nil
+        }
+        
+        let numberMinX = line.map({ $0.rect.minX }).min() ?? 0.0
+        let numberMaxX = line.map({ $0.rect.maxX }).max() ?? 0.0
+        let numberWidth = numberMaxX - numberMinX
+        let boxWidth = line.first?.rect.width ?? 1.0
+        let scale = Double(numberWidth * 1.2 / (boxWidth * 4.0))
+        
+        if (scale <= 0.0) {
+            return nil
+        }
+        
+        return scale
+    }
+    
     @available(iOS 11.2, *)
-    mutating func number(lines: [[DetectedBox]]) -> (String?, [CGRect]?, Bool) {
+    mutating func number(lines: [[DetectedBox]], useScale: Bool = false) -> (String?, [CGRect]?, Bool) {
         let maxRow = lines.map { $0.map { $0.row }}.flatMap { $0 }.max() ?? 0
         let maxCol = lines.map { $0.map { $0.col }}.flatMap { $0 }.max() ?? 0
         
@@ -40,8 +58,10 @@ struct RecognizeNumbers {
             var candidateNumber = ""
             var detectedDigitsCount = 0
             
+            let scale: Double? = useScale ? calculateScale(line: line) : nil
+            
             for word in line {
-                guard let recognized = self.cachedDigits(box: word) else {
+                guard let recognized = self.cachedDigits(box: word, scale: scale) else {
                     return (nil, nil, false)
                 }
                 
@@ -66,10 +86,15 @@ struct RecognizeNumbers {
     }
     
     @available(iOS 11.2, *)
-    mutating func cachedDigits(box: DetectedBox) -> RecognizedDigits? {
+    mutating func cachedDigits(box: DetectedBox, scale: Double? = nil) -> RecognizedDigits? {
         var recognizedDigits: RecognizedDigits? = nil
         if self.recognizedDigits[box.row][box.col] == nil {
-            recognizedDigits = RecognizedDigits.from(image: self.image, within: box.rect)
+            
+            if let scale = scale {
+                recognizedDigits = RecognizedDigits.from(image: self.image, within: box.rect.scale(scale))
+            } else {
+                recognizedDigits = RecognizedDigits.from(image: self.image, within: box.rect)
+            }
             self.recognizedDigits[box.row][box.col] = recognizedDigits
         } else {
             recognizedDigits = self.recognizedDigits[box.row][box.col]
@@ -141,5 +166,17 @@ struct RecognizeNumbers {
         }
         
         return (nil, nil)
+    }
+}
+
+extension CGRect {
+    func scale(_ scale: Double) -> CGRect {
+        let width = Double(self.width) * scale
+        let height = Double(self.height) * scale
+        let cx = Double(self.minX + self.width * 0.5)
+        let cy = Double(self.minY + self.height * 0.5)
+        let x = cx - width * 0.5
+        let y = cy - height * 0.5
+        return CGRect(x: x, y: y, width: width, height: height)
     }
 }
