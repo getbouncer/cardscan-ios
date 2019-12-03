@@ -10,6 +10,7 @@ import UIKit
 import CardScan
 
 class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanStringsDataSource, TestingImageDataSource {
+    var imageIsFullScreen: Bool = true
 
     let testImages = [UIImage(imageLiteralResourceName: "frame0"),
                       UIImage(imageLiteralResourceName: "frame19"),
@@ -178,6 +179,8 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
             
             return image.cropping(to: CGRect(x: x, y: y, width: width, height: height))
         }
+        
+        self.imageIsFullScreen = false
         
         vc.testingImageDataSource = self
         vc.showDebugImageView = true

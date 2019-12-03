@@ -5,6 +5,7 @@ import Vision
 
 
 @objc public protocol TestingImageDataSource {
+    @objc var imageIsFullScreen: Bool { get }
     @objc func nextImage() -> CGImage?
 }
 
@@ -410,34 +411,56 @@ import Vision
     }
     
     func captureOutputWork(sampleBuffer: CMSampleBuffer) {
+        var testImageArr: [CGImage]?
+            
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             print("could not get the pixel buffer, dropping frame")
             self.machineLearningSemaphore.signal()
             return
         }
-        
-        guard let rawImage = self.toRegionOfInterest(pixelBuffer: pixelBuffer) else {
+            
+        guard let rawImageArr = self.toRegionOfInterest(pixelBuffer: pixelBuffer) else {
             print("could not get the cgImage from the region of interest, dropping frame")
             self.machineLearningSemaphore.signal()
             return
         }
-        
-        // we allow apps that integrate to supply their own sequence of images
-        // for use in testing
-        let image = self.testingImageDataSource?.nextImage() ?? rawImage
-        
+            
+        // Testing images exist
+        if let testingImage = self.testingImageDataSource?.nextImage() {
+            // Testing image size is of full screen
+            if self.testingImageDataSource?.imageIsFullScreen == true {
+                guard let squareImg = cropImageToSquare(image: testingImage) else {
+                    print("could not crop testing image")
+                    self.machineLearningSemaphore.signal()
+                    return
+                }
+                testImageArr = [squareImg, testingImage]
+                
+            } else {
+                // Only have the cropped image available, send to OCR
+                if #available(iOS 11.2, *) {
+                    self.blockingOcrModel(rawImage: testingImage)
+                }
+                self.machineLearningSemaphore.signal()
+            }
+        }
+
+        // imageArr will have [square cropped image, full image]
+        let imageArr = testImageArr ?? rawImageArr
+
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
                 self.blockingQrModel(pixelBuffer: pixelBuffer)
             } else {
-                self.blockingOcrModel(rawImage: image)
+                self.blockingOcrModel(rawImage: imageArr[0])
             }
         }
         
         self.machineLearningSemaphore.signal()
     }
     
-    func toRegionOfInterest(pixelBuffer: CVPixelBuffer) -> CGImage? {
+    // Returns a square cropped image and a full screen image
+    func toRegionOfInterest(pixelBuffer: CVPixelBuffer) -> [CGImage]? {
         var cgImage: CGImage?
         if #available(iOS 9.0, *) {
             #if swift(>=4.2)
@@ -453,10 +476,19 @@ import Vision
             return nil
         }
         
+        guard let squareImage = cropImageToSquare(image: image) else {
+            return nil
+        }
+        
+        return [squareImage, image]
+    }
+    
+    
+    func cropImageToSquare(image: CGImage) -> CGImage? {
         // use the full width
         let width = CGFloat(image.width)
-        // keep the aspect ratio at 480:302
-        let height = width * 302.0 / 480.0
+        
+        let height = CGFloat(image.width)
         
         // get device screen size
         let screen = UIScreen.main.bounds
@@ -507,8 +539,7 @@ import Vision
         
         let rect = CGRect(x: cx - width / 2.0, y: cy - height / 2.0, width: width, height: height)
         
-        self.currentImageRect = rect
-        
+        //self.currentImageRect = rect
         return image.cropping(to: rect)
     }
 }
