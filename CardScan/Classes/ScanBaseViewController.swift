@@ -9,10 +9,8 @@ import Vision
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
-    
-    public func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?) {
-        // relay this data to our own delegate object
-        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, cardImage: cardImage, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox)
+    public func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, squareCardImage: CGImage, fullCardImage: CGImage) {
+        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
     }
     
     public func onScanComplete(scanStats: ScanStats) {
@@ -358,13 +356,27 @@ import Vision
         return newImage
     }
     
+    func toCardImage(squareCardImage: CGImage) -> CGImage {
+        if squareCardImage.width != squareCardImage.height {
+            return squareCardImage
+        }
+        
+        let height = CGFloat(squareCardImage.width) * 302.0 / 480.0
+        let dh = (CGFloat(squareCardImage.height) - height) * 0.5
+        let cardRect = CGRect(x: 0.0, y: dh, width: CGFloat(squareCardImage.width), height: height)
+        
+        return squareCardImage.cropping(to: cardRect) ?? squareCardImage
+    }
+    
     @available(iOS 11.2, *)
-    func blockingOcrModel(rawImage: CGImage) {
-        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: rawImage)
+    func blockingOcrModel(squareCardImage: CGImage, fullCardImage: CGImage) {
+        let croppedCardImage = toCardImage(squareCardImage: squareCardImage)
+        
+        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
         if let number = number {
             self.showCardNumber(number, expiry: expiry?.display())
             if self.includeCardImage && foundNumberInThisScan {
-                self.scannedCardImage = UIImage(cgImage: rawImage)
+                self.scannedCardImage = UIImage(cgImage: croppedCardImage)
             }
         }
         
@@ -378,7 +390,7 @@ import Vision
                     self.debugImageView?.isHidden = false
                 }
                 
-                self.debugImageView?.image = self.drawBoundingBoxesOnImage(image: UIImage(cgImage: rawImage), embossedCharacterBoxes: embossedBoxes, characterBoxes: flatBoxes, appleBoxes: expiryBoxes)
+                self.debugImageView?.image = self.drawBoundingBoxesOnImage(image: UIImage(cgImage: croppedCardImage), embossedCharacterBoxes: embossedBoxes, characterBoxes: flatBoxes, appleBoxes: expiryBoxes)
             }
         }
         
@@ -416,7 +428,13 @@ import Vision
             return
         }
         
-        guard let rawImage = self.toRegionOfInterest(pixelBuffer: pixelBuffer) else {
+        guard let fullCardImage = self.toCGImage(pixelBuffer: pixelBuffer) else {
+            print("could not get the cgImage from the pixel buffer")
+            self.machineLearningSemaphore.signal()
+            return
+        }
+        
+        guard let squareCardImage = self.toRegionOfInterest(image: fullCardImage) else {
             print("could not get the cgImage from the region of interest, dropping frame")
             self.machineLearningSemaphore.signal()
             return
@@ -424,20 +442,20 @@ import Vision
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let image = self.testingImageDataSource?.nextImage() ?? rawImage
+        let image = self.testingImageDataSource?.nextImage() ?? squareCardImage
         
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
                 self.blockingQrModel(pixelBuffer: pixelBuffer)
             } else {
-                self.blockingOcrModel(rawImage: image)
+                self.blockingOcrModel(squareCardImage: squareCardImage, fullCardImage: fullCardImage)
             }
         }
         
         self.machineLearningSemaphore.signal()
     }
     
-    func toRegionOfInterest(pixelBuffer: CVPixelBuffer) -> CGImage? {
+    func toCGImage(pixelBuffer: CVPixelBuffer) -> CGImage? {
         var cgImage: CGImage?
         if #available(iOS 9.0, *) {
             #if swift(>=4.2)
@@ -449,10 +467,10 @@ import Vision
             return nil
         }
         
-        guard let image = cgImage else {
-            return nil
-        }
-        
+        return cgImage
+    }
+    
+    func toRegionOfInterest(image: CGImage) -> CGImage? {
         // use the full width
         let width = CGFloat(image.width)
         // keep the aspect ratio at 480:302
