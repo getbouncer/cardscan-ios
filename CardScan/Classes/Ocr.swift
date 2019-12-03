@@ -60,8 +60,8 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func performWithErrorCorrection(for rawImage: CGImage) -> (String?, Expiry?, Bool, Bool) {
-        let number = self.perform(for: rawImage)
+    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage) -> (String?, Expiry?, Bool, Bool) {
+        let number = self.perform(croppedCardImage: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
 
         if self.firstResult == nil && number != nil {
             self.firstResult = Date()
@@ -90,9 +90,9 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func perform(for rawImage: CGImage) -> String? {
+    public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?) -> String? {
         var findFour = FindFourOcr()
-        let number = findFour.predict(image: UIImage(cgImage: rawImage))
+        let number = findFour.predict(image: UIImage(cgImage: croppedCardImage))
         self.expiry = findFour.expiry
         
         self.scanStats.scans += 1
@@ -110,14 +110,21 @@ public class Ocr {
             let ymin = findFour.predictedBoxes.map { $0.minY }.min() ?? 0.0
             let ymax = findFour.predictedBoxes.map { $0.maxY }.max() ?? 0.0
             let numberBoundingBox = CGRect(x: xmin, y: ymin, width: (xmax - xmin), height: (ymax - ymin))
-            self.scanEventsDelegate?.onNumberRecognized(number: number, expiry:
-                findFour.expiry, cardImage: rawImage, numberBoundingBox: numberBoundingBox, expiryBoundingBox: findFour.expiryBoxes.first)
+            
+            if let squareCardImage = squareCardImage, let fullCardImage = fullCardImage {
+                self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: findFour.expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: findFour.expiryBoxes.first, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+            }
             
             self.scanStats.algorithm = findFour.algorithm
-            self.updateStats(model: findFour.modelString, boxes: findFour.predictedBoxes, image: rawImage, number: number, cvvBoxes: findFour.cvvBoxes)
+            self.updateStats(model: findFour.modelString, boxes: findFour.predictedBoxes, image: croppedCardImage, number: number, cvvBoxes: findFour.cvvBoxes)
             return number
         }
 
         return nil
+    }
+    
+    @available(iOS 11.2, *)
+    public func perform(for rawImage: CGImage) -> String? {
+        return self.perform(croppedCardImage: rawImage, squareCardImage: nil, fullCardImage: nil)
     }
 }

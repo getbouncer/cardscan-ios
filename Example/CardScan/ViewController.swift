@@ -187,7 +187,7 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         self.present(vc, animated: true)
     }
     
-    func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?) {
+    func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, squareCardImage: CGImage, fullCardImage: CGImage) {
         print("number recognized")
     }
     
