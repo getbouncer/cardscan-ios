@@ -9,8 +9,8 @@ import Vision
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
-    public func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, squareCardImage: CGImage, fullCardImage: CGImage) {
-        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+    public func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
+        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
     }
     
     public func onScanComplete(scanStats: ScanStats) {
@@ -357,10 +357,6 @@ import Vision
     }
     
     func toCardImage(squareCardImage: CGImage) -> CGImage {
-        if squareCardImage.width != squareCardImage.height {
-            return squareCardImage
-        }
-        
         let height = CGFloat(squareCardImage.width) * 302.0 / 480.0
         let dh = (CGFloat(squareCardImage.height) - height) * 0.5
         let cardRect = CGRect(x: 0.0, y: dh, width: CGFloat(squareCardImage.width), height: height)
@@ -442,7 +438,7 @@ import Vision
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let image = self.testingImageDataSource?.nextImage() ?? squareCardImage
+        //let image = self.testingImageDataSource?.nextImage() ?? squareCardImage
         
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
@@ -471,10 +467,9 @@ import Vision
     }
     
     func toRegionOfInterest(image: CGImage) -> CGImage? {
-        // use the full width
+        // use the full width and make it a square
         let width = CGFloat(image.width)
-        // keep the aspect ratio at 480:302
-        let height = width * 302.0 / 480.0
+        let height = width
         
         // get device screen size
         let screen = UIScreen.main.bounds

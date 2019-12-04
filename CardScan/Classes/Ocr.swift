@@ -112,7 +112,8 @@ public class Ocr {
             let numberBoundingBox = CGRect(x: xmin, y: ymin, width: (xmax - xmin), height: (ymax - ymin))
             
             if let squareCardImage = squareCardImage, let fullCardImage = fullCardImage {
-                self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: findFour.expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: findFour.expiryBoxes.first, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+                let croppedCardSize = CGSize(width: croppedCardImage.width, height: croppedCardImage.height)
+                self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: findFour.expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: findFour.expiryBoxes.first, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
             }
             
             self.scanStats.algorithm = findFour.algorithm
