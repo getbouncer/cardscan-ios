@@ -4,8 +4,10 @@ import VideoToolbox
 import Vision
 
 
-public protocol TestingImageDataSource {
-    func nextSquareAndFullImage() -> (CGImage,CGImage)?
+@objc public protocol TestingImageDataSource {
+    @objc var squareTestCardImage: CGImage? { get }
+    @objc var fullTestCardImage: CGImage? { get }
+    @objc func nextSquareAndFullImage() 
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
@@ -18,7 +20,7 @@ public protocol TestingImageDataSource {
     }
     
     
-    public var testingImageDataSource: TestingImageDataSource?
+    public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
     @objc public var includeCardImage = false
     @objc public var showDebugImageView = false
@@ -415,7 +417,14 @@ public protocol TestingImageDataSource {
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let squareAndFullCardImage = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
+        self.testingImageDataSource?.nextSquareAndFullImage()
+        var squareAndFullCardImage: (CGImage, CGImage)
+        
+        if let testSquareImage = self.testingImageDataSource?.squareTestCardImage, let testFullImage = self.testingImageDataSource?.fullTestCardImage {
+            squareAndFullCardImage = (testSquareImage, testFullImage)
+        } else {
+            squareAndFullCardImage = (squareCardImage, fullCardImage)
+        }
         
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
@@ -497,7 +506,7 @@ public protocol TestingImageDataSource {
         
         let rect = CGRect(x: cx - width / 2.0, y: cy - height / 2.0, width: width, height: height)
         
-        //self.currentImageRect = rect
+        self.currentImageRect = rect
         return image.cropping(to: rect)
     }
 }

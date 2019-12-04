@@ -10,6 +10,7 @@ import UIKit
 import CardScan
 
 class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanStringsDataSource, TestingImageDataSource {
+    
     let testImages = [UIImage(imageLiteralResourceName: "frame0"),
                       UIImage(imageLiteralResourceName: "frame19"),
                       UIImage(imageLiteralResourceName: "frame38"),
@@ -22,30 +23,25 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
                       UIImage(imageLiteralResourceName: "frame133")]
     
     var currentTestImages: [CGImage]?
+    var squareTestCardImage: CGImage?
+    var fullTestCardImage: CGImage?
     
-    func nextSquareAndFullImage() -> (CGImage, CGImage)? {
+    func nextSquareAndFullImage() {
         guard let fullCardImage = self.currentTestImages?.first else {
             print("could not get full size test image")
-            return nil
+            return
         }
         
-        let cropToSquareImage: CGImage? = {
-            let image = fullCardImage
-            let width = CGFloat(image.width)
-            let height = width
-            let x = CGFloat(0)
-            let y = CGFloat(image.height) * 0.5 - height * 0.5
-            
-            return image.cropping(to: CGRect(x: x, y: y, width: width, height: height))
-        }()
-        
-        guard let squareCardImage = cropToSquareImage else {
-            print("could not crop test image")
-            return nil
-        }
-        
+        let squareCropImage = fullCardImage
+        let width = CGFloat(squareCropImage.width)
+        let height = width
+        let x = CGFloat(0) 
+        let y = CGFloat(squareCropImage.height) * 0.5 - height * 0.5
+        let squareCardImage = squareCropImage.cropping(to: CGRect(x: x, y: y, width: width, height: height))
+    
         self.currentTestImages = self.currentTestImages?.dropFirst().map { $0 }
-        return (squareCardImage, fullCardImage)
+        self.squareTestCardImage = squareCardImage
+        self.fullTestCardImage = fullCardImage
     }
     
     func scanCard() -> String { return "New Scan Card" }
