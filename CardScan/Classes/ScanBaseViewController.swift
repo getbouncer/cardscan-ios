@@ -4,8 +4,8 @@ import VideoToolbox
 import Vision
 
 
-@objc public protocol TestingImageDataSource {
-    @objc func nextImage() -> CGImage?
+public protocol TestingImageDataSource: AnyObject {
+    func nextSquareAndFullImage() -> (CGImage, CGImage)?
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
@@ -18,7 +18,7 @@ import Vision
     }
     
     
-    @objc public weak var testingImageDataSource: TestingImageDataSource?
+    public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
     @objc public var includeCardImage = false
     @objc public var showDebugImageView = false
@@ -273,29 +273,6 @@ import Vision
     }
     
     
-    /* We're not ready for bardcodes again yet
-    @available(iOS 11.0, *)
-    func handleBarcodeResults(_ results: [Any]) {
-        for result in results {
-            // Cast the result to a barcode-observation
-            
-            if let barcode = result as? VNBarcodeObservation, barcode.symbology == .QR {
-                
-                if let payload = barcode.payloadStringValue {
-                    DispatchQueue.main.async {
-                        // XXX FIXME get QR Codes working again
-                        if self.calledDelegate {
-                            return
-                        }
-                        self.calledDelegate = true
-                        self.scanDelegate?.userDidScanQrCode.map { $0(self, payload) }
-
-                    }
-                }
-            }
-        }
-    }*/
-    
     @available(iOS 11.2, *)
     func blockingQrModel(pixelBuffer: CVPixelBuffer) {
         let semaphore = DispatchSemaphore(value: 0)
@@ -424,6 +401,7 @@ import Vision
             return
         }
         
+
         guard let fullCardImage = self.toCGImage(pixelBuffer: pixelBuffer) else {
             print("could not get the cgImage from the pixel buffer")
             self.machineLearningSemaphore.signal()
@@ -438,13 +416,13 @@ import Vision
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        //let image = self.testingImageDataSource?.nextImage() ?? squareCardImage
+        let (squareImage, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
                 self.blockingQrModel(pixelBuffer: pixelBuffer)
             } else {
-                self.blockingOcrModel(squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+                self.blockingOcrModel(squareCardImage: squareImage, fullCardImage: fullImage)
             }
         }
         
