@@ -400,6 +400,7 @@ public protocol TestingImageDataSource: AnyObject {
             self.machineLearningSemaphore.signal()
             return
         }
+        
 
         guard let fullCardImage = self.toCGImage(pixelBuffer: pixelBuffer) else {
             print("could not get the cgImage from the pixel buffer")
