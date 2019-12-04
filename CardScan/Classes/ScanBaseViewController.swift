@@ -3,11 +3,8 @@ import AVKit
 import VideoToolbox
 import Vision
 
-
-@objc public protocol TestingImageDataSource {
-    @objc var squareTestCardImage: CGImage? { get }
-    @objc var fullTestCardImage: CGImage? { get }
-    @objc func nextSquareAndFullImage() 
+public protocol TestingImageDataSource: AnyObject {
+    func nextSquareAndFullImage() -> (CGImage, CGImage)?
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
@@ -18,7 +15,6 @@ import Vision
     public func onScanComplete(scanStats: ScanStats) {
         // this shouldn't get called
     }
-    
     
     public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
@@ -417,14 +413,7 @@ import Vision
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        self.testingImageDataSource?.nextSquareAndFullImage()
-        var squareAndFullCardImage: (CGImage, CGImage)
-        
-        if let testSquareImage = self.testingImageDataSource?.squareTestCardImage, let testFullImage = self.testingImageDataSource?.fullTestCardImage {
-            squareAndFullCardImage = (testSquareImage, testFullImage)
-        } else {
-            squareAndFullCardImage = (squareCardImage, fullCardImage)
-        }
+        let squareAndFullCardImage = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
             if self.scanQrCode {

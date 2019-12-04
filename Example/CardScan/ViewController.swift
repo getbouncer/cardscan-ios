@@ -23,13 +23,11 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
                       UIImage(imageLiteralResourceName: "frame133")]
     
     var currentTestImages: [CGImage]?
-    var squareTestCardImage: CGImage?
-    var fullTestCardImage: CGImage?
     
-    func nextSquareAndFullImage() {
+    func nextSquareAndFullImage() -> (CGImage, CGImage)? {
         guard let fullCardImage = self.currentTestImages?.first else {
             print("could not get full size test image")
-            return
+            return nil
         }
         
         let squareCropImage = fullCardImage
@@ -37,11 +35,14 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         let height = width
         let x = CGFloat(0) 
         let y = CGFloat(squareCropImage.height) * 0.5 - height * 0.5
-        let squareCardImage = squareCropImage.cropping(to: CGRect(x: x, y: y, width: width, height: height))
+        
+        guard let squareCardImage = squareCropImage.cropping(to: CGRect(x: x, y: y, width: width, height: height)) else {
+            print("could not crop test image")
+            return nil
+        }
     
         self.currentTestImages = self.currentTestImages?.dropFirst().map { $0 }
-        self.squareTestCardImage = squareCardImage
-        self.fullTestCardImage = fullCardImage
+        return (squareCardImage, fullCardImage)
     }
     
     func scanCard() -> String { return "New Scan Card" }
