@@ -10,7 +10,7 @@ import UIKit
 import CardScan
 
 class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanStringsDataSource, TestingImageDataSource {
-    
+
     let testImages = [UIImage(imageLiteralResourceName: "frame0"),
                       UIImage(imageLiteralResourceName: "frame19"),
                       UIImage(imageLiteralResourceName: "frame38"),
@@ -180,6 +180,7 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
             print("scan view controller not supported on this hardware")
             return
         }
+        
         self.currentTestImages = self.testImages.compactMap { $0.cgImage }
         vc.testingImageDataSource = self
         vc.showDebugImageView = true

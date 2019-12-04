@@ -3,6 +3,7 @@ import AVKit
 import VideoToolbox
 import Vision
 
+
 public protocol TestingImageDataSource: AnyObject {
     func nextSquareAndFullImage() -> (CGImage, CGImage)?
 }
@@ -15,6 +16,7 @@ public protocol TestingImageDataSource: AnyObject {
     public func onScanComplete(scanStats: ScanStats) {
         // this shouldn't get called
     }
+    
     
     public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
@@ -413,13 +415,13 @@ public protocol TestingImageDataSource: AnyObject {
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let squareAndFullCardImage = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
+        let (squareImage, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
                 self.blockingQrModel(pixelBuffer: pixelBuffer)
             } else {
-                self.blockingOcrModel(squareCardImage: squareAndFullCardImage.0, fullCardImage: squareAndFullCardImage.1)
+                self.blockingOcrModel(squareCardImage: squareImage, fullCardImage: fullImage)
             }
         }
         
@@ -496,6 +498,7 @@ public protocol TestingImageDataSource: AnyObject {
         let rect = CGRect(x: cx - width / 2.0, y: cy - height / 2.0, width: width, height: height)
         
         self.currentImageRect = rect
+        
         return image.cropping(to: rect)
     }
 }
