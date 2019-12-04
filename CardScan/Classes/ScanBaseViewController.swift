@@ -5,8 +5,7 @@ import Vision
 
 
 public protocol TestingImageDataSource {
-    var imageIsFullScreen: Bool? { get }
-    func nextImage() -> CGImage?
+    func nextSquareAndFullImage() -> (CGImage,CGImage)?
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
@@ -414,17 +413,15 @@ public protocol TestingImageDataSource {
             return
         }
         
-        let testImgArr: [CGImage?] = self.testingImagesSizeCheck()
-        
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        //let image = self.testingImageDataSource?.nextImage() ?? squareCardImage
+        let squareAndFullCardImage = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
                 self.blockingQrModel(pixelBuffer: pixelBuffer)
             } else {
-                self.blockingOcrModel(squareCardImage: squareCardImg, fullCardImage: fullCardImg)
+                self.blockingOcrModel(squareCardImage: squareAndFullCardImage.0, fullCardImage: squareAndFullCardImage.1)
             }
         }
         

@@ -10,8 +10,6 @@ import UIKit
 import CardScan
 
 class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanStringsDataSource, TestingImageDataSource {
-    var imageIsFullScreen: Bool? = nil
-    
     let testImages = [UIImage(imageLiteralResourceName: "frame0"),
                       UIImage(imageLiteralResourceName: "frame19"),
                       UIImage(imageLiteralResourceName: "frame38"),
@@ -25,10 +23,29 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
     
     var currentTestImages: [CGImage]?
     
-    func nextImage() -> CGImage? {
-        let nextImage = self.currentTestImages?.first
+    func nextSquareAndFullImage() -> (CGImage, CGImage)? {
+        guard let fullCardImage = self.currentTestImages?.first else {
+            print("could not get full size test image")
+            return nil
+        }
+        
+        let cropToSquareImage: CGImage? = {
+            let image = fullCardImage
+            let width = CGFloat(image.width)
+            let height = width
+            let x = CGFloat(0)
+            let y = CGFloat(image.height) * 0.5 - height * 0.5
+            
+            return image.cropping(to: CGRect(x: x, y: y, width: width, height: height))
+        }()
+        
+        guard let squareCardImage = cropToSquareImage else {
+            print("could not crop test image")
+            return nil
+        }
+        
         self.currentTestImages = self.currentTestImages?.dropFirst().map { $0 }
-        return nextImage
+        return (squareCardImage, fullCardImage)
     }
     
     func scanCard() -> String { return "New Scan Card" }
@@ -166,28 +183,13 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
             print("scan view controller not supported on this hardware")
             return
         }
-        
-        let cgImages = self.testImages.compactMap { $0.cgImage }
-        
-        // pull the images from the center, use the full width but keep the
-        // aspect ratio consistent with what the model is expecting
-        self.currentTestImages = cgImages.compactMap { image in
-            let width = CGFloat(image.width)
-            let height = 302.0 * width / 480.0
-            let x = CGFloat(0)
-            let y = CGFloat(image.height) * 0.5 - height * 0.5
-            
-            return image.cropping(to: CGRect(x: x, y: y, width: width, height: height))
-        }
-        
-        self.imageIsFullScreen = false
-        
+        self.currentTestImages = self.testImages.compactMap { $0.cgImage }
         vc.testingImageDataSource = self
         vc.showDebugImageView = true
         self.present(vc, animated: true)
     }
     
-    func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, squareCardImage: CGImage, fullCardImage: CGImage) {
+    func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
         print("number recognized")
     }
     
