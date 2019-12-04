@@ -10,8 +10,8 @@ import UIKit
 import CardScan
 
 class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanStringsDataSource, TestingImageDataSource {
-    var imageIsFullScreen: Bool = true
-
+    var imageIsFullScreen: Bool? = nil
+    
     let testImages = [UIImage(imageLiteralResourceName: "frame0"),
                       UIImage(imageLiteralResourceName: "frame19"),
                       UIImage(imageLiteralResourceName: "frame38"),

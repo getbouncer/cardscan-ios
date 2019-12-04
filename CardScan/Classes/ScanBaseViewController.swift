@@ -4,9 +4,9 @@ import VideoToolbox
 import Vision
 
 
-@objc public protocol TestingImageDataSource {
-    @objc var imageIsFullScreen: Bool { get }
-    @objc func nextImage() -> CGImage?
+public protocol TestingImageDataSource {
+    var imageIsFullScreen: Bool? { get }
+    func nextImage() -> CGImage?
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
@@ -19,7 +19,7 @@ import Vision
     }
     
     
-    @objc public weak var testingImageDataSource: TestingImageDataSource?
+    public var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
     @objc public var includeCardImage = false
     @objc public var showDebugImageView = false
@@ -274,29 +274,6 @@ import Vision
     }
     
     
-    /* We're not ready for bardcodes again yet
-    @available(iOS 11.0, *)
-    func handleBarcodeResults(_ results: [Any]) {
-        for result in results {
-            // Cast the result to a barcode-observation
-            
-            if let barcode = result as? VNBarcodeObservation, barcode.symbology == .QR {
-                
-                if let payload = barcode.payloadStringValue {
-                    DispatchQueue.main.async {
-                        // XXX FIXME get QR Codes working again
-                        if self.calledDelegate {
-                            return
-                        }
-                        self.calledDelegate = true
-                        self.scanDelegate?.userDidScanQrCode.map { $0(self, payload) }
-
-                    }
-                }
-            }
-        }
-    }*/
-    
     @available(iOS 11.2, *)
     func blockingQrModel(pixelBuffer: CVPixelBuffer) {
         let semaphore = DispatchSemaphore(value: 0)
@@ -423,18 +400,12 @@ import Vision
     }
     
     func captureOutputWork(sampleBuffer: CMSampleBuffer) {
-        var testImageArr: [CGImage]?
-            
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             print("could not get the pixel buffer, dropping frame")
             self.machineLearningSemaphore.signal()
             return
         }
-<<<<<<< HEAD
-            
-        guard let rawImageArr = self.toRegionOfInterest(pixelBuffer: pixelBuffer) else {
-=======
-        
+
         guard let fullCardImage = self.toCGImage(pixelBuffer: pixelBuffer) else {
             print("could not get the cgImage from the pixel buffer")
             self.machineLearningSemaphore.signal()
@@ -442,64 +413,30 @@ import Vision
         }
         
         guard let squareCardImage = self.toRegionOfInterest(image: fullCardImage) else {
->>>>>>> 30f2fcbf8ddc93b2c9525b4c3f7a3874ed0a5c46
             print("could not get the cgImage from the region of interest, dropping frame")
             self.machineLearningSemaphore.signal()
             return
         }
-<<<<<<< HEAD
-            
-        // Testing images exist
-        if let testingImage = self.testingImageDataSource?.nextImage() {
-            // Testing image size is of full screen
-            if self.testingImageDataSource?.imageIsFullScreen == true {
-                guard let squareImg = cropImageToSquare(image: testingImage) else {
-                    print("could not crop testing image")
-                    self.machineLearningSemaphore.signal()
-                    return
-                }
-                testImageArr = [squareImg, testingImage]
-                
-            } else {
-                // Only have the cropped image available, send to OCR
-                if #available(iOS 11.2, *) {
-                    self.blockingOcrModel(rawImage: testingImage)
-                }
-                self.machineLearningSemaphore.signal()
-            }
-        }
-
-        // imageArr will have [square cropped image, full image]
-        let imageArr = testImageArr ?? rawImageArr
-
-=======
+        
+        let testImgArr: [CGImage?] = self.testingImagesSizeCheck()
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let image = self.testingImageDataSource?.nextImage() ?? squareCardImage
+        let squareCardImg: CGImage  = testImgArr[0] ?? squareCardImage
+        let fullCardImg: CGImage = testImgArr[1] ?? fullCardImage
         
->>>>>>> 30f2fcbf8ddc93b2c9525b4c3f7a3874ed0a5c46
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
                 self.blockingQrModel(pixelBuffer: pixelBuffer)
             } else {
-<<<<<<< HEAD
-                self.blockingOcrModel(rawImage: imageArr[0])
-=======
-                self.blockingOcrModel(squareCardImage: squareCardImage, fullCardImage: fullCardImage)
->>>>>>> 30f2fcbf8ddc93b2c9525b4c3f7a3874ed0a5c46
+                self.blockingOcrModel(squareCardImage: squareCardImg, fullCardImage: fullCardImg)
             }
         }
         
         self.machineLearningSemaphore.signal()
     }
     
-<<<<<<< HEAD
-    // Returns a square cropped image and a full screen image
-    func toRegionOfInterest(pixelBuffer: CVPixelBuffer) -> [CGImage]? {
-=======
     func toCGImage(pixelBuffer: CVPixelBuffer) -> CGImage? {
->>>>>>> 30f2fcbf8ddc93b2c9525b4c3f7a3874ed0a5c46
         var cgImage: CGImage?
         if #available(iOS 9.0, *) {
             #if swift(>=4.2)
@@ -511,26 +448,10 @@ import Vision
             return nil
         }
         
-<<<<<<< HEAD
-        guard let image = cgImage else {
-            return nil
-        }
-        
-        guard let squareImage = cropImageToSquare(image: image) else {
-            return nil
-        }
-        
-        return [squareImage, image]
-    }
-    
-    
-    func cropImageToSquare(image: CGImage) -> CGImage? {
-=======
         return cgImage
     }
     
     func toRegionOfInterest(image: CGImage) -> CGImage? {
->>>>>>> 30f2fcbf8ddc93b2c9525b4c3f7a3874ed0a5c46
         // use the full width
         let width = CGFloat(image.width)
         
