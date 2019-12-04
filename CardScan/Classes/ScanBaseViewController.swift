@@ -10,8 +10,8 @@ public protocol TestingImageDataSource {
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
-    public func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, squareCardImage: CGImage, fullCardImage: CGImage) {
-        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+    public func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
+        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
     }
     
     public func onScanComplete(scanStats: ScanStats) {
@@ -335,10 +335,6 @@ public protocol TestingImageDataSource {
     }
     
     func toCardImage(squareCardImage: CGImage) -> CGImage {
-        if squareCardImage.width != squareCardImage.height {
-            return squareCardImage
-        }
-        
         let height = CGFloat(squareCardImage.width) * 302.0 / 480.0
         let dh = (CGFloat(squareCardImage.height) - height) * 0.5
         let cardRect = CGRect(x: 0.0, y: dh, width: CGFloat(squareCardImage.width), height: height)
@@ -422,8 +418,7 @@ public protocol TestingImageDataSource {
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let squareCardImg: CGImage  = testImgArr[0] ?? squareCardImage
-        let fullCardImg: CGImage = testImgArr[1] ?? fullCardImage
+        //let image = self.testingImageDataSource?.nextImage() ?? squareCardImage
         
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
@@ -452,10 +447,9 @@ public protocol TestingImageDataSource {
     }
     
     func toRegionOfInterest(image: CGImage) -> CGImage? {
-        // use the full width
+        // use the full width and make it a square
         let width = CGFloat(image.width)
-        
-        let height = CGFloat(image.width)
+        let height = width
         
         // get device screen size
         let screen = UIScreen.main.bounds
