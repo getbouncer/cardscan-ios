@@ -4,6 +4,8 @@
 
 Once we have a build on master we want to publish:
 
+0. Bump the `CardScan.podfile` with the new version of our library
+
 1. Run CardScan systems iOS test. Make sure to watch the videos to double check that everything looks good.
 
 2. If a new file is added in `CardScan/`, run `pod install` and commit the newly created `Pod/` directory
