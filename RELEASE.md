@@ -4,7 +4,7 @@
 
 Once we have a build on master we want to publish:
 
-1. Run CardScan systems iOS test
+1. Run CardScan systems iOS test. Make sure to watch the videos to double check that everything looks good.
 
 2. If a new file is added in `CardScan/`, run `pod install` and commit the newly created `Pod/` directory
 
@@ -14,14 +14,20 @@ Once we have a build on master we want to publish:
    carthage build --no-skip-current
    ```
 
-4. Tag release
+4. Run the Cocoapods linter to make sure that everything is going to pass
+
+   ```bash
+   pod lib lint
+   ```
+
+5. Tag release
 
    ```bash
    git tag <version>
    git push --tags
    ```
 
-5. Publish to CocoaPods
+6. Publish to CocoaPods
 
    ```bash
    pod trunk push
