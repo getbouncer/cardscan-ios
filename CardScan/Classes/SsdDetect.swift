@@ -8,6 +8,8 @@
 import Foundation
 import os.log
 
+import CoreML
+
 /**
  Documentation on how SSD works
  
@@ -20,8 +22,8 @@ public struct SsdDetect {
     static var priors:[CGRect]? = nil
     
     // SSD Model Parameters
-    static let SSDCardWidth = 300
-    static let SSDCardHeight = 300
+    static let ssdImageWidth = 300
+    static let ssdImageHeight = 300
     static let probThreshold: Float = 0.3
     static let iouThreshold: Float = 0.45
     static let candidateSize = 200
@@ -34,24 +36,22 @@ public struct SsdDetect {
     *  let NoOfCordinates = 4
     */
     
-    public private(set) var allSSDBoxes = DetectedAllBoxes()
-
-    
-    func warmUp() {
-
-        UIGraphicsBeginImageContext(CGSize(width: SsdDetect.SSDCardWidth, height: SsdDetect.SSDCardHeight))
-        UIColor.white.setFill()
-        UIRectFill(CGRect(x: 0, y: 0, width: SsdDetect.SSDCardWidth, height: SsdDetect.SSDCardHeight))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+    static public func warmUp() {
+        guard let image = UIImage.blankGrayImage(width: ssdImageWidth, height: ssdImageHeight) else {
+            return
+        }
         
         guard let ssdModel = SsdDetect.ssdModel else {
             print("Models not initialized")
             return
         }
         
-        if let pixelBuffer = newImage?.pixelBuffer(width: SsdDetect.SSDCardWidth, height: SsdDetect.SSDCardHeight) {
-            let _ = try? ssdModel.prediction(_0: pixelBuffer)
+        if let pixelBuffer = image.pixelBuffer(width: ssdImageWidth, height: ssdImageHeight) {
+            let input = SSDInput(_0: pixelBuffer)
+            let options = MLPredictionOptions()
+            // just in case this runs in the background
+            options.usesCPUOnly = true
+            let _ = try? ssdModel.prediction(input: input, options: options)
         }
         
     }
@@ -102,9 +102,9 @@ public struct SsdDetect {
     }
     
     
-    public mutating func predict(image: UIImage) -> String? {
+    public func predict(image: UIImage) -> DetectedAllBoxes? {
 
-        guard let pixelBuffer = image.pixelBuffer(width: SsdDetect.SSDCardWidth, height: SsdDetect.SSDCardHeight) else {
+        guard let pixelBuffer = image.pixelBuffer(width: SsdDetect.ssdImageWidth, height: SsdDetect.ssdImageHeight) else {
             os_log("Couldn't convert to pixel buffer", type: .debug)
             return nil
         }
@@ -116,15 +116,17 @@ public struct SsdDetect {
         }
        
         let startTime = CFAbsoluteTimeGetCurrent()
-        guard let prediction = try? detectModel.prediction(_0: pixelBuffer) else {
+        let input = SSDInput(_0: pixelBuffer)
+        let options = MLPredictionOptions()
+        options.usesCPUOnly = true
+        guard let prediction = try? detectModel.prediction(input: input, options: options) else {
             os_log("Couldn't predict", type: .debug)
             return nil
         }
         let endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "Model Run without post-process time: \(endTime)")
 
-        self.allSSDBoxes = self.detectObjects(prediction: prediction, image: image)
-        return "Sucess"
+        return self.detectObjects(prediction: prediction, image: image)
     }
     
 

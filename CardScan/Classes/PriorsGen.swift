@@ -54,7 +54,7 @@ struct PriorsGen{
     @available(iOS 11.2, *)
     static func genPriors(featureMapSize: Int, shrinkage: Int, boxSizeMin: Int, boxSizeMax: Int, aspectRatioOne : Int, aspectRatioTwo: Int, noOfPriors: Int) -> [CGRect]{
         
-        let image_size = SsdDetect.SSDCardWidth
+        let image_size = SsdDetect.ssdImageWidth
         let scale = Float(image_size) / Float(shrinkage);
         var boxes = [CGRect]()
         var x_center: Float; var y_center: Float

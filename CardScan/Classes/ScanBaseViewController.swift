@@ -102,7 +102,7 @@ public protocol TestingImageDataSource: AnyObject {
         AppState.inBackground = true
         // this makes sure that any currently running predictions finish before we
         // let the app go into the background
-        ScanViewController.machineLearningQueue.sync { }
+        machineLearningQueue.sync { }
     }
     
     @objc static func didBecomeActive() {
@@ -265,7 +265,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if self.machineLearningSemaphore.wait(timeout: .now()) == .success {
-            ScanViewController.machineLearningQueue.async {
+            ScanBaseViewController.machineLearningQueue.async {
                 ScanBaseViewController.registerAppNotifications()
                 self.captureOutputWork(sampleBuffer: sampleBuffer)
             }
