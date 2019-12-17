@@ -19,7 +19,7 @@ class CardScan_CardUtilsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testAmexBin() {
+    func testBin() {
         let amexPanInvalidLength = "1111222233334444"
         let dinersClubInvalidLength = "1111222233334444"
         
@@ -41,5 +41,4 @@ class CardScan_CardUtilsTests: XCTestCase {
         XCTAssert(CreditCardUtils.isValidBin(number: jcbPan35))
         XCTAssert(CreditCardUtils.isValidBin(number: dinersClubPan300))
     }
-
 }
