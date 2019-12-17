@@ -4,21 +4,21 @@ public struct CreditCardUtils {
     static let cvcLengthAmericanExpress = 4
     static let cvcLength = 3
     
-    static let prefixesAmericanExpress = ["34", "37"]
-    static let prefixesDiscover = ["6011", "64", "65"]
-    static let prefixesVisa = ["4"]
-    static let prefixesUnionPay = ["62"]
-    static let prefixesMastercard = ["2221", "2222", "2223", "2224",
-                                     "2225", "2226", "2227", "2228",
-                                     "2229", "223", "224", "225",
-                                     "226", "227", "228", "229",
-                                     "23", "24", "25", "26",
-                                     "270", "271", "2720", "50",
-                                     "51", "52", "53", "54",
-                                     "55", "67"]
-    
     static let maxPanLength = 16
     static let maxPanLengthAmericanExpress = 15
+    static let maxPanLengthDinersClub = 14
+
+    static let prefixesAmericanExpress = ["34", "37"]
+    static let prefixesDinersClub = ["300", "301", "302", "303", "304", "305", "309", "36", "38", "39"]
+    static let prefixesDiscover = ["6011", "64", "65"]
+    static let prefixesJcb = ["35"]
+    static let prefixesMastercard = ["2221", "2222", "2223", "2224", "2225", "2226",
+                                     "2227", "2228", "2229", "223", "224", "225", "226",
+                                     "227", "228", "229", "23", "24", "25", "26", "270",
+                                     "271", "2720", "50", "51", "52", "53", "54", "55",
+                                     "67"]
+    static let prefixesUnionPay = ["62"]
+    static let prefixesVisa = ["4"]
     
     // https://en.wikipedia.org/wiki/Luhn_algorithm
     // assume 16 digits are for MC and Visa (start with 4, 5) and 15 is for Amex
@@ -44,7 +44,7 @@ public struct CreditCardUtils {
     }
     
     public static func isValidBin(number: String) -> Bool {
-        return isAmex(number: number) || isDiscover(number: number) || isVisa(number: number) || isMastercard(number: number) || isUnionPay(number: number)
+        return isAmex(number: number) || isDiscover(number: number) || isVisa(number: number) || isMastercard(number: number) || isUnionPay(number: number) || isJcb(number: number) || isDinersClub(number: number)
     }
     
     public static func isAmex(number: String) -> Bool {
@@ -81,6 +81,16 @@ public struct CreditCardUtils {
         return number.count == maxPanLength && prefixesVisa.contains(prefix)
     }
     
+    public static func isJcb(number: String) -> Bool {
+        let prefix = String(number.prefix(2))
+        return number.count == maxPanLength && prefixesJcb.contains(prefix)
+    }
+    
+    public static func isDinersClub(number: String) ->  Bool {
+        let prefix2 = String(number.prefix(2))
+        let prefix3 = String(number.prefix(3))
+        return number.count == maxPanLengthDinersClub && (prefixesDinersClub.contains(prefix2) || prefixesDinersClub.contains(prefix3))
+    }
     
     public static func format(number: String) -> String {
         if number.count == 16 {

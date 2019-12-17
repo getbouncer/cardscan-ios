@@ -20,60 +20,26 @@ class CardScan_CardUtilsTests: XCTestCase {
     }
     
     func testAmexBin() {
+        let amexPanInvalidLength = "1111222233334444"
+        let dinersClubInvalidLength = "1111222233334444"
+        
         let amexPan34 = "341222233334444"
-        let amexPan37 = "371222233334444"
-        let amexPanInvalidLength = "3411222233334444"
-        let amexPanInvalidBin = "321222233334444"
-        
-        XCTAssert(CreditCardUtils.isAmex(number: amexPan34))
-        XCTAssert(CreditCardUtils.isAmex(number: amexPan37))
-        XCTAssert(!CreditCardUtils.isAmex(number: amexPanInvalidLength))
-        XCTAssert(!CreditCardUtils.isAmex(number: amexPanInvalidBin))
-    }
-    
-    func testUnionPayBin() {
         let unionPayPan62 = "6211222233334444"
-        let unionPayInvalidLength = "621222233334444"
-        let unionPayInvalidBin = "6311222233334444"
-        
-        XCTAssert(CreditCardUtils.isUnionPay(number: unionPayPan62))
-        XCTAssert(!CreditCardUtils.isUnionPay(number: unionPayInvalidLength))
-        XCTAssert(!CreditCardUtils.isUnionPay(number: unionPayInvalidBin))
-    }
-    
-    func testDiscoverBin() {
         let discoverPan64 = "6411222233334444"
-        let discoverPan65 = "6511222233334444"
-        let discoverPan6011 = "6011222233334444"
-        let discoverPanInvalidLength = "641222233334444"
-        let discoverPanInvalidBin = "6611222233334444"
-        
-        XCTAssert(CreditCardUtils.isDiscover(number: discoverPan64))
-        XCTAssert(CreditCardUtils.isDiscover(number: discoverPan65))
-        XCTAssert(CreditCardUtils.isDiscover(number: discoverPan6011))
-        XCTAssert(!CreditCardUtils.isDiscover(number: discoverPanInvalidLength))
-        XCTAssert(!CreditCardUtils.isDiscover(number: discoverPanInvalidBin))
-    }
-    
-    func testMastercardBin() {
         let mastercardPan53 = "5311222233334444"
-        let mastercardPan2222 = "2222222233334444"
-        let mastercardPanInvalidLength = "531222233334444"
-        let mastercardPanInvalidBin = "2721222233334444"
-        
-        XCTAssert(CreditCardUtils.isMastercard(number: mastercardPan53))
-        XCTAssert(CreditCardUtils.isMastercard(number: mastercardPan2222))
-        XCTAssert(!CreditCardUtils.isMastercard(number: mastercardPanInvalidLength))
-        XCTAssert(!CreditCardUtils.isMastercard(number: mastercardPanInvalidBin))
-    }
-    
-    func testVisaBin() {
         let visaPan4 = "4111222233334444"
-        let visaPanInvalidLength = "411222233334444"
-        let visaPanInvalidBin = "5111222233334444"
+        let jcbPan35 = "3511222233334444"
+        let dinersClubPan300 = "30012222333344"
         
-        XCTAssert(CreditCardUtils.isVisa(number: visaPan4))
-        XCTAssert(!CreditCardUtils.isVisa(number: visaPanInvalidLength))
-        XCTAssert(!CreditCardUtils.isVisa(number: visaPanInvalidBin))
+        XCTAssert(!CreditCardUtils.isAmex(number: amexPanInvalidLength))
+        XCTAssert(!CreditCardUtils.isDinersClub(number: dinersClubInvalidLength))
+        XCTAssert(CreditCardUtils.isValidBin(number: amexPan34))
+        XCTAssert(CreditCardUtils.isValidBin(number: unionPayPan62))
+        XCTAssert(CreditCardUtils.isValidBin(number: discoverPan64))
+        XCTAssert(CreditCardUtils.isValidBin(number: mastercardPan53))
+        XCTAssert(CreditCardUtils.isValidBin(number: visaPan4))
+        XCTAssert(CreditCardUtils.isValidBin(number: jcbPan35))
+        XCTAssert(CreditCardUtils.isValidBin(number: dinersClubPan300))
     }
+
 }
