@@ -1,9 +1,6 @@
 import Foundation
 
 public struct CreditCardUtils {
-    static let cvcLengthAmericanExpress = 4
-    static let cvcLength = 3
-    
     static let maxPanLength = 16
     static let maxPanLengthAmericanExpress = 15
     static let maxPanLengthDinersClub = 14
