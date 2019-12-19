@@ -18,6 +18,7 @@
 		8B35C432628F7822A929E022 /* Pods_CardScan_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D23A15A1FC04B1051F78F83F /* Pods_CardScan_Example.framework */; };
 		CDE23ECB5AB347EDDBC0BBB6 /* Pods_CardScan_ExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 549CDC3EE835C98A0E3A73B9 /* Pods_CardScan_ExampleUITests.framework */; };
 		F3BF1C5C22D51AAA002A2575 /* CardScan_BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */; };
+		F3FA027023A814C4002A8169 /* CardScan_CardUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */; };
 		F8CAD2C8565738BD646FB707 /* Pods_CardScan_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD0335DC1ACC5289BDEBF1 /* Pods_CardScan_ExampleTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		D23A15A1FC04B1051F78F83F /* Pods_CardScan_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CardScan_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E89BEC885679F7CB00F19F5A /* Pods-CardScan_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardScan_Example.release.xcconfig"; path = "Target Support Files/Pods-CardScan_Example/Pods-CardScan_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScan_BundleTests.swift; sourceTree = "<group>"; };
+		F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_CardUtilsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */,
 				3B2C41F822C55531006172BE /* CardScan_ExampleTests.swift */,
 				3B2C41FA22C55531006172BE /* Info.plist */,
+				F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */,
 			);
 			path = CardScan_ExampleTests;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 			files = (
 				F3BF1C5C22D51AAA002A2575 /* CardScan_BundleTests.swift in Sources */,
 				3B2C41F922C55531006172BE /* CardScan_ExampleTests.swift in Sources */,
+				F3FA027023A814C4002A8169 /* CardScan_CardUtilsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
