@@ -19,10 +19,7 @@ class CardScan_CardUtilsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testBin() {
-        let amexPanInvalidLength = "1111222233334444"
-        let dinersClubInvalidLength = "1111222233334444"
-        
+    func testCardBin() {
         let amexPan34 = "341222233334444"
         let unionPayPan62 = "6211222233334444"
         let discoverPan64 = "6411222233334444"
@@ -31,14 +28,32 @@ class CardScan_CardUtilsTests: XCTestCase {
         let jcbPan35 = "3511222233334444"
         let dinersClubPan300 = "30012222333344"
         
-        XCTAssert(!CreditCardUtils.isAmex(number: amexPanInvalidLength))
-        XCTAssert(!CreditCardUtils.isDinersClub(number: dinersClubInvalidLength))
-        XCTAssert(CreditCardUtils.isValidBin(number: amexPan34))
-        XCTAssert(CreditCardUtils.isValidBin(number: unionPayPan62))
-        XCTAssert(CreditCardUtils.isValidBin(number: discoverPan64))
-        XCTAssert(CreditCardUtils.isValidBin(number: mastercardPan53))
-        XCTAssert(CreditCardUtils.isValidBin(number: visaPan4))
-        XCTAssert(CreditCardUtils.isValidBin(number: jcbPan35))
-        XCTAssert(CreditCardUtils.isValidBin(number: dinersClubPan300))
+        XCTAssert(CreditCardUtils.isValidBin(cardNumber: amexPan34))
+        XCTAssert(CreditCardUtils.isValidBin(cardNumber: unionPayPan62))
+        XCTAssert(CreditCardUtils.isValidBin(cardNumber: discoverPan64))
+        XCTAssert(CreditCardUtils.isValidBin(cardNumber: mastercardPan53))
+        XCTAssert(CreditCardUtils.isValidBin(cardNumber: visaPan4))
+        XCTAssert(CreditCardUtils.isValidBin(cardNumber: jcbPan35))
+        XCTAssert(CreditCardUtils.isValidBin(cardNumber: dinersClubPan300))
+    }
+    
+    func testCardLength() {
+        let visaNumber = "4111222233334444"
+        let amexNumber = "341222233334444"
+        let dinersClubNumber = "30012222333344"
+        
+        XCTAssert(CreditCardUtils.isValidLength(cardNumber: visaNumber))
+        XCTAssert(CreditCardUtils.isValidLength(cardNumber: amexNumber))
+        XCTAssert(CreditCardUtils.isValidLength(cardNumber: dinersClubNumber))
+    }
+    
+    func testCardNumber() {
+        let visaNumber = "4242424242424242"
+        let unionPayNumber = "6212345678901232"
+        let amexNumber = "370000000000002"
+        
+        XCTAssert(CreditCardUtils.isValidNumber(cardNumber: visaNumber))
+        XCTAssert(CreditCardUtils.isValidNumber(cardNumber: unionPayNumber))
+        XCTAssert(CreditCardUtils.isValidNumber(cardNumber: amexNumber))
     }
 }

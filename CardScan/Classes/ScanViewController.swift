@@ -290,7 +290,7 @@ import UIKit
         // we're assuming that the image takes up the full width and that
         // video has the same aspect ratio of the screen
         DispatchQueue.main.async {
-            self.cardNumberLabel.text = CreditCardUtils.format(number: number)
+            self.cardNumberLabel.text = CreditCardUtils.format(cardNumber: number)
             if self.cardNumberLabel.isHidden {
                 self.cardNumberLabel.fadeIn()
             }

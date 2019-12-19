@@ -1,29 +1,43 @@
 import Foundation
 
+public enum CardNetwork: String {
+    case VISA = "Visa"
+    case MASTERCARD = "Mastercard"
+    case AMEX = "Amex"
+    case DISCOVER = "Discover"
+    case UNIONPAY = "Union Pay"
+    case JCB = "Jcb"
+    case DINERSCLUB = "Diners Club"
+    case UNKNOWN = "Unknown"
+}
+
 public struct CreditCardUtils {
     static let maxPanLength = 16
     static let maxPanLengthAmericanExpress = 15
     static let maxPanLengthDinersClub = 14
 
-    static let prefixesAmericanExpress = ["34", "37"]
-    static let prefixesDinersClub = ["300", "301", "302", "303", "304", "305", "309", "36", "38", "39"]
-    static let prefixesDiscover = ["6011", "64", "65"]
-    static let prefixesJcb = ["35"]
-    static let prefixesMastercard = ["2221", "2222", "2223", "2224", "2225", "2226",
+    private static let prefixesAmericanExpress = ["34", "37"]
+    private static let prefixesDinersClub = ["300", "301", "302", "303", "304", "305", "309", "36", "38", "39"]
+    private static let prefixesDiscover = ["6011", "64", "65"]
+    private static let prefixesJcb = ["35"]
+    private static let prefixesMastercard = ["2221", "2222", "2223", "2224", "2225", "2226",
                                      "2227", "2228", "2229", "223", "224", "225", "226",
                                      "227", "228", "229", "23", "24", "25", "26", "270",
                                      "271", "2720", "50", "51", "52", "53", "54", "55",
                                      "67"]
-    static let prefixesUnionPay = ["62"]
-    static let prefixesVisa = ["4"]
+    private static let prefixesUnionPay = ["62"]
+    private static let prefixesVisa = ["4"]
+    
+    
+    public static func isValidNumber(cardNumber: String) -> Bool {
+        return isValidLuhnNumber(cardNumber: cardNumber) && isValidLength(cardNumber: cardNumber)
+    }
     
     // https://en.wikipedia.org/wiki/Luhn_algorithm
     // assume 16 digits are for MC and Visa (start with 4, 5) and 15 is for Amex
     // which starts with 3
-    public static func luhnCheck(_ cardNumber: String) -> Bool {
-        if cardNumber.count == 0 {
-            return false
-        } else if !isValidBin(number: cardNumber) {
+    static func isValidLuhnNumber(cardNumber: String) -> Bool {
+        if cardNumber.isEmpty || !isValidBin(cardNumber: cardNumber){
             return false
         }
         
@@ -40,68 +54,76 @@ public struct CreditCardUtils {
         return sum % 10 == 0
     }
     
-    public static func isValidBin(number: String) -> Bool {
-        return isAmex(number: number) || isDiscover(number: number) || isVisa(number: number) || isMastercard(number: number) || isUnionPay(number: number) || isJcb(number: number) || isDinersClub(number: number)
+    static func isValidBin(cardNumber: String) -> Bool {
+        determineCardNetwork(cardNumber: cardNumber) != CardNetwork.UNKNOWN
     }
     
-    public static func isAmex(number: String) -> Bool {
-        let prefix = String(number.prefix(2))
-        return number.count == maxPanLengthAmericanExpress && prefixesAmericanExpress.contains(prefix)
+    static func isValidLength(cardNumber: String) -> Bool {
+        return isValidLength(cardNumber: cardNumber, network: determineCardNetwork(cardNumber: cardNumber))
     }
-    
-    public static func isUnionPay(number: String) -> Bool {
-        // Note: there is a little confusion over discover vs unionpay
-        // since some of the bin ranges overlap, but my guess is that
-        // it's unionpay but might be using the discover network
-        // behind the scenes.
-        // https://www.unionpayintl.com/en/mediaCenter/brandCenter/brandEmbodiment/
-        let prefix = String(number.prefix(2))
-        return number.count == maxPanLength && prefixesUnionPay.contains(prefix)
-    }
-    
-    public static func isDiscover(number: String) -> Bool {
-        let prefix2 = String(number.prefix(2))
-        let prefix4 = String(number.prefix(4))
-        return number.count == maxPanLength && (prefixesDiscover.contains(prefix2) || prefixesDiscover.contains(prefix4))
-    }
-    
-    public static func isMastercard(number: String) -> Bool {
-        let prefix2 = String(number.prefix(2))
-        let prefix3 = String(number.prefix(3))
-        let prefix4 = String(number.prefix(4))
+
+    static func isValidLength(cardNumber: String, network: CardNetwork ) -> Bool {
+        let cardNumber = cardNumber.trimmingCharacters(in: .whitespaces)
+        let cardNumberLength = cardNumber.count
         
-        return number.count == maxPanLength && (prefixesMastercard.contains(prefix2) || prefixesMastercard.contains(prefix3) || prefixesMastercard.contains(prefix4))
-    }
-    
-    public static func isVisa(number: String) -> Bool {
-        let prefix = String(number.prefix(1))
-        return number.count == maxPanLength && prefixesVisa.contains(prefix)
-    }
-    
-    public static func isJcb(number: String) -> Bool {
-        let prefix = String(number.prefix(2))
-        return number.count == maxPanLength && prefixesJcb.contains(prefix)
-    }
-    
-    public static func isDinersClub(number: String) ->  Bool {
-        let prefix2 = String(number.prefix(2))
-        let prefix3 = String(number.prefix(3))
-        return number.count == maxPanLengthDinersClub && (prefixesDinersClub.contains(prefix2) || prefixesDinersClub.contains(prefix3))
-    }
-    
-    public static func format(number: String) -> String {
-        if number.count == 16 {
-            return format16(number: number)
-        } else if number.count == 15 {
-            return format15(number: number)
-        } else {
-            return number
+        if cardNumber.isEmpty || network == CardNetwork.UNKNOWN {
+            return false
+        }
+        
+        switch network {
+        case CardNetwork.AMEX:
+            return cardNumberLength == maxPanLengthAmericanExpress
+        case CardNetwork.DINERSCLUB:
+            return cardNumberLength == maxPanLengthDinersClub
+        default:
+            return cardNumberLength == maxPanLength
         }
     }
     
-    static func format15(number: String) -> String {
+    public static func determineCardNetwork(cardNumber: String) -> CardNetwork {
+        let cardNumber = cardNumber.trimmingCharacters(in: .whitespaces)
+        
+        if cardNumber.isEmpty {
+            return CardNetwork.UNKNOWN
+        }
+        
+        switch true {
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesAmericanExpress):
+            return CardNetwork.AMEX
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesDiscover):
+            return CardNetwork.DISCOVER
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesJcb):
+            return CardNetwork.JCB
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesDinersClub):
+            return CardNetwork.DINERSCLUB
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesVisa):
+            return CardNetwork.VISA
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesMastercard):
+            return CardNetwork.MASTERCARD
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesUnionPay):
+            return CardNetwork.UNIONPAY
+        default:
+            return CardNetwork.UNKNOWN
+        }
+    }
+    
+    static func hasAnyPrefix( cardNumber: String, prefixes: [String] ) -> Bool {
+        return prefixes.filter { cardNumber.hasPrefix($0) }.count > 0
+    }
+    
+    public static func format(cardNumber: String) -> String {
+        if cardNumber.count == maxPanLength {
+            return format16(cardNumber: cardNumber)
+        } else if cardNumber.count == maxPanLengthAmericanExpress {
+            return format15(cardNumber: cardNumber)
+        } else {
+            return cardNumber
+        }
+    }
+    
+    static func format15(cardNumber: String) -> String {
         var displayNumber = ""
-        for (idx, char) in number.enumerated() {
+        for (idx, char) in cardNumber.enumerated() {
             if idx == 4 || idx == 10 {
                 displayNumber += " "
             }
@@ -110,9 +132,9 @@ public struct CreditCardUtils {
         return displayNumber
     }
     
-    static func format16(number: String) -> String {
+    static func format16(cardNumber: String) -> String {
         var displayNumber = ""
-        for (idx, char) in number.enumerated() {
+        for (idx, char) in cardNumber.enumerated() {
             if (idx % 4) == 0 && idx != 0 {
                 displayNumber += " "
             }
