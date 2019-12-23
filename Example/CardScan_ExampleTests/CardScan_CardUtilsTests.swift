@@ -56,4 +56,21 @@ class CardScan_CardUtilsTests: XCTestCase {
         XCTAssert(CreditCardUtils.isValidNumber(cardNumber: unionPayNumber))
         XCTAssert(CreditCardUtils.isValidNumber(cardNumber: amexNumber))
     }
+    
+    func testCardCVV() {
+        let amexCVV = "4444"
+        let visaCVV = "123"
+        
+        XCTAssert(CreditCardUtils.isValidCvv(cvv: amexCVV, network: CardNetwork.AMEX))
+        XCTAssert(CreditCardUtils.isValidCvv(cvv: visaCVV, network: CardNetwork.VISA))
+    }
+    
+    func testCardExpDate() {
+        let expMonth = "10"
+        let validExpYear = "23"
+        let invalidExpYear = "19"
+        
+        XCTAssert(CreditCardUtils.isValidDate(expMonth: expMonth, expYear: validExpYear))
+        XCTAssert(!CreditCardUtils.isValidDate(expMonth: expMonth, expYear: invalidExpYear))
+    }
 }
