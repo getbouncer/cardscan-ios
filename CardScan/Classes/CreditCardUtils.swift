@@ -273,12 +273,17 @@ public struct CreditCardUtils {
         return prefixes.filter { cardNumber.hasPrefix($0) }.count > 0
     }
     
+    //TODO: Will be replaced with `formatCardNumber` in future version
+    public static func format(number: String) -> String {
+        return formatCardNumber(cardNumber: number)
+    }
+    
     /**
         Returns the card number formatted for display
         -   Parameter cardNumber: The card number as a string
         -   Returns: The card number formatted
      */
-    public static func format(cardNumber: String) -> String {
+    public static func formatCardNumber(cardNumber: String) -> String {
         if cardNumber.count == maxPanLength {
             return format16(cardNumber: cardNumber)
         } else if cardNumber.count == maxPanLengthAmericanExpress {
@@ -308,5 +313,28 @@ public struct CreditCardUtils {
             displayNumber += String(char)
         }
         return displayNumber
+    }
+}
+
+//TODO: Added extension to make older network changes available, will remove in future version
+extension CreditCardUtils {
+    public static func isVisa(number: String) -> Bool {
+        return determineCardNetwork(cardNumber: number) == CardNetwork.VISA
+    }
+    
+    public static func isAmex(number: String) -> Bool {
+        return determineCardNetwork(cardNumber: number) == CardNetwork.AMEX
+    }
+    
+    public static func isDiscover(number: String) -> Bool {
+        return determineCardNetwork(cardNumber: number) == CardNetwork.DISCOVER
+    }
+    
+    public static func isMastercard(number: String) -> Bool {
+        return determineCardNetwork(cardNumber: number) == CardNetwork.MASTERCARD
+    }
+    
+    public static func isUnionPay(number: String) -> Bool {
+        return determineCardNetwork(cardNumber: number) == CardNetwork.UNIONPAY
     }
 }
