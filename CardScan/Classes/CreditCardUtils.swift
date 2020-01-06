@@ -293,6 +293,24 @@ public struct CreditCardUtils {
         }
     }
     
+    /**
+        Returns the card's expiration date formatted for display
+        -   Parameters:
+                -   expMonth: The expiration month as a string
+                -   expYear: The expiration year as a string
+        -   Returns: The card's expiration date formatted as MM/YY
+     */
+    public static func formatExpirationDate(expMonth: String, expYear: String) -> String {
+        var month = expMonth
+        let year = "\(expYear.suffix(2))"
+        
+        if expMonth.count == 1 {
+            month = "0\(expMonth)"
+        }
+        
+        return "\(month)/\(year)"
+    }
+    
     static func format15(cardNumber: String) -> String {
         var displayNumber = ""
         for (idx, char) in cardNumber.enumerated() {
