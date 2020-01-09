@@ -10,7 +10,7 @@ Once we have a build on master we want to publish:
 
 2. If a new file is added in `CardScan/`, run `pod install` and commit the newly created `Pod/` directory
 
-3. Verify Carthage build is working
+3. Verify Carthage build is working in the same directory as `.xcodeproj`
 
    ```bash
    carthage build --no-skip-current
