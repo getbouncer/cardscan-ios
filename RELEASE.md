@@ -15,6 +15,7 @@ Once we have a build on master we want to publish:
    ```bash
    carthage build --no-skip-current
    ```
+   *  If you get the error: `no shared framework schemes`, reclick `shared` on the project schemes in xcode.
 
 4. Run the Cocoapods linter to make sure that everything is going to pass
 
