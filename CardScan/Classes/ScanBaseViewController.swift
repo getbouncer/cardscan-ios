@@ -41,7 +41,6 @@ public protocol TestingImageDataSource: AnyObject {
     
     var currentImageRect: CGRect?
     var scannedCardImage: UIImage?
-    var isNavigationBarHidden = false
     private let scanQrCode = false
     private let regionCornerRadius = CGFloat(10.0)
     private var calledOnScannedCard = false
@@ -237,8 +236,6 @@ public protocol TestingImageDataSource: AnyObject {
         self.ocr.firstResult = nil
         self.calledOnScannedCard = false
         self.videoFeed.willAppear()
-        self.isNavigationBarHidden = self.navigationController?.isNavigationBarHidden ?? true
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override open func viewDidLayoutSubviews() {
@@ -253,10 +250,6 @@ public protocol TestingImageDataSource: AnyObject {
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.videoFeed.willDisappear()
-        
-        if !self.isNavigationBarHidden {
-            self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        }
     }
     
     public func getScanStats() -> ScanStats {

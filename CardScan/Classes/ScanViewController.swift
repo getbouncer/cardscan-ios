@@ -17,14 +17,11 @@ import UIKit
     @objc func userDidCancel(_ scanViewController: ScanViewController)
     @objc func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard)
     @objc optional func userDidScanQrCode(_ scanViewController: ScanViewController, payload: String)
-    @objc func userDidSkip(_ scanViewController: ScanViewController)
 }
 
 @objc public protocol ScanStringsDataSource {
     @objc func scanCard() -> String
     @objc func positionCard() -> String
-    @objc func backButton() -> String
-    @objc func skipButton() -> String
 }
 
 // The FullScanStringsDataSource protocol defines all of the strings
@@ -86,19 +83,10 @@ import UIKit
     
     public weak var scanDelegate: ScanDelegate?
     @objc public weak var stringDataSource: ScanStringsDataSource?
-    @objc public var allowSkip = false
-    public var torchLevel: Float? 
+    public var torchLevel: Float?
     public var scanQrCode = false
-    @objc public var hideBackButtonImage = false
-    @IBOutlet weak var backButtonImageToTextConstraint: NSLayoutConstraint!
-    @IBOutlet weak var backButtonWidthConstraint: NSLayoutConstraint!
-    @objc public var backButtonImage: UIImage?
-    @objc public var backButtonColor: UIColor?
-    @objc public var backButtonFont: UIFont?
     @objc public var scanCardFont: UIFont?
     @objc public var positionCardFont: UIFont?
-    @objc public var skipButtonFont: UIFont?
-    @objc public var backButtonImageToTextDelta: NSNumber?
     @objc public var torchButtonImage: UIImage?
     @objc public var cornerColor: UIColor?
     
@@ -108,9 +96,6 @@ import UIKit
     
     @IBOutlet weak var scanCardLabel: UILabel!
     @IBOutlet weak var positionCardLabel: UILabel!
-    @IBOutlet weak var skipButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var backButtonImageButton: UIButton!
     
     @IBOutlet weak var debugImageView: UIImageView!
     @IBOutlet weak var previewView: PreviewView!
@@ -146,27 +131,6 @@ import UIKit
             viewController.scanDelegate = delegate
         return viewController
     }
-    
-    @IBAction func backTextPress() {
-        self.backButtonPress("")
-    }
-    
-    @IBAction func backButtonPress(_ sender: Any) {
-        // Note: for the back button we may call the `userCancelled` delegate even if the
-        // delegate has been called just as a safety precation to always provide the
-        // user with a way to get out.
-        self.cancelScan()
-        self.calledDelegate = true
-        self.scanDelegate?.userDidCancel(self)
-    }
-    
-    @IBAction func skipButtonPress() {
-        // Same for the skip button, like with the back button press we may call the
-        // delegate function even if it's already been called
-        self.cancelScan()
-        self.calledDelegate = true
-        self.scanDelegate?.userDidSkip(self)
-    }
 
     @objc public func cancel(callDelegate: Bool) {
         if !self.calledDelegate {
@@ -186,8 +150,6 @@ import UIKit
         
         self.scanCardLabel.text = dataSource.scanCard()
         self.positionCardLabel.text = dataSource.positionCard()
-        self.skipButton.setTitle(dataSource.skipButton(), for: .normal)
-        self.backButton.setTitle(dataSource.backButton(), for: .normal)
         
         guard let fullDataSource = dataSource as? FullScanStringsDataSource else {
             return
@@ -199,33 +161,11 @@ import UIKit
     }
     
     func setUiCustomization() {
-        if self.hideBackButtonImage {
-            self.backButtonImageButton.setImage(nil, for: .normal)
-            // the image button is 8 from safe area and has a width of 32 the
-            // label has a leading constraint of -11 so setting the width to
-            // 19 sets the space from the safe region to 16
-            self.backButtonWidthConstraint.constant = 19
-        } else if let newImage = self.backButtonImage {
-            self.backButtonImageButton.setImage(newImage, for: .normal)
-        }
-        
-        if let color = self.backButtonColor {
-            self.backButton.setTitleColor(color, for: .normal)
-        }
-        if let font = self.backButtonFont {
-            self.backButton.titleLabel?.font = font
-        }
         if let font = self.scanCardFont {
             self.scanCardLabel.font = font
         }
         if let font = self.positionCardFont {
             self.positionCardLabel.font = font
-        }
-        if let font = self.skipButtonFont {
-            self.skipButton.titleLabel?.font = font
-        }
-        if let delta = self.backButtonImageToTextDelta.map({ CGFloat($0.floatValue) }) {
-            self.backButtonImageToTextConstraint.constant += delta
         }
         if let image = self.torchButtonImage {
             self.torchButton.setImage(image, for: .normal)
@@ -240,7 +180,7 @@ import UIKit
         alert.addAction(UIAlertAction(title: self.denyPermissionButtonText, style: .default, handler: { action in
             switch action.style{
             case .default:
-                self.backButtonPress("")
+                print("cancel")
                 
             case .cancel:
                 print("cancel")
@@ -254,8 +194,6 @@ import UIKit
     override public func onCameraPermissionDenied(showedPrompt: Bool) {
         if !showedPrompt {
             self.showDenyAlert()
-        } else {
-            self.backButtonPress("")
         }
     }
     
@@ -265,12 +203,6 @@ import UIKit
         self.setStrings()
         self.setUiCustomization()
         self.calledDelegate = false
-        
-        if self.allowSkip {
-            self.skipButton.isHidden = false
-        } else {
-            self.skipButton.isHidden = true
-        }
         
         let debugImageView = self.showDebugImageView ? self.debugImageView : nil
         self.setupOnViewDidLoad(regionOfInterestLabel: self.regionOfInterestLabel, blurView: self.blurView, previewView: self.previewView, cornerView: self.cornerView, debugImageView: debugImageView, torchLevel: self.torchLevel)
