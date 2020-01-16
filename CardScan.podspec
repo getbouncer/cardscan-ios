@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'RTCardScan'
-  s.version          = '1.1.1'
+  s.version          = '1.1.3'
   s.summary          = 'Scan credit cards'
   s.description      = <<-DESC
 CardScan is a library for scanning credit cards.
@@ -17,14 +17,14 @@ CardScan is a library for scanning credit cards.
   s.swift_version = '4.2'
 
   s.subspec 'Core' do |core|
-    core.source_files = 'RTCardScan/Classes/**/*'
-    core.resource_bundles = { 'RTCardScan' => ['RTCardScan/Assets/*.xcassets', 'RTCardScan/Assets/*.storyboard', 'RTCardScan/Assets/*.mlmodelc'] }
+    core.source_files = 'CardScan/Classes/**/*'
+    core.resource_bundles = { 'CardScan' => ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodelc'] }
     core.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
   end
 
   s.subspec 'Stripe' do |stripe|
-    stripe.source_files = 'RTCardScan/Classes/**/*'
-    stripe.resource_bundles = { 'RTCardScan' => ['RTCardScan/Assets/*.xcassets', 'RTCardScan/Assets/*.storyboard', 'RTCardScan/Assets/*.mlmodelc'] }
+    stripe.source_files = 'CardScan/Classes/**/*'
+    stripe.resource_bundles = { 'CardScan' => ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodelc'] }
     stripe.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
     stripe.dependency  'Stripe'
   end
