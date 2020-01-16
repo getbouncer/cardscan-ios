@@ -52,6 +52,7 @@ public protocol TestingImageDataSource: AnyObject {
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
     @objc open func onCameraPermissionDenied(showedPrompt: Bool) { }
+    @objc open func uponPredictedCardNumber( predictedNumber: String?, currentFrameCardNumber: String?) -> Bool { return true }
     
     //MARK: -Torch Logic
     public func toggleTorch() {
@@ -345,9 +346,15 @@ public protocol TestingImageDataSource: AnyObject {
     func blockingOcrModel(squareCardImage: CGImage, fullCardImage: CGImage) {
         let croppedCardImage = toCardImage(squareCardImage: squareCardImage)
         
-        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
-        if let number = number {
-            self.showCardNumber(number, expiry: expiry?.display())
+        let (currentNumber, predictedNumber, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+        
+        if let number = predictedNumber {
+            if self.uponPredictedCardNumber(predictedNumber: predictedNumber, currentFrameCardNumber: currentNumber) {
+               self.showCardNumber(number, expiry: expiry?.display())
+            } else {
+                // TODO: get rid of prediction?
+            }
+            
             if self.includeCardImage && foundNumberInThisScan {
                 self.scannedCardImage = UIImage(cgImage: croppedCardImage)
             }
@@ -369,7 +376,7 @@ public protocol TestingImageDataSource: AnyObject {
         
         if done {
             DispatchQueue.main.async {
-                guard let number = number else {
+                guard let number = predictedNumber else {
                     return
                 }
                 

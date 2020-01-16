@@ -59,15 +59,23 @@ public class Ocr {
         self.scanStats.endTime = Date()
     }
     
+    /**
+        - Parameters:
+            -   croppedCardImage: A credit card sized image
+            -   squareCardImage: A square sized image
+            -   fullCardImage: A fullscreen sized image
+        -   Returns:
+            - (currentFrameNumber, predictedNumber, expiryResult, done, foundNumberInThisScan)
+     */
     @available(iOS 11.2, *)
-    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage) -> (String?, Expiry?, Bool, Bool) {
-        let number = self.perform(croppedCardImage: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage) -> (String?, String?, Expiry?, Bool, Bool) {
+        let currentNumber = self.perform(croppedCardImage: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
 
-        if self.firstResult == nil && number != nil {
+        if self.firstResult == nil && currentNumber != nil {
             self.firstResult = Date()
         }
         
-        if let number = number {
+        if let number = currentNumber {
             self.numbers[number] = (self.numbers[number] ?? 0) + 1
         }
         
@@ -80,12 +88,12 @@ public class Ocr {
         let numberResult = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let expiryResult = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let done = interval >= self.errorCorrectionDuration
-        let foundNumberInThisScan = number != nil
+        let foundNumberInThisScan = currentNumber != nil
         
         if interval >= (self.errorCorrectionDuration / 2.0) {
-            return (numberResult, expiryResult, done, foundNumberInThisScan)
+            return (currentNumber, numberResult, expiryResult, done, foundNumberInThisScan)
         } else {
-            return (numberResult, nil, done, foundNumberInThisScan)
+            return (currentNumber, numberResult, nil, done, foundNumberInThisScan)
         }
     }
     
