@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = 'CardScan'
+  s.name             = 'RTCardScan'
   s.version          = '1.1.1'
   s.summary          = 'Scan credit cards'
   s.description      = <<-DESC
