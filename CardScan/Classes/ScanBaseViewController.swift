@@ -52,7 +52,7 @@ public protocol TestingImageDataSource: AnyObject {
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
     @objc open func onCameraPermissionDenied(showedPrompt: Bool) { }
-    @objc open func usePredictedCardNumber(predictedNumber: String?, currentFrameNumber: String) -> Bool { return true }
+    @objc open func useCurrentFrameNumber(predictedNumber: String?, currentFrameNumber: String) -> Bool { return true }
     
     //MARK: -Torch Logic
     public func toggleTorch() {
@@ -346,7 +346,7 @@ public protocol TestingImageDataSource: AnyObject {
     func blockingOcrModel(squareCardImage: CGImage, fullCardImage: CGImage) {
         let croppedCardImage = toCardImage(squareCardImage: squareCardImage)
         
-        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, predictedNumberPredicate: self.usePredictedCardNumber(predictedNumber:currentFrameNumber:))
+        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, predictedNumberPredicate: self.useCurrentFrameNumber(predictedNumber:currentFrameNumber:))
         
         if let number = number {
             self.showCardNumber(number, expiry: expiry?.display())

@@ -60,7 +60,7 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage, predictedNumberPredicate: (String?, String) -> Bool ) -> (String?, Expiry?, Bool, Bool) {
+    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage, predictedNumberPredicate: (String?, String) -> Bool = { _, _ in true } ) -> (String?, Expiry?, Bool, Bool) {
         let number = self.perform(croppedCardImage: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, predictedNumberPredicate: predictedNumberPredicate)
 
         if self.firstResult == nil && number != nil {
@@ -133,7 +133,7 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func perform(for rawImage: CGImage, predicate: (String?, String) -> Bool) -> String? {
+    public func perform(for rawImage: CGImage, predicate: (String?, String) -> Bool = { _, _ in true } ) -> String? {
         return self.perform(croppedCardImage: rawImage, squareCardImage: nil, fullCardImage: nil, predictedNumberPredicate: predicate)
     }
 }

@@ -304,9 +304,7 @@ import UIKit
         }
     }
     
-    public override func usePredictedCardNumber(predictedNumber: String?, currentFrameNumber: String) -> Bool {
-        print("predicted number: \(predictedNumber)")
-        print("current number: \(currentFrameNumber)")
+    public override func useCurrentFrameNumber(predictedNumber: String?, currentFrameNumber: String) -> Bool {
         return true
     }
     
