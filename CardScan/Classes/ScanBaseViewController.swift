@@ -52,7 +52,7 @@ public protocol TestingImageDataSource: AnyObject {
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
     @objc open func onCameraPermissionDenied(showedPrompt: Bool) { }
-    @objc open func uponPredictedCardNumber( predictedNumber: String?, currentFrameCardNumber: String?) -> Bool { return true }
+    @objc open func usePredictedCardNumber(predictedNumber: String?, currentFrameNumber: String) -> Bool { return true }
     
     //MARK: -Torch Logic
     public func toggleTorch() {
@@ -346,15 +346,10 @@ public protocol TestingImageDataSource: AnyObject {
     func blockingOcrModel(squareCardImage: CGImage, fullCardImage: CGImage) {
         let croppedCardImage = toCardImage(squareCardImage: squareCardImage)
         
-        let (currentNumber, predictedNumber, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, predictedNumberPredicate: self.usePredictedCardNumber(predictedNumber:currentFrameNumber:))
         
-        if let number = predictedNumber {
-            if self.uponPredictedCardNumber(predictedNumber: predictedNumber, currentFrameCardNumber: currentNumber) {
-               self.showCardNumber(number, expiry: expiry?.display())
-            } else {
-                // TODO: get rid of prediction?
-            }
-            
+        if let number = number {
+            self.showCardNumber(number, expiry: expiry?.display())
             if self.includeCardImage && foundNumberInThisScan {
                 self.scannedCardImage = UIImage(cgImage: croppedCardImage)
             }
@@ -376,7 +371,7 @@ public protocol TestingImageDataSource: AnyObject {
         
         if done {
             DispatchQueue.main.async {
-                guard let number = predictedNumber else {
+                guard let number = number else {
                     return
                 }
                 

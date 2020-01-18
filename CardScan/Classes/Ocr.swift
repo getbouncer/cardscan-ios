@@ -59,23 +59,15 @@ public class Ocr {
         self.scanStats.endTime = Date()
     }
     
-    /**
-        - Parameters:
-            -   croppedCardImage: A credit card sized image
-            -   squareCardImage: A square sized image
-            -   fullCardImage: A fullscreen sized image
-        -   Returns:
-            - (currentFrameNumber, predictedNumber, expiryResult, done, foundNumberInThisScan)
-     */
     @available(iOS 11.2, *)
-    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage) -> (String?, String?, Expiry?, Bool, Bool) {
-        let currentNumber = self.perform(croppedCardImage: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage, predictedNumberPredicate: (String?, String) -> Bool ) -> (String?, Expiry?, Bool, Bool) {
+        let number = self.perform(croppedCardImage: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, predictedNumberPredicate: predictedNumberPredicate)
 
-        if self.firstResult == nil && currentNumber != nil {
+        if self.firstResult == nil && number != nil {
             self.firstResult = Date()
         }
         
-        if let number = currentNumber {
+        if let number = number {
             self.numbers[number] = (self.numbers[number] ?? 0) + 1
         }
         
@@ -88,19 +80,27 @@ public class Ocr {
         let numberResult = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let expiryResult = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let done = interval >= self.errorCorrectionDuration
-        let foundNumberInThisScan = currentNumber != nil
-        
+        let foundNumberInThisScan = number != nil
+    
         if interval >= (self.errorCorrectionDuration / 2.0) {
-            return (currentNumber, numberResult, expiryResult, done, foundNumberInThisScan)
+            return (numberResult, expiryResult, done, foundNumberInThisScan)
         } else {
-            return (currentNumber, numberResult, nil, done, foundNumberInThisScan)
+            return (numberResult, nil, done, foundNumberInThisScan)
         }
     }
     
     @available(iOS 11.2, *)
-    public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?) -> String? {
+    public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?, predictedNumberPredicate: (String? , String) -> Bool ) -> String? {
         var findFour = FindFourOcr()
-        let number = findFour.predict(image: UIImage(cgImage: croppedCardImage))
+        var number = findFour.predict(image: UIImage(cgImage: croppedCardImage))
+        
+        if let currentNumber = number {
+            let errorCorrectedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
+            if !predictedNumberPredicate(errorCorrectedNumber, currentNumber) {
+                number = nil
+            }
+        }
+        
         self.expiry = findFour.expiry
         
         self.scanStats.scans += 1
@@ -133,7 +133,8 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func perform(for rawImage: CGImage) -> String? {
-        return self.perform(croppedCardImage: rawImage, squareCardImage: nil, fullCardImage: nil)
+    public func perform(for rawImage: CGImage, predicate: (String?, String) -> Bool) -> String? {
+        return self.perform(croppedCardImage: rawImage, squareCardImage: nil, fullCardImage: nil, predictedNumberPredicate: predicate)
     }
+    
 }

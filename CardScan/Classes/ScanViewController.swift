@@ -304,6 +304,12 @@ import UIKit
         }
     }
     
+    public override func usePredictedCardNumber(predictedNumber: String?, currentFrameNumber: String) -> Bool {
+        print("predicted number: \(predictedNumber)")
+        print("current number: \(currentFrameNumber)")
+        return true
+    }
+    
     override public func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) {
         
         if self.calledDelegate {
