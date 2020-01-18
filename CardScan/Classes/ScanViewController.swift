@@ -304,7 +304,7 @@ import UIKit
         }
     }
     
-    public override func useCurrentFrameNumber(predictedNumber: String?, currentFrameNumber: String) -> Bool {
+    public override func useCurrentFrameNumber(errorCorrectedNumber : String?, currentFrameNumber: String) -> Bool {
         return true
     }
     

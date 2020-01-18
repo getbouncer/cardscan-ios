@@ -60,8 +60,8 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage, predictedNumberPredicate: (String?, String) -> Bool = { _,_ in true } ) -> (String?, Expiry?, Bool, Bool) {
-        let number = self.perform(croppedCardImage: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, predictedNumberPredicate: predictedNumberPredicate)
+    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage, useCurrentFrameNumber: (String?, String) -> Bool = { _,_ in true } ) -> (String?, Expiry?, Bool, Bool) {
+        let number = self.perform(croppedCardImage: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, useCurrentFrameNumber: useCurrentFrameNumber)
 
         if self.firstResult == nil && number != nil {
             self.firstResult = Date()
@@ -90,13 +90,13 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?, predictedNumberPredicate: (String? , String) -> Bool = { _,_ in true } ) -> String? {
+    public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?, useCurrentFrameNumber: (String? , String) -> Bool = { _,_ in true } ) -> String? {
         var findFour = FindFourOcr()
         var number = findFour.predict(image: UIImage(cgImage: croppedCardImage))
         
         if let currentNumber = number {
             let errorCorrectedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
-            if !predictedNumberPredicate(errorCorrectedNumber, currentNumber) {
+            if !useCurrentFrameNumber(errorCorrectedNumber, currentNumber) {
                 number = nil
             }
         }
@@ -133,7 +133,7 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func perform(for rawImage: CGImage, predicate: (String?, String) -> Bool = { _,_ in true } ) -> String? {
-        return self.perform(croppedCardImage: rawImage, squareCardImage: nil, fullCardImage: nil, predictedNumberPredicate: predicate)
+    public func perform(for rawImage: CGImage, userCurrentFrameNumber: (String?, String) -> Bool = { _,_ in true } ) -> String? {
+        return self.perform(croppedCardImage: rawImage, squareCardImage: nil, fullCardImage: nil, useCurrentFrameNumber: userCurrentFrameNumber)
     }
 }
