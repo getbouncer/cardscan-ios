@@ -81,7 +81,7 @@ public class Ocr {
         let expiryResult = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let done = interval >= self.errorCorrectionDuration
         let foundNumberInThisScan = number != nil
-
+        
         if interval >= (self.errorCorrectionDuration / 2.0) {
             return (numberResult, expiryResult, done, foundNumberInThisScan)
         } else {
