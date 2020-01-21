@@ -187,6 +187,10 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         self.present(vc, animated: true)
     }
     
+    func onFrameDetected(number: String?, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
+        print("frame detected")
+    }
+    
     func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
         print("number recognized")
     }
