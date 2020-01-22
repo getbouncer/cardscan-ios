@@ -29,7 +29,7 @@
 
 **Merged pull requests:**
 
-- Run our fraud models on the CPU for now [\#106](https://github.com/getbouncer/cardscan-ios/pull/106) ([kingst](https://github.com/kingst))
+- Run non OCR models on the CPU [\#106](https://github.com/getbouncer/cardscan-ios/pull/106) ([kingst](https://github.com/kingst))
 
 ## [1.0.5023](https://github.com/getbouncer/cardscan-ios/tree/1.0.5023) (2019-12-11)
 
@@ -41,8 +41,8 @@
 
 **Merged pull requests:**
 
-- Update the ScanCard protocol, more robust cropping [\#104](https://github.com/getbouncer/cardscan-ios/pull/104) ([kingst](https://github.com/kingst))
-- \[RFC\] First cut at sending square and full images to the ML pipeline [\#103](https://github.com/getbouncer/cardscan-ios/pull/103) ([kingst](https://github.com/kingst))
+- Update the ScanCard protocol to include the cropped card image size [\#104](https://github.com/getbouncer/cardscan-ios/pull/104) ([kingst](https://github.com/kingst))
+- First cut at sending square and full images to the ML pipeline [\#103](https://github.com/getbouncer/cardscan-ios/pull/103) ([kingst](https://github.com/kingst))
 - mod testing image protocol/ add squared image [\#102](https://github.com/getbouncer/cardscan-ios/pull/102) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - added identifier for UITest [\#100](https://github.com/getbouncer/cardscan-ios/pull/100) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Adapt to iOS 9 [\#99](https://github.com/getbouncer/cardscan-ios/pull/99) ([igor-makarov](https://github.com/igor-makarov))
@@ -54,7 +54,7 @@
 
 **Merged pull requests:**
 
-- Remove forced unwrap and provide ability to set bundle name [\#95](https://github.com/getbouncer/cardscan-ios/pull/95) ([kingst](https://github.com/kingst))
+- Let apps set the bundle name [\#95](https://github.com/getbouncer/cardscan-ios/pull/95) ([kingst](https://github.com/kingst))
 
 ## [1.0.5021](https://github.com/getbouncer/cardscan-ios/tree/1.0.5021) (2019-11-04)
 
@@ -62,7 +62,7 @@
 
 **Merged pull requests:**
 
-- Update object serialization format [\#94](https://github.com/getbouncer/cardscan-ios/pull/94) ([kingst](https://github.com/kingst))
+- Update object detection serialization format [\#94](https://github.com/getbouncer/cardscan-ios/pull/94) ([kingst](https://github.com/kingst))
 
 ## [1.0.5020](https://github.com/getbouncer/cardscan-ios/tree/1.0.5020) (2019-11-01)
 
