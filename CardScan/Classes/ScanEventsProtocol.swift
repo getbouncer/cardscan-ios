@@ -7,6 +7,6 @@
 // serial dispatch queue.
 //
 public protocol ScanEvents {
-    mutating func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?)
+    mutating func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage)
     mutating func onScanComplete(scanStats: ScanStats)
 }

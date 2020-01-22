@@ -304,16 +304,22 @@ import UIKit
         }
     }
     
+    public override func useCurrentFrameNumber(errorCorrectedNumber : String?, currentFrameNumber: String) -> Bool {
+        return true
+    }
+    
     override public func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) {
         
         if self.calledDelegate {
             return
         }
         
-        let notification = UINotificationFeedbackGenerator()
-        notification.prepare()
-        notification.notificationOccurred(.success)
-        
+        if #available(iOS 10.0, *) {
+            let notification = UINotificationFeedbackGenerator()
+            notification.prepare()
+            notification.notificationOccurred(.success)
+        }
+                
         self.calledDelegate = true
         let card = CreditCard(number: number)
         card.expiryMonth = expiryMonth

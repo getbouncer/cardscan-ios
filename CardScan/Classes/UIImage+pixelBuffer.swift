@@ -211,3 +211,14 @@ extension UIImage {
         return image
     }
 }
+
+public extension UIImage {
+    static func blankGrayImage(width: Int, height: Int) -> UIImage? {
+        UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+        UIColor.gray.setFill()
+        UIRectFill(CGRect(x: 0, y: 0, width: width, height: height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+}

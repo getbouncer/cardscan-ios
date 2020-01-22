@@ -4,15 +4,13 @@ import VideoToolbox
 import Vision
 
 
-@objc public protocol TestingImageDataSource {
-    @objc func nextImage() -> CGImage?
+public protocol TestingImageDataSource: AnyObject {
+    func nextSquareAndFullImage() -> (CGImage, CGImage)?
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
-    
-    public func onNumberRecognized(number: String, expiry: Expiry?, cardImage: CGImage, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?) {
-        // relay this data to our own delegate object
-        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, cardImage: cardImage, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox)
+    public func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
+        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
     }
     
     public func onScanComplete(scanStats: ScanStats) {
@@ -20,7 +18,7 @@ import Vision
     }
     
     
-    @objc public weak var testingImageDataSource: TestingImageDataSource?
+    public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
     @objc public var includeCardImage = false
     @objc public var showDebugImageView = false
@@ -54,6 +52,7 @@ import Vision
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
     @objc open func onCameraPermissionDenied(showedPrompt: Bool) { }
+    @objc open func useCurrentFrameNumber(errorCorrectedNumber: String?, currentFrameNumber: String) -> Bool { return true }
     
     //MARK: -Torch Logic
     public func toggleTorch() {
@@ -104,7 +103,7 @@ import Vision
         AppState.inBackground = true
         // this makes sure that any currently running predictions finish before we
         // let the app go into the background
-        ScanViewController.machineLearningQueue.sync { }
+        machineLearningQueue.sync { }
     }
     
     @objc static func didBecomeActive() {
@@ -267,36 +266,13 @@ import Vision
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if self.machineLearningSemaphore.wait(timeout: .now()) == .success {
-            ScanViewController.machineLearningQueue.async {
+            ScanBaseViewController.machineLearningQueue.async {
                 ScanBaseViewController.registerAppNotifications()
                 self.captureOutputWork(sampleBuffer: sampleBuffer)
             }
         }
     }
     
-    
-    /* We're not ready for bardcodes again yet
-    @available(iOS 11.0, *)
-    func handleBarcodeResults(_ results: [Any]) {
-        for result in results {
-            // Cast the result to a barcode-observation
-            
-            if let barcode = result as? VNBarcodeObservation, barcode.symbology == .QR {
-                
-                if let payload = barcode.payloadStringValue {
-                    DispatchQueue.main.async {
-                        // XXX FIXME get QR Codes working again
-                        if self.calledDelegate {
-                            return
-                        }
-                        self.calledDelegate = true
-                        self.scanDelegate?.userDidScanQrCode.map { $0(self, payload) }
-
-                    }
-                }
-            }
-        }
-    }*/
     
     @available(iOS 11.2, *)
     func blockingQrModel(pixelBuffer: CVPixelBuffer) {
@@ -358,13 +334,24 @@ import Vision
         return newImage
     }
     
+    func toCardImage(squareCardImage: CGImage) -> CGImage {
+        let height = CGFloat(squareCardImage.width) * 302.0 / 480.0
+        let dh = (CGFloat(squareCardImage.height) - height) * 0.5
+        let cardRect = CGRect(x: 0.0, y: dh, width: CGFloat(squareCardImage.width), height: height)
+        
+        return squareCardImage.cropping(to: cardRect) ?? squareCardImage
+    }
+    
     @available(iOS 11.2, *)
-    func blockingOcrModel(rawImage: CGImage) {
-        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: rawImage)
+    func blockingOcrModel(squareCardImage: CGImage, fullCardImage: CGImage) {
+        let croppedCardImage = toCardImage(squareCardImage: squareCardImage)
+        
+        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, useCurrentFrameNumber: self.useCurrentFrameNumber(errorCorrectedNumber:currentFrameNumber:))
+        
         if let number = number {
             self.showCardNumber(number, expiry: expiry?.display())
             if self.includeCardImage && foundNumberInThisScan {
-                self.scannedCardImage = UIImage(cgImage: rawImage)
+                self.scannedCardImage = UIImage(cgImage: croppedCardImage)
             }
         }
         
@@ -378,7 +365,7 @@ import Vision
                     self.debugImageView?.isHidden = false
                 }
                 
-                self.debugImageView?.image = self.drawBoundingBoxesOnImage(image: UIImage(cgImage: rawImage), embossedCharacterBoxes: embossedBoxes, characterBoxes: flatBoxes, appleBoxes: expiryBoxes)
+                self.debugImageView?.image = self.drawBoundingBoxesOnImage(image: UIImage(cgImage: croppedCardImage), embossedCharacterBoxes: embossedBoxes, characterBoxes: flatBoxes, appleBoxes: expiryBoxes)
             }
         }
         
@@ -416,7 +403,14 @@ import Vision
             return
         }
         
-        guard let rawImage = self.toRegionOfInterest(pixelBuffer: pixelBuffer) else {
+
+        guard let fullCardImage = self.toCGImage(pixelBuffer: pixelBuffer) else {
+            print("could not get the cgImage from the pixel buffer")
+            self.machineLearningSemaphore.signal()
+            return
+        }
+        
+        guard let squareCardImage = self.toRegionOfInterest(image: fullCardImage) else {
             print("could not get the cgImage from the region of interest, dropping frame")
             self.machineLearningSemaphore.signal()
             return
@@ -424,20 +418,20 @@ import Vision
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let image = self.testingImageDataSource?.nextImage() ?? rawImage
+        let (squareImage, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
             if self.scanQrCode {
                 self.blockingQrModel(pixelBuffer: pixelBuffer)
             } else {
-                self.blockingOcrModel(rawImage: image)
+                self.blockingOcrModel(squareCardImage: squareImage, fullCardImage: fullImage)
             }
         }
         
         self.machineLearningSemaphore.signal()
     }
     
-    func toRegionOfInterest(pixelBuffer: CVPixelBuffer) -> CGImage? {
+    func toCGImage(pixelBuffer: CVPixelBuffer) -> CGImage? {
         var cgImage: CGImage?
         if #available(iOS 9.0, *) {
             #if swift(>=4.2)
@@ -449,14 +443,13 @@ import Vision
             return nil
         }
         
-        guard let image = cgImage else {
-            return nil
-        }
-        
-        // use the full width
+        return cgImage
+    }
+    
+    func toRegionOfInterest(image: CGImage) -> CGImage? {
+        // use the full width and make it a square
         let width = CGFloat(image.width)
-        // keep the aspect ratio at 480:302
-        let height = width * 302.0 / 480.0
+        let height = width
         
         // get device screen size
         let screen = UIScreen.main.bounds

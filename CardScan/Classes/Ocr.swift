@@ -60,8 +60,8 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func performWithErrorCorrection(for rawImage: CGImage) -> (String?, Expiry?, Bool, Bool) {
-        let number = self.perform(for: rawImage)
+    public func performWithErrorCorrection(for croppedCardImage: CGImage, squareCardImage: CGImage, fullCardImage: CGImage, useCurrentFrameNumber: (String?, String) -> Bool = { _,_ in true } ) -> (String?, Expiry?, Bool, Bool) {
+        let number = self.perform(croppedCardImage: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, useCurrentFrameNumber: useCurrentFrameNumber)
 
         if self.firstResult == nil && number != nil {
             self.firstResult = Date()
@@ -90,9 +90,17 @@ public class Ocr {
     }
     
     @available(iOS 11.2, *)
-    public func perform(for rawImage: CGImage) -> String? {
+    public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?, useCurrentFrameNumber: (String? , String) -> Bool = { _,_ in true } ) -> String? {
         var findFour = FindFourOcr()
-        let number = findFour.predict(image: UIImage(cgImage: rawImage))
+        var number = findFour.predict(image: UIImage(cgImage: croppedCardImage))
+        
+        if let currentNumber = number {
+            let errorCorrectedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
+            if !useCurrentFrameNumber(errorCorrectedNumber, currentNumber) {
+                number = nil
+            }
+        }
+        
         self.expiry = findFour.expiry
         
         self.scanStats.scans += 1
@@ -110,14 +118,22 @@ public class Ocr {
             let ymin = findFour.predictedBoxes.map { $0.minY }.min() ?? 0.0
             let ymax = findFour.predictedBoxes.map { $0.maxY }.max() ?? 0.0
             let numberBoundingBox = CGRect(x: xmin, y: ymin, width: (xmax - xmin), height: (ymax - ymin))
-            self.scanEventsDelegate?.onNumberRecognized(number: number, expiry:
-                findFour.expiry, cardImage: rawImage, numberBoundingBox: numberBoundingBox, expiryBoundingBox: findFour.expiryBoxes.first)
+            
+            if let squareCardImage = squareCardImage, let fullCardImage = fullCardImage {
+                let croppedCardSize = CGSize(width: croppedCardImage.width, height: croppedCardImage.height)
+                self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: findFour.expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: findFour.expiryBoxes.first, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+            }
             
             self.scanStats.algorithm = findFour.algorithm
-            self.updateStats(model: findFour.modelString, boxes: findFour.predictedBoxes, image: rawImage, number: number, cvvBoxes: findFour.cvvBoxes)
+            self.updateStats(model: findFour.modelString, boxes: findFour.predictedBoxes, image: croppedCardImage, number: number, cvvBoxes: findFour.cvvBoxes)
             return number
         }
 
         return nil
+    }
+    
+    @available(iOS 11.2, *)
+    public func perform(for rawImage: CGImage, userCurrentFrameNumber: (String?, String) -> Bool = { _,_ in true } ) -> String? {
+        return self.perform(croppedCardImage: rawImage, squareCardImage: nil, fullCardImage: nil, useCurrentFrameNumber: userCurrentFrameNumber)
     }
 }

@@ -68,6 +68,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GI2-Cu-50E">
                                                 <rect key="frame" x="157.5" y="50.5" width="60" height="60"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="TorchButton"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="FGW-3T-gOM"/>
                                                     <constraint firstAttribute="width" constant="60" id="sCb-37-0DF"/>

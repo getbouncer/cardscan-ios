@@ -76,7 +76,7 @@ struct RecognizeNumbers {
                 detectedCard = true
             }
             
-            if candidateNumber.count == 16  && CreditCardUtils.luhnCheck(candidateNumber) {
+            if CreditCardUtils.isValidNumber(cardNumber: candidateNumber) {
                 self.number = candidateNumber
                 self.numberBoxes = line.map { $0.rect }
             }
@@ -139,7 +139,7 @@ struct RecognizeNumbers {
         
         let candidateNumber = digits.filter { $0 != 10 }.map { String($0) }.joined()
         
-        if candidateNumber.count == 15  && CreditCardUtils.luhnCheck(candidateNumber) {
+        if CreditCardUtils.isValidNumber(cardNumber: candidateNumber) {
             return (candidateNumber, line.map { $0.rect })
         }
         

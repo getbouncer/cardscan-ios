@@ -32,7 +32,9 @@ struct NMS{
         if(indices.count > 200){
             // TODO Fix This
             indices = Array(indices[0..<200])
-            os_log("Exceptional Situation more than 200 candiates found", type: .error)
+            if #available(iOS 10.0, *) {
+                os_log("Exceptional Situation more than 200 candiates found", type: .error)
+            }
         }
         
         while(indices.count > 0){
