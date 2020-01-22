@@ -14,7 +14,7 @@
 
 **Merged pull requests:**
 
-- adding new cardscan CreditCardUtils functionality into pre-existing cardVerify PaymentCard functions [\#110](https://github.com/getbouncer/cardscan-ios/pull/110) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- adding new cardscan CreditCardUtils functionality into pre-existing functions [\#110](https://github.com/getbouncer/cardscan-ios/pull/110) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - adding cvv and expiration date functionality to CreditCardUtils; adding markdown documentation for CreditCardUtil struct [\#109](https://github.com/getbouncer/cardscan-ios/pull/109) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - modifying CreditCardUtil functions to match cardscan-android CreditCardUtils [\#108](https://github.com/getbouncer/cardscan-ios/pull/108) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Rewriting credit card network bin rules and adding the card networks: JCB and Diners Club [\#107](https://github.com/getbouncer/cardscan-ios/pull/107) ([jaimejiyepark](https://github.com/jaimejiyepark))
