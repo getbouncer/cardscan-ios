@@ -120,8 +120,7 @@ import UIKit
     @IBOutlet weak var torchButton: UIButton!
     @IBOutlet weak var torchButtonWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var torchButtonHeightConstraint: NSLayoutConstraint!
-    public var torchButtonWidth: CGFloat?
-    public var torchButtonHeight: CGFloat?
+    public var torchButtonSize: CGSize?
     @IBOutlet weak var cornerView: CornerView!
     var cornerBorderColor = UIColor.green.cgColor
     var denyPermissionTitle = "Need camera access"
@@ -237,11 +236,9 @@ import UIKit
         if let color = self.cornerColor {
             self.cornerBorderColor = color.cgColor
         }
-        if let width = self.torchButtonWidth {
-            self.torchButtonWidthConstraint.constant = width
-        }
-        if let height = self.torchButtonHeight {
-            self.torchButtonHeightConstraint.constant = height
+        if let size = self.torchButtonSize {
+            self.torchButtonWidthConstraint.constant = size.width
+            self.torchButtonHeightConstraint.constant = size.height
         }
     }
     
