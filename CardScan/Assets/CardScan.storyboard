@@ -221,6 +221,8 @@
                         <outlet property="scanCardLabel" destination="vfu-3N-l48" id="2kI-61-Gm4"/>
                         <outlet property="skipButton" destination="X5c-eH-4ZR" id="4S7-9x-HVa"/>
                         <outlet property="torchButton" destination="GI2-Cu-50E" id="F1H-K0-X4c"/>
+                        <outlet property="torchButtonHeightConstraint" destination="FGW-3T-gOM" id="0Ot-fv-8f4"/>
+                        <outlet property="torchButtonWidthConstraint" destination="sCb-37-0DF" id="U6d-Lu-0UR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LMM-sw-EX2" userLabel="First Responder" sceneMemberID="firstResponder"/>
