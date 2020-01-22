@@ -14,10 +14,10 @@
 
 **Merged pull requests:**
 
-- Reintroduce cardverify func [\#110](https://github.com/getbouncer/cardscan-ios/pull/110) ([jaimejiyepark](https://github.com/jaimejiyepark))
-- added cvv and exp date func, added md comments [\#109](https://github.com/getbouncer/cardscan-ios/pull/109) ([jaimejiyepark](https://github.com/jaimejiyepark))
-- card number/ bin validity check [\#108](https://github.com/getbouncer/cardscan-ios/pull/108) ([jaimejiyepark](https://github.com/jaimejiyepark))
-- \[RFC\] bin rules [\#107](https://github.com/getbouncer/cardscan-ios/pull/107) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- adding new cardscan CreditCardUtils functionality into pre-existing cardVerify PaymentCard functions [\#110](https://github.com/getbouncer/cardscan-ios/pull/110) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- adding cvv and expiration date functionality to CreditCardUtils; adding markdown documentation for CreditCardUtil struct [\#109](https://github.com/getbouncer/cardscan-ios/pull/109) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- modifying CreditCardUtil functions to match cardscan-android CreditCardUtils [\#108](https://github.com/getbouncer/cardscan-ios/pull/108) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Rewriting credit card network bin rules and adding the card networks: JCB and Diners Club [\#107](https://github.com/getbouncer/cardscan-ios/pull/107) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5025](https://github.com/getbouncer/cardscan-ios/tree/1.0.5025) (2019-12-13)
 
@@ -43,10 +43,10 @@
 
 - Update the ScanCard protocol to include the cropped card image size [\#104](https://github.com/getbouncer/cardscan-ios/pull/104) ([kingst](https://github.com/kingst))
 - First cut at sending square and full images to the ML pipeline [\#103](https://github.com/getbouncer/cardscan-ios/pull/103) ([kingst](https://github.com/kingst))
-- mod testing image protocol/ add squared image [\#102](https://github.com/getbouncer/cardscan-ios/pull/102) ([jaimejiyepark](https://github.com/jaimejiyepark))
-- added identifier for UITest [\#100](https://github.com/getbouncer/cardscan-ios/pull/100) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- modifying testing image protocol to return square and full-screen images [\#102](https://github.com/getbouncer/cardscan-ios/pull/102) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- added button identifier for UITest [\#100](https://github.com/getbouncer/cardscan-ios/pull/100) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Adapt to iOS 9 [\#99](https://github.com/getbouncer/cardscan-ios/pull/99) ([igor-makarov](https://github.com/igor-makarov))
-- exposing torch functions [\#97](https://github.com/getbouncer/cardscan-ios/pull/97) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- created public interface to get/set torch levels [\#97](https://github.com/getbouncer/cardscan-ios/pull/97) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5022](https://github.com/getbouncer/cardscan-ios/tree/1.0.5022) (2019-11-13)
 
@@ -95,7 +95,7 @@
 
 - Moves setting the sessionPreset after addInput.  [\#90](https://github.com/getbouncer/cardscan-ios/pull/90) ([waltersanford](https://github.com/waltersanford))
 - Fix typo [\#88](https://github.com/getbouncer/cardscan-ios/pull/88) ([kingst](https://github.com/kingst))
-- full screen in storyboard [\#87](https://github.com/getbouncer/cardscan-ios/pull/87) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- adapt to new iOS13 card-screen presentation by setting to full-screen [\#87](https://github.com/getbouncer/cardscan-ios/pull/87) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5016](https://github.com/getbouncer/cardscan-ios/tree/1.0.5016) (2019-09-23)
 
