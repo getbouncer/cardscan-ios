@@ -88,7 +88,7 @@ struct FindFourOcr {
     
     static func initializeModels() {
         if FindFourOcr.recognizeModel == nil {
-            guard let fourRecognizeUrl = BundleURL.compiledModel(forResource: fourRecognizeResource, withExtension: fourRecognizeExtension) else {
+            guard let fourRecognizeUrl = CardScan.compiledModel(forResource: fourRecognizeResource, withExtension: fourRecognizeExtension) else {
                 print("Could not find URL for FourRecognize")
                 return
             }
@@ -101,7 +101,7 @@ struct FindFourOcr {
             FindFourOcr.recognizeModel = recognizeModel
         }
         if FindFourOcr.detectModel == nil {
-            guard let findFourUrl = BundleURL.compiledModel(forResource: findFourResource, withExtension: findFourExtension) else {
+            guard let findFourUrl = CardScan.compiledModel(forResource: findFourResource, withExtension: findFourExtension) else {
                 print("Could not find URL for FindFour")
                 return
             }
