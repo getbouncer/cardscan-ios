@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased](https://github.com/getbouncer/cardscan-ios/tree/HEAD)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5027...HEAD)
+
+**Merged pull requests:**
+
+- renamed BundleURL to CardScan [\#114](https://github.com/getbouncer/cardscan-ios/pull/114) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Torch Button custom sizing [\#113](https://github.com/getbouncer/cardscan-ios/pull/113) ([justinvallely](https://github.com/justinvallely))
+
 ## [1.0.5027](https://github.com/getbouncer/cardscan-ios/tree/1.0.5027) (2020-01-19)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5026...1.0.5027)
