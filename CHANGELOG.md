@@ -2,7 +2,19 @@
 
 ## [Unreleased](https://github.com/getbouncer/cardscan-ios/tree/HEAD)
 
-[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5027...HEAD)
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5028...HEAD)
+
+**Closed issues:**
+
+- Performance and memory leaks [\#85](https://github.com/getbouncer/cardscan-ios/issues/85)
+
+## [1.0.5028](https://github.com/getbouncer/cardscan-ios/tree/1.0.5028) (2020-01-29)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5027...1.0.5028)
+
+**Closed issues:**
+
+- Release 1.0.5024 breaks Carthage [\#112](https://github.com/getbouncer/cardscan-ios/issues/112)
 
 **Merged pull requests:**
 
