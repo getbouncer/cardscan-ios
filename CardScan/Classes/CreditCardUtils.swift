@@ -1,16 +1,5 @@
 import Foundation
 
-public enum CardNetwork: String {
-    case VISA = "Visa"
-    case MASTERCARD = "Mastercard"
-    case AMEX = "Amex"
-    case DISCOVER = "Discover"
-    case UNIONPAY = "Union Pay"
-    case JCB = "Jcb"
-    case DINERSCLUB = "Diners Club"
-    case UNKNOWN = "Unknown"
-}
-
 public struct CreditCardUtils {
     static let maxCvvLength = 3
     static let maxCvvLengthAmex = 4
