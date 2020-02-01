@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum CardNetwork: Int {
+@objc public enum CardNetwork: Int {
     case VISA
     case MASTERCARD
     case AMEX
