@@ -9,7 +9,7 @@ public protocol TestingImageDataSource: AnyObject {
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
-    public func onFrameDetected(number: String?, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
+    public func onFrameDetected(number: String?, expiry: Expiry?, numberBoundingBox: CGRect?, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
         self.scanEventsDelegate?.onFrameDetected(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
     }
     
