@@ -112,22 +112,24 @@ public class Ocr {
         }
         if let squareCardImage = squareCardImage, let fullCardImage = fullCardImage {
             let croppedCardSize = CGSize(width: croppedCardImage.width, height: croppedCardImage.height)
-            // Note: the onScanComplete method is called in ScanBaseViewController
-            let xmin = findFour.predictedBoxes.map { $0.minX }.min() ?? 0.0
-            let xmax = findFour.predictedBoxes.map { $0.maxX }.max() ?? 0.0
-            let ymin = findFour.predictedBoxes.map { $0.minY }.min() ?? 0.0
-            let ymax = findFour.predictedBoxes.map { $0.maxY }.max() ?? 0.0
-            let numberBoundingBox = CGRect(x: xmin, y: ymin, width: (xmax - xmin), height: (ymax - ymin))
             
-             if let number = number {
+            if let number = number {
+                // Note: the onScanComplete method is called in ScanBaseViewController
+                let xmin = findFour.predictedBoxes.map { $0.minX }.min() ?? 0.0
+                let xmax = findFour.predictedBoxes.map { $0.maxX }.max() ?? 0.0
+                let ymin = findFour.predictedBoxes.map { $0.minY }.min() ?? 0.0
+                let ymax = findFour.predictedBoxes.map { $0.maxY }.max() ?? 0.0
+                let numberBoundingBox = CGRect(x: xmin, y: ymin, width: (xmax - xmin), height: (ymax - ymin))
+                       
+            
                 self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: findFour.expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: findFour.expiryBoxes.first, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
-            
+        
                 self.scanStats.algorithm = findFour.algorithm
                 self.updateStats(model: findFour.modelString, boxes: findFour.predictedBoxes, image: croppedCardImage, number: number, cvvBoxes: findFour.cvvBoxes)
                 return number
             }
             
-            self.scanEventsDelegate?.onFrameDetected(number: number, expiry: findFour.expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: findFour.expiryBoxes.first, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+            self.scanEventsDelegate?.onFrameDetected(croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
         }
 
         return nil
