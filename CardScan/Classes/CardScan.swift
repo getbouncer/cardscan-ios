@@ -1,4 +1,13 @@
-public struct BundleURL {
+//
+//  CardScan.swift
+//  CardScan
+//
+//  Created by Jaime Park on 1/29/20.
+//
+
+import Foundation
+
+public class CardScan {
     // If you change the bundle name make sure to set these before
     // initializing the library
     public static var bundleName = "CardScan"

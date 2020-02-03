@@ -153,7 +153,7 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     @objc static public func cameraImage() -> UIImage? {
-        guard let bundle = BundleURL.bundle() else {
+        guard let bundle = CardScan.bundle() else {
             return nil
         }
         

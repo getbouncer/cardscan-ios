@@ -145,6 +145,8 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         
         vc.cornerColor = UIColor.blue
         vc.torchButtonImage = ScanViewController.cameraImage()
+
+        vc.torchButtonSize = CGSize(width: 44, height: 44)
         
         self.present(vc, animated: true)
     }

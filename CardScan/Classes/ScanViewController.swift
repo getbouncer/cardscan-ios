@@ -118,6 +118,9 @@ import UIKit
     @IBOutlet weak var regionOfInterestAspectConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var torchButton: UIButton!
+    @IBOutlet weak var torchButtonWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var torchButtonHeightConstraint: NSLayoutConstraint!
+    public var torchButtonSize: CGSize?
     @IBOutlet weak var cornerView: CornerView!
     var cornerBorderColor = UIColor.green.cgColor
     var denyPermissionTitle = "Need camera access"
@@ -139,7 +142,7 @@ import UIKit
         
         // The forced unwrap here is intentional -- we expect this to crash
         // if someone uses it with an invalid bundle
-        let bundle = BundleURL.bundle()!
+        let bundle = CardScan.bundle()!
         
         let storyboard = UIStoryboard(name: "CardScan", bundle: bundle)
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
@@ -232,6 +235,10 @@ import UIKit
         }
         if let color = self.cornerColor {
             self.cornerBorderColor = color.cgColor
+        }
+        if let size = self.torchButtonSize {
+            self.torchButtonWidthConstraint.constant = size.width
+            self.torchButtonHeightConstraint.constant = size.height
         }
     }
     
