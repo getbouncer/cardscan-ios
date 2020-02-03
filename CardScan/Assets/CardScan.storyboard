@@ -11,7 +11,7 @@
         <!--Scan View Controller-->
         <scene sceneID="tgv-Xg-mB7">
             <objects>
-                <viewController storyboardIdentifier="scanCardViewController" modalPresentationStyle="fullScreen" id="RWC-EC-Zxy" customClass="ScanViewController" customModule="CardScan" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="scanCardViewController" modalPresentationStyle="fullScreen" id="RWC-EC-Zxy" customClass="ScanViewController" customModule="RTCardScan" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dia-FZ-zQY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
