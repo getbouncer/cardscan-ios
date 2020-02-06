@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'RTCardScan'
-  s.version          = '1.1.3'
+  s.version          = '1.1.4'
   s.summary          = 'Scan credit cards'
   s.description      = <<-DESC
 CardScan is a library for scanning credit cards.
