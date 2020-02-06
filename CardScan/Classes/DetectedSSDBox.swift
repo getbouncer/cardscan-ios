@@ -19,7 +19,11 @@ struct DetectedSSDBox {
         let XMax_ = XMax * Double(imageSize.width)
         let YMin_ = YMin * Double(imageSize.height)
         let YMax_ = YMax * Double(imageSize.height)
-
+        
+        // The model ouputs labels that are off by 1
+        // compared to the previous versions and this line
+        // serves to retain the consistency. This label
+        // correction should be removed in the future.
         self.label = category - 1
         self.confidence = conf
         self.rect = CGRect(x: XMin_, y: YMin_, width: XMax_ - XMin_, height: YMax_ - YMin_)
