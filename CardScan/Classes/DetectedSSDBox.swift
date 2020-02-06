@@ -20,7 +20,7 @@ struct DetectedSSDBox {
         let YMin_ = YMin * Double(imageSize.height)
         let YMax_ = YMax * Double(imageSize.height)
 
-        self.label = category
+        self.label = category - 1
         self.confidence = conf
         self.rect = CGRect(x: XMin_, y: YMin_, width: XMax_ - XMin_, height: YMax_ - YMin_)
         self.imgSize = imageSize
