@@ -31,7 +31,7 @@ public struct SsdDetect {
 
     /* We don't use the following constants, these values are determined at run time
     *  Regardless, this is good information to keep around.
-    *  let NoOfClasses = 13
+    *  let NoOfClasses = 14
     *  let TotalNumberOfPriors = 2766
     *  let NoOfCordinates = 4
     */
