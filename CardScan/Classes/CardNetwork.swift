@@ -17,7 +17,7 @@ import Foundation
     case DINERSCLUB
     case UNKNOWN
     
-    func toString() -> String {
+    public func toString() -> String {
         switch self {
         case .VISA: return "Visa"
         case .MASTERCARD: return "Mastercard"
