@@ -54,6 +54,12 @@ public class PreviewView: UIView {
         }
         layer.videoGravity = .resizeAspectFill
         
+        let orientation = UIDevice.current.orientation
+        
+        if let videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue) {
+            layer.connection?.videoOrientation = videoOrientation
+        }
+        
         return layer
     }
     
