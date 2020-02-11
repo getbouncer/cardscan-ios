@@ -201,6 +201,10 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         print("scan complete")
     }
     
+    func onScanComplete(ocrResults: [String : Any]) {
+        print("scan complete with ocr result")
+    }
+    
     @IBAction func scanWithStatsPress() {
         ScanViewController.configure(apiKey: "0xdeadbeef")
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {

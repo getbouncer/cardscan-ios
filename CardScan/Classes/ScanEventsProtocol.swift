@@ -9,5 +9,6 @@
 public protocol ScanEvents {
     mutating func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage)
     mutating func onScanComplete(scanStats: ScanStats)
+    mutating func onScanComplete(ocrResults: [String: Any])
     mutating func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage)
 }

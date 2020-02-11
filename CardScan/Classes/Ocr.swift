@@ -83,6 +83,18 @@ public class Ocr {
         let foundNumberInThisScan = number != nil
         
         if interval >= (self.errorCorrectionDuration / 2.0) {
+            var ocrResult: [String: Any] = [:]
+            if let number = numberResult {
+                ocrResult["bin"] = String(number.prefix(6))
+                ocrResult["last4"] = String(number.suffix(4))
+            }
+            
+            if let expiry = expiryResult {
+                ocrResult["exp_month"] = String(expiry.month)
+                ocrResult["exp_year"] = String(expiry.year)
+            }
+            
+            self.scanEventsDelegate?.onScanComplete(ocrResults: ocrResult)
             return (numberResult, expiryResult, done, foundNumberInThisScan)
         } else {
             return (numberResult, nil, done, foundNumberInThisScan)

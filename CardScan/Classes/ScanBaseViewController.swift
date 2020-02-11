@@ -17,6 +17,10 @@ public protocol TestingImageDataSource: AnyObject {
         self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
     }
     
+    public func onScanComplete(ocrResults: [String: Any]) {
+        self.scanEventsDelegate?.onScanComplete(ocrResults: ocrResults)
+    }
+    
     public func onScanComplete(scanStats: ScanStats) {
         // this shouldn't get called
     }
