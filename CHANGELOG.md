@@ -1,12 +1,18 @@
 # Changelog
 
-## [Unreleased](https://github.com/getbouncer/cardscan-ios/tree/HEAD)
+## [1.0.5029](https://github.com/getbouncer/cardscan-ios/tree/1.0.5029) (2020-02-11)
 
-[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5028...HEAD)
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5028...1.0.5029)
 
-**Closed issues:**
+**Merged pull requests:**
 
-- Performance and memory leaks [\#85](https://github.com/getbouncer/cardscan-ios/issues/85)
+- Update expiry thresholds for better accuracy [\#125](https://github.com/getbouncer/cardscan-ios/pull/125) ([kingst](https://github.com/kingst))
+- Made network function public [\#123](https://github.com/getbouncer/cardscan-ios/pull/123) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Obj detect v003 [\#121](https://github.com/getbouncer/cardscan-ios/pull/121) ([dxaen](https://github.com/dxaen))
+- Adding CardScan pod scheme for carthage build [\#120](https://github.com/getbouncer/cardscan-ios/pull/120) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Got rid of last4, exp, numBox, expBox in onFrameDetected protocol [\#118](https://github.com/getbouncer/cardscan-ios/pull/118) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Added framedetected protocol to grab non-numbered frames [\#117](https://github.com/getbouncer/cardscan-ios/pull/117) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Changed CardNetwork enum to Int along with ToString function [\#116](https://github.com/getbouncer/cardscan-ios/pull/116) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5028](https://github.com/getbouncer/cardscan-ios/tree/1.0.5028) (2020-01-29)
 
@@ -15,6 +21,7 @@
 **Closed issues:**
 
 - Release 1.0.5024 breaks Carthage [\#112](https://github.com/getbouncer/cardscan-ios/issues/112)
+- Performance and memory leaks [\#85](https://github.com/getbouncer/cardscan-ios/issues/85)
 
 **Merged pull requests:**
 
