@@ -277,35 +277,6 @@ public protocol TestingImageDataSource: AnyObject {
         }
     }
     
-    
-    @available(iOS 11.2, *)
-    func blockingQrModel(pixelBuffer: CVPixelBuffer) {
-        let semaphore = DispatchSemaphore(value: 0)
-        DispatchQueue.global(qos: .userInteractive).async {
-            let barcodeRequest = VNDetectBarcodesRequest(completionHandler: { request, error in
-                guard let _ = request.results else {
-                    semaphore.signal()
-                    return
-                }
-                // We took out QR code scanning for now
-                //self.handleBarcodeResults(results)
-                semaphore.signal()
-            })
-
-            let orientation = CGImagePropertyOrientation.up
-            let requestOptions:[VNImageOption : Any] = [:]
-            let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
-                                                orientation: orientation,
-                                                options: requestOptions)
-            guard let _ = try? handler.perform([barcodeRequest]) else {
-                print("error with vision call for barcode")
-                semaphore.signal()
-                return
-            }
-        }
-        semaphore.wait()
-    }
-    
     func drawBoundingBoxesOnImage(image: UIImage, embossedCharacterBoxes: [CGRect],
                                   characterBoxes: [CGRect], appleBoxes: [CGRect]) -> UIImage? {
         
@@ -347,7 +318,7 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     @available(iOS 11.2, *)
-    func blockingOcrModel(squareCardImage: CGImage, fullCardImage: CGImage) {
+    open func blockingMlModel(squareCardImage: CGImage, fullCardImage: CGImage) {
         let croppedCardImage = toCardImage(squareCardImage: squareCardImage)
         
         let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, useCurrentFrameNumber: self.useCurrentFrameNumber(errorCorrectedNumber:currentFrameNumber:))
@@ -425,11 +396,7 @@ public protocol TestingImageDataSource: AnyObject {
         let (squareImage, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
-            if self.scanQrCode {
-                self.blockingQrModel(pixelBuffer: pixelBuffer)
-            } else {
-                self.blockingOcrModel(squareCardImage: squareImage, fullCardImage: fullImage)
-            }
+            self.blockingMlModel(squareCardImage: squareImage, fullCardImage: fullImage)
         }
         
         self.machineLearningSemaphore.signal()
