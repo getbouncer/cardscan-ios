@@ -317,8 +317,18 @@ public protocol TestingImageDataSource: AnyObject {
         return squareCardImage.cropping(to: cardRect) ?? squareCardImage
     }
     
+    func toSquareCardImage(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
+        let width = CGFloat(fullCardImage.width)
+        let height = width
+        let centerY = (roiRectangle.maxY + roiRectangle.minY) * 0.5
+        let cropRectangle = CGRect(x: 0.0, y: centerY - height * 0.5,
+                                   width: width, height: height)
+        return fullCardImage.cropping(to: cropRectangle)
+    }
+    
     @available(iOS 11.2, *)
-    open func blockingMlModel(squareCardImage: CGImage, fullCardImage: CGImage) {
+    open func blockingMlModel(fullCardImage: CGImage, roiRectangle: CGRect) {
+        guard let squareCardImage = toSquareCardImage(fullCardImage: fullCardImage, roiRectangle: roiRectangle) else { return }
         let croppedCardImage = toCardImage(squareCardImage: squareCardImage)
         
         let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, useCurrentFrameNumber: self.useCurrentFrameNumber(errorCorrectedNumber:currentFrameNumber:))
@@ -385,7 +395,7 @@ public protocol TestingImageDataSource: AnyObject {
             return
         }
         
-        guard let squareCardImage = self.toRegionOfInterest(image: fullCardImage) else {
+        guard let (squareCardImage, roiRectInPixels) = self.toRegionOfInterest(image: fullCardImage) else {
             print("could not get the cgImage from the region of interest, dropping frame")
             self.machineLearningSemaphore.signal()
             return
@@ -396,7 +406,7 @@ public protocol TestingImageDataSource: AnyObject {
         let (squareImage, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
-            self.blockingMlModel(squareCardImage: squareImage, fullCardImage: fullImage)
+            self.blockingMlModel(fullCardImage: fullImage, roiRectangle: roiRectInPixels)
         }
         
         self.machineLearningSemaphore.signal()
@@ -417,7 +427,7 @@ public protocol TestingImageDataSource: AnyObject {
         return cgImage
     }
     
-    func toRegionOfInterest(image: CGImage) -> CGImage? {
+    func toRegionOfInterest(image: CGImage) -> (CGImage, CGRect)? {
         // use the full width and make it a square
         let width = CGFloat(image.width)
         let height = width
@@ -449,13 +459,14 @@ public protocol TestingImageDataSource: AnyObject {
         // The size of the cropped region is needed to map regionOfInterestCenter to the image center
         let imageAspectRatio = CGFloat(image.width) / CGFloat(image.height)
         let screenAspectRatio = screenWidth / screenHeight
-
+        
+        var pointsToPixels: CGFloat
         // convert from points to pixels and account for the cropped region
         if imageAspectRatio > screenAspectRatio {
             // left and right of the image cropped
             //      tested on: iPhone XS Max
             let croppedOffset = (CGFloat(image.width) - CGFloat(image.height) * screenAspectRatio) / 2.0
-            let pointsToPixels = CGFloat(image.height) / screenHeight
+            pointsToPixels = CGFloat(image.height) / screenHeight
             
             cx = regionOfInterestCenterX * pointsToPixels + croppedOffset
             cy = regionOfInterestCenterY * pointsToPixels
@@ -463,16 +474,23 @@ public protocol TestingImageDataSource: AnyObject {
             // top and bottom of the image cropped
             //      tested on: iPad Mini 2
             let croppedOffset = (CGFloat(image.height) - CGFloat(image.width) / screenAspectRatio) / 2.0
-            let pointsToPixels = CGFloat(image.width) / screenWidth
+            pointsToPixels = CGFloat(image.width) / screenWidth
             
             cx = regionOfInterestCenterX * pointsToPixels
             cy = regionOfInterestCenterY * pointsToPixels + croppedOffset
         }
         
+        let roiWidthInPixels = regionOfInterestLabelFrame.size.width * pointsToPixels
+        let roiHeightInPixels = regionOfInterestLabelFrame.size.height * pointsToPixels
+        let roiRectInPixels = CGRect(x: cx - roiWidthInPixels * 0.5,
+                                     y: cy - roiHeightInPixels * 0.5,
+                                     width: roiWidthInPixels,
+                                     height: roiHeightInPixels)
+        
         let rect = CGRect(x: cx - width / 2.0, y: cy - height / 2.0, width: width, height: height)
         
         self.currentImageRect = rect
         
-        return image.cropping(to: rect)
+        return image.cropping(to: rect).map { ($0, roiRectInPixels) }
     }
 }
