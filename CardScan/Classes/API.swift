@@ -103,7 +103,7 @@ public struct Api {
     }
     
     static func getSdkVersion() -> String? {
-        guard let bundle = CardScan.bundle() else {
+        guard let bundle = CSBundle.getBundle() else {
             return nil
         }
         

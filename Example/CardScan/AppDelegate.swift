@@ -16,10 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let bundle = CardScan.bundle()
-        CardScan.cardScanBundle = bundle
-        CardScan.bundleName = ""
-        CardScan.extensionName = ""
+        let bundle = CSBundle.getBundle()
+        CSBundle.bundle = bundle
+        CSBundle.name = ""
+        CSBundle.extensionName = ""
         ScanViewController.configure()
         return true
     }
