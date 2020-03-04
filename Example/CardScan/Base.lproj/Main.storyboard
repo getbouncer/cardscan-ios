@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -119,12 +119,21 @@
                                     <action selector="scanCardOldDevicePress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lSb-gT-iHT"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hwY-Fq-Ur0">
+                                <rect key="frame" x="132" y="591" width="111" height="30"/>
+                                <state key="normal" title="Present Modally"/>
+                                <connections>
+                                    <action selector="presentModallyPress:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="f6C-cg-AW8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="top" secondItem="9tR-DO-gyb" secondAttribute="bottom" constant="16" id="1PH-rJ-mXS"/>
                             <constraint firstItem="ohs-2Q-mlC" firstAttribute="top" secondItem="f3P-G8-yKq" secondAttribute="bottom" constant="8" id="2fc-SR-27T"/>
                             <constraint firstItem="ohs-2Q-mlC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="16" id="420-Q5-1Ny"/>
+                            <constraint firstItem="hwY-Fq-Ur0" firstAttribute="top" secondItem="lOx-Ed-LOH" secondAttribute="bottom" constant="7.5" id="4Ee-bv-ET0"/>
+                            <constraint firstItem="hwY-Fq-Ur0" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="4jS-r9-jBh"/>
                             <constraint firstItem="f3P-G8-yKq" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="8CR-et-Rxz"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="AkZ-f5-Cw0"/>
                             <constraint firstItem="LBI-Nj-Ojb" firstAttribute="top" secondItem="pIK-as-bko" secondAttribute="bottom" constant="8" id="DKk-6B-vtM"/>
@@ -186,7 +195,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Cr-oD-9K4">
                                 <rect key="frame" x="16" y="418" width="343" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ci9-Th-M77">
@@ -213,7 +222,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuH-z7-S5E">
                                 <rect key="frame" x="16" y="446" width="343" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -248,6 +257,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G7M-4N-UJP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="885.60000000000002" y="132.68365817091455"/>
+        </scene>
+        <!--Nav View Controller-->
+        <scene sceneID="bCm-19-JS1">
+            <objects>
+                <navigationController storyboardIdentifier="NavViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="87N-Bd-HH6" customClass="NavViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jwQ-nQ-AEE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="D4V-8e-gM9" kind="relationship" relationship="rootViewController" id="uta-Uk-YXB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AQQ-Bi-koO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137" y="825"/>
+        </scene>
+        <!--Test View Controller-->
+        <scene sceneID="gUm-Zf-Nqo">
+            <objects>
+                <viewController storyboardIdentifier="TestViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="D4V-8e-gM9" customClass="TestViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Iyg-As-Eer"/>
+                        <viewControllerLayoutGuide type="bottom" id="HeG-S6-K01"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3rF-WI-NK3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="01i-Pw-5tv">
+                                <rect key="frame" x="110" y="318.5" width="155" height="30"/>
+                                <state key="normal" title="To ScanViewController"/>
+                                <connections>
+                                    <action selector="toScanViewPress:" destination="D4V-8e-gM9" eventType="touchUpInside" id="OJW-Pc-6IA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="01i-Pw-5tv" firstAttribute="centerX" secondItem="3rF-WI-NK3" secondAttribute="centerX" id="Tzn-dA-Aqf"/>
+                            <constraint firstItem="01i-Pw-5tv" firstAttribute="centerY" secondItem="3rF-WI-NK3" secondAttribute="centerY" id="VlP-LI-gpl"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Lul-cx-tKl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OC3-j3-Ev9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="893" y="824"/>
         </scene>
     </scenes>
 </document>

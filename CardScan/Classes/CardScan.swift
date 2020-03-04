@@ -13,6 +13,7 @@ public class CardScan {
     public static var bundleName = "CardScan"
     public static var extensionName = "bundle"
     public static var cardScanBundle: Bundle?
+    public static var scanViewControllerIsAppearing = false
     
     // Public for testing
     public static func bundle() -> Bundle? {

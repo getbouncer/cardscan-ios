@@ -231,6 +231,10 @@ public protocol TestingImageDataSource: AnyObject {
         return .portrait
     }
     
+    override open var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+    
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
