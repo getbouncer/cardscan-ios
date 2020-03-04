@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class CardScan {
+public class CSBundle {
     // If you change the bundle name make sure to set these before
     // initializing the library
     public static var bundleName = "CardScan"
