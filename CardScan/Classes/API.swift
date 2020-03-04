@@ -103,7 +103,7 @@ public struct Api {
     }
     
     static func getSdkVersion() -> String? {
-        guard let bundle = CSBundle.getBundle() else {
+        guard let bundle = CSBundle.bundle() else {
             return nil
         }
         

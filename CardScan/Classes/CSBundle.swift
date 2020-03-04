@@ -10,17 +10,17 @@ import Foundation
 public class CSBundle {
     // If you change the bundle name make sure to set these before
     // initializing the library
-    public static var name = "CardScan"
+    public static var bundleName = "CardScan"
     public static var extensionName = "bundle"
-    public static var bundle: Bundle?
+    public static var cardScanBundle: Bundle?
     
     // Public for testing
-    public static func getBundle() -> Bundle? {
-        if bundle != nil {
-            return bundle
+    public static func bundle() -> Bundle? {
+        if cardScanBundle != nil {
+            return cardScanBundle
         }
         
-        guard let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: name, withExtension: extensionName) else {
+        guard let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: bundleName, withExtension: extensionName) else {
             print("bundleURL could not be found")
             return nil
         }
@@ -34,7 +34,7 @@ public class CSBundle {
     }
     
     static func compiledModel(forResource: String, withExtension: String) -> URL? {
-        guard let bundle = getBundle() else {
+        guard let bundle = bundle() else {
             return nil
         }
         
