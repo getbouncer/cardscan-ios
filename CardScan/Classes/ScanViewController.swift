@@ -94,6 +94,7 @@ public protocol MainLoopDelegate: class {
     public var torchLevel: Float? 
     public var scanQrCode = false
     public weak var mainLoopDelegate: MainLoopDelegate?
+    public var strongMainLoopDelegate: MainLoopDelegate?
     @objc public var hideBackButtonImage = false
     @IBOutlet weak var backButtonImageToTextConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButtonWidthConstraint: NSLayoutConstraint!
@@ -350,6 +351,10 @@ public protocol MainLoopDelegate: class {
     @available(iOS 11.2, *)
     override public func blockingMlModel(fullCardImage: CGImage, roiRectangle: CGRect) {
         guard mainLoopDelegate?.shouldRunBaseMainLoop(fullCardImage: fullCardImage, roiRectangle: roiRectangle, scanViewController: self) ?? true else {
+            return
+        }
+        
+        guard strongMainLoopDelegate?.shouldRunBaseMainLoop(fullCardImage: fullCardImage, roiRectangle: roiRectangle, scanViewController: self) ?? true else {
             return
         }
         
