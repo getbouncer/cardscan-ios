@@ -212,3 +212,4 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         self.present(vc, animated: true)
     }
 }
+

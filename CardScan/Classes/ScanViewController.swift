@@ -286,14 +286,11 @@ import UIKit
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
-        CardScan.scanViewControllerIsAppearing = true
         self.cornerView.layer.borderColor = self.cornerBorderColor
     }
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        CardScan.scanViewControllerIsAppearing = false
     }
     
     public override func viewDidLayoutSubviews() {
