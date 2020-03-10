@@ -87,7 +87,10 @@ file:
 
 Make sure that you get an [API
 key](https://api.getbouncer.com/console) and configure the library
-when your application launches:
+when your application launches.
+If you are planning to use a navigation controller or support rotation, 
+put in the following line.
+
 
 ```swift
 import UIKit
@@ -102,6 +105,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     	ScanViewController.configure(apiKey: "YOUR_API_KEY_HERE") 
         // do any other necessary launch configuration
         return true
+    }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        // if you are planning to embed scanViewController into a navigation controller, 
+        // put this line to handle rotations
+        return ScanBaseViewController.isAppearing ? UIInterfaceOrientationMask.portrait : UIInterfaceOrientationMask.allButUpsideDown
     }
 }
 ```

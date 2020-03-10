@@ -29,6 +29,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     public var scanEventsDelegate: ScanEvents?
     
+    static public var isAppearing = false
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     // Only access this variable from the machineLearningQueue
     static var hasRegisteredAppNotifications = false
@@ -231,12 +232,18 @@ public protocol TestingImageDataSource: AnyObject {
         return .portrait
     }
     
+    override open var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
+        ScanBaseViewController.isAppearing = true
         self.ocr.numbers.removeAll()
         self.ocr.expiries.removeAll()
         self.ocr.firstResult = nil
@@ -262,6 +269,11 @@ public protocol TestingImageDataSource: AnyObject {
         if !self.isNavigationBarHidden {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)
         }
+    }
+    
+    override open func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ScanBaseViewController.isAppearing = false
     }
     
     public func getScanStats() -> ScanStats {
