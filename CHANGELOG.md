@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.0.5030](https://github.com/getbouncer/cardscan-ios/tree/1.0.5030) (2020-03-10)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5029...1.0.5030)
+
+**Closed issues:**
+
+- Orientation problems on iPad [\#122](https://github.com/getbouncer/cardscan-ios/issues/122)
+- CardScan class same name as module CardScan [\#134](https://github.com/getbouncer/cardscan-ios/issues/134)
+- Enhancement: Customise scanning title and message [\#132](https://github.com/getbouncer/cardscan-ios/issues/132)
+- ScanViewController is not opening on iPhone 6 and iPhone6plus real device iOS version 12.4 [\#115](https://github.com/getbouncer/cardscan-ios/issues/115)
+- UI issue in iPhone11 pro max [\#105](https://github.com/getbouncer/cardscan-ios/issues/105)
+
+**Merged pull requests:**
+
+- Fixed pod-lib-lint warning [\#140](https://github.com/getbouncer/cardscan-ios/pull/140) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Adding sharedframework to Pods  [\#139](https://github.com/getbouncer/cardscan-ios/pull/139) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Fix landscape / portrait mode bug  [\#138](https://github.com/getbouncer/cardscan-ios/pull/138) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Added a mainLoopDelegate with a strong pointer [\#137](https://github.com/getbouncer/cardscan-ios/pull/137) ([kingst](https://github.com/kingst))
+- Add protocol to enable extending the main loop [\#136](https://github.com/getbouncer/cardscan-ios/pull/136) ([kingst](https://github.com/kingst))
+- change cardscan to csbundle [\#135](https://github.com/getbouncer/cardscan-ios/pull/135) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Pass the full image and roi rectangle only [\#131](https://github.com/getbouncer/cardscan-ios/pull/131) ([kingst](https://github.com/kingst))
+- Provide the ability to override the ML model in ScanBaseViewController [\#129](https://github.com/getbouncer/cardscan-ios/pull/129) ([kingst](https://github.com/kingst))
+- Modifying gitignore and adding back pod shared xcsheme to allow carthage build [\#128](https://github.com/getbouncer/cardscan-ios/pull/128) ([jaimejiyepark](https://github.com/jaimejiyepark))
+
 ## [1.0.5029](https://github.com/getbouncer/cardscan-ios/tree/1.0.5029) (2020-02-11)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5028...1.0.5029)
@@ -7,11 +31,11 @@
 **Merged pull requests:**
 
 - Update expiry thresholds for better accuracy [\#125](https://github.com/getbouncer/cardscan-ios/pull/125) ([kingst](https://github.com/kingst))
-- Made network function public [\#123](https://github.com/getbouncer/cardscan-ios/pull/123) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- made network function public [\#123](https://github.com/getbouncer/cardscan-ios/pull/123) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Obj detect v003 [\#121](https://github.com/getbouncer/cardscan-ios/pull/121) ([dxaen](https://github.com/dxaen))
-- Adding CardScan pod scheme for carthage build [\#120](https://github.com/getbouncer/cardscan-ios/pull/120) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- adding CardScan pod scheme for carthage build [\#120](https://github.com/getbouncer/cardscan-ios/pull/120) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Got rid of last4, exp, numBox, expBox in onFrameDetected protocol [\#118](https://github.com/getbouncer/cardscan-ios/pull/118) ([jaimejiyepark](https://github.com/jaimejiyepark))
-- Added framedetected protocol to grab non-numbered frames [\#117](https://github.com/getbouncer/cardscan-ios/pull/117) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- added framedetected protocol to grab non-numbered frames [\#117](https://github.com/getbouncer/cardscan-ios/pull/117) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Changed CardNetwork enum to Int along with ToString function [\#116](https://github.com/getbouncer/cardscan-ios/pull/116) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5028](https://github.com/getbouncer/cardscan-ios/tree/1.0.5028) (2020-01-29)
