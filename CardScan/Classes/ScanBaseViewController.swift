@@ -415,7 +415,7 @@ public protocol TestingImageDataSource: AnyObject {
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let (squareImage, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
+        let (_, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
             self.blockingMlModel(fullCardImage: fullImage, roiRectangle: roiRectInPixels)
