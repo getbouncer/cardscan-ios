@@ -123,7 +123,7 @@
                                 <rect key="frame" x="132" y="591" width="111" height="30"/>
                                 <state key="normal" title="Present Modally"/>
                                 <connections>
-                                    <action selector="presentModallyPress:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="f6C-cg-AW8"/>
+                                    <segue destination="87N-Bd-HH6" kind="show" id="jwC-oO-mwT"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -258,12 +258,13 @@
             </objects>
             <point key="canvasLocation" x="885.60000000000002" y="132.68365817091455"/>
         </scene>
-        <!--Nav View Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="bCm-19-JS1">
             <objects>
-                <navigationController storyboardIdentifier="NavViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="87N-Bd-HH6" customClass="NavViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="87N-Bd-HH6" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="zWh-IE-9d8"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jwQ-nQ-AEE">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -272,22 +273,22 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AQQ-Bi-koO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137" y="825"/>
+            <point key="canvasLocation" x="137" y="952"/>
         </scene>
-        <!--Test View Controller-->
+        <!--Modal View View Controller-->
         <scene sceneID="gUm-Zf-Nqo">
             <objects>
-                <viewController storyboardIdentifier="TestViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="D4V-8e-gM9" customClass="TestViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ModalViewViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="D4V-8e-gM9" customClass="ModalViewViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Iyg-As-Eer"/>
                         <viewControllerLayoutGuide type="bottom" id="HeG-S6-K01"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3rF-WI-NK3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="01i-Pw-5tv">
-                                <rect key="frame" x="110" y="318.5" width="155" height="30"/>
+                                <rect key="frame" x="110" y="308.5" width="155" height="30"/>
                                 <state key="normal" title="To ScanViewController"/>
                                 <connections>
                                     <action selector="toScanViewPress:" destination="D4V-8e-gM9" eventType="touchUpInside" id="OJW-Pc-6IA"/>
@@ -304,7 +305,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OC3-j3-Ev9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="893" y="824"/>
+            <point key="canvasLocation" x="886" y="951"/>
         </scene>
     </scenes>
 </document>

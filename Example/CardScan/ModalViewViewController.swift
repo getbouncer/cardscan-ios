@@ -10,17 +10,20 @@ import Foundation
 import UIKit
 import CardScan
 
-class TestViewController: UIViewController, ScanDelegate {
+class ModalViewViewController: UIViewController, ScanDelegate {
     func userDidCancel(_ scanViewController: ScanViewController) {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: true)
+        print("User Did Cancel")
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: true)
+        print("User Did Scan Card \(creditCard.number)")
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: true)
+        print("User Did Skip")
     }
     
     override func viewDidLoad() {
@@ -28,7 +31,7 @@ class TestViewController: UIViewController, ScanDelegate {
     }
     
     @IBAction func toScanViewPress(_ sender: Any) {
-        guard let vc = ScanViewController.createViewController() else {
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
             return
         }
         self.navigationController?.pushViewController(vc, animated: true)

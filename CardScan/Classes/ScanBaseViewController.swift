@@ -29,6 +29,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     public var scanEventsDelegate: ScanEvents?
     
+    static public var isAppearing = false
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     // Only access this variable from the machineLearningQueue
     static var hasRegisteredAppNotifications = false
@@ -153,7 +154,7 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     @objc static public func cameraImage() -> UIImage? {
-        guard let bundle = CardScan.bundle() else {
+        guard let bundle = CSBundle.bundle() else {
             return nil
         }
         
@@ -241,6 +242,8 @@ public protocol TestingImageDataSource: AnyObject {
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
+        ScanBaseViewController.isAppearing = true
         self.ocr.numbers.removeAll()
         self.ocr.expiries.removeAll()
         self.ocr.firstResult = nil
@@ -268,6 +271,10 @@ public protocol TestingImageDataSource: AnyObject {
         }
     }
     
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ScanBaseViewController.isAppearing = false
+    }
     public func getScanStats() -> ScanStats {
         return self.ocr.scanStats
     }

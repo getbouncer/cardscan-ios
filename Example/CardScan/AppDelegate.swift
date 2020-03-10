@@ -16,16 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let bundle = CardScan.bundle()
-        CardScan.cardScanBundle = bundle
-        CardScan.bundleName = ""
-        CardScan.extensionName = ""
+        let bundle = CSBundle.bundle()
+        CSBundle.cardScanBundle = bundle
+        CSBundle.bundleName = ""
+        CSBundle.extensionName = ""
         ScanViewController.configure()
         return true
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return CardScan.scanViewControllerIsAppearing ? UIInterfaceOrientationMask.portrait : UIInterfaceOrientationMask.allButUpsideDown
+        return ScanBaseViewController.isAppearing ? UIInterfaceOrientationMask.portrait : UIInterfaceOrientationMask.allButUpsideDown
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

@@ -211,9 +211,4 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         
         self.present(vc, animated: true)
     }
-    
-    @IBAction func presentModallyPress(_ sender: Any) {
-        let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavViewController") as! NavViewController
-        self.present(nav, animated: true, completion: nil)
-    }
 }
