@@ -29,7 +29,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     public var scanEventsDelegate: ScanEvents?
     
-    static public var isAppearing = false
+    static var isAppearing = false
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     // Only access this variable from the machineLearningQueue
     static var hasRegisteredAppNotifications = false
@@ -124,6 +124,39 @@ public protocol TestingImageDataSource: AnyObject {
         hasRegisteredAppNotifications = true
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    @objc public static func supportedOrientationMaskOrDefault() -> UIInterfaceOrientationMask {
+        guard ScanBaseViewController.isAppearing else {
+            // If the ScanBaseViewController isn't appearing then fall back
+            // to getting the orientation mask from the infoDictionary, just like
+            // the system would do if the user didn't override the
+            // supportedInterfaceOrientationsFor method
+            let supportedOrientations = (Bundle.main.infoDictionary?["UISupportedInterfaceOrientations"] as? [String]) ?? ["UIInterfaceOrientationPortrait"]
+            
+            let maskArray = supportedOrientations.map { option -> UIInterfaceOrientationMask in
+                switch (option) {
+                case "UIInterfaceOrientationPortrait":
+                    return UIInterfaceOrientationMask.portrait
+                case "UIInterfaceOrientationPortraitUpsideDown":
+                    return UIInterfaceOrientationMask.portraitUpsideDown
+                case "UIInterfaceOrientationLandscapeLeft":
+                    return UIInterfaceOrientationMask.landscapeLeft
+                case "UIInterfaceOrientationLandscapeRight":
+                    return UIInterfaceOrientationMask.landscapeRight
+                default:
+                    return UIInterfaceOrientationMask.portrait
+                }
+            }
+            
+            let mask: UIInterfaceOrientationMask = maskArray.reduce(UIInterfaceOrientationMask.portrait) { result, element in
+                return UIInterfaceOrientationMask(rawValue: result.rawValue | element.rawValue)
+            }
+            
+            return mask
+        }
+        
+        return UIInterfaceOrientationMask.portrait
     }
     
     @objc static public func isCompatible() -> Bool {
