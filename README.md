@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         // if you are planning to embed scanViewController into a navigation controller, 
         // put this line to handle rotations
-        return ScanBaseViewController.isAppearing ? UIInterfaceOrientationMask.portrait : UIInterfaceOrientationMask.allButUpsideDown
+        return ScanBaseViewController.supportedOrientationMaskOrDefault()
     }
 }
 ```
