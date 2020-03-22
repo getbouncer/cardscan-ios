@@ -92,6 +92,9 @@ public class Ocr {
     @available(iOS 11.2, *)
     public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?, useCurrentFrameNumber: (String? , String) -> Bool = { _,_ in true } ) -> String? {
         var findFour = FindFourOcr()
+        var ssdOcr = SSDOcrDetect()
+        ssdOcr.warmUp()
+        var cardNumber = ssdOcr.predict(image: UIImage(cgImage: croppedCardImage))
         var number = findFour.predict(image: UIImage(cgImage: croppedCardImage))
         
         if let currentNumber = number {
