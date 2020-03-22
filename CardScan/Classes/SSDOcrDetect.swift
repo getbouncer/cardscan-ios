@@ -68,7 +68,7 @@ struct SSDOcrDetect {
         return self.ssdOcrModel != nil
     }
     
-    func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> DetectedAllOcrBoxes {
+    func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> String? {
         var DetectedOcrBoxes = DetectedAllOcrBoxes()
         var startTime = CFAbsoluteTimeGetCurrent()
         let boxes = prediction.getBoxes()
@@ -103,16 +103,14 @@ struct SSDOcrDetect {
                 _cardNumber = _cardNumber + String(result.pickedLabels[index])
             }
         }
-        //print(cardNumber)
         if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
             print(_cardNumber)
-            //self.CardNumber = _cardNumber
-            //return DetectedSSDBoxes
+            return _cardNumber
         }
-        return DetectedOcrBoxes
+        return nil
     }
 
-    public func predict(image: UIImage) -> DetectedAllOcrBoxes? {
+    public func predict(image: UIImage) -> String? {
         guard let pixelBuffer = image.pixelBuffer(width: ssdOcrImageWidth,
                                                   height: ssdOcrImageHeight)
         else {
