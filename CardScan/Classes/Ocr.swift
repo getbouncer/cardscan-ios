@@ -11,8 +11,8 @@ public class Ocr {
     
     static func configure() {
         if #available(iOS 11.2, *) {
-            let ocr = FindFourOcr()
-            ocr.warmUp()
+            let ssdOcr = SSDOcrDetect()
+            ssdOcr.warmUp()
         }
     }
     
@@ -93,9 +93,7 @@ public class Ocr {
     public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?, useCurrentFrameNumber: (String? , String) -> Bool = { _,_ in true } ) -> String? {
         var findFour = FindFourOcr()
         var ssdOcr = SSDOcrDetect()
-        ssdOcr.warmUp()
-        var cardNumber = ssdOcr.predict(image: UIImage(cgImage: croppedCardImage))
-        var number = findFour.predict(image: UIImage(cgImage: croppedCardImage))
+        var number = ssdOcr.predict(image: UIImage(cgImage: croppedCardImage))
         
         if let currentNumber = number {
             let errorCorrectedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
