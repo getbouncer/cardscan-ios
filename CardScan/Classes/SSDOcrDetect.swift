@@ -68,8 +68,8 @@ struct SSDOcrDetect {
         return self.ssdOcrModel != nil
     }
     
-    func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> DetectedAllBoxes {
-        var DetectedSSDBoxes = DetectedAllBoxes()
+    func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> DetectedAllOcrBoxes {
+        var DetectedOcrBoxes = DetectedAllOcrBoxes()
         var startTime = CFAbsoluteTimeGetCurrent()
         let boxes = prediction.getBoxes()
         let scores = prediction.getScores()
@@ -87,12 +87,32 @@ struct SSDOcrDetect {
         os_log("%@", type: .debug, "Rest of the forward pass time: \(endTime)")
     
         for idx in 0..<result.pickedBoxes.count {
-            DetectedSSDBoxes.allBoxes.append(DetectedSSDBox(category: result.pickedLabels[idx], conf: result.pickedBoxProbs[idx], XMin: Double(result.pickedBoxes[idx][0]), YMin: Double(result.pickedBoxes[idx][1]), XMax: Double(result.pickedBoxes[idx][2]), YMax: Double(result.pickedBoxes[idx][3]), imageSize: image.size))
+            DetectedOcrBoxes.allBoxes.append(DetectedSSDOcrBox(category: result.pickedLabels[idx], conf: result.pickedBoxProbs[idx], XMin: Double(result.pickedBoxes[idx][0]), YMin: Double(result.pickedBoxes[idx][1]), XMax: Double(result.pickedBoxes[idx][2]), YMax: Double(result.pickedBoxes[idx][3]), imageSize: image.size))
         }
-        return DetectedSSDBoxes
+        
+        let leftCordinates = result.pickedBoxes.map{$0[0]}
+        let sortedLeftCordinates = leftCordinates.enumerated().sorted(by: {$0.element < $1.element})
+        let indices = sortedLeftCordinates.map{$0.offset}
+        var _cardNumber: String = ""
+
+        indices.forEach { index in
+            if result.pickedLabels[index] == 10{
+                _cardNumber = _cardNumber + String(0)
+            }
+            else {
+                _cardNumber = _cardNumber + String(result.pickedLabels[index])
+            }
+        }
+        //print(cardNumber)
+        if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
+            print(_cardNumber)
+            //self.CardNumber = _cardNumber
+            //return DetectedSSDBoxes
+        }
+        return DetectedOcrBoxes
     }
 
-    public func predict(image: UIImage) -> DetectedAllBoxes? {
+    public func predict(image: UIImage) -> DetectedAllOcrBoxes? {
         guard let pixelBuffer = image.pixelBuffer(width: ssdOcrImageWidth,
                                                   height: ssdOcrImageHeight)
         else {
