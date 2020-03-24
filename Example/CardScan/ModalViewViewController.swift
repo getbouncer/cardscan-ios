@@ -34,7 +34,9 @@ class ModalViewViewController: UIViewController, ScanDelegate {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
             return
         }
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        self.navigationController?.present(vc, animated: true, completion: nil)
     }
 }
 

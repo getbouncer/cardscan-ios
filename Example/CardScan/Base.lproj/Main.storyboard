@@ -261,7 +261,7 @@
         <!--Modal View View Controller-->
         <scene sceneID="KW8-5r-Gdc">
             <objects>
-                <viewController id="s5g-OK-FOJ" customClass="ModalViewViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="s5g-OK-FOJ" customClass="ModalViewViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gel-rM-WUS"/>
                         <viewControllerLayoutGuide type="bottom" id="LQA-Lg-cau"/>
@@ -293,11 +293,11 @@
         <!--Navigation Controller-->
         <scene sceneID="mDp-3X-wbx">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QHk-Pe-Pgw" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="QHk-Pe-Pgw" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="MZa-kR-PbQ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FGP-py-bfx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
