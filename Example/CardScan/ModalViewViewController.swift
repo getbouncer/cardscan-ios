@@ -12,18 +12,22 @@ import CardScan
 
 class ModalViewViewController: UIViewController, ScanDelegate {
     func userDidCancel(_ scanViewController: ScanViewController) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.dismiss(animated: true, completion: nil)
         print("User Did Cancel")
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.dismiss(animated: true, completion: nil)
         print("User Did Scan Card \(creditCard.number)")
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.dismiss(animated: true, completion: nil)
         print("User Did Skip")
+    }
+    
+    @IBAction func backButtonPress(_ sender: Any) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {

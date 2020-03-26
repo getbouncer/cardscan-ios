@@ -258,7 +258,7 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     override open var shouldAutorotate: Bool {
-        return false
+        return true
     }
     
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
