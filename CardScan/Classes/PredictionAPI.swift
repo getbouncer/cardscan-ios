@@ -32,7 +32,7 @@ struct PredictionAPI{
         var pickedBoxProbs:[Float] = [Float]()
         
         
-        for classIndex in 1..<scores[0].count{
+        for classIndex in 0..<scores[0].count{
             var probs: [Float] = [Float]()
             var subsetBoxes: [[Float]] = [[Float]]()
             var indicies : [Int] = [Int]()
@@ -53,7 +53,7 @@ struct PredictionAPI{
             for idx in indicies{
                 pickedBoxProbs.append(probs[idx])
                 pickedBoxes.append(subsetBoxes[idx])
-                pickedLabels.append(classIndex)
+                pickedLabels.append(classIndex + 1)
             }
         }
         var result: Result = Result()

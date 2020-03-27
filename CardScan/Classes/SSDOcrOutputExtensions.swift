@@ -64,7 +64,8 @@ extension SSDOcrOutput{
         return resultArray
     }
     
-
+     /* These layers are also moved to the GPU
+     
      func softmax(_ x: [Float]) -> [Float] {
         // subtract the max from each value
         // to prevent exp blowup
@@ -126,5 +127,5 @@ extension SSDOcrOutput{
         }
         return cornerFormBoxes
     }
-    
+    */
 }
