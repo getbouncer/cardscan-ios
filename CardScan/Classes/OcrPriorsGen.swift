@@ -5,6 +5,8 @@
 //  Created by xaen on 3/20/20.
 //
 
+/* Don't need this, since this is happening on the GPU now ...............
+ 
 import Foundation
 @available(iOS 11.2, *)
 struct OcrPriorsGen{
@@ -126,3 +128,4 @@ struct OcrPriorsGen{
 }
 
 
+*/

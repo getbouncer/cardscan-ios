@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 
 public class Ocr {
     public var scanStats = ScanStats()
@@ -93,7 +94,10 @@ public class Ocr {
     public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?, useCurrentFrameNumber: (String? , String) -> Bool = { _,_ in true } ) -> String? {
         var findFour = FindFourOcr()
         var ssdOcr = SSDOcrDetect()
+        var startTime = CFAbsoluteTimeGetCurrent()
         var number = ssdOcr.predict(image: UIImage(cgImage: croppedCardImage))
+        var endTime = CFAbsoluteTimeGetCurrent() - startTime
+        os_log("%@", type: .debug, "Full Forward Pass: \(endTime)")
         
         if let currentNumber = number {
             let errorCorrectedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first

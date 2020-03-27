@@ -51,17 +51,11 @@ struct SSDOcrDetect {
     }
     
     public init() {
-        if SSDOcrDetect.priors == nil{
-            SSDOcrDetect.priors = OcrPriorsGen.combinePriors()
-        }
     }
     
     static func initializeModels() {
         if SSDOcrDetect.ssdOcrModel == nil{
             SSDOcrDetect.ssdOcrModel = SSDOcr()
-        }
-        if SSDOcrDetect.priors == nil{
-            SSDOcrDetect.priors = OcrPriorsGen.combinePriors()
         }
     }
     public static func isModelLoaded() -> Bool {
@@ -70,21 +64,31 @@ struct SSDOcrDetect {
     
     func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> String? {
         var DetectedOcrBoxes = DetectedAllOcrBoxes()
+        
         var startTime = CFAbsoluteTimeGetCurrent()
         let boxes = prediction.getBoxes()
-        let scores = prediction.getScores()
         var endTime = CFAbsoluteTimeGetCurrent() - startTime
-        os_log("%@", type: .debug, "Get boxes and scores from mult-array time: \(endTime)")
-    
+        os_log("%@", type: .debug, "Get boxes from mult-array time: \(endTime)")
+        
         startTime = CFAbsoluteTimeGetCurrent()
-        let normalizedScores = prediction.fasterSoftmax2D(scores)
-        let regularBoxes = prediction.convertLocationsToBoxes(locations: boxes, priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(), centerVariance: 0.1, sizeVariance: 0.2)
-        let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
-
-        let predAPI = PredictionAPI()
-        let result:Result = predAPI.predictionAPI(scores:normalizedScores, boxes: cornerFormBoxes, probThreshold: SsdDetect.probThreshold, iouThreshold: SsdDetect.iouThreshold, candidateSize: SsdDetect.candidateSize, topK: SsdDetect.topK)
+        let scores = prediction.getScores()
         endTime = CFAbsoluteTimeGetCurrent() - startTime
-        os_log("%@", type: .debug, "Rest of the forward pass time: \(endTime)")
+        os_log("%@", type: .debug, "Get scores from mult-array time: \(endTime)")
+        
+        // The following layers have been moved to the GPU now
+    
+        //startTime = CFAbsoluteTimeGetCurrent()
+        //let normalizedScores = prediction.fasterSoftmax2D(scores)
+        //let regularBoxes = prediction.convertLocationsToBoxes(locations: boxes, priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(), centerVariance: 0.1, sizeVariance: 0.2)
+        //let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
+        //endTime = CFAbsoluteTimeGetCurrent() - startTime
+        //os_log("%@", type: .debug, "Softmax locations to boxes and center to corner form: \(endTime)")
+        
+        startTime = CFAbsoluteTimeGetCurrent()
+        let predAPI = PredictionAPI()
+        let result:Result = predAPI.predictionAPI(scores:scores, boxes: boxes, probThreshold: SsdDetect.probThreshold, iouThreshold: SsdDetect.iouThreshold, candidateSize: SsdDetect.candidateSize, topK: SsdDetect.topK)
+        endTime = CFAbsoluteTimeGetCurrent() - startTime
+        os_log("%@", type: .debug, "NMS: \(endTime)")
     
         for idx in 0..<result.pickedBoxes.count {
             DetectedOcrBoxes.allBoxes.append(DetectedSSDOcrBox(category: result.pickedLabels[idx], conf: result.pickedBoxProbs[idx], XMin: Double(result.pickedBoxes[idx][0]), YMin: Double(result.pickedBoxes[idx][1]), XMax: Double(result.pickedBoxes[idx][2]), YMax: Double(result.pickedBoxes[idx][3]), imageSize: image.size))
