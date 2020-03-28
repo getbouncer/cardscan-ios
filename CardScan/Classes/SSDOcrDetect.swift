@@ -65,15 +65,18 @@ struct SSDOcrDetect {
     func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> String? {
         var DetectedOcrBoxes = DetectedAllOcrBoxes()
         
-        var startTime = CFAbsoluteTimeGetCurrent()
-        let boxes = prediction.getBoxes()
-        var endTime = CFAbsoluteTimeGetCurrent() - startTime
-        os_log("%@", type: .debug, "Get boxes from mult-array time: \(endTime)")
+        var scores : [[Float]]
+        var boxes : [[Float]]
+        //var startTime = CFAbsoluteTimeGetCurrent()
+        //var boxes = prediction.getBoxes()
+        //var endTime = CFAbsoluteTimeGetCurrent() - startTime
+        //os_log("%@", type: .debug, "Getboxes: \(endTime)")
         
-        startTime = CFAbsoluteTimeGetCurrent()
-        let scores = prediction.getScores()
-        endTime = CFAbsoluteTimeGetCurrent() - startTime
-        os_log("%@", type: .debug, "Get scores from mult-array time: \(endTime)")
+        var startTime = CFAbsoluteTimeGetCurrent()
+        (scores, boxes) = prediction.getScores()
+        var endTime = CFAbsoluteTimeGetCurrent() - startTime
+        os_log("%@", type: .debug, "Get scores and boxes from mult array: \(endTime)")
+        
         
         // The following layers have been moved to the GPU now
     
