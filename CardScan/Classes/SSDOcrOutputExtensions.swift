@@ -17,28 +17,49 @@ extension SSDOcrOutput{
         let pointerFilter = UnsafeMutablePointer<Float>(OpaquePointer(self._597.dataPointer))
         let numOfRowsScores = self.scores.shape[3].intValue
         let numOfColsScores = self.scores.shape[4].intValue
-        var scoresTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfColsScores ), count: numOfRowsScores)
         let numOfRowsBoxes = self.boxes.shape[3].intValue
         let numOfColsBoxes = self.boxes.shape[4].intValue
-        var boxesTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfColsBoxes ), count: numOfRowsBoxes)
-       
+        let numOfRowsFilter = self._597.shape[3].intValue
+        var filterArray = [Float](repeating: 0.0, count: numOfRowsFilter)
+        var numToKeep : Int = 0
+        
+        for idx3 in 0..<self._597.count{
+            let offsetFilter = idx3 * self._597.strides[4].intValue
+            filterArray[idx3] = Float(pointerFilter[offsetFilter])
+            if filterArray[idx3] > 0.25{
+                numToKeep = numToKeep + 1
+            }
+        }
+        
+        var scoresTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfColsScores ), count: numToKeep)
+        var boxesTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfColsBoxes ), count: numToKeep)
+        
         var countScores = 0
         var countBoxes = 0
+        var scoresI = 0
+        var scoresJ = 0
+        var boxesI = 0
+        var boxesJ = 0
         for idx2 in 0..<self._597.count{
-            let offset2 = idx2 * self._597.strides[4].intValue
-            if Float(pointerFilter[offset2]) > 0.25 {
+            if filterArray[idx2] > 0.25 {
+                scoresJ = 0
+                boxesJ = 0
                 
                 for idx in countScores..<countScores + numOfColsScores{
                     let offset = idx * self.scores.strides[4].intValue
-                    scoresTest[idx/numOfColsScores][idx%numOfColsScores] = Float(pointerScores[offset])
+                    scoresTest[scoresI][scoresJ] = Float(pointerScores[offset])
+                    scoresJ = scoresJ + 1
                     }
                 countScores = countScores + numOfColsScores
+                scoresI = scoresI + 1
                 
                 for idx in countBoxes..<countBoxes + numOfColsBoxes{
                     let offset = idx * self.boxes.strides[4].intValue
-                    boxesTest[idx/numOfColsBoxes][idx%numOfColsBoxes] = Float(pointerBoxes[offset])
+                    boxesTest[boxesI][boxesJ] = Float(pointerBoxes[offset])
+                    boxesJ = boxesJ + 1
                 }
                 countBoxes = countBoxes + numOfColsBoxes
+                boxesI = boxesI + 1
                 
             }
             
@@ -50,7 +71,6 @@ extension SSDOcrOutput{
         }
         return (scoresTest, boxesTest)
     }
-
     /*
     func getScores() -> [[Float]] {
         let pointer = UnsafeMutablePointer<Float>(OpaquePointer(self.scores.dataPointer))

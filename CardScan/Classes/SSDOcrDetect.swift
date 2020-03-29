@@ -77,6 +77,11 @@ struct SSDOcrDetect {
         var endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "Get scores and boxes from mult array: \(endTime)")
         
+        if scores.isEmpty || boxes.isEmpty{
+            scores = [[Float]](repeating: [Float](repeating: 0.0, count: 2), count: 2)
+            boxes = [[Float]](repeating: [Float](repeating: 0.0, count: 2 ), count: 2)
+        }
+        
         
         // The following layers have been moved to the GPU now
     
