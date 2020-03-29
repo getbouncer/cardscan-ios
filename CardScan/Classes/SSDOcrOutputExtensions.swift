@@ -11,6 +11,8 @@ import Accelerate
 @available(iOS 11.2, *)
 extension SSDOcrOutput{
     
+    /* ------------------------------ more complex getscores function ------------------------
+    
     func getScores() -> ([[Float]], [[Float]]) {
         let pointerScores = UnsafeMutablePointer<Float>(OpaquePointer(self.scores.dataPointer))
         let pointerBoxes = UnsafeMutablePointer<Float>(OpaquePointer(self.boxes.dataPointer))
@@ -71,6 +73,51 @@ extension SSDOcrOutput{
         }
         return (scoresTest, boxesTest)
     }
+ 
+    */
+    
+   func getScores() -> ([[Float]], [[Float]]) {
+        let pointerScores = UnsafeMutablePointer<Float>(OpaquePointer(self.scores.dataPointer))
+        let pointerBoxes = UnsafeMutablePointer<Float>(OpaquePointer(self.boxes.dataPointer))
+        let pointerFilter = UnsafeMutablePointer<Float>(OpaquePointer(self._594.dataPointer))
+        let numOfRowsScores = self.scores.shape[3].intValue
+        let numOfColsScores = self.scores.shape[4].intValue
+        var scoresTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfColsScores ), count: numOfRowsScores)
+        let numOfRowsBoxes = self.boxes.shape[3].intValue
+        let numOfColsBoxes = self.boxes.shape[4].intValue
+        var boxesTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfColsBoxes ), count: numOfRowsBoxes)
+
+        var countScores = 0
+        var countBoxes = 0
+        for idx2 in 0..<self._594.count{
+            let offset2 = idx2 * self._594.strides[4].intValue
+            if Float(pointerFilter[offset2]) > 0.29 {
+
+                for idx in countScores..<countScores + numOfColsScores{
+                    let offset = idx * self.scores.strides[4].intValue
+                    scoresTest[idx/numOfColsScores][idx%numOfColsScores] = Float(pointerScores[offset])
+                    }
+                countScores = countScores + numOfColsScores
+
+                for idx in countBoxes..<countBoxes + numOfColsBoxes{
+                    let offset = idx * self.boxes.strides[4].intValue
+                    boxesTest[idx/numOfColsBoxes][idx%numOfColsBoxes] = Float(pointerBoxes[offset])
+                }
+                countBoxes = countBoxes + numOfColsBoxes
+
+            }
+
+            else {
+                countScores = countScores + numOfColsScores
+                countBoxes = countBoxes + numOfColsBoxes
+            }
+
+        }
+        return (scoresTest, boxesTest)
+    }
+    
+    
+    
     /*
     func getScores() -> [[Float]] {
         let pointer = UnsafeMutablePointer<Float>(OpaquePointer(self.scores.dataPointer))
@@ -156,6 +203,7 @@ extension SSDOcrOutput{
         let normalizedScores = scores.map {softmax($0)}
         return normalizedScores
     }
+    */
     
     func convertLocationsToBoxes(locations: [[Float]], priors: [CGRect], centerVariance: Float, sizeVariance : Float) -> [[Float]]{
         
@@ -188,5 +236,5 @@ extension SSDOcrOutput{
         }
         return cornerFormBoxes
     }
-    */
+    
 }

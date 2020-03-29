@@ -76,25 +76,27 @@ struct SSDOcrDetect {
         (scores, boxes) = prediction.getScores()
         var endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "Get scores and boxes from mult array: \(endTime)")
-        
+       
+        /*
         if scores.isEmpty || boxes.isEmpty{
             scores = [[Float]](repeating: [Float](repeating: 0.0, count: 2), count: 2)
             boxes = [[Float]](repeating: [Float](repeating: 0.0, count: 2 ), count: 2)
         }
+        */
         
         
         // The following layers have been moved to the GPU now
     
-        //startTime = CFAbsoluteTimeGetCurrent()
+        startTime = CFAbsoluteTimeGetCurrent()
         //let normalizedScores = prediction.fasterSoftmax2D(scores)
-        //let regularBoxes = prediction.convertLocationsToBoxes(locations: boxes, priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(), centerVariance: 0.1, sizeVariance: 0.2)
-        //let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
-        //endTime = CFAbsoluteTimeGetCurrent() - startTime
-        //os_log("%@", type: .debug, "Softmax locations to boxes and center to corner form: \(endTime)")
+        let regularBoxes = prediction.convertLocationsToBoxes(locations: boxes, priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(), centerVariance: 0.1, sizeVariance: 0.2)
+        let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
+        endTime = CFAbsoluteTimeGetCurrent() - startTime
+        os_log("%@", type: .debug, "locations to boxes and center to corner form: \(endTime)")
         
         startTime = CFAbsoluteTimeGetCurrent()
         let predAPI = PredictionAPI()
-        let result:Result = predAPI.predictionAPI(scores:scores, boxes: boxes, probThreshold: SsdDetect.probThreshold, iouThreshold: SsdDetect.iouThreshold, candidateSize: SsdDetect.candidateSize, topK: SsdDetect.topK)
+        let result:Result = predAPI.predictionAPI(scores:scores, boxes: cornerFormBoxes, probThreshold: SsdDetect.probThreshold, iouThreshold: SsdDetect.iouThreshold, candidateSize: SsdDetect.candidateSize, topK: SsdDetect.topK)
         endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "NMS: \(endTime)")
     
