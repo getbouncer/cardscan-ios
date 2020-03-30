@@ -120,7 +120,7 @@ struct OcrPriorsGen{
                         noOfPriors: OcrPriorsGen.noOfPriorsPerLocation)
         
         let priorsCombined = priorsOne + priorsTwo
-        
+
         return priorsCombined
         
         

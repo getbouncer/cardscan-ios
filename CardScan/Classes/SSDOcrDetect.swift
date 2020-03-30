@@ -51,11 +51,17 @@ struct SSDOcrDetect {
     }
     
     public init() {
+        if SSDOcrDetect.priors == nil{
+            SSDOcrDetect.priors = OcrPriorsGen.combinePriors()
+        }
     }
     
     static func initializeModels() {
         if SSDOcrDetect.ssdOcrModel == nil{
             SSDOcrDetect.ssdOcrModel = SSDOcr()
+        }
+        if SSDOcrDetect.priors == nil{
+            SSDOcrDetect.priors = OcrPriorsGen.combinePriors()
         }
     }
     public static func isModelLoaded() -> Bool {
@@ -67,13 +73,14 @@ struct SSDOcrDetect {
         
         var scores : [[Float]]
         var boxes : [[Float]]
+        var filterArray : [Float]
         //var startTime = CFAbsoluteTimeGetCurrent()
         //var boxes = prediction.getBoxes()
         //var endTime = CFAbsoluteTimeGetCurrent() - startTime
         //os_log("%@", type: .debug, "Getboxes: \(endTime)")
         
         var startTime = CFAbsoluteTimeGetCurrent()
-        (scores, boxes) = prediction.getScores()
+        (scores, boxes, filterArray) = prediction.getScores()
         var endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "Get scores and boxes from mult array: \(endTime)")
        
@@ -89,14 +96,31 @@ struct SSDOcrDetect {
     
         startTime = CFAbsoluteTimeGetCurrent()
         //let normalizedScores = prediction.fasterSoftmax2D(scores)
-        let regularBoxes = prediction.convertLocationsToBoxes(locations: boxes, priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(), centerVariance: 0.1, sizeVariance: 0.2)
+        let regularBoxes = prediction.convertLocationsToBoxes(locations: boxes,
+                                                              priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(),
+                                                              centerVariance: 0.1, sizeVariance: 0.2)
         let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
         endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "locations to boxes and center to corner form: \(endTime)")
         
+        var prunnedScores : [[Float]]
+        var prunnedBoxes : [[Float]]
+        
+        (prunnedScores, prunnedBoxes) = prediction.filterScoresAndBoxes(scores: scores,
+                                                                         boxes: cornerFormBoxes,
+                                                                         filterArray:  filterArray)
+        
+        if prunnedScores.isEmpty || prunnedBoxes.isEmpty{
+            prunnedScores = [[Float]](repeating: [Float](repeating: 0.0, count: 2), count: 2)
+            prunnedBoxes = [[Float]](repeating: [Float](repeating: 0.0, count: 2 ), count: 2)
+            
+        }
         startTime = CFAbsoluteTimeGetCurrent()
         let predAPI = PredictionAPI()
-        let result:Result = predAPI.predictionAPI(scores:scores, boxes: cornerFormBoxes, probThreshold: SsdDetect.probThreshold, iouThreshold: SsdDetect.iouThreshold, candidateSize: SsdDetect.candidateSize, topK: SsdDetect.topK)
+        let result:Result = predAPI.predictionAPI(scores:prunnedScores, boxes: prunnedBoxes,
+                                                  probThreshold: SsdDetect.probThreshold,
+                                                  iouThreshold: SsdDetect.iouThreshold,
+                                                  candidateSize: SsdDetect.candidateSize, topK: SsdDetect.topK)
         endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "NMS: \(endTime)")
     
@@ -125,6 +149,8 @@ struct SSDOcrDetect {
     }
 
     public func predict(image: UIImage) -> String? {
+        
+        SSDOcrDetect.initializeModels()
         guard let pixelBuffer = image.pixelBuffer(width: ssdOcrImageWidth,
                                                   height: ssdOcrImageHeight)
         else {
