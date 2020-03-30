@@ -27,7 +27,7 @@ public struct Api {
     // XXX FIXME we should move to a more traditional error handling method
     public typealias ApiCompletion = ((_ response: [String: Any]?, _ error: ApiError?) -> Void)
     
-    static public var baseUrl: String? = "https://api.getbouncer.com"
+    static public var baseUrl: String? = "https://api-staging.getbouncer.com/"
     static let defaultError = ApiError(response: [:])
     static let apiUrlNotSet = ApiError(response: ["error_message": "Your API.baseUrl or token isn't set",
                                                   "error_code": "api_baseurl_not_set"])
