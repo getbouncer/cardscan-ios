@@ -76,7 +76,7 @@ extension SSDOcrOutput{
  
     */
     
-   func getScores() -> ([[Float]], [[Float]]) {
+   func getScores() -> ([[Float]], [[Float]], [Float]) {
         let pointerScores = UnsafeMutablePointer<Float>(OpaquePointer(self.scores.dataPointer))
         let pointerBoxes = UnsafeMutablePointer<Float>(OpaquePointer(self.boxes.dataPointer))
         let pointerFilter = UnsafeMutablePointer<Float>(OpaquePointer(self._594.dataPointer))
@@ -86,12 +86,18 @@ extension SSDOcrOutput{
         let numOfRowsBoxes = self.boxes.shape[3].intValue
         let numOfColsBoxes = self.boxes.shape[4].intValue
         var boxesTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfColsBoxes ), count: numOfRowsBoxes)
+        var filterArray = [Float](repeating: 0.0, count: numOfRowsScores)
+       
+        for idx3 in 0..<self._594.count{
+           let offsetFilter = idx3 * self._594.strides[4].intValue
+           filterArray[idx3] = Float(pointerFilter[offsetFilter])
+           
+       }
 
         var countScores = 0
         var countBoxes = 0
         for idx2 in 0..<self._594.count{
-            let offset2 = idx2 * self._594.strides[4].intValue
-            if Float(pointerFilter[offset2]) > 0.29 {
+            if filterArray[idx2] > 0.29 {
 
                 for idx in countScores..<countScores + numOfColsScores{
                     let offset = idx * self.scores.strides[4].intValue
@@ -113,7 +119,7 @@ extension SSDOcrOutput{
             }
 
         }
-        return (scoresTest, boxesTest)
+        return (scoresTest, boxesTest, filterArray)
     }
     
     
@@ -205,7 +211,8 @@ extension SSDOcrOutput{
     }
     */
     
-    func convertLocationsToBoxes(locations: [[Float]], priors: [CGRect], centerVariance: Float, sizeVariance : Float) -> [[Float]]{
+    func convertLocationsToBoxes(locations: [[Float]], priors: [CGRect], centerVariance: Float,
+                                 sizeVariance : Float) -> [[Float]]{
         
         /** Convert regressional location results of
          SSD into boxes in the form of (center_x, center_y, h, w)
@@ -236,5 +243,19 @@ extension SSDOcrOutput{
         }
         return cornerFormBoxes
     }
-    
+   
+    func filterScoresAndBoxes( scores: [[Float]], boxes: [[Float]], filterArray: [Float]) -> ([[Float]], [[Float]]) {
+        
+        var prunnedScores = [[Float]]()
+        var prunnedBoxes = [[Float]]()
+        
+        for i in 0..<filterArray.count {
+            if filterArray[i] > 0.29 {
+                prunnedScores.append(scores[i])
+                prunnedBoxes.append(boxes[i])
+            }
+        }
+        
+        return (prunnedScores, prunnedBoxes)
+    }
 }
