@@ -18,6 +18,9 @@ struct SSDOcrDetect {
     static var ssdOcrModel: SSDOcr? = nil
     static var priors: [CGRect]? = nil
     
+    static let ssdOcrResource = "SSDOcr"
+    static let ssdOcrExtension = "mlmodelc"
+    
     //SSD Model parameters
     let ssdOcrImageWidth = 600
     let ssdOcrImageHeight = 375
@@ -57,12 +60,24 @@ struct SSDOcrDetect {
     }
     
     static func initializeModels() {
-        if SSDOcrDetect.ssdOcrModel == nil{
-            SSDOcrDetect.ssdOcrModel = SSDOcr()
-        }
+        
+        if SSDOcrDetect.ssdOcrModel == nil {
+            guard let ssdOcrUrl  = CSBundle.compiledModel(forResource: ssdOcrResource, withExtension: ssdOcrExtension) else {
+                print("Could not find URL for FourRecognize")
+                return
+            }
+    
+            guard let ssdOcrModel = try? SSDOcr(contentsOf: ssdOcrUrl) else {
+                print("Could not get contents of recognize model with fourRecognize URL")
+                return
+            }
+    
+            SSDOcrDetect.ssdOcrModel = ssdOcrModel
+        
         if SSDOcrDetect.priors == nil{
             SSDOcrDetect.priors = OcrPriorsGen.combinePriors()
         }
+    }
     }
     public static func isModelLoaded() -> Bool {
         return self.ssdOcrModel != nil
