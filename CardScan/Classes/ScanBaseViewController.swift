@@ -281,7 +281,7 @@ public protocol TestingImageDataSource: AnyObject {
             }
         }
     }
-    
+
     func captureOutputWork(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             print("could not get the pixel buffer, dropping frame")
