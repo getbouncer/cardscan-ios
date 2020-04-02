@@ -220,10 +220,10 @@ extension SSDOcrOutput{
         var boxes = [[Float]]()
         
         for i in 0..<locations.count{
-            let box = [locations[i][0] * centerVariance * Float(priors[i].height) + Float(priors[i].minX),
-                       locations[i][1] * centerVariance * Float(priors[i].width) + Float(priors[i].minY),
-                       exp(locations[i][2] * sizeVariance) * Float(priors[i].height),
-                       exp(locations[i][3] * sizeVariance) * Float(priors[i].width)]
+            let box = [locations[i][0] * centerVariance * Float(priors[i].width) + Float(priors[i].minX),
+                       locations[i][1] * centerVariance * Float(priors[i].height) + Float(priors[i].minY),
+                       exp(locations[i][2] * sizeVariance) * Float(priors[i].width),
+                       exp(locations[i][3] * sizeVariance) * Float(priors[i].height)]
             boxes.append(box)
         }
         
