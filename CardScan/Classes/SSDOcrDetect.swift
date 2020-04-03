@@ -24,7 +24,7 @@ struct SSDOcrDetect {
     //SSD Model parameters
     let ssdOcrImageWidth = 600
     let ssdOcrImageHeight = 375
-    let probThreshold: Float = 0.5
+    let probThreshold: Float = 0.45
     let iouThreshold: Float = 0.45
     let centerVariance: Float = 0.1
     let sizeVariance: Float = 0.2
@@ -159,6 +159,9 @@ struct SSDOcrDetect {
         if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
             print(_cardNumber)
             return _cardNumber
+        }
+        else {
+            print("Not Correct", _cardNumber)
         }
         return nil
     }
