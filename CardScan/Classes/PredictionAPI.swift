@@ -26,7 +26,8 @@ struct PredictionAPI{
      * that are kept and composes all the information in one place to be returned as
      * an object.
      */
-    func predictionAPI(scores: [[Float]], boxes: [[Float]], probThreshold: Float, iouThreshold: Float, candidateSize: Int , topK: Int) -> Result{
+    func predictionAPI(scores: [[Float]], boxes: [[Float]], probThreshold: Float,
+                       iouThreshold: Float, candidateSize: Int , topK: Int) -> Result{
         var pickedBoxes:[[Float]] = [[Float]]()
         var pickedLabels:[Int] = [Int]()
         var pickedBoxProbs:[Float] = [Float]()
@@ -62,9 +63,13 @@ struct PredictionAPI{
             var _pickedBoxes = [[Float]]()
             var _pickedScores = [Float]()
 
-            (_pickedBoxes, _pickedScores) = SoftNMS.softNMS(subsetBoxes: subsetBoxes, probs: probs,
-                                                            probThreshold: probThreshold, sigma: 0.5,
-                                                            topK: topK, candidateSize: candidateSize)
+            if #available(iOS 11.2, *) {
+                (_pickedBoxes, _pickedScores) = SoftNMS.softNMS(subsetBoxes: subsetBoxes, probs: probs,
+                                                                probThreshold: probThreshold, sigma: SSDOcrDetect.sigma, topK: topK,
+                                                                candidateSize: candidateSize)
+            } else {
+                // Fallback on earlier versions
+            }
 
             for idx in 0..<_pickedScores.count{
                 pickedBoxProbs.append(_pickedScores[idx])

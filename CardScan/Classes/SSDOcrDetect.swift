@@ -22,9 +22,11 @@ struct SSDOcrDetect {
     static let ssdOcrExtension = "mlmodelc"
     
     //SSD Model parameters
+    static let sigma: Float = 0.4
     let ssdOcrImageWidth = 600
     let ssdOcrImageHeight = 375
-    let probThreshold: Float = 0.45
+    let probThreshold: Float = 0.3
+    let filterThreshold: Float = 0.29
     let iouThreshold: Float = 0.45
     let centerVariance: Float = 0.1
     let sizeVariance: Float = 0.2
@@ -95,7 +97,7 @@ struct SSDOcrDetect {
         //os_log("%@", type: .debug, "Getboxes: \(endTime)")
         
         var startTime = CFAbsoluteTimeGetCurrent()
-        (scores, boxes, filterArray) = prediction.getScores()
+        (scores, boxes, filterArray) = prediction.getScores(filterThreshold: filterThreshold)
         var endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "Get scores and boxes from mult array: \(endTime)")
        
@@ -123,7 +125,7 @@ struct SSDOcrDetect {
         
         (prunnedScores, prunnedBoxes) = prediction.filterScoresAndBoxes(scores: scores,
                                                                          boxes: cornerFormBoxes,
-                                                                         filterArray:  filterArray)
+                                                                         filterArray:  filterArray, filterThreshold: filterThreshold)
         
         if prunnedScores.isEmpty || prunnedBoxes.isEmpty{
             prunnedScores = [[Float]](repeating: [Float](repeating: 0.0, count: 2), count: 2)
@@ -133,9 +135,10 @@ struct SSDOcrDetect {
         startTime = CFAbsoluteTimeGetCurrent()
         let predAPI = PredictionAPI()
         let result:Result = predAPI.predictionAPI(scores:prunnedScores, boxes: prunnedBoxes,
-                                                  probThreshold: SsdDetect.probThreshold,
-                                                  iouThreshold: SsdDetect.iouThreshold,
-                                                  candidateSize: SsdDetect.candidateSize, topK: SsdDetect.topK)
+                                                  probThreshold: probThreshold,
+                                                  iouThreshold: iouThreshold,
+                                                  candidateSize: candidateSize,
+                                                  topK: topK)
         endTime = CFAbsoluteTimeGetCurrent() - startTime
         os_log("%@", type: .debug, "NMS: \(endTime)")
     
