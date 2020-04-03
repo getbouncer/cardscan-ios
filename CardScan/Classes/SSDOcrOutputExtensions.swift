@@ -97,7 +97,7 @@ extension SSDOcrOutput{
         var countScores = 0
         var countBoxes = 0
         for idx2 in 0..<self._594.count{
-            if filterArray[idx2] > 0.29 {
+            if filterArray[idx2] > 0.38 {
 
                 for idx in countScores..<countScores + numOfColsScores{
                     let offset = idx * self.scores.strides[4].intValue
@@ -250,7 +250,7 @@ extension SSDOcrOutput{
         var prunnedBoxes = [[Float]]()
         
         for i in 0..<filterArray.count {
-            if filterArray[i] > 0.29 {
+            if filterArray[i] > 0.38{
                 prunnedScores.append(scores[i])
                 prunnedBoxes.append(boxes[i])
             }

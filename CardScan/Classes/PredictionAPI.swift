@@ -35,7 +35,7 @@ struct PredictionAPI{
         for classIndex in 0..<scores[0].count{
             var probs: [Float] = [Float]()
             var subsetBoxes: [[Float]] = [[Float]]()
-            var indicies : [Int] = [Int]()
+            //var indicies : [Int] = [Int]()
             
             for rowIndex in 0..<scores.count{
                 if scores[rowIndex][classIndex] > probThreshold{
@@ -48,6 +48,8 @@ struct PredictionAPI{
                 continue
             }
             
+            /*
+            
             indicies = NMS.hardNMS(subsetBoxes: subsetBoxes, probs: probs, iouThreshold: iouThreshold, topK: topK, candidateSize: candidateSize)
            
             for idx in indicies{
@@ -55,6 +57,21 @@ struct PredictionAPI{
                 pickedBoxes.append(subsetBoxes[idx])
                 pickedLabels.append(classIndex + 1)
             }
+ 
+            */
+            var _pickedBoxes = [[Float]]()
+            var _pickedScores = [Float]()
+
+            (_pickedBoxes, _pickedScores) = SoftNMS.softNMS(subsetBoxes: subsetBoxes, probs: probs,
+                                                            probThreshold: probThreshold, sigma: 0.5,
+                                                            topK: topK, candidateSize: candidateSize)
+
+            for idx in 0..<_pickedScores.count{
+                pickedBoxProbs.append(_pickedScores[idx])
+                pickedBoxes.append(_pickedBoxes[idx])
+                pickedLabels.append(classIndex + 1)
+            }
+        
         }
         var result: Result = Result()
         result.pickedBoxProbs =  pickedBoxProbs
