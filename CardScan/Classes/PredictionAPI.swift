@@ -74,7 +74,7 @@ struct PredictionAPI{
             for idx in 0..<_pickedScores.count{
                 pickedBoxProbs.append(_pickedScores[idx])
                 pickedBoxes.append(_pickedBoxes[idx])
-                pickedLabels.append(classIndex + 1)
+                pickedLabels.append((classIndex + 1) % 10)
             }
         
         }
