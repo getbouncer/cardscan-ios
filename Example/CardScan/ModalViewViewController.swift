@@ -12,17 +12,17 @@ import CardScan
 
 class ModalViewViewController: UIViewController, ScanDelegate {
     func userDidCancel(_ scanViewController: ScanViewController) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.dismiss(animated: true, completion: nil)
         print("User Did Cancel")
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.dismiss(animated: true, completion: nil)
         print("User Did Scan Card \(creditCard.number)")
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.dismiss(animated: true, completion: nil)
         print("User Did Skip")
     }
     
@@ -30,11 +30,17 @@ class ModalViewViewController: UIViewController, ScanDelegate {
         super.viewDidLoad()
     }
     
+    @IBAction func backButtonPress(_ sender: Any) {
+        self.navigationController?.dismiss(animated: true, completion: nil
+        )
+    }
+    
     @IBAction func toScanViewPress(_ sender: Any) {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
             return
         }
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.modalPresentationStyle = .formSheet
+        self.navigationController?.present(vc, animated: true, completion: nil)
     }
 }
 
