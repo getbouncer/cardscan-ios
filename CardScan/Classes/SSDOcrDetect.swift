@@ -167,7 +167,7 @@ struct SSDOcrDetect {
                     let box = result.pickedBoxes[index]
                     let boxCenter = abs(box[3] + box[1]) / 2
                     let boxHeight = abs(box[3] - box[1])
-                    if abs(boxCenter - medianCenter) < medianHeight || boxHeight < 1.2 * medianHeight {
+                    if abs(boxCenter - medianCenter) < medianHeight && boxHeight < 1.2 * medianHeight {
                             _cardNumber = _cardNumber + String(result.pickedLabels[index])
                     }
         
@@ -176,6 +176,9 @@ struct SSDOcrDetect {
                     print(_cardNumber)
                     return _cardNumber
                 }
+                else {
+                    os_log("%@" , type: .debug, "Could verify \(_cardNumber)")
+            }
             }
         
         return nil
