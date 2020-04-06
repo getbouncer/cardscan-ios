@@ -20,7 +20,7 @@ class VideoFeed {
     var videoDevice: AVCaptureDevice?
     
     var torch: Torch?
-    
+    var videoOrientation: AVCaptureVideoOrientation?
     func pauseSession() {
         self.sessionQueue.suspend()
     }
@@ -128,10 +128,11 @@ class VideoFeed {
                 session.sessionPreset = .high
             }
             
-//            let connection = videoDeviceOutput.connection(with: .video)
-//            if connection?.isVideoOrientationSupported ?? false {
-//                connection?.videoOrientation = .portrait
-//            }
+            let connection = videoDeviceOutput.connection(with: .video)
+            if connection?.isVideoOrientationSupported ?? false {
+                let orientation = self.videoOrientation ?? .portrait
+                connection?.videoOrientation = orientation
+            }
             
         } catch {
             print("Could not create video device input: \(error)")
