@@ -34,7 +34,7 @@ public protocol TestingImageDataSource: AnyObject {
     // Only access this variable from the machineLearningQueue
     static var hasRegisteredAppNotifications = false
     
-    public weak var debugImageView: UIImageView?
+    private weak var debugImageView: UIImageView?
     private weak var previewView: PreviewView?
     private weak var regionOfInterestLabel: UILabel?
     private weak var blurView: BlurView?
@@ -537,5 +537,12 @@ public protocol TestingImageDataSource: AnyObject {
         self.currentImageRect = rect
         
         return image.cropping(to: rect).map { ($0, roiRectInPixels) }
+    }
+    
+    public func updateDebugImageView(image: UIImage) {
+        self.debugImageView?.image = image
+        if self.debugImageView?.isHidden ?? false {
+            self.debugImageView?.isHidden = false
+        }
     }
 }
