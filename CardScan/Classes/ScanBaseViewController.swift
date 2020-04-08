@@ -538,4 +538,11 @@ public protocol TestingImageDataSource: AnyObject {
         
         return image.cropping(to: rect).map { ($0, roiRectInPixels) }
     }
+    
+    public func updateDebugImageView(image: UIImage) {
+        self.debugImageView?.image = image
+        if self.debugImageView?.isHidden ?? false {
+            self.debugImageView?.isHidden = false
+        }
+    }
 }
