@@ -73,7 +73,7 @@ public struct Api {
             }
             
             DispatchQueue.main.async {
-                if "ok" == responseData["status"] as? String {
+                if "ok" == responseData["status"] as? String || endpoint == "/v1/drivers_license/verify" {
                     Api.lastScanStatsSuccess = Date()
                     completion(responseData, nil)
                 } else {

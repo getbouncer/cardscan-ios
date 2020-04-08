@@ -34,7 +34,7 @@ public protocol TestingImageDataSource: AnyObject {
     // Only access this variable from the machineLearningQueue
     static var hasRegisteredAppNotifications = false
     
-    private weak var debugImageView: UIImageView?
+    public weak var debugImageView: UIImageView?
     private weak var previewView: PreviewView?
     private weak var regionOfInterestLabel: UILabel?
     private weak var blurView: BlurView?
