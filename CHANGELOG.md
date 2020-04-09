@@ -1,14 +1,22 @@
 # Changelog
 
+## [1.0.5031](https://github.com/getbouncer/cardscan-ios/tree/1.0.5031) (2020-04-09)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5030...1.0.5031)
+
+**Merged pull requests:**
+
+- Minor tweaks [\#144](https://github.com/getbouncer/cardscan-ios/pull/144) ([kingst](https://github.com/kingst))
+
 ## [1.0.5030](https://github.com/getbouncer/cardscan-ios/tree/1.0.5030) (2020-03-10)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5029...1.0.5030)
 
 **Closed issues:**
 
-- Orientation problems on iPad [\#122](https://github.com/getbouncer/cardscan-ios/issues/122)
 - CardScan class same name as module CardScan [\#134](https://github.com/getbouncer/cardscan-ios/issues/134)
 - Enhancement: Customise scanning title and message [\#132](https://github.com/getbouncer/cardscan-ios/issues/132)
+- Orientation problems on iPad [\#122](https://github.com/getbouncer/cardscan-ios/issues/122)
 - ScanViewController is not opening on iPhone 6 and iPhone6plus real device iOS version 12.4 [\#115](https://github.com/getbouncer/cardscan-ios/issues/115)
 - UI issue in iPhone11 pro max [\#105](https://github.com/getbouncer/cardscan-ios/issues/105)
 
