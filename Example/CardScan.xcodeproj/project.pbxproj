@@ -287,7 +287,7 @@
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = L4TQ6C2R74;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -757,7 +757,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getgrowthmetrics.CardScan-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -775,7 +775,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getgrowthmetrics.CardScan-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
