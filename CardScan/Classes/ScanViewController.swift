@@ -260,6 +260,9 @@ public protocol MainLoopDelegate: class {
                 
             case .destructive:
                 print("destructive")
+
+            @unknown default:
+                assertionFailure("UIAlertAction case not handled")
             }}))
         self.present(alert, animated: true, completion: nil)
     }
