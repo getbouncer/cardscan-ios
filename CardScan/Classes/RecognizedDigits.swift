@@ -11,7 +11,7 @@ struct RecognizedDigits {
     let digits: [Int]
     let confidence: [Double]
     
-    static func from(image: CGImage, within box: CGRect) -> RecognizedDigits? {
+    static func from(image: CGImage, within box: CGRect, minConfidence: Double = kDigitMinConfidence) -> RecognizedDigits? {
         guard let croppedImage = image.cropping(to: box) else {
             return nil
         }
@@ -35,7 +35,7 @@ struct RecognizedDigits {
         for col in 0..<kNumPredictions {
             let (arg, value) = prediction.argAndValueMax(row: 0, col: col)
             
-            if value < kDigitMinConfidence {
+            if value < minConfidence {
                 digits.append(kBackgroundClass)
             } else {
                 digits.append(arg)

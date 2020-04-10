@@ -2,6 +2,10 @@
 
 CardScan iOS installation guide
 
+## IMPORTANT NOTICE:
+
+Our license will be changing in an upcoming release. Please view the [License](#license) section for more information.
+
 ## Contents
 
 * [Requirements](#requirements)
@@ -87,7 +91,10 @@ file:
 
 Make sure that you get an [API
 key](https://api.getbouncer.com/console) and configure the library
-when your application launches:
+when your application launches.
+If you are planning to use a navigation controller or support rotation, 
+put in the following line.
+
 
 ```swift
 import UIKit
@@ -102,6 +109,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     	ScanViewController.configure(apiKey: "YOUR_API_KEY_HERE") 
         // do any other necessary launch configuration
         return true
+    }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        // if you are planning to embed scanViewController into a navigation controller, 
+        // put this line to handle rotations
+        return ScanBaseViewController.supportedOrientationMaskOrDefault()
     }
 }
 ```
@@ -294,4 +307,29 @@ Sam King, Jaime Park, Zain ul Abi Din, and Andy Li
 
 ## License
 
-CardScan is available under the BSD license. See the LICENSE file for more info.
+IMPORTANT: OUR LICENSE IS CHANGING.
+
+Card Scan is currently available under the BSD-3 license (See the [LICENSE](LICENSE) file for the full text). Version 1.0.5031 will be the last version of Card Scan that is available under the BSD-3 license. Future versions of the Card Scan library will remain open source, but will be under a new license (see the new [LICENSE](https://github.com/getbouncer/cardscan-android/blob/24ac9491f36e92241f37d8eebc5bd394a70bd4dd/LICENSE) file for the full text).
+
+### Quick summary
+In short, Card Scan will remain free forever for non-commercial applications, but use by commercial applications is limited to 90 days, after which time a licensing agreement is required. We’re also adding some legal liability protections.
+
+After this period commercial applications need to convert to a licensing agreement to continue to use Card Scan.
+* Details of licensing (pricing, etc) are [here](https://cardscan.io/pricing), or you can contact us at [license@getbouncer.com](mailto:license@getbouncer.com).
+
+### More detailed summary
+What's allowed under the new license:
+* Free use for any app for 90 days (for demos, evaluations, hack-a-thons, etc.)
+* Contributions (contributors must agree to the [CLA](Contributor%20License%20Agreement))
+* Any modifications as needed to work in your app
+
+What's not allowed under the new license:
+* Commercial applications using the license for longer than 90 days without a license agreement
+  * Using us now in a commercial app today? No worries! Just email [license@getbouncer.com](mailto:license@getbouncer.com) and we’ll get you set up
+* Redistribution under a different license
+* Removing attribution
+* Modifying logos
+* Indemnification: using this free software is "at your own risk", so you can’t sue Bouncer Technologies, Inc. for problems caused by this library
+
+### Questions? Concerns?
+Please email us at [license@getbouncer.com](mailto:license@getbouncer.com) or ask us on [slack](https://getbouncer.slack.com).

@@ -24,7 +24,7 @@ public struct Expiry: Hashable {
     
     @available(iOS 11.2, *)
     static func from(image: CGImage, within rect: CGRect) -> Expiry? {
-        guard let digits = RecognizedDigits.from(image: image, within: rect) else {
+        guard let digits = RecognizedDigits.from(image: image, within: rect, minConfidence: 0.65) else {
             return nil
         }
         

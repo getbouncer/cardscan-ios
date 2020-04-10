@@ -41,6 +41,10 @@ import UIKit
     @objc func denyPermissionButton() -> String
 }
 
+public protocol MainLoopDelegate: class {
+    func shouldRunBaseMainLoop(fullCardImage: CGImage, roiRectangle: CGRect, scanViewController: ScanViewController) -> Bool
+}
+
 @objc public class CreditCard: NSObject {
     @objc public var number: String
     @objc public var expiryMonth: String?
@@ -89,6 +93,8 @@ import UIKit
     @objc public var allowSkip = false
     public var torchLevel: Float? 
     public var scanQrCode = false
+    public weak var mainLoopDelegate: MainLoopDelegate?
+    public var strongMainLoopDelegate: MainLoopDelegate?
     @objc public var hideBackButtonImage = false
     @IBOutlet weak var backButtonImageToTextConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButtonWidthConstraint: NSLayoutConstraint!
@@ -114,10 +120,13 @@ import UIKit
     
     @IBOutlet weak var debugImageView: UIImageView!
     @IBOutlet weak var previewView: PreviewView!
-    @IBOutlet weak var regionOfInterestLabel: UILabel!
+    @IBOutlet public weak var regionOfInterestLabel: UILabel!
     @IBOutlet weak var regionOfInterestAspectConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var torchButton: UIButton!
+    @IBOutlet weak var torchButtonWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var torchButtonHeightConstraint: NSLayoutConstraint!
+    public var torchButtonSize: CGSize?
     @IBOutlet weak var cornerView: CornerView!
     var cornerBorderColor = UIColor.green.cgColor
     var denyPermissionTitle = "Need camera access"
@@ -139,7 +148,7 @@ import UIKit
         
         // The forced unwrap here is intentional -- we expect this to crash
         // if someone uses it with an invalid bundle
-        let bundle = BundleURL.bundle()!
+        let bundle = CSBundle.bundle()!
         
         let storyboard = UIStoryboard(name: "CardScan", bundle: bundle)
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
@@ -232,6 +241,10 @@ import UIKit
         }
         if let color = self.cornerColor {
             self.cornerBorderColor = color.cgColor
+        }
+        if let size = self.torchButtonSize {
+            self.torchButtonWidthConstraint.constant = size.width
+            self.torchButtonHeightConstraint.constant = size.height
         }
     }
     
@@ -332,6 +345,20 @@ import UIKit
     
     @IBAction func toggleTorch(_ sender: Any) {
         self.toggleTorch()
+    }
+    
+    // MARK: main loop
+    @available(iOS 11.2, *)
+    override public func blockingMlModel(fullCardImage: CGImage, roiRectangle: CGRect) {
+        guard mainLoopDelegate?.shouldRunBaseMainLoop(fullCardImage: fullCardImage, roiRectangle: roiRectangle, scanViewController: self) ?? true else {
+            return
+        }
+        
+        guard strongMainLoopDelegate?.shouldRunBaseMainLoop(fullCardImage: fullCardImage, roiRectangle: roiRectangle, scanViewController: self) ?? true else {
+            return
+        }
+        
+        super.blockingMlModel(fullCardImage: fullCardImage, roiRectangle: roiRectangle)
     }
 }
 

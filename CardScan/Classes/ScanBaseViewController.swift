@@ -9,6 +9,10 @@ public protocol TestingImageDataSource: AnyObject {
 }
 
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
+    public func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
+        self.scanEventsDelegate?.onFrameDetected(croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+    }
+    
     public func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
         self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
     }
@@ -25,6 +29,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     public var scanEventsDelegate: ScanEvents?
     
+    static var isAppearing = false
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     // Only access this variable from the machineLearningQueue
     static var hasRegisteredAppNotifications = false
@@ -121,6 +126,39 @@ public protocol TestingImageDataSource: AnyObject {
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
+    @objc public static func supportedOrientationMaskOrDefault() -> UIInterfaceOrientationMask {
+        guard ScanBaseViewController.isAppearing else {
+            // If the ScanBaseViewController isn't appearing then fall back
+            // to getting the orientation mask from the infoDictionary, just like
+            // the system would do if the user didn't override the
+            // supportedInterfaceOrientationsFor method
+            let supportedOrientations = (Bundle.main.infoDictionary?["UISupportedInterfaceOrientations"] as? [String]) ?? ["UIInterfaceOrientationPortrait"]
+            
+            let maskArray = supportedOrientations.map { option -> UIInterfaceOrientationMask in
+                switch (option) {
+                case "UIInterfaceOrientationPortrait":
+                    return UIInterfaceOrientationMask.portrait
+                case "UIInterfaceOrientationPortraitUpsideDown":
+                    return UIInterfaceOrientationMask.portraitUpsideDown
+                case "UIInterfaceOrientationLandscapeLeft":
+                    return UIInterfaceOrientationMask.landscapeLeft
+                case "UIInterfaceOrientationLandscapeRight":
+                    return UIInterfaceOrientationMask.landscapeRight
+                default:
+                    return UIInterfaceOrientationMask.portrait
+                }
+            }
+            
+            let mask: UIInterfaceOrientationMask = maskArray.reduce(UIInterfaceOrientationMask.portrait) { result, element in
+                return UIInterfaceOrientationMask(rawValue: result.rawValue | element.rawValue)
+            }
+            
+            return mask
+        }
+        
+        return UIInterfaceOrientationMask.portrait
+    }
+    
     @objc static public func isCompatible() -> Bool {
         return self.isCompatible(configuration: ScanConfiguration())
     }
@@ -149,7 +187,7 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     @objc static public func cameraImage() -> UIImage? {
-        guard let bundle = BundleURL.bundle() else {
+        guard let bundle = CSBundle.bundle() else {
             return nil
         }
         
@@ -227,12 +265,18 @@ public protocol TestingImageDataSource: AnyObject {
         return .portrait
     }
     
+    override open var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
+        ScanBaseViewController.isAppearing = true
         self.ocr.numbers.removeAll()
         self.ocr.expiries.removeAll()
         self.ocr.firstResult = nil
@@ -260,6 +304,11 @@ public protocol TestingImageDataSource: AnyObject {
         }
     }
     
+    override open func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ScanBaseViewController.isAppearing = false
+    }
+    
     public func getScanStats() -> ScanStats {
         return self.ocr.scanStats
     }
@@ -271,35 +320,6 @@ public protocol TestingImageDataSource: AnyObject {
                 self.captureOutputWork(sampleBuffer: sampleBuffer)
             }
         }
-    }
-    
-    
-    @available(iOS 11.2, *)
-    func blockingQrModel(pixelBuffer: CVPixelBuffer) {
-        let semaphore = DispatchSemaphore(value: 0)
-        DispatchQueue.global(qos: .userInteractive).async {
-            let barcodeRequest = VNDetectBarcodesRequest(completionHandler: { request, error in
-                guard let _ = request.results else {
-                    semaphore.signal()
-                    return
-                }
-                // We took out QR code scanning for now
-                //self.handleBarcodeResults(results)
-                semaphore.signal()
-            })
-
-            let orientation = CGImagePropertyOrientation.up
-            let requestOptions:[VNImageOption : Any] = [:]
-            let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
-                                                orientation: orientation,
-                                                options: requestOptions)
-            guard let _ = try? handler.perform([barcodeRequest]) else {
-                print("error with vision call for barcode")
-                semaphore.signal()
-                return
-            }
-        }
-        semaphore.wait()
     }
     
     func drawBoundingBoxesOnImage(image: UIImage, embossedCharacterBoxes: [CGRect],
@@ -342,8 +362,18 @@ public protocol TestingImageDataSource: AnyObject {
         return squareCardImage.cropping(to: cardRect) ?? squareCardImage
     }
     
+    func toSquareCardImage(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
+        let width = CGFloat(fullCardImage.width)
+        let height = width
+        let centerY = (roiRectangle.maxY + roiRectangle.minY) * 0.5
+        let cropRectangle = CGRect(x: 0.0, y: centerY - height * 0.5,
+                                   width: width, height: height)
+        return fullCardImage.cropping(to: cropRectangle)
+    }
+    
     @available(iOS 11.2, *)
-    func blockingOcrModel(squareCardImage: CGImage, fullCardImage: CGImage) {
+    open func blockingMlModel(fullCardImage: CGImage, roiRectangle: CGRect) {
+        guard let squareCardImage = toSquareCardImage(fullCardImage: fullCardImage, roiRectangle: roiRectangle) else { return }
         let croppedCardImage = toCardImage(squareCardImage: squareCardImage)
         
         let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, useCurrentFrameNumber: self.useCurrentFrameNumber(errorCorrectedNumber:currentFrameNumber:))
@@ -410,7 +440,7 @@ public protocol TestingImageDataSource: AnyObject {
             return
         }
         
-        guard let squareCardImage = self.toRegionOfInterest(image: fullCardImage) else {
+        guard let (squareCardImage, roiRectInPixels) = self.toRegionOfInterest(image: fullCardImage) else {
             print("could not get the cgImage from the region of interest, dropping frame")
             self.machineLearningSemaphore.signal()
             return
@@ -418,14 +448,10 @@ public protocol TestingImageDataSource: AnyObject {
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let (squareImage, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
+        let (_, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
-            if self.scanQrCode {
-                self.blockingQrModel(pixelBuffer: pixelBuffer)
-            } else {
-                self.blockingOcrModel(squareCardImage: squareImage, fullCardImage: fullImage)
-            }
+            self.blockingMlModel(fullCardImage: fullImage, roiRectangle: roiRectInPixels)
         }
         
         self.machineLearningSemaphore.signal()
@@ -446,7 +472,7 @@ public protocol TestingImageDataSource: AnyObject {
         return cgImage
     }
     
-    func toRegionOfInterest(image: CGImage) -> CGImage? {
+    func toRegionOfInterest(image: CGImage) -> (CGImage, CGRect)? {
         // use the full width and make it a square
         let width = CGFloat(image.width)
         let height = width
@@ -478,13 +504,14 @@ public protocol TestingImageDataSource: AnyObject {
         // The size of the cropped region is needed to map regionOfInterestCenter to the image center
         let imageAspectRatio = CGFloat(image.width) / CGFloat(image.height)
         let screenAspectRatio = screenWidth / screenHeight
-
+        
+        var pointsToPixels: CGFloat
         // convert from points to pixels and account for the cropped region
         if imageAspectRatio > screenAspectRatio {
             // left and right of the image cropped
             //      tested on: iPhone XS Max
             let croppedOffset = (CGFloat(image.width) - CGFloat(image.height) * screenAspectRatio) / 2.0
-            let pointsToPixels = CGFloat(image.height) / screenHeight
+            pointsToPixels = CGFloat(image.height) / screenHeight
             
             cx = regionOfInterestCenterX * pointsToPixels + croppedOffset
             cy = regionOfInterestCenterY * pointsToPixels
@@ -492,16 +519,30 @@ public protocol TestingImageDataSource: AnyObject {
             // top and bottom of the image cropped
             //      tested on: iPad Mini 2
             let croppedOffset = (CGFloat(image.height) - CGFloat(image.width) / screenAspectRatio) / 2.0
-            let pointsToPixels = CGFloat(image.width) / screenWidth
+            pointsToPixels = CGFloat(image.width) / screenWidth
             
             cx = regionOfInterestCenterX * pointsToPixels
             cy = regionOfInterestCenterY * pointsToPixels + croppedOffset
         }
         
+        let roiWidthInPixels = regionOfInterestLabelFrame.size.width * pointsToPixels
+        let roiHeightInPixels = regionOfInterestLabelFrame.size.height * pointsToPixels
+        let roiRectInPixels = CGRect(x: cx - roiWidthInPixels * 0.5,
+                                     y: cy - roiHeightInPixels * 0.5,
+                                     width: roiWidthInPixels,
+                                     height: roiHeightInPixels)
+        
         let rect = CGRect(x: cx - width / 2.0, y: cy - height / 2.0, width: width, height: height)
         
         self.currentImageRect = rect
         
-        return image.cropping(to: rect)
+        return image.cropping(to: rect).map { ($0, roiRectInPixels) }
+    }
+    
+    public func updateDebugImageView(image: UIImage) {
+        self.debugImageView?.image = image
+        if self.debugImageView?.isHidden ?? false {
+            self.debugImageView?.isHidden = false
+        }
     }
 }
