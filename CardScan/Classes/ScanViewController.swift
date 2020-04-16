@@ -134,6 +134,7 @@ public protocol MainLoopDelegate: class {
     var denyPermissionButtonText = "OK"
     
     var calledDelegate = false
+    var blurViewTagOnBackground: Int = 9999
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
         // use default config
@@ -274,6 +275,7 @@ public protocol MainLoopDelegate: class {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        self.addBackgroundObservers()
         
         self.setStrings()
         self.setUiCustomization()
@@ -362,6 +364,25 @@ public protocol MainLoopDelegate: class {
     }
 }
 
+extension ScanViewController {
+     @objc func viewOnWillResignActive() {
+         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+         let blurEffectView = UIVisualEffectView(effect: blurEffect)
+         blurEffectView.tag = blurViewTagOnBackground
+         blurEffectView.frame = self.view.bounds
+         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+         self.view.addSubview(blurEffectView)
+     }
+    
+     @objc func viewOnDidBecomeActive() {
+         self.view.viewWithTag(blurViewTagOnBackground)?.removeFromSuperview()
+     }
+     
+     func addBackgroundObservers() {
+         NotificationCenter.default.addObserver(self, selector: #selector(viewOnWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(viewOnDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+     }
+}
 
 // https://stackoverflow.com/a/53143736/947883
 extension UIView {
