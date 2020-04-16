@@ -275,8 +275,7 @@ public protocol MainLoopDelegate: class {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.addBackgroundObservers()
-        
+
         self.setStrings()
         self.setUiCustomization()
         self.calledDelegate = false
@@ -295,6 +294,8 @@ public protocol MainLoopDelegate: class {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.cornerView.layer.borderColor = self.cornerBorderColor
+        self.addBackgroundObservers()
+        
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
