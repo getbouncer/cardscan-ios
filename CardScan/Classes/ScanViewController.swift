@@ -297,6 +297,11 @@ public protocol MainLoopDelegate: class {
         self.cornerView.layer.borderColor = self.cornerBorderColor
     }
     
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeBackgroundObservers()
+    }
+    
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
@@ -382,6 +387,11 @@ extension ScanViewController {
          NotificationCenter.default.addObserver(self, selector: #selector(viewOnWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(viewOnDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
      }
+    
+    func removeBackgroundObservers() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
 }
 
 // https://stackoverflow.com/a/53143736/947883
