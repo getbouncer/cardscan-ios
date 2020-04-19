@@ -134,7 +134,7 @@ public protocol MainLoopDelegate: class {
     var denyPermissionButtonText = "OK"
     
     var calledDelegate = false
-    var blurViewTagOnBackground: Int = 9999
+    @objc var backgroundBlurEffectView: UIVisualEffectView?
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
         // use default config
@@ -372,16 +372,22 @@ public protocol MainLoopDelegate: class {
 
 extension ScanViewController {
      @objc func viewOnWillResignActive() {
-         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-         blurEffectView.tag = blurViewTagOnBackground
-         blurEffectView.frame = self.view.bounds
-         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-         self.view.addSubview(blurEffectView)
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        self.backgroundBlurEffectView = UIVisualEffectView(effect: blurEffect)
+
+        guard let backgroundBlurEffectView = self.backgroundBlurEffectView else {
+            return
+        }
+
+        backgroundBlurEffectView.frame = self.view.bounds
+        backgroundBlurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(backgroundBlurEffectView)
      }
     
      @objc func viewOnDidBecomeActive() {
-         self.view.viewWithTag(blurViewTagOnBackground)?.removeFromSuperview()
+        if let backgroundBlurEffectView = self.backgroundBlurEffectView {
+            backgroundBlurEffectView.removeFromSuperview()
+        }
      }
      
      func addBackgroundObservers() {
