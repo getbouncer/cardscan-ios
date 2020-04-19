@@ -134,6 +134,7 @@ public protocol MainLoopDelegate: class {
     var denyPermissionButtonText = "OK"
     
     var calledDelegate = false
+    @objc var backgroundBlurEffectView: UIVisualEffectView?
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
         // use default config
@@ -293,6 +294,13 @@ public protocol MainLoopDelegate: class {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.cornerView.layer.borderColor = self.cornerBorderColor
+        self.addBackgroundObservers()
+        
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeBackgroundObservers()
     }
     
     public override func viewDidLayoutSubviews() {
@@ -362,6 +370,36 @@ public protocol MainLoopDelegate: class {
     }
 }
 
+extension ScanViewController {
+     @objc func viewOnWillResignActive() {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        self.backgroundBlurEffectView = UIVisualEffectView(effect: blurEffect)
+
+        guard let backgroundBlurEffectView = self.backgroundBlurEffectView else {
+            return
+        }
+
+        backgroundBlurEffectView.frame = self.view.bounds
+        backgroundBlurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(backgroundBlurEffectView)
+     }
+    
+     @objc func viewOnDidBecomeActive() {
+        if let backgroundBlurEffectView = self.backgroundBlurEffectView {
+            backgroundBlurEffectView.removeFromSuperview()
+        }
+     }
+     
+     func addBackgroundObservers() {
+         NotificationCenter.default.addObserver(self, selector: #selector(viewOnWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(viewOnDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+     }
+    
+    func removeBackgroundObservers() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+}
 
 // https://stackoverflow.com/a/53143736/947883
 extension UIView {
