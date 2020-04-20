@@ -27,7 +27,7 @@ public protocol TestingImageDataSource: AnyObject {
     private var regionOfInterestLabelFrame: CGRect?
     
     var videoFeed = VideoFeed()
-    
+
     var scannedCardImage: UIImage?
     var isNavigationBarHidden = false
     private let regionCornerRadius = CGFloat(10.0)
