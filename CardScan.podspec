@@ -11,6 +11,7 @@ CardScan is a library for scanning credit cards.
   s.author           = { 'Sam King' => 'kingst@gmail.com' }
   s.source           = { :git => 'https://github.com/getbouncer/cardscan-ios.git', :tag => s.version.to_s } 
 
+
   # lint warning, who knows
   #s.social_media_url = 'https://twitter.com/stk'
   s.default_subspec = 'Core'
