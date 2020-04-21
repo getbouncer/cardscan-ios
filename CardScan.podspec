@@ -9,12 +9,12 @@ CardScan is a library for scanning credit cards.
   s.homepage         = 'https://cardscan.io'
   s.license          = { :type => 'BSD', :file => 'LICENSE' }
   s.author           = { 'Sam King' => 'kingst@gmail.com' }
-  s.source           = { :git => 'https://github.com/getbouncer/cardscan-ios.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/Ibotta/cardscan-ios.git', :tag => s.version.to_s }
   # lint warning, who knows
   #s.social_media_url = 'https://twitter.com/stk'
   s.default_subspec = 'Core'
   s.ios.deployment_target = '9.0'
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 
   s.subspec 'Core' do |core|
     core.source_files = 'CardScan/Classes/**/*'
