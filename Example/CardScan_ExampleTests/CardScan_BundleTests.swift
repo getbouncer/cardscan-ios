@@ -22,18 +22,18 @@ class CardScan_BundleTests: XCTestCase {
     }
     
     func testForResource() {
-        var findFourURl = CardScan.compiledModel(forResource: "feefifofum", withExtension: "bin")
+        var findFourURl = CSBundle.compiledModel(forResource: "feefifofum", withExtension: "bin")
         XCTAssert(findFourURl == nil)
         
-        findFourURl = CardScan.compiledModel(forResource: "FindFour", withExtension: "mlmodelc")
+        findFourURl = CSBundle.compiledModel(forResource: "FindFour", withExtension: "mlmodelc")
         XCTAssert(findFourURl != nil)
     }
     
     func testWithExtension() {
-        var findFourURl = CardScan.compiledModel(forResource: "FindFour", withExtension: "fee")
+        var findFourURl = CSBundle.compiledModel(forResource: "FindFour", withExtension: "fee")
         XCTAssert(findFourURl == nil)
         
-        findFourURl = CardScan.compiledModel(forResource: "FindFour", withExtension: "mlmodelc")
+        findFourURl = CSBundle.compiledModel(forResource: "FindFour", withExtension: "mlmodelc")
         XCTAssert(findFourURl != nil)
     }
 }
