@@ -15,6 +15,7 @@ public struct ScanStats {
     public var embossedDigitsRecognized = 0
     public var embossedDigitsDetected = 0
     public var torchOn = false
+    public var orientation = "Portrait"
     public var success: Bool?
     public var endTime: Date?
     public var model: String?
@@ -51,6 +52,7 @@ public struct ScanStats {
         return ["scans": self.scans,
                 "cards_detected": self.cardsDetected,
                 "torch_on": self.torchOn,
+                "orientation": self.orientation,
                 "success": self.success ?? false,
                 "duration": self.duration(),
                 "model": self.model ?? "unknown",
