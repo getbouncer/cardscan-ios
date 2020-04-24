@@ -20,13 +20,13 @@ extension UIWindow {
     
     static var interfaceOrientationToString: String {
         switch (self.interfaceOrientation) {
-        case .portrait: return "Portrait"
-        case .portraitUpsideDown: return "PortraitUpsideDown"
-        case .landscapeRight: return "LandscapeRight"
-        case .landscapeLeft: return "LandscapeLeft"
-        case .unknown: return "Unknown"
+        case .portrait: return "portrait"
+        case .portraitUpsideDown: return "portrait_upside_down"
+        case .landscapeRight: return "landscape_right"
+        case .landscapeLeft: return "landscape_left"
+        case .unknown: return "unknown"
         @unknown default:
-            return "Unknown"
+            return "unknown"
         }
     }
 }
