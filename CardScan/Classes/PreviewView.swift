@@ -49,7 +49,7 @@ import AVFoundation
 public class PreviewView: UIView {
     
     var videoOrientation: AVCaptureVideoOrientation {
-        let orientation = UIApplication.shared.statusBarOrientation
+        let orientation = UIWindow.interfaceOrientation
         let videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)
         return videoOrientation ?? .portrait
     }

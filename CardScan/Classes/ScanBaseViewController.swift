@@ -247,8 +247,6 @@ public protocol TestingImageDataSource: AnyObject {
         // as a delegate so that we can keep a single copy of the delegate object.
         self.ocr.scanEventsDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
-        
-        self.videoFeed.videoOrientation = AVCaptureVideoOrientation(rawValue: UIApplication.shared.statusBarOrientation.rawValue)
         self.videoFeed.pauseSession()
         //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
         self.videoFeed.setup(captureDelegate: self, completion: { success in

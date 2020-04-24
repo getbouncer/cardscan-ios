@@ -20,7 +20,7 @@ class VideoFeed {
     var videoDevice: AVCaptureDevice?
     
     var torch: Torch?
-    var videoOrientation: AVCaptureVideoOrientation?
+    var videoOrientation: AVCaptureVideoOrientation? = AVCaptureVideoOrientation(rawValue:     UIWindow.interfaceOrientation.rawValue)
     func pauseSession() {
         self.sessionQueue.suspend()
     }
