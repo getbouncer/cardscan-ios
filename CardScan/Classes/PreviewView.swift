@@ -48,12 +48,20 @@ import AVFoundation
 
 public class PreviewView: UIView {
     
+    var videoOrientation: AVCaptureVideoOrientation {
+        let orientation = UIWindow.interfaceOrientation
+        let videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)
+        return videoOrientation ?? .portrait
+    }
+    
     var videoPreviewLayer: AVCaptureVideoPreviewLayer {
         guard let layer = layer as? AVCaptureVideoPreviewLayer else {
             fatalError("Expected `AVCaptureVideoPreviewLayer` type for layer. Check PreviewView.layerClass implementation.")
         }
+
         layer.videoGravity = .resizeAspectFill
-        
+        layer.connection?.videoOrientation = self.videoOrientation
+
         return layer
     }
     
