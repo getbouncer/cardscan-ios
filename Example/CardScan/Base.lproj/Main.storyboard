@@ -271,10 +271,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fyx-FO-b7y">
-                                <rect key="frame" x="111.5" y="308.5" width="152" height="30"/>
-                                <state key="normal" title="to ScanViewController"/>
+                                <rect key="frame" x="88.5" y="308.5" width="198" height="30"/>
+                                <state key="normal" title="to ScanViewController Modal"/>
                                 <connections>
-                                    <action selector="toScanViewPress:" destination="s5g-OK-FOJ" eventType="touchUpInside" id="zDD-nE-V4P"/>
+                                    <action selector="toScanViewModalPress:" destination="s5g-OK-FOJ" eventType="touchUpInside" id="5Vp-dc-t3R"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSh-CX-nI8">
@@ -284,10 +284,19 @@
                                     <action selector="backButtonPress:" destination="s5g-OK-FOJ" eventType="touchUpInside" id="Fyi-TR-7la"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZKd-W5-Pb9">
+                                <rect key="frame" x="73.5" y="248.5" width="228" height="30"/>
+                                <state key="normal" title="to ScanViewController FullScreen"/>
+                                <connections>
+                                    <action selector="toScanViewPress:" destination="s5g-OK-FOJ" eventType="touchUpInside" id="eZK-rg-7Rg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="kSh-CX-nI8" firstAttribute="top" secondItem="gel-rM-WUS" secondAttribute="bottom" constant="20" id="5CU-4b-LJy"/>
+                            <constraint firstItem="Fyx-FO-b7y" firstAttribute="top" secondItem="ZKd-W5-Pb9" secondAttribute="bottom" constant="30" id="OCX-lt-hwe"/>
+                            <constraint firstItem="ZKd-W5-Pb9" firstAttribute="centerX" secondItem="CIL-DC-8QO" secondAttribute="centerX" id="PbK-yd-1Ni"/>
                             <constraint firstItem="Fyx-FO-b7y" firstAttribute="centerX" secondItem="CIL-DC-8QO" secondAttribute="centerX" id="mjt-nF-ynE"/>
                             <constraint firstItem="kSh-CX-nI8" firstAttribute="leading" secondItem="CIL-DC-8QO" secondAttribute="leadingMargin" constant="6" id="pQX-wB-kXf"/>
                             <constraint firstItem="Fyx-FO-b7y" firstAttribute="centerY" secondItem="CIL-DC-8QO" secondAttribute="centerY" id="uiZ-Ty-1rm"/>

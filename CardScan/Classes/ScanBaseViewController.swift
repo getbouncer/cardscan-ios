@@ -277,6 +277,9 @@ public protocol TestingImageDataSource: AnyObject {
         super.viewWillAppear(animated)
         UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
         ScanBaseViewController.isAppearing = true
+        //set previewview and video orientation after load
+        self.videoFeed.videoOrientation = AVCaptureVideoOrientation(rawValue: UIWindow.interfaceOrientation.rawValue)
+        self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIWindow.interfaceOrientation.rawValue)
         self.ocr.numbers.removeAll()
         self.ocr.expiries.removeAll()
         self.ocr.firstResult = nil

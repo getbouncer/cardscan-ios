@@ -39,6 +39,14 @@ class LandscapeViewController: UIViewController, ScanDelegate {
             return
         }
         
+        self.navigationController?.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func toScanViewModalPress(_ sender: Any) {
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            return
+        }
+        
         vc.modalPresentationStyle = .formSheet
         self.navigationController?.present(vc, animated: true, completion: nil)
     }
