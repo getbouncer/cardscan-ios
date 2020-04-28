@@ -31,7 +31,7 @@ public struct Api {
     static let defaultError = ApiError(response: [:])
     static let apiUrlNotSet = ApiError(response: ["error_message": "Your API.baseUrl or token isn't set",
                                                   "error_code": "api_baseurl_not_set"])
-    static var apiKey: String?
+    static public var apiKey: String?
     
     static func configuration() -> URLSessionConfiguration {
         let config = URLSessionConfiguration.ephemeral
