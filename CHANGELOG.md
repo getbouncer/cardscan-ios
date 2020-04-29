@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.5032](https://github.com/getbouncer/cardscan-ios/tree/1.0.5032) (2020-04-29)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5031...1.0.5032)
+
+**Closed issues:**
+
+- Sometime getting wrong valid thru or expire date  [\#141](https://github.com/getbouncer/cardscan-ios/issues/141)
+
+**Merged pull requests:**
+
+- Changed interface orientation values to snake case [\#150](https://github.com/getbouncer/cardscan-ios/pull/150) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Put orientation into stats [\#149](https://github.com/getbouncer/cardscan-ios/pull/149) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Migrating to Swift5 [\#148](https://github.com/getbouncer/cardscan-ios/pull/148) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Obscuring view during background state [\#147](https://github.com/getbouncer/cardscan-ios/pull/147) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Swift 5 conversion [\#146](https://github.com/getbouncer/cardscan-ios/pull/146) ([justinvallely](https://github.com/justinvallely))
+- Add license change notification [\#145](https://github.com/getbouncer/cardscan-ios/pull/145) ([awushensky](https://github.com/awushensky))
+
 ## [1.0.5031](https://github.com/getbouncer/cardscan-ios/tree/1.0.5031) (2020-04-09)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5030...1.0.5031)
