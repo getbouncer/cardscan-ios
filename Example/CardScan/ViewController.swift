@@ -69,6 +69,7 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         vc.number = creditCard.number
         vc.cardImage = creditCard.image
         vc.expiration = creditCard.expiryForDisplay()
+        vc.name = creditCard.name
         
         self.dismiss(animated: true)
         self.present(vc, animated: true)

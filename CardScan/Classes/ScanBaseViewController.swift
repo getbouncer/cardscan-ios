@@ -2,13 +2,21 @@ import UIKit
 import AVKit
 import VideoToolbox
 import Vision
-
+/**
+ (2) connect scan events
+ (3) scan stats
+ (4) image capture
+ (5) make sure that testing still works
+ (6) pull out unused stuff
+ (7) Debug view
+ */
 
 public protocol TestingImageDataSource: AnyObject {
     func nextSquareAndFullImage() -> (CGImage, CGImage)?
 }
 
-@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions {
+@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions, OcrMainLoopDelegate {
+    
     public func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
         self.scanEventsDelegate?.onFrameDetected(croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
     }
@@ -51,7 +59,10 @@ public protocol TestingImageDataSource: AnyObject {
     private let regionCornerRadius = CGFloat(10.0)
     private var calledOnScannedCard = false
     
-    private var ocr = Ocr()
+    //private var ocr = Ocr()
+    private var mainLoop = OcrMainLoop()
+    // this is a hack to avoid changing our public interface
+    var predictedName: String?
     
     // Child classes should override these three functions
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
@@ -61,7 +72,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     //MARK: -Torch Logic
     public func toggleTorch() {
-        self.ocr.scanStats.torchOn = !self.ocr.scanStats.torchOn
+        self.mainLoop.scanStats.torchOn = !self.mainLoop.scanStats.torchOn
         self.videoFeed.toggleTorch()
     }
     
@@ -88,42 +99,10 @@ public protocol TestingImageDataSource: AnyObject {
         
         self.machineLearningQueue.async {
             if #available(iOS 11.2, *) {
-                registerAppNotifications()
-                Ocr.configure()
+                //Ocr.configure()
+                OcrMainLoop.warmUp()
             }
         }
-    }
-    
- 
-    // We're keeping track of the app's background state because we need to shut down
-    // our ML threads, which use the GPU. Since there can be ML tasks in flight when
-    // this happens our correctness criteria is:
-    //   * For any new tasks, if we have `inBackground` set then we know that they
-    //     won't hit the GPU
-    //   * For any pending tasks, our sync block ensures that they finish before
-    //     this returns
-    //   * The willResignActive function blocks the transition to the background until
-    //     it completes, which we couldn't find docs on but verified experimentally
-    @objc static func willResignActive() {
-        AppState.inBackground = true
-        // this makes sure that any currently running predictions finish before we
-        // let the app go into the background
-        machineLearningQueue.sync { }
-    }
-    
-    @objc static func didBecomeActive() {
-        AppState.inBackground = false
-    }
-    
-    // Only call this function from the machineLearningQueue
-    static func registerAppNotifications() {
-        if hasRegisteredAppNotifications {
-            return
-        }
-        
-        hasRegisteredAppNotifications = true
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     @objc public static func supportedOrientationMaskOrDefault() -> UIInterfaceOrientationMask {
@@ -195,9 +174,10 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     public func cancelScan() {
-        self.ocr.userCancelled()
+        //self.ocr.userCancelled()
         // fire and forget
-        Api.scanStats(scanStats: self.ocr.scanStats, completion: {_, _ in })
+        preconditionFailure("add scanstats call back")
+        //Api.scanStats(scanStats: self.ocr.scanStats, completion: {_, _ in })
     }
      
     func setupMask() {
@@ -214,7 +194,7 @@ public protocol TestingImageDataSource: AnyObject {
     }
 
     func permissionDidComplete(granted: Bool, showedPrompt: Bool) {
-        self.ocr.scanStats.permissionGranted = granted
+        self.mainLoop.scanStats.permissionGranted = granted
         if !granted {
             self.onCameraPermissionDenied(showedPrompt: showedPrompt)
         }
@@ -240,12 +220,13 @@ public protocol TestingImageDataSource: AnyObject {
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
   
-        self.ocr.errorCorrectionDuration = self.errorCorrectionDuration
+        self.mainLoop.mainLoopDelegate = self
 
         // we split the implementation between OCR, which calls `onNumberRecognized`
         // and ScanBaseViewController, which calls `onScanComplete`. We register ourselves
         // as a delegate so that we can keep a single copy of the delegate object.
-        self.ocr.scanEventsDelegate = self
+        print("scan event delegate missing")
+        //self.ocr.scanEventsDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
         self.videoFeed.pauseSession()
@@ -277,9 +258,7 @@ public protocol TestingImageDataSource: AnyObject {
         super.viewWillAppear(animated)
         UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
         ScanBaseViewController.isAppearing = true
-        self.ocr.numbers.removeAll()
-        self.ocr.expiries.removeAll()
-        self.ocr.firstResult = nil
+        self.mainLoop.reset()
         self.calledOnScannedCard = false
         self.videoFeed.willAppear()
         self.isNavigationBarHidden = self.navigationController?.isNavigationBarHidden ?? true
@@ -297,7 +276,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.ocr.scanStats.orientation = UIWindow.interfaceOrientationToString
+        self.mainLoop.scanStats.orientation = UIWindow.interfaceOrientationToString
     }
     
     override open func viewWillDisappear(_ animated: Bool) {
@@ -315,13 +294,12 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     public func getScanStats() -> ScanStats {
-        return self.ocr.scanStats
+        return self.mainLoop.scanStats
     }
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if self.machineLearningSemaphore.wait(timeout: .now()) == .success {
             ScanBaseViewController.machineLearningQueue.async {
-                ScanBaseViewController.registerAppNotifications()
                 self.captureOutputWork(sampleBuffer: sampleBuffer)
             }
         }
@@ -376,6 +354,7 @@ public protocol TestingImageDataSource: AnyObject {
         return fullCardImage.cropping(to: cropRectangle)
     }
     
+    /*
     @available(iOS 11.2, *)
     open func blockingMlModel(fullCardImage: CGImage, roiRectangle: CGRect) {
         guard let squareCardImage = toSquareCardImage(fullCardImage: fullCardImage, roiRectangle: roiRectangle) else { return }
@@ -429,7 +408,7 @@ public protocol TestingImageDataSource: AnyObject {
                 self.onScannedCard(number: number, expiryYear: expiryYear, expiryMonth: expiryMonth, scannedImage: image)
             }
         }
-    }
+    }*/
     
     func captureOutputWork(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
@@ -456,7 +435,7 @@ public protocol TestingImageDataSource: AnyObject {
         let (_, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
         
         if #available(iOS 11.2, *) {
-            self.blockingMlModel(fullCardImage: fullImage, roiRectangle: roiRectInPixels)
+            mainLoop.push(fullImage: fullImage, roiRectangle: roiRectInPixels)
         }
         
         self.machineLearningSemaphore.signal()
@@ -549,5 +528,32 @@ public protocol TestingImageDataSource: AnyObject {
         if self.debugImageView?.isHidden ?? false {
             self.debugImageView?.isHidden = false
         }
+    }
+    
+    // MARK: OcrMainLoopComplete logic
+    func complete(creditCardOcrResult: CreditCardOcrResult) {
+        self.dismiss(animated: true)
+        mainLoop.mainLoopDelegate = nil
+        ScanBaseViewController.machineLearningQueue.async {
+            // Note: the onNumberRecognized method is called on Ocr
+            print("scanEventsDelegate")
+            //self.scanEventsDelegate?.onScanComplete(scanStats: self.ocr.scanStats)
+        }
+        
+        let expiryMonth = creditCardOcrResult.expiryMonth
+        let expiryYear = creditCardOcrResult.expiryYear
+        let number = creditCardOcrResult.number
+        // hack to work around having to change our public interface
+        predictedName = creditCardOcrResult.name
+        let image = self.scannedCardImage
+        
+        // fire and forget
+        Api.scanStats(scanStats: self.mainLoop.scanStats, completion: {_, _ in })
+        self.onScannedCard(number: number, expiryYear: expiryYear, expiryMonth: expiryMonth, scannedImage: image)
+    }
+    
+    func showCardDetails(number: String?, expiry: String?, name: String?) {
+        guard let number = number else { return }
+        showCardNumber(number, expiry: expiry)
     }
 }

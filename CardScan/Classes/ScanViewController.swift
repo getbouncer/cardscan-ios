@@ -349,6 +349,8 @@ public protocol MainLoopDelegate: class {
         card.expiryMonth = expiryMonth
         card.expiryYear = expiryYear
         card.image = scannedImage
+        // This is a hack to work around having to change our public interface
+        card.name = predictedName
 
         self.scanDelegate?.userDidScanCard(self, creditCard: card)
     }
@@ -359,6 +361,7 @@ public protocol MainLoopDelegate: class {
     }
     
     // MARK: main loop
+    /*
     @available(iOS 11.2, *)
     override public func blockingMlModel(fullCardImage: CGImage, roiRectangle: CGRect) {
         guard mainLoopDelegate?.shouldRunBaseMainLoop(fullCardImage: fullCardImage, roiRectangle: roiRectangle, scanViewController: self) ?? true else {
@@ -370,7 +373,7 @@ public protocol MainLoopDelegate: class {
         }
         
         super.blockingMlModel(fullCardImage: fullCardImage, roiRectangle: roiRectangle)
-    }
+    }*/
 }
 
 extension ScanViewController {
