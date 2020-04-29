@@ -12,14 +12,14 @@ struct AppleOcr {
             return CGRect()
         }
 
-        let topLeft = VNImagePointForNormalizedPoint(boundingBox.bottomLeft,
+        let topLeft = VNImagePointForNormalizedPoint(boundingBox.topLeft,
                                                      Int(imageSize.width),
                                                      Int(imageSize.height))
-        let bottomRight = VNImagePointForNormalizedPoint(boundingBox.topRight,
+        let bottomRight = VNImagePointForNormalizedPoint(boundingBox.bottomRight,
                                                          Int(imageSize.width),
                                                          Int(imageSize.height))
         // flip it for top left (0,0) image coordinates
-        return CGRect(x: topLeft.x, y: topLeft.y,
+        return CGRect(x: topLeft.x, y: imageSize.height - topLeft.y,
                       width: abs(bottomRight.x - topLeft.x),
                       height: abs(topLeft.y - bottomRight.y))
         

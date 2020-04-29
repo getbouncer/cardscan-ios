@@ -42,6 +42,7 @@ import UIKit
 
 protocol OcrMainLoopDelegate: class {
     func complete(creditCardOcrResult: CreditCardOcrResult)
+    func prediction(creditCardOcrPrediction: CreditCardOcrPrediction)
     func showCardDetails(number: String?, expiry: String?, name: String?)
 }
 
@@ -103,9 +104,8 @@ class OcrMainLoop {
     }
     
     func userCancelled() {
-        preconditionFailure("userCancelled")
-        //self.scanStats.success = false
-        //self.scanStats.endTime = Date()
+        scanStats.success = false
+        scanStats.endTime = Date()
     }
     
     func push(fullImage: CGImage, roiRectangle: CGRect) {
@@ -158,6 +158,10 @@ class OcrMainLoop {
             let prediction = ocr.recognizeCard(in: image, roiRectangle: roi)
             self?.mutexQueue.async {
                 guard let self = self else { return }
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.mainLoopDelegate?.prediction(creditCardOcrPrediction: prediction)
+                }
                 guard let result = self.combine(prediction: prediction), result.isFinished else {
                     self.postAnalyzerToQueueAndRun(ocr: ocr)
                     return

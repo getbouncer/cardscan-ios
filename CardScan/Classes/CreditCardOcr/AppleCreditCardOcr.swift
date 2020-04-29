@@ -11,7 +11,7 @@ import UIKit
 class AppleCreditCardOcr: CreditCardOcrImplementation {
     override func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
         guard let image = croppedImage(fullCardImage: fullImage, roiRectangle: roiRectangle) else {
-            return CreditCardOcrPrediction(number: nil, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0)
+            return CreditCardOcrPrediction.emptyPrediction(cgImage: fullImage)
         }
         
         var pan: String?
@@ -20,30 +20,32 @@ class AppleCreditCardOcr: CreditCardOcrImplementation {
         let semaphore = DispatchSemaphore(value: 0)
         let startTime = Date()
         var name: String?
+        var nameBox: CGRect?
+        var numberBox: CGRect?
+        var expiryBox: CGRect?
         AppleOcr.recognizeText(in: image) { results in
             for result in results {
                 let predictedPan = CreditCardOcrPrediction.pan(result.text)
                 let expiry = CreditCardOcrPrediction.likelyExpiry(result.text)
                 if let (month, year) = expiry {
                     if CreditCardUtils.isValidDate(expMonth: month, expYear: year) {
-                        if expiryMonth == nil { expiryMonth = month }
+                        if expiryMonth == nil {
+                            expiryBox = result.rect
+                            expiryMonth = month
+                        }
                         if expiryYear == nil { expiryYear = year }
                     }
                 }
-                if pan == nil { pan = predictedPan }
+                if pan == nil {
+                    pan = predictedPan
+                    numberBox = result.rect
+                }
                 let predictedName = AppleCreditCardOcr.likelyName(result.text)
-                name = {
-                    switch (name, predictedName) {
-                    case (.some(let name), .some(let predictedName)):
-                        return name + "\n" + predictedName
-                    case (.none, .some(let predictedName)):
-                        return predictedName
-                    case (.some(let name), .none):
-                        return name
-                    case (.none, .none):
-                        return nil
-                    }
-                }()
+                // XXX FIXME we should be smarter about the name
+                if name == nil {
+                    name = predictedName
+                    nameBox = result.rect
+                }
             }
             semaphore.signal()
         }
@@ -52,7 +54,7 @@ class AppleCreditCardOcr: CreditCardOcrImplementation {
         self.computationTime += duration
         self.frames += 1
 
-        return CreditCardOcrPrediction(number: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, name: name, computationTime: duration)
+        return CreditCardOcrPrediction(image: image, number: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, name: name, computationTime: duration, numberBoxes: numberBox.map { [$0] }, expiryBoxes: expiryBox.map { [$0] }, nameBoxes: nameBox.map { [$0] })
     }
     
     static func likelyName(_ text: String) -> String? {

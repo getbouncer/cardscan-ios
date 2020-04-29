@@ -174,10 +174,8 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     public func cancelScan() {
-        //self.ocr.userCancelled()
-        // fire and forget
-        preconditionFailure("add scanstats call back")
-        //Api.scanStats(scanStats: self.ocr.scanStats, completion: {_, _ in })
+        mainLoop.userCancelled()
+        Api.scanStats(scanStats: self.mainLoop.scanStats, completion: {_, _ in })
     }
      
     func setupMask() {
@@ -303,38 +301,6 @@ public protocol TestingImageDataSource: AnyObject {
                 self.captureOutputWork(sampleBuffer: sampleBuffer)
             }
         }
-    }
-    
-    func drawBoundingBoxesOnImage(image: UIImage, embossedCharacterBoxes: [CGRect],
-                                  characterBoxes: [CGRect], appleBoxes: [CGRect]) -> UIImage? {
-        
-        let imageSize = image.size
-        let scale: CGFloat = 0
-        UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
-        
-        image.draw(at: CGPoint(x: 0,y :0))
-        
-        UIGraphicsGetCurrentContext()?.setLineWidth(3.0)
-        
-        UIColor.green.setStroke()
-        for characterBox in characterBoxes {
-            UIRectFrame(characterBox)
-        }
-        
-        UIColor.blue.setStroke()
-        for characterBox in embossedCharacterBoxes {
-            UIRectFrame(characterBox)
-        }
-        
-        UIColor.red.setStroke()
-        for characterBox in appleBoxes {
-            UIRectFrame(characterBox)
-        }
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage
     }
     
     func toCardImage(squareCardImage: CGImage) -> CGImage {
@@ -550,6 +516,20 @@ public protocol TestingImageDataSource: AnyObject {
         // fire and forget
         Api.scanStats(scanStats: self.mainLoop.scanStats, completion: {_, _ in })
         self.onScannedCard(number: number, expiryYear: expiryYear, expiryMonth: expiryMonth, scannedImage: image)
+    }
+    
+    func prediction(creditCardOcrPrediction: CreditCardOcrPrediction) {
+        if self.showDebugImageView {
+            let numberBoxes = creditCardOcrPrediction.numberBoxes.map { $0.map { (UIColor.blue, $0) }} ?? []
+            let expiryBoxes = creditCardOcrPrediction.expiryBoxes.map { $0.map { (UIColor.red, $0) }} ?? []
+            let nameBoxes = creditCardOcrPrediction.nameBoxes.map { $0.map { (UIColor.green, $0) }} ?? []
+            
+            if self.debugImageView?.isHidden ?? false {
+                self.debugImageView?.isHidden = false
+            }
+                
+            self.debugImageView?.image = creditCardOcrPrediction.image.drawBoundingBoxesOnImage(boxes: numberBoxes + expiryBoxes + nameBoxes)
+        }
     }
     
     func showCardDetails(number: String?, expiry: String?, name: String?) {

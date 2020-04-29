@@ -12,15 +12,18 @@ class LegacyCreditCardOcr: CreditCardOcrImplementation {
     override func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
         guard let image = croppedImageWithFullWidth(fullCardImage: fullImage, roiRectangle: roiRectangle),
             let squareImage = squareCardImage(fullCardImage: fullImage, roiRectangle: roiRectangle) else {
-                return CreditCardOcrPrediction(number: nil, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0)
+                return CreditCardOcrPrediction.emptyPrediction(cgImage: fullImage)
         }
                 
         let ocr = Ocr()
         let startTime = Date()
         let number = ocr.perform(croppedCardImage: image, squareCardImage: squareImage, fullCardImage: fullImage)
         let duration = -startTime.timeIntervalSinceNow
+        let numberBoxes = ocr.scanStats.lastFlatBoxes
+        let expiryBoxes = ocr.scanStats.expiryBoxes
+        
         self.computationTime += duration
         self.frames += 1
-        return CreditCardOcrPrediction(number: number, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: duration)
+        return CreditCardOcrPrediction(image: image, number: number, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: duration, numberBoxes: numberBoxes, expiryBoxes: expiryBoxes, nameBoxes: nil)
     }
 }

@@ -8,11 +8,19 @@
 import Foundation
 
 struct CreditCardOcrPrediction {
+    let image: CGImage
     let number: String?
     let expiryMonth: String?
     let expiryYear: String?
     let name: String?
     let computationTime: Double
+    let numberBoxes: [CGRect]?
+    let expiryBoxes: [CGRect]?
+    let nameBoxes: [CGRect]?
+    
+    static func emptyPrediction(cgImage: CGImage) -> CreditCardOcrPrediction {
+        CreditCardOcrPrediction(image: cgImage, number: nil, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
+    }
     
     var expiryForDisplay: String? {
         guard let month = expiryMonth, let year = expiryYear else { return nil }
