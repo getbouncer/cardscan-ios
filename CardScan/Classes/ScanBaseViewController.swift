@@ -1,11 +1,6 @@
 import UIKit
 import AVKit
 import Vision
-/**
- - Make sure that scanId still works
- - make sure that demo app still works
- - make sure that our test app for capturing data still works
- */
 
 public protocol TestingImageDataSource: AnyObject {
     func nextSquareAndFullImage() -> (CGImage, CGImage)?
