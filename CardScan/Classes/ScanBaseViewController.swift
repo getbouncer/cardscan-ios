@@ -302,10 +302,13 @@ public protocol TestingImageDataSource: AnyObject {
         
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
-        let (_, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (nil, fullCardImage)
-        
-        if #available(iOS 11.2, *) {
-            mainLoop.push(fullImage: fullImage, roiRectangle: roiRectInPixels)
+        if let dataSource = self.testingImageDataSource {
+            let (_, fullImage) = dataSource.nextSquareAndFullImage() ?? (nil, fullCardImage)
+            let _ = mainLoop.blockingOcr(fullImage: fullImage, roiRectangle: roiRectInPixels)
+        } else {
+            if #available(iOS 11.2, *) {
+                mainLoop.push(fullImage: fullCardImage, roiRectangle: roiRectInPixels)
+            }
         }
     }
     

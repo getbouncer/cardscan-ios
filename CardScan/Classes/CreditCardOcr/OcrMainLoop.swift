@@ -53,6 +53,7 @@ class OcrMainLoop {
     let mutexQueue = DispatchQueue(label: "OcrMainLoopMuxtex")
     var inBackground = false
     var machineLearningQueues: [DispatchQueue] = []
+    var blockingSemaphore: DispatchSemaphore?
     
     init(analyzers: [AnalyzerType] = [.legacy, .apple]) {
         scanStats.model = "legacy+apple"
@@ -118,9 +119,13 @@ class OcrMainLoop {
 
     func postAnalyzerToQueueAndRun(ocr: CreditCardOcrImplementation) {
         mutexQueue.async { [weak self] in
-            self?.analyzerQueue.insert(ocr, at: 0)
-            guard let ocr = self?.analyzerQueue.popLast() else { return }
-            self?.analyzer(ocr: ocr)
+            guard let self = self else { return }
+            self.analyzerQueue.insert(ocr, at: 0)
+            // only kick off the next analyzer if there is an image in the queue
+            if self.imageQueue.count > 0 {
+                guard let ocr = self.analyzerQueue.popLast() else { return }
+                self.analyzer(ocr: ocr)
+            }
         }
     }
     
@@ -151,6 +156,7 @@ class OcrMainLoop {
             let prediction = ocr.recognizeCard(in: image, roiRectangle: roi)
             self?.mutexQueue.async {
                 guard let self = self else { return }
+                self.blockingSemaphore?.signal()
                 self.scanStats.scans += 1
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
@@ -179,12 +185,22 @@ class OcrMainLoop {
         return result
     }
     
+    /**
+     Note: This function is _not_ thread safe, but the rest of the class is. However, we expect this to only get used
+     during testing.
+     */
     func blockingOcr(fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrResult? {
         var result: CreditCardOcrResult?
+        let semaphore = DispatchSemaphore(value: 0)
         mutexQueue.sync {
-            guard let analyzer = analyzerQueue.first else { return }
-            let prediction = analyzer.recognizeCard(in: fullImage, roiRectangle: roiRectangle)
-            result = errorCorrection.add(prediction: prediction)
+            self.blockingSemaphore = semaphore
+        }
+        push(fullImage: fullImage, roiRectangle: roiRectangle)
+        
+        semaphore.wait()
+        mutexQueue.sync {
+            result = errorCorrection.result()
+            self.blockingSemaphore = nil
         }
         
         return result

@@ -17,6 +17,7 @@ class ErrorCorrection {
     var names: [String: Int] = [:]
     let startTime = Date()
     let errorCorrectionTime = 1.5
+    var mostRecentPrediction: CreditCardOcrPrediction?
     
     var framesPerSecond: Double {
         return Double(frames) / -startTime.timeIntervalSinceNow
@@ -26,6 +27,18 @@ class ErrorCorrection {
     
     var number: String? {
         return self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
+    }
+    
+    func result() -> CreditCardOcrResult? {
+        guard let firstPan = firstPan else { return nil }
+        let predictedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
+        guard let number = predictedNumber else { return nil }
+        let predictedExpiry = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
+        let predictedName = self.names.sorted { $0.1 > $1.1 }.map { $0.0 }.first
+        let isFinished = -firstPan.timeIntervalSinceNow >= errorCorrectionTime
+        guard let prediction = self.mostRecentPrediction else { return nil }
+        
+        return CreditCardOcrResult(mostRecentPrediction: prediction, number: number, expiry: predictedExpiry, name: predictedName, isFinished: isFinished, duration: -startTime.timeIntervalSinceNow, frames: frames)
     }
     
     func add(prediction: CreditCardOcrPrediction) -> CreditCardOcrResult? {
@@ -44,13 +57,8 @@ class ErrorCorrection {
             self.names[name] = (self.names[name] ?? 0) + 1
         }
         
-        guard let firstPan = firstPan else { return nil }
-        let predictedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
-        guard let number = predictedNumber else { return nil }
-        let predictedExpiry = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
-        let predictedName = self.names.sorted { $0.1 > $1.1 }.map { $0.0 }.first
-        let isFinished = -firstPan.timeIntervalSinceNow >= errorCorrectionTime
+        self.mostRecentPrediction = prediction
         
-        return CreditCardOcrResult(mostRecentPrediction: prediction, number: number, expiry: predictedExpiry, name: predictedName, isFinished: isFinished, duration: -startTime.timeIntervalSinceNow, frames: frames)
+        return result()
     }
 }
