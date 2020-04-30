@@ -57,8 +57,10 @@ struct CreditCardOcrPrediction {
             return nil
         }
         
-        let range1 = Range(result.first!.range(at: 1), in: string)!
-        let range2 = Range(result.first!.range(at: 2), in: string)!
+        guard let nsrange1 = result.first?.range(at: 1),
+            let range1 = Range(nsrange1, in: string) else { return nil }
+        guard let nsrange2 = result.first?.range(at: 2),
+            let range2 = Range(nsrange2, in: string) else { return nil }
 
         return (String(string[range1]), String(string[range2]))
     }
