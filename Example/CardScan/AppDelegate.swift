@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CSBundle.cardScanBundle = bundle
         CSBundle.bundleName = ""
         CSBundle.extensionName = ""
-        ScanViewController.configure(apiKey: "qBls6Cr7KNqM_GbWZDN6TJ_5_5nvsjst")
+        ScanViewController.configure()
         return true
     }
 
