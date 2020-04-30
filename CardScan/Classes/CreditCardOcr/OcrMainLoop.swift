@@ -17,33 +17,25 @@
     diversity in images by virtue of maximizing the time in between images that it reads.
  
     The consumers pull images from the queue and run the full OCR algorithm, including expiry extraction and
-    full error correction independently.
+    full error correction on the combined results.
  
     In terms of iOS abstractions, we make heavy use of dispatch queues. We have a single `mutexQueue`
     that we use to mutate our shared state. This queue is a serial queue and our method for synchronizing
     access. One thing to be careful with is we use `sync` in places to access our `mutexQueue`. This
     method can lead to deadlock if you aren't careful.
  
-    We also have N `machineLearningQueues` that we define statically and use to run
-    each individual OCR algorithm. One important aspect of our `machineLearningQueues` is that we
-    monitor when the app goes into the background and kill all ML before letting the app go into the background.
- 
-    The main items left TODO are:
-    - Combine the results from each OCR run. Our OCR runs have three states, (1) no pan detected, (2) pan
-        detected but running error correction and (3) complete results. After an OCR run is complete, it stops
-        reading images.
-    - Pass the results back to the ViewController that registers with the `OcrMainLoopComplete`
-        protocol to let it know when to start showing or update number / expiry via the
-        `showCardDetails` method and notify the ViewController when it is all done using the `complete`
-        method.
+    We also have `machineLearningQueues` that we use to run each individual OCR algorithm.
+    One important aspect of our `machineLearningQueues` is that we monitor when the app goes into
+    the background and kill all ML before letting the app go into the background.
  */
 
 import UIKit
 
 protocol OcrMainLoopDelegate: class {
     func complete(creditCardOcrResult: CreditCardOcrResult)
-    func prediction(creditCardOcrPrediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage)
+    func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage)
     func showCardDetails(number: String?, expiry: String?, name: String?)
+    func shouldUsePrediction(errorCorrectedNumber: String?, prediction: CreditCardOcrPrediction) -> Bool
 }
 
 class OcrMainLoop {
@@ -63,6 +55,7 @@ class OcrMainLoop {
     var machineLearningQueues: [DispatchQueue] = []
     
     init(analyzers: [AnalyzerType] = [.legacy, .apple]) {
+        scanStats.model = "legacy+apple"
         machineLearningQueues = []
         for analyzer in analyzers {
             let queue = DispatchQueue(label: "\(analyzer) OCR ML")
@@ -158,10 +151,11 @@ class OcrMainLoop {
             let prediction = ocr.recognizeCard(in: image, roiRectangle: roi)
             self?.mutexQueue.async {
                 guard let self = self else { return }
+                self.scanStats.scans += 1
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     guard let squareCardImage = CreditCardOcrImplementation.squareCardImage(fullCardImage: image, roiRectangle: roi) else { return }
-                    self.mainLoopDelegate?.prediction(creditCardOcrPrediction: prediction, squareCardImage: squareCardImage, fullCardImage: image)
+                    self.mainLoopDelegate?.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: image)
                 }
                 guard let result = self.combine(prediction: prediction), result.isFinished else {
                     self.postAnalyzerToQueueAndRun(ocr: ocr)
@@ -172,10 +166,13 @@ class OcrMainLoop {
     }
     
     func combine(prediction: CreditCardOcrPrediction) -> CreditCardOcrResult? {
+        guard mainLoopDelegate?.shouldUsePrediction(errorCorrectedNumber: errorCorrection.number, prediction: prediction) ?? true else { return nil }
         guard let result = errorCorrection.add(prediction: prediction) else { return nil }
         DispatchQueue.main.async { [weak self] in
             self?.mainLoopDelegate?.showCardDetails(number: result.number, expiry: result.expiry, name: result.name)
             if result.isFinished {
+                self?.scanStats.success = true
+                self?.scanStats.endTime = Date()
                 self?.mainLoopDelegate?.complete(creditCardOcrResult: result)
             }
         }
@@ -193,7 +190,7 @@ class OcrMainLoop {
         return result
     }
     
-    // MARK: backrounding logic
+    // MARK: -backrounding logic
     
     // We're keeping track of the app's background state because we need to shut down
     // our ML threads, which use the GPU. Since there can be ML tasks in flight when

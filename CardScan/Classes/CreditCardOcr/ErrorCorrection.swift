@@ -24,6 +24,10 @@ class ErrorCorrection {
     
     init() { }
     
+    var number: String? {
+        return self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
+    }
+    
     func add(prediction: CreditCardOcrPrediction) -> CreditCardOcrResult? {
         self.frames += 1
         if let pan = prediction.number {

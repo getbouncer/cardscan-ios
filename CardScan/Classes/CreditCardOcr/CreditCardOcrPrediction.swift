@@ -27,6 +27,25 @@ struct CreditCardOcrPrediction {
         return "\(month)/\(year)"
     }
     
+    var expiryAsUInt: (UInt, UInt)? {
+        guard let month = expiryMonth.flatMap({ UInt($0) }) else { return nil }
+        guard let year = expiryYear.flatMap({ UInt($0) }) else { return nil }
+        
+        return (month, year)
+    }
+    
+    var numberBox: CGRect? {
+        let xmin = numberBoxes?.map { $0.minX }.min() ?? 0.0
+        let xmax = numberBoxes?.map { $0.maxX }.max() ?? 0.0
+        let ymin = numberBoxes?.map { $0.minY }.min() ?? 0.0
+        let ymax = numberBoxes?.map { $0.maxY }.max() ?? 0.0
+        return CGRect(x: xmin, y: ymin, width: (xmax - xmin), height: (ymax - ymin))
+    }
+    
+    var expiryBox: CGRect? {
+        return expiryBoxes.flatMap { $0.first }
+    }
+    
     static func likelyExpiry(_ string: String) -> (String, String)? {
         guard let regex = try? NSRegularExpression(pattern: "^.*(0[1-9]|1[0-2])\\/([1-2][0-9])$") else {
             return nil

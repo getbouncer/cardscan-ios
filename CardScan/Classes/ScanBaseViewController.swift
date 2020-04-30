@@ -1,12 +1,11 @@
 import UIKit
 import AVKit
-import VideoToolbox
 import Vision
 /**
- (3) scan stats
- (4) should use number stuff
- (5) make sure that testing still works
- (6) pull out unused stuff
+ - make sure that testing still works
+ - make sure that verify still works
+ - make sure that demo app still works
+ - make sure that our test app for capturing data still works
  */
 
 public protocol TestingImageDataSource: AnyObject {
@@ -24,8 +23,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     static var isAppearing = false
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
-    // Only access this variable from the machineLearningQueue
-    static var hasRegisteredAppNotifications = false
+    private let machineLearningSemaphore = DispatchSemaphore(value: 1)
     
     private weak var debugImageView: UIImageView?
     private weak var previewView: PreviewView?
@@ -35,16 +33,12 @@ public protocol TestingImageDataSource: AnyObject {
     private var regionOfInterestLabelFrame: CGRect?
     
     var videoFeed = VideoFeed()
-    private let machineLearningSemaphore = DispatchSemaphore(value: 1)
     
-    var currentImageRect: CGRect?
     var scannedCardImage: UIImage?
     var isNavigationBarHidden = false
-    private let scanQrCode = false
     private let regionCornerRadius = CGFloat(10.0)
     private var calledOnScannedCard = false
     
-    //private var ocr = Ocr()
     private var mainLoop = OcrMainLoop()
     // this is a hack to avoid changing our public interface
     var predictedName: String?
@@ -278,6 +272,7 @@ public protocol TestingImageDataSource: AnyObject {
         if self.machineLearningSemaphore.wait(timeout: .now()) == .success {
             ScanBaseViewController.machineLearningQueue.async {
                 self.captureOutputWork(sampleBuffer: sampleBuffer)
+                self.machineLearningSemaphore.signal()
             }
         }
     }
@@ -285,114 +280,33 @@ public protocol TestingImageDataSource: AnyObject {
     func captureOutputWork(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             print("could not get the pixel buffer, dropping frame")
-            self.machineLearningSemaphore.signal()
             return
         }
         
 
-        guard let fullCardImage = self.toCGImage(pixelBuffer: pixelBuffer) else {
+        guard let fullCardImage = pixelBuffer.cgImage() else {
             print("could not get the cgImage from the pixel buffer")
-            self.machineLearningSemaphore.signal()
             return
         }
-        
-        guard let (squareCardImage, roiRectInPixels) = self.toRegionOfInterest(image: fullCardImage) else {
-            print("could not get the cgImage from the region of interest, dropping frame")
-            self.machineLearningSemaphore.signal()
-            return
-        }
-        
-        // we allow apps that integrate to supply their own sequence of images
-        // for use in testing
-        let (_, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (squareCardImage, fullCardImage)
-        
-        if #available(iOS 11.2, *) {
-            mainLoop.push(fullImage: fullImage, roiRectangle: roiRectInPixels)
-        }
-        
-        self.machineLearningSemaphore.signal()
-    }
-    
-    func toCGImage(pixelBuffer: CVPixelBuffer) -> CGImage? {
-        var cgImage: CGImage?
-        if #available(iOS 9.0, *) {
-            #if swift(>=4.2)
-                VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
-            #else
-                VTCreateCGImageFromCVPixelBuffer(pixelBuffer, nil, &cgImage)
-            #endif
-        } else {
-            return nil
-        }
-        
-        return cgImage
-    }
-    
-    func toRegionOfInterest(image: CGImage) -> (CGImage, CGRect)? {
-        // use the full width and make it a square
-        let width = CGFloat(image.width)
-        let height = width
-        
-        // get device screen size
-        let screen = UIScreen.main.bounds
-        let screenWidth = screen.size.width
-        let screenHeight = screen.size.height
-        
-        guard let regionOfInterestLabelFrame = self.regionOfInterestLabelFrame else {
-            return nil
-        }
-        
-        // ROI center in Points
-        let regionOfInterestCenterX = regionOfInterestLabelFrame.origin.x + regionOfInterestLabelFrame.size.width / 2.0
-        
-        let regionOfInterestCenterY = regionOfInterestLabelFrame.origin.y + regionOfInterestLabelFrame.size.height / 2.0
-        
-        // calculate center of cropping region in Pixels.
-        var cx, cy: CGFloat
-        
         
         // confirm videoGravity settings in previewView. Calculations based on .resizeAspectFill
         DispatchQueue.main.async {
             assert(self.previewView?.videoPreviewLayer.videoGravity == .resizeAspectFill)
         }
-
-        // Find out whether left/right or top/bottom of the image was cropped before it was displayed to previewView.
-        // The size of the cropped region is needed to map regionOfInterestCenter to the image center
-        let imageAspectRatio = CGFloat(image.width) / CGFloat(image.height)
-        let screenAspectRatio = screenWidth / screenHeight
         
-        var pointsToPixels: CGFloat
-        // convert from points to pixels and account for the cropped region
-        if imageAspectRatio > screenAspectRatio {
-            // left and right of the image cropped
-            //      tested on: iPhone XS Max
-            let croppedOffset = (CGFloat(image.width) - CGFloat(image.height) * screenAspectRatio) / 2.0
-            pointsToPixels = CGFloat(image.height) / screenHeight
-            
-            cx = regionOfInterestCenterX * pointsToPixels + croppedOffset
-            cy = regionOfInterestCenterY * pointsToPixels
-        } else {
-            // top and bottom of the image cropped
-            //      tested on: iPad Mini 2
-            let croppedOffset = (CGFloat(image.height) - CGFloat(image.width) / screenAspectRatio) / 2.0
-            pointsToPixels = CGFloat(image.width) / screenWidth
-            
-            cx = regionOfInterestCenterX * pointsToPixels
-            cy = regionOfInterestCenterY * pointsToPixels + croppedOffset
+        guard let roiFrame = self.regionOfInterestLabelFrame,
+            let roiRectInPixels = fullCardImage.toRegionOfInterest(regionOfInterestLabelFrame: roiFrame) else {
+            print("could not get the cgImage from the region of interest, dropping frame")
+            return
         }
         
-        let roiWidthInPixels = regionOfInterestLabelFrame.size.width * pointsToPixels
-        let roiHeightInPixels = regionOfInterestLabelFrame.size.height * pointsToPixels
-        let roiRectInPixels = CGRect(x: cx - roiWidthInPixels * 0.5,
-                                     y: cy - roiHeightInPixels * 0.5,
-                                     width: roiWidthInPixels,
-                                     height: roiHeightInPixels)
+        // we allow apps that integrate to supply their own sequence of images
+        // for use in testing
+        let (_, fullImage) = self.testingImageDataSource?.nextSquareAndFullImage() ?? (nil, fullCardImage)
         
-        let rect = CGRect(x: cx - width / 2.0, y: cy - height / 2.0, width: width, height: height)
-        
-        self.currentImageRect = rect
-        
-        return image.cropping(to: rect).map { ($0, roiRectInPixels) }
+        if #available(iOS 11.2, *) {
+            mainLoop.push(fullImage: fullImage, roiRectangle: roiRectInPixels)
+        }
     }
     
     public func updateDebugImageView(image: UIImage) {
@@ -402,7 +316,7 @@ public protocol TestingImageDataSource: AnyObject {
         }
     }
     
-    // MARK: OcrMainLoopComplete logic
+    // MARK: -OcrMainLoopComplete logic
     func complete(creditCardOcrResult: CreditCardOcrResult) {
         self.dismiss(animated: true)
         mainLoop.mainLoopDelegate = nil
@@ -410,56 +324,38 @@ public protocol TestingImageDataSource: AnyObject {
             self.scanEventsDelegate?.onScanComplete(scanStats: self.mainLoop.scanStats)
         }
         
-        let expiryMonth = creditCardOcrResult.expiryMonth
-        let expiryYear = creditCardOcrResult.expiryYear
-        let number = creditCardOcrResult.number
         // hack to work around having to change our public interface
         predictedName = creditCardOcrResult.name
-        let image = self.scannedCardImage
-        
+
         // fire and forget
         Api.scanStats(scanStats: self.mainLoop.scanStats, completion: {_, _ in })
-        self.onScannedCard(number: number, expiryYear: expiryYear, expiryMonth: expiryMonth, scannedImage: image)
+        self.onScannedCard(number: creditCardOcrResult.number, expiryYear: creditCardOcrResult.expiryYear, expiryMonth: creditCardOcrResult.expiryMonth, scannedImage: scannedCardImage)
     }
     
-    func prediction(creditCardOcrPrediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
+    func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
         if self.showDebugImageView {
-            let numberBoxes = creditCardOcrPrediction.numberBoxes.map { $0.map { (UIColor.blue, $0) }} ?? []
-            let expiryBoxes = creditCardOcrPrediction.expiryBoxes.map { $0.map { (UIColor.red, $0) }} ?? []
-            let nameBoxes = creditCardOcrPrediction.nameBoxes.map { $0.map { (UIColor.green, $0) }} ?? []
+            let numberBoxes = prediction.numberBoxes?.map { (UIColor.blue, $0) } ?? []
+            let expiryBoxes = prediction.expiryBoxes?.map { (UIColor.red, $0) } ?? []
+            let nameBoxes = prediction.nameBoxes?.map { (UIColor.green, $0) } ?? []
             
             if self.debugImageView?.isHidden ?? false {
                 self.debugImageView?.isHidden = false
             }
                 
-            self.debugImageView?.image = creditCardOcrPrediction.image.drawBoundingBoxesOnImage(boxes: numberBoxes + expiryBoxes + nameBoxes)
+            self.debugImageView?.image = prediction.image.drawBoundingBoxesOnImage(boxes: numberBoxes + expiryBoxes + nameBoxes)
         }
-        if creditCardOcrPrediction.number != nil && self.includeCardImage {
-            self.scannedCardImage = UIImage(cgImage: creditCardOcrPrediction.image)
+        if prediction.number != nil && self.includeCardImage {
+            self.scannedCardImage = UIImage(cgImage: prediction.image)
         }
         
-        let cardSize = CGSize(width: creditCardOcrPrediction.image.width, height: creditCardOcrPrediction.image.height)
-        if let number = creditCardOcrPrediction.number {
-            let expiry: Expiry? = {
-                if let month = creditCardOcrPrediction.expiryMonth.flatMap({ UInt($0) }),
-                    let year = creditCardOcrPrediction.expiryYear.flatMap({ UInt($0) }),
-                    let expiryString = creditCardOcrPrediction.expiryForDisplay {
-                    return Expiry(string: expiryString, month: month, year: year)
-                } else {
-                    return nil
-                }
-            }()
-            let xmin = creditCardOcrPrediction.numberBoxes?.map { $0.minX }.min() ?? 0.0
-            let xmax = creditCardOcrPrediction.numberBoxes?.map { $0.maxX }.max() ?? 0.0
-            let ymin = creditCardOcrPrediction.numberBoxes?.map { $0.minY }.min() ?? 0.0
-            let ymax = creditCardOcrPrediction.numberBoxes?.map { $0.maxY }.max() ?? 0.0
-            let numberBox = CGRect(x: xmin, y: ymin, width: (xmax - xmin), height: (ymax - ymin))
-            let expiryBox = creditCardOcrPrediction.expiryBoxes.flatMap { $0.first }
+        let cardSize = CGSize(width: prediction.image.width, height: prediction.image.height)
+        if let number = prediction.number, let numberBox = prediction.numberBox {
+            let expiry = prediction.expiryObject()
+            let expiryBox = prediction.expiryBox
             
             ScanBaseViewController.machineLearningQueue.async {
                 self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBox, expiryBoundingBox: expiryBox, croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
             }
-
         } else {
             ScanBaseViewController.machineLearningQueue.async {
                 self.scanEventsDelegate?.onFrameDetected(croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
@@ -470,5 +366,10 @@ public protocol TestingImageDataSource: AnyObject {
     func showCardDetails(number: String?, expiry: String?, name: String?) {
         guard let number = number else { return }
         showCardNumber(number, expiry: expiry)
+    }
+    
+    func shouldUsePrediction(errorCorrectedNumber: String?, prediction: CreditCardOcrPrediction) -> Bool {
+        guard let predictedNumber = prediction.number else { return true }
+        return useCurrentFrameNumber(errorCorrectedNumber: errorCorrectedNumber, currentFrameNumber: predictedNumber)
     }
 }

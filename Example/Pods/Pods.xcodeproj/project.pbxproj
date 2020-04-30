@@ -79,6 +79,7 @@
 		3322FBC6F40F5431BDD39774DC4E1535 /* FourRecognize.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = 1143D2E0AE784182EF798C939D555090 /* FourRecognize.mlmodelc */; };
 		396016C6F95C369771E8FB3118CF7558 /* PostDetectionAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF7627E78A554D1E08C1FF0495240A2 /* PostDetectionAlgorithm.swift */; };
 		39BDA49CE2B8E6F3C780EFB11B63ABA6 /* ScanConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC80A89300673E7578098BEDD1C8DEED /* ScanConfiguration.swift */; };
+		3B92A524245ADECD00478A1D /* CreditCardOcrPrediction+expiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B92A523245ADECD00478A1D /* CreditCardOcrPrediction+expiry.swift */; };
 		3D8CC5D22140253BEADE8B816EB1E60F /* ScanStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D900510BE6810CE1EDCDDD5C2D457FAF /* ScanStats.swift */; };
 		406EBD73EFB0CA43A61401BCB277754F /* VideoFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4135017C3E8AF146C3C293BF63BCDE1 /* VideoFeed.swift */; };
 		434FB5096E8A2464998E039378C4F5E2 /* ErrorCorrection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ADE54BDB7FD3110A694BF44EABA3A9 /* ErrorCorrection.swift */; };
@@ -245,6 +246,7 @@
 		321A06F85EF541A27AF6255C358C2461 /* NonNameWords.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NonNameWords.swift; sourceTree = "<group>"; };
 		35D3C13710AE219F8E61724B2AA55D0D /* RecognizeNumbers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RecognizeNumbers.swift; path = CardScan/Classes/RecognizeNumbers.swift; sourceTree = "<group>"; };
 		37D314FA58B718C8D1E4397DF28D3E92 /* Pods_CardScan_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CardScan_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B92A523245ADECD00478A1D /* CreditCardOcrPrediction+expiry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreditCardOcrPrediction+expiry.swift"; sourceTree = "<group>"; };
 		3D35131A96E752647BF65122EC5F3224 /* BlurView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BlurView.swift; path = CardScan/Classes/BlurView.swift; sourceTree = "<group>"; };
 		3F08E0F9D8B225015E5F2BFE5EC7D035 /* Pods-CardScan_ExampleTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CardScan_ExampleTests-dummy.m"; sourceTree = "<group>"; };
 		3F85EE03FFB19EA9973F7FF89BE878E9 /* FindFourOcr.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FindFourOcr.swift; path = CardScan/Classes/FindFourOcr.swift; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				12ECBC208D0C54F59703CFFC12DE448B /* Image+utils.swift */,
+				3B92A523245ADECD00478A1D /* CreditCardOcrPrediction+expiry.swift */,
 			);
 			name = Extensions;
 			path = CardScan/Classes/Extensions;
@@ -1126,6 +1129,7 @@
 				29958B3BC6CB901BB21C92E795C68BBD /* PriorsGen.swift in Sources */,
 				45A6593C0F9B20B5EDAD4DF4031B7621 /* RecognizedDigits.swift in Sources */,
 				74ADC6D2003410ADE60738AA16A48545 /* RecognizeNumbers.swift in Sources */,
+				3B92A524245ADECD00478A1D /* CreditCardOcrPrediction+expiry.swift in Sources */,
 				05E4154661BAEECFFD71878A45FD054B /* ScanBaseViewController.swift in Sources */,
 				39BDA49CE2B8E6F3C780EFB11B63ABA6 /* ScanConfiguration.swift in Sources */,
 				AB3DA8D817AEFAC5C16E23ACADEE8B17 /* ScanEventsProtocol.swift in Sources */,
