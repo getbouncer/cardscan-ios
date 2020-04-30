@@ -2,7 +2,6 @@ import UIKit
 import AVKit
 import Vision
 /**
- - make sure that testing still works
  - make sure that verify still works
  - make sure that demo app still works
  - make sure that our test app for capturing data still works
