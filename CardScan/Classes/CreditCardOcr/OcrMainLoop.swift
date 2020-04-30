@@ -38,7 +38,12 @@ protocol OcrMainLoopDelegate: class {
     func shouldUsePrediction(errorCorrectedNumber: String?, prediction: CreditCardOcrPrediction) -> Bool
 }
 
-class OcrMainLoop {
+public protocol MachineLearningLoop: class {
+    func push(fullImage: CGImage, roiRectangle: CGRect)
+    func blockingPush(fullImage: CGImage, roiRectangle: CGRect) -> MachineLearningResult?
+}
+
+class OcrMainLoop : MachineLearningLoop {
     enum AnalyzerType {
         case apple
         case legacy
@@ -189,7 +194,7 @@ class OcrMainLoop {
      Note: This function is _not_ thread safe, but the rest of the class is. However, we expect this to only get used
      during testing.
      */
-    func blockingOcr(fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrResult? {
+    func blockingPush(fullImage: CGImage, roiRectangle: CGRect) -> MachineLearningResult? {
         var result: CreditCardOcrResult?
         let semaphore = DispatchSemaphore(value: 0)
         mutexQueue.sync {

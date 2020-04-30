@@ -8,17 +8,22 @@
 
 import Foundation
 
-struct CreditCardOcrResult {
+class CreditCardOcrResult: MachineLearningResult {
     let mostRecentPrediction: CreditCardOcrPrediction
     let number: String
     let expiry: String?
     let name: String?
     let isFinished: Bool
-    let duration: Double
-    let frames: Int
-    var framePerSecond: Double {
-        return Double(frames) / duration
+    
+    init(mostRecentPrediction: CreditCardOcrPrediction, number: String, expiry: String?, name: String?, isFinished: Bool, duration: Double, frames: Int) {
+        self.mostRecentPrediction = mostRecentPrediction
+        self.number = number
+        self.expiry = expiry
+        self.name = name
+        self.isFinished = isFinished
+        super.init(duration: duration, frames: frames)
     }
+    
     var expiryMonth: String? {
         return expiry.flatMap { $0.split(separator: "/").first.map { String($0) }}
     }

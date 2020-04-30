@@ -2,7 +2,7 @@ import UIKit
 import AVKit
 import Vision
 /**
- - make sure that verify still works
+ - Make sure that scanId still works
  - make sure that demo app still works
  - make sure that our test app for capturing data still works
  */
@@ -38,7 +38,11 @@ public protocol TestingImageDataSource: AnyObject {
     private let regionCornerRadius = CGFloat(10.0)
     private var calledOnScannedCard = false
     
-    private var mainLoop = OcrMainLoop()
+    public var mainLoop: MachineLearningLoop? = OcrMainLoop()
+    private func ocrMainLoop() -> OcrMainLoop? {
+        return mainLoop as? OcrMainLoop
+    }
+    
     // this is a hack to avoid changing our public interface
     var predictedName: String?
     
@@ -50,7 +54,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     //MARK: -Torch Logic
     public func toggleTorch() {
-        self.mainLoop.scanStats.torchOn = !self.mainLoop.scanStats.torchOn
+        self.ocrMainLoop()?.scanStats.torchOn = !(self.ocrMainLoop()?.scanStats.torchOn ?? false)
         self.videoFeed.toggleTorch()
     }
     
@@ -152,8 +156,11 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     public func cancelScan() {
-        mainLoop.userCancelled()
-        Api.scanStats(scanStats: self.mainLoop.scanStats, completion: {_, _ in })
+        guard let ocrMainLoop = ocrMainLoop()  else {
+            return
+        }
+        ocrMainLoop.userCancelled()
+        Api.scanStats(scanStats: ocrMainLoop.scanStats, completion: {_, _ in })
     }
      
     func setupMask() {
@@ -170,7 +177,7 @@ public protocol TestingImageDataSource: AnyObject {
     }
 
     func permissionDidComplete(granted: Bool, showedPrompt: Bool) {
-        self.mainLoop.scanStats.permissionGranted = granted
+        self.ocrMainLoop()?.scanStats.permissionGranted = granted
         if !granted {
             self.onCameraPermissionDenied(showedPrompt: showedPrompt)
         }
@@ -196,7 +203,7 @@ public protocol TestingImageDataSource: AnyObject {
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
   
-        self.mainLoop.mainLoopDelegate = self
+        self.ocrMainLoop()?.mainLoopDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
         self.videoFeed.pauseSession()
@@ -228,7 +235,7 @@ public protocol TestingImageDataSource: AnyObject {
         super.viewWillAppear(animated)
         UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
         ScanBaseViewController.isAppearing = true
-        self.mainLoop.reset()
+        self.ocrMainLoop()?.reset()
         self.calledOnScannedCard = false
         self.videoFeed.willAppear()
         self.isNavigationBarHidden = self.navigationController?.isNavigationBarHidden ?? true
@@ -246,7 +253,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.mainLoop.scanStats.orientation = UIWindow.interfaceOrientationToString
+        self.ocrMainLoop()?.scanStats.orientation = UIWindow.interfaceOrientationToString
     }
     
     override open func viewWillDisappear(_ animated: Bool) {
@@ -264,7 +271,7 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     public func getScanStats() -> ScanStats {
-        return self.mainLoop.scanStats
+        return self.ocrMainLoop()?.scanStats ?? ScanStats()
     }
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -303,10 +310,10 @@ public protocol TestingImageDataSource: AnyObject {
         // for use in testing
         if let dataSource = self.testingImageDataSource {
             let (_, fullImage) = dataSource.nextSquareAndFullImage() ?? (nil, fullCardImage)
-            let _ = mainLoop.blockingOcr(fullImage: fullImage, roiRectangle: roiRectInPixels)
+            let _ = mainLoop?.blockingPush(fullImage: fullImage, roiRectangle: roiRectInPixels)
         } else {
             if #available(iOS 11.2, *) {
-                mainLoop.push(fullImage: fullCardImage, roiRectangle: roiRectInPixels)
+                mainLoop?.push(fullImage: fullCardImage, roiRectangle: roiRectInPixels)
             }
         }
     }
@@ -320,17 +327,16 @@ public protocol TestingImageDataSource: AnyObject {
     
     // MARK: -OcrMainLoopComplete logic
     func complete(creditCardOcrResult: CreditCardOcrResult) {
-        self.dismiss(animated: true)
-        mainLoop.mainLoopDelegate = nil
+        ocrMainLoop()?.mainLoopDelegate = nil
         ScanBaseViewController.machineLearningQueue.async {
-            self.scanEventsDelegate?.onScanComplete(scanStats: self.mainLoop.scanStats)
+            self.scanEventsDelegate?.onScanComplete(scanStats: self.getScanStats())
         }
         
         // hack to work around having to change our public interface
         predictedName = creditCardOcrResult.name
 
         // fire and forget
-        Api.scanStats(scanStats: self.mainLoop.scanStats, completion: {_, _ in })
+        Api.scanStats(scanStats: self.getScanStats(), completion: {_, _ in })
         self.onScannedCard(number: creditCardOcrResult.number, expiryYear: creditCardOcrResult.expiryYear, expiryMonth: creditCardOcrResult.expiryMonth, scannedImage: scannedCardImage)
     }
     
