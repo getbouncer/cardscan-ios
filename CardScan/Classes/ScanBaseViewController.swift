@@ -40,7 +40,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     public var mainLoop: MachineLearningLoop? = OcrMainLoop()
     private func ocrMainLoop() -> OcrMainLoop? {
-        return mainLoop as? OcrMainLoop
+        return mainLoop.flatMap { $0 as? OcrMainLoop }
     }
     
     // this is a hack to avoid changing our public interface
