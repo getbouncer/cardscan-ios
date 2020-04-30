@@ -74,7 +74,7 @@ class CreditCardOcrImplementation {
         return fullCardImage.cropping(to: cropRect)
     }
     
-    func squareCardImage(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
+    static func squareCardImage(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
         let width = CGFloat(fullCardImage.width)
         let height = width
         let centerY = (roiRectangle.maxY + roiRectangle.minY) * 0.5

@@ -3,32 +3,17 @@ import AVKit
 import VideoToolbox
 import Vision
 /**
- (2) connect scan events
  (3) scan stats
- (4) image capture
+ (4) should use number stuff
  (5) make sure that testing still works
  (6) pull out unused stuff
- (7) Debug view
  */
 
 public protocol TestingImageDataSource: AnyObject {
     func nextSquareAndFullImage() -> (CGImage, CGImage)?
 }
 
-@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ScanEvents, AfterPermissions, OcrMainLoopDelegate {
-    
-    public func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
-        self.scanEventsDelegate?.onFrameDetected(croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
-    }
-    
-    public func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
-        self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBoundingBox, expiryBoundingBox: expiryBoundingBox, croppedCardSize: croppedCardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
-    }
-    
-    public func onScanComplete(scanStats: ScanStats) {
-        // this shouldn't get called
-    }
-    
+@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AfterPermissions, OcrMainLoopDelegate {
     
     public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
@@ -219,12 +204,6 @@ public protocol TestingImageDataSource: AnyObject {
         regionOfInterestLabel.layer.borderWidth = 2.0
   
         self.mainLoop.mainLoopDelegate = self
-
-        // we split the implementation between OCR, which calls `onNumberRecognized`
-        // and ScanBaseViewController, which calls `onScanComplete`. We register ourselves
-        // as a delegate so that we can keep a single copy of the delegate object.
-        print("scan event delegate missing")
-        //self.ocr.scanEventsDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
         self.videoFeed.pauseSession()
@@ -302,79 +281,6 @@ public protocol TestingImageDataSource: AnyObject {
             }
         }
     }
-    
-    func toCardImage(squareCardImage: CGImage) -> CGImage {
-        let height = CGFloat(squareCardImage.width) * 302.0 / 480.0
-        let dh = (CGFloat(squareCardImage.height) - height) * 0.5
-        let cardRect = CGRect(x: 0.0, y: dh, width: CGFloat(squareCardImage.width), height: height)
-        
-        return squareCardImage.cropping(to: cardRect) ?? squareCardImage
-    }
-    
-    func toSquareCardImage(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
-        let width = CGFloat(fullCardImage.width)
-        let height = width
-        let centerY = (roiRectangle.maxY + roiRectangle.minY) * 0.5
-        let cropRectangle = CGRect(x: 0.0, y: centerY - height * 0.5,
-                                   width: width, height: height)
-        return fullCardImage.cropping(to: cropRectangle)
-    }
-    
-    /*
-    @available(iOS 11.2, *)
-    open func blockingMlModel(fullCardImage: CGImage, roiRectangle: CGRect) {
-        guard let squareCardImage = toSquareCardImage(fullCardImage: fullCardImage, roiRectangle: roiRectangle) else { return }
-        let croppedCardImage = toCardImage(squareCardImage: squareCardImage)
-        
-        let (number, expiry, done, foundNumberInThisScan) = ocr.performWithErrorCorrection(for: croppedCardImage, squareCardImage: squareCardImage, fullCardImage: fullCardImage, useCurrentFrameNumber: self.useCurrentFrameNumber(errorCorrectedNumber:currentFrameNumber:))
-        
-        if let number = number {
-            self.showCardNumber(number, expiry: expiry?.display())
-            if self.includeCardImage && foundNumberInThisScan {
-                self.scannedCardImage = UIImage(cgImage: croppedCardImage)
-            }
-        }
-        
-        if self.showDebugImageView {
-            let flatBoxes = self.ocr.scanStats.lastFlatBoxes ?? []
-            let embossedBoxes = self.ocr.scanStats.lastEmbossedBoxes ?? []
-            let expiryBoxes = self.ocr.scanStats.expiryBoxes ?? []
-            
-            DispatchQueue.main.async {
-                if self.debugImageView?.isHidden ?? false {
-                    self.debugImageView?.isHidden = false
-                }
-                
-                self.debugImageView?.image = self.drawBoundingBoxesOnImage(image: UIImage(cgImage: croppedCardImage), embossedCharacterBoxes: embossedBoxes, characterBoxes: flatBoxes, appleBoxes: expiryBoxes)
-            }
-        }
-        
-        if done {
-            DispatchQueue.main.async {
-                guard let number = number else {
-                    return
-                }
-                
-                if self.calledOnScannedCard {
-                    return
-                }
-                self.calledOnScannedCard = true
-                
-                ScanBaseViewController.machineLearningQueue.async {
-                    // Note: the onNumberRecognized method is called on Ocr
-                    self.scanEventsDelegate?.onScanComplete(scanStats: self.ocr.scanStats)
-                }
-                
-                let expiryMonth = expiry.map { String($0.month) }
-                let expiryYear = expiry.map { String($0.year) }
-                let image = self.scannedCardImage
-                
-                // fire and forget
-                Api.scanStats(scanStats: self.ocr.scanStats, completion: {_, _ in })
-                self.onScannedCard(number: number, expiryYear: expiryYear, expiryMonth: expiryMonth, scannedImage: image)
-            }
-        }
-    }*/
     
     func captureOutputWork(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
@@ -501,9 +407,7 @@ public protocol TestingImageDataSource: AnyObject {
         self.dismiss(animated: true)
         mainLoop.mainLoopDelegate = nil
         ScanBaseViewController.machineLearningQueue.async {
-            // Note: the onNumberRecognized method is called on Ocr
-            print("scanEventsDelegate")
-            //self.scanEventsDelegate?.onScanComplete(scanStats: self.ocr.scanStats)
+            self.scanEventsDelegate?.onScanComplete(scanStats: self.mainLoop.scanStats)
         }
         
         let expiryMonth = creditCardOcrResult.expiryMonth
@@ -518,7 +422,7 @@ public protocol TestingImageDataSource: AnyObject {
         self.onScannedCard(number: number, expiryYear: expiryYear, expiryMonth: expiryMonth, scannedImage: image)
     }
     
-    func prediction(creditCardOcrPrediction: CreditCardOcrPrediction) {
+    func prediction(creditCardOcrPrediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
         if self.showDebugImageView {
             let numberBoxes = creditCardOcrPrediction.numberBoxes.map { $0.map { (UIColor.blue, $0) }} ?? []
             let expiryBoxes = creditCardOcrPrediction.expiryBoxes.map { $0.map { (UIColor.red, $0) }} ?? []
@@ -529,6 +433,37 @@ public protocol TestingImageDataSource: AnyObject {
             }
                 
             self.debugImageView?.image = creditCardOcrPrediction.image.drawBoundingBoxesOnImage(boxes: numberBoxes + expiryBoxes + nameBoxes)
+        }
+        if creditCardOcrPrediction.number != nil && self.includeCardImage {
+            self.scannedCardImage = UIImage(cgImage: creditCardOcrPrediction.image)
+        }
+        
+        let cardSize = CGSize(width: creditCardOcrPrediction.image.width, height: creditCardOcrPrediction.image.height)
+        if let number = creditCardOcrPrediction.number {
+            let expiry: Expiry? = {
+                if let month = creditCardOcrPrediction.expiryMonth.flatMap({ UInt($0) }),
+                    let year = creditCardOcrPrediction.expiryYear.flatMap({ UInt($0) }),
+                    let expiryString = creditCardOcrPrediction.expiryForDisplay {
+                    return Expiry(string: expiryString, month: month, year: year)
+                } else {
+                    return nil
+                }
+            }()
+            let xmin = creditCardOcrPrediction.numberBoxes?.map { $0.minX }.min() ?? 0.0
+            let xmax = creditCardOcrPrediction.numberBoxes?.map { $0.maxX }.max() ?? 0.0
+            let ymin = creditCardOcrPrediction.numberBoxes?.map { $0.minY }.min() ?? 0.0
+            let ymax = creditCardOcrPrediction.numberBoxes?.map { $0.maxY }.max() ?? 0.0
+            let numberBox = CGRect(x: xmin, y: ymin, width: (xmax - xmin), height: (ymax - ymin))
+            let expiryBox = creditCardOcrPrediction.expiryBoxes.flatMap { $0.first }
+            
+            ScanBaseViewController.machineLearningQueue.async {
+                self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBox, expiryBoundingBox: expiryBox, croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+            }
+
+        } else {
+            ScanBaseViewController.machineLearningQueue.async {
+                self.scanEventsDelegate?.onFrameDetected(croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
+            }
         }
     }
     

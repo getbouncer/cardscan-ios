@@ -42,7 +42,7 @@ import UIKit
 
 protocol OcrMainLoopDelegate: class {
     func complete(creditCardOcrResult: CreditCardOcrResult)
-    func prediction(creditCardOcrPrediction: CreditCardOcrPrediction)
+    func prediction(creditCardOcrPrediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage)
     func showCardDetails(number: String?, expiry: String?, name: String?)
 }
 
@@ -160,7 +160,8 @@ class OcrMainLoop {
                 guard let self = self else { return }
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.mainLoopDelegate?.prediction(creditCardOcrPrediction: prediction)
+                    guard let squareCardImage = CreditCardOcrImplementation.squareCardImage(fullCardImage: image, roiRectangle: roi) else { return }
+                    self.mainLoopDelegate?.prediction(creditCardOcrPrediction: prediction, squareCardImage: squareCardImage, fullCardImage: image)
                 }
                 guard let result = self.combine(prediction: prediction), result.isFinished else {
                     self.postAnalyzerToQueueAndRun(ocr: ocr)
@@ -204,7 +205,6 @@ class OcrMainLoop {
     //   * The willResignActive function blocks the transition to the background until
     //     it completes, which we couldn't find docs on but verified experimentally
     @objc func willResignActive() {
-        print("clean up ML, entering background")
         inBackground = true
         // this makes sure that any currently running predictions finish before we
         // let the app go into the background
@@ -216,7 +216,6 @@ class OcrMainLoop {
     }
     
     @objc func didBecomeActive() {
-        print("leaving background, fire up queues again")
         inBackground = false
         for queue in machineLearningQueues {
             queue.resume()
@@ -225,13 +224,11 @@ class OcrMainLoop {
     
     // Only call this function from the machineLearningQueue
     func registerAppNotifications() {
-        print("registerAppNotifications")
         NotificationCenter.default.addObserver(self, selector: #selector(self.willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     func unregisterAppNotifications() {
-        print("unregisterAppNotifications")
         NotificationCenter.default.removeObserver(self)
     }
 }

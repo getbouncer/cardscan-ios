@@ -11,7 +11,7 @@ import UIKit
 class LegacyCreditCardOcr: CreditCardOcrImplementation {
     override func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
         guard let image = croppedImageWithFullWidth(fullCardImage: fullImage, roiRectangle: roiRectangle),
-            let squareImage = squareCardImage(fullCardImage: fullImage, roiRectangle: roiRectangle) else {
+            let squareImage = CreditCardOcrImplementation.squareCardImage(fullCardImage: fullImage, roiRectangle: roiRectangle) else {
                 return CreditCardOcrPrediction.emptyPrediction(cgImage: fullImage)
         }
                 
