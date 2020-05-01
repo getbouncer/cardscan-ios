@@ -43,8 +43,8 @@ public protocol MachineLearningLoop: class {
     func blockingPush(fullImage: CGImage, roiRectangle: CGRect) -> MachineLearningResult?
 }
 
-class OcrMainLoop : MachineLearningLoop {
-    enum AnalyzerType {
+public class OcrMainLoop : MachineLearningLoop {
+    public enum AnalyzerType {
         case apple
         case legacy
     }
@@ -60,7 +60,7 @@ class OcrMainLoop : MachineLearningLoop {
     var machineLearningQueues: [DispatchQueue] = []
     var blockingSemaphore: DispatchSemaphore?
     
-    init(analyzers: [AnalyzerType] = [.legacy, .apple]) {
+    public init(analyzers: [AnalyzerType] = [.legacy, .apple]) {
         scanStats.model = "legacy+apple"
         machineLearningQueues = []
         for analyzer in analyzers {
@@ -107,7 +107,7 @@ class OcrMainLoop : MachineLearningLoop {
         scanStats.endTime = Date()
     }
     
-    func push(fullImage: CGImage, roiRectangle: CGRect) {
+    public func push(fullImage: CGImage, roiRectangle: CGRect) {
         mutexQueue.sync {
             guard !inBackground else { return }
             // only keep the latest images
@@ -194,7 +194,7 @@ class OcrMainLoop : MachineLearningLoop {
      Note: This function is _not_ thread safe, but the rest of the class is. However, we expect this to only get used
      during testing.
      */
-    func blockingPush(fullImage: CGImage, roiRectangle: CGRect) -> MachineLearningResult? {
+    public func blockingPush(fullImage: CGImage, roiRectangle: CGRect) -> MachineLearningResult? {
         var result: CreditCardOcrResult?
         let semaphore = DispatchSemaphore(value: 0)
         mutexQueue.sync {
