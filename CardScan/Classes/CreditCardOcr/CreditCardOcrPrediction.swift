@@ -7,7 +7,7 @@
 //
 import Foundation
 
-struct CreditCardOcrPrediction {
+public struct CreditCardOcrPrediction {
     let image: CGImage
     let number: String?
     let expiryMonth: String?

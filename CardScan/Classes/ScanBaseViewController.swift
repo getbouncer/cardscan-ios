@@ -321,7 +321,7 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     // MARK: -OcrMainLoopComplete logic
-    func complete(creditCardOcrResult: CreditCardOcrResult) {
+    public func complete(creditCardOcrResult: CreditCardOcrResult) {
         ocrMainLoop()?.mainLoopDelegate = nil
         ScanBaseViewController.machineLearningQueue.async {
             self.scanEventsDelegate?.onScanComplete(scanStats: self.getScanStats())
@@ -335,7 +335,7 @@ public protocol TestingImageDataSource: AnyObject {
         self.onScannedCard(number: creditCardOcrResult.number, expiryYear: creditCardOcrResult.expiryYear, expiryMonth: creditCardOcrResult.expiryMonth, scannedImage: scannedCardImage)
     }
     
-    func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
+    public func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
         if self.showDebugImageView {
             let numberBoxes = prediction.numberBoxes?.map { (UIColor.blue, $0) } ?? []
             let expiryBoxes = prediction.expiryBoxes?.map { (UIColor.red, $0) } ?? []
@@ -366,12 +366,12 @@ public protocol TestingImageDataSource: AnyObject {
         }
     }
     
-    func showCardDetails(number: String?, expiry: String?, name: String?) {
+    public func showCardDetails(number: String?, expiry: String?, name: String?) {
         guard let number = number else { return }
         showCardNumber(number, expiry: expiry)
     }
     
-    func shouldUsePrediction(errorCorrectedNumber: String?, prediction: CreditCardOcrPrediction) -> Bool {
+    public func shouldUsePrediction(errorCorrectedNumber: String?, prediction: CreditCardOcrPrediction) -> Bool {
         guard let predictedNumber = prediction.number else { return true }
         return useCurrentFrameNumber(errorCorrectedNumber: errorCorrectedNumber, currentFrameNumber: predictedNumber)
     }

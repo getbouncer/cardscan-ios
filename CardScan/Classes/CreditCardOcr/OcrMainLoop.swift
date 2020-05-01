@@ -31,7 +31,7 @@
 
 import UIKit
 
-protocol OcrMainLoopDelegate: class {
+public protocol OcrMainLoopDelegate: class {
     func complete(creditCardOcrResult: CreditCardOcrResult)
     func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage)
     func showCardDetails(number: String?, expiry: String?, name: String?)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CreditCardOcrResult: MachineLearningResult {
+public class CreditCardOcrResult: MachineLearningResult {
     let mostRecentPrediction: CreditCardOcrPrediction
     let number: String
     let expiry: String?
