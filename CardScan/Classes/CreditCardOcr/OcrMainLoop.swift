@@ -51,7 +51,7 @@ public class OcrMainLoop : MachineLearningLoop {
     
     var scanStats = ScanStats()
     
-    weak var mainLoopDelegate: OcrMainLoopDelegate?
+    public weak var mainLoopDelegate: OcrMainLoopDelegate?
     var errorCorrection = ErrorCorrection()
     var imageQueue: [(CGImage, CGRect)] = []
     var analyzerQueue: [CreditCardOcrImplementation] = []
