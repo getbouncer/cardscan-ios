@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -225,13 +225,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89z-WF-akV">
+                                <rect key="frame" x="16" y="474" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="89z-WF-akV" firstAttribute="top" secondItem="wuH-z7-S5E" secondAttribute="bottom" constant="8" id="2cq-jw-uf7"/>
                             <constraint firstItem="hGU-AQ-XEE" firstAttribute="top" secondItem="xXx-1S-0Fk" secondAttribute="bottom" constant="8" id="2yu-LX-d3O"/>
                             <constraint firstItem="ci9-Th-M77" firstAttribute="trailing" secondItem="w7i-ie-yVr" secondAttribute="trailingMargin" id="3jq-Jm-Zrg"/>
+                            <constraint firstItem="89z-WF-akV" firstAttribute="trailing" secondItem="w7i-ie-yVr" secondAttribute="trailingMargin" id="OL7-Ay-Nzz"/>
                             <constraint firstItem="aU5-W8-fum" firstAttribute="top" secondItem="Dpc-u0-9nd" secondAttribute="bottom" constant="8" id="OfT-62-U7S"/>
                             <constraint firstItem="7Cr-oD-9K4" firstAttribute="leading" secondItem="w7i-ie-yVr" secondAttribute="leadingMargin" id="R7L-gg-VxX"/>
+                            <constraint firstItem="89z-WF-akV" firstAttribute="leading" secondItem="w7i-ie-yVr" secondAttribute="leadingMargin" id="SRZ-l7-gd5"/>
                             <constraint firstItem="wuH-z7-S5E" firstAttribute="trailing" secondItem="w7i-ie-yVr" secondAttribute="trailingMargin" id="TRc-6G-Rdn"/>
                             <constraint firstItem="Dpc-u0-9nd" firstAttribute="top" secondItem="hGU-AQ-XEE" secondAttribute="bottom" constant="8" id="UiL-ZP-vDM"/>
                             <constraint firstAttribute="trailing" secondItem="hGU-AQ-XEE" secondAttribute="trailing" constant="8" id="a89-ZR-khs"/>
@@ -251,6 +260,7 @@
                         <outlet property="bin0" destination="Dpc-u0-9nd" id="jH7-ua-kfh"/>
                         <outlet property="expirationLabel" destination="wuH-z7-S5E" id="nvM-8j-rAP"/>
                         <outlet property="last0" destination="aU5-W8-fum" id="Enj-Nu-986"/>
+                        <outlet property="nameLabel" destination="89z-WF-akV" id="KmT-o6-O90"/>
                         <outlet property="numberLabel" destination="7Cr-oD-9K4" id="0eQ-EL-bBK"/>
                     </connections>
                 </viewController>

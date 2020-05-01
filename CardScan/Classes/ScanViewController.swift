@@ -41,10 +41,6 @@ import UIKit
     @objc func denyPermissionButton() -> String
 }
 
-public protocol MainLoopDelegate: class {
-    func shouldRunBaseMainLoop(fullCardImage: CGImage, roiRectangle: CGRect, scanViewController: ScanViewController) -> Bool
-}
-
 @objc public class CreditCard: NSObject {
     @objc public var number: String
     @objc public var expiryMonth: String?
@@ -93,8 +89,6 @@ public protocol MainLoopDelegate: class {
     @objc public var allowSkip = false
     public var torchLevel: Float? 
     public var scanQrCode = false
-    public weak var mainLoopDelegate: MainLoopDelegate?
-    public var strongMainLoopDelegate: MainLoopDelegate?
     @objc public var hideBackButtonImage = false
     @IBOutlet weak var backButtonImageToTextConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButtonWidthConstraint: NSLayoutConstraint!
@@ -349,6 +343,8 @@ public protocol MainLoopDelegate: class {
         card.expiryMonth = expiryMonth
         card.expiryYear = expiryYear
         card.image = scannedImage
+        // This is a hack to work around having to change our public interface
+        card.name = predictedName
 
         self.scanDelegate?.userDidScanCard(self, creditCard: card)
     }
@@ -356,20 +352,6 @@ public protocol MainLoopDelegate: class {
     
     @IBAction func toggleTorch(_ sender: Any) {
         self.toggleTorch()
-    }
-    
-    // MARK: main loop
-    @available(iOS 11.2, *)
-    override public func blockingMlModel(fullCardImage: CGImage, roiRectangle: CGRect) {
-        guard mainLoopDelegate?.shouldRunBaseMainLoop(fullCardImage: fullCardImage, roiRectangle: roiRectangle, scanViewController: self) ?? true else {
-            return
-        }
-        
-        guard strongMainLoopDelegate?.shouldRunBaseMainLoop(fullCardImage: fullCardImage, roiRectangle: roiRectangle, scanViewController: self) ?? true else {
-            return
-        }
-        
-        super.blockingMlModel(fullCardImage: fullCardImage, roiRectangle: roiRectangle)
     }
 }
 

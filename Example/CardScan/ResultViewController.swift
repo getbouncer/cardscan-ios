@@ -17,10 +17,12 @@ class ResultViewController: UIViewController {
     @IBOutlet weak var expirationLabel: UILabel!
     @IBOutlet weak var bin0: UIImageView!
     @IBOutlet weak var last0: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
     
     var scanStats: ScanStats?
     var number: String?
     var expiration: String?
+    var name: String?
     var cardImage: UIImage?
     
     override func viewDidLoad() {
@@ -32,6 +34,7 @@ class ResultViewController: UIViewController {
       
         self.numberLabel.text = format(number: self.number ?? "")
         self.expirationLabel.text = expiration ?? ""
+        self.nameLabel.text = name ?? ""
     }
     
     func format(number: String) -> String {
