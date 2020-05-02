@@ -1,32 +1,68 @@
-//
-//  OcrMainLoop.swift
-//  ocr-playground-ios
-//
-//  Created by Sam King on 3/20/20.
-//  Copyright © 2020 Sam King. All rights reserved.
-//
-
 /**
-    This is the main loop for OCR. It runs one of our OCR systems in paralell with the Apple OCR system and
-    combines results. From a high level this implements a standard producer-consumer where the main
-    system will push images and ROI rectangles into the main loop and two Analyzers, or OCR systems
-    will consume the images.
+ This is the main loop for OCR. It runs one of our OCR systems in paralell with the Apple OCR system and
+ combines results. From a high level this implements a standard producer-consumer where the main
+ system will push images and ROI rectangles into the main loop and two Analyzers, or OCR systems
+ will consume the images.
+
+ The producer, which pushes images will keep N (2 currently) images in the queue and when a new image
+ comes in it will remove old images leaving the N most recent images. That way we can try to get more
+ diversity in images by virtue of maximizing the time in between images that it reads.
+
+ The consumers pull images from the queue and run the full OCR algorithm, including expiry extraction and
+ full error correction on the combined results.
+
+ In terms of iOS abstractions, we make heavy use of dispatch queues. We have a single `mutexQueue`
+ that we use to mutate our shared state. This queue is a serial queue and our method for synchronizing
+ access. One thing to be careful with is we use `sync` in places to access our `mutexQueue`. This
+ method can lead to deadlock if you aren't careful.
+
+ We also have `machineLearningQueues` that we use to run each individual OCR algorithm.
+ One important aspect of our `machineLearningQueues` is that we monitor when the app goes into
+ the background and kill all ML before letting the app go into the background.
+
+ # Correcness criteria
+ We make heavy use of dispatch queues for paralellism, so it's important to be disciplined about how
+ we access shared state
+
+ ## Shared state
+ All shared state updates need to happeon on the `mutexQueue`
+
+ ## Delegate invocation
+ All invocations of delegate methods need to happen on the main queue, and for each prediction there
+ are one or more methods that may get called in order:
+ - `prediction` this happens on all predictions
+ - if the scan predicts a number, then `showCardDetails` happens with the current overall predicted number, expiry, and name
+ - if the scan is complete, then `complete` includes the final result
+
+ To finalize results, we clear out the `mainLoopDelegate` after it's done
+
+ It's important that we not update `scanStats` after complete is called or call any futher delegate functions, although
+ more predictions might come through after the fact
+
+ We also expose `shouldUsePrediction` that delegates can implement to discard a prediction, but note that the `prediction`
+ method still fires even when this returns false. Note: `shouldUsePrediction` is called from the `mutexQueue` so handlers
+ don't need to synchronize but they may need to handle any computation that needs to happen on the main loop appropriately.
  
-    The producer, which pushes images will keep N (2 currently) images in the queue and when a new image
-    comes in it will remove old images leaving the N most recent images. That way we can try to get more
-    diversity in images by virtue of maximizing the time in between images that it reads.
+ ## userCancelled
+ One aspect to be careful with when someone invokes the `userCancelled` method is that there could be a race with OCR and it
+ could complete OCR in parallel with this call. The net result we want is if a caller calls this method we don't subsequenty fire any of
+ the `OcrMainLoopDelegate` methods and we want to make sure that `scanStats.success` is always `false` to correctly
+ denote that this scan failed.
+  
+ To handle this correctly we:
+ - use the `userDidCancel` variable here and in any of our blocks that run on the main dispatch queue. Since this call should
+ come from the main dispatch queue, those calls, where we invoke the callback methods, will run after this one and we prevent firing
+ their delegate methods.
+ - the logic to set `scanStats.success` will come on the `muxtexQueue`, but could execute either before or after this block runs.
+    - If it's before then this block will overwrite the `success` results with the unsuccessful result here. If the
+    - If it runs after, there is a check and it sets `scanStats.success` iff it isn't already set
+ - we use `sync` on the `muxtexQueue` to make sure that when this method returns any subsequent calls to `scanStats` are
+ always `success = false`
  
-    The consumers pull images from the queue and run the full OCR algorithm, including expiry extraction and
-    full error correction on the combined results.
+ ## blockingPush
+ The `blockingPush` method is _not_ thread safe, so only call it from a single thread. However, if you're using blocking OCR then
+ you wouldn't call it from multiple threads. The standard `push` method and the rest of the code is thread safe.
  
-    In terms of iOS abstractions, we make heavy use of dispatch queues. We have a single `mutexQueue`
-    that we use to mutate our shared state. This queue is a serial queue and our method for synchronizing
-    access. One thing to be careful with is we use `sync` in places to access our `mutexQueue`. This
-    method can lead to deadlock if you aren't careful.
- 
-    We also have `machineLearningQueues` that we use to run each individual OCR algorithm.
-    One important aspect of our `machineLearningQueues` is that we monitor when the app goes into
-    the background and kill all ML before letting the app go into the background.
  */
 
 import UIKit
@@ -59,6 +95,7 @@ public class OcrMainLoop : MachineLearningLoop {
     var inBackground = false
     var machineLearningQueues: [DispatchQueue] = []
     var blockingSemaphore: DispatchSemaphore?
+    var userDidCancel = false
     
     public init(analyzers: [AnalyzerType] = [.legacy, .apple]) {
         scanStats.model = "legacy+apple"
@@ -102,9 +139,18 @@ public class OcrMainLoop : MachineLearningLoop {
         }
     }
     
+    // see the Correctness Criteria note in the comments above for why this is correct
+    // Make sure you call this from the main dispatch queue
     func userCancelled() {
-        scanStats.success = false
-        scanStats.endTime = Date()
+        userDidCancel = true
+        mutexQueue.sync { [weak self] in
+            guard let self = self else { return }
+            if self.scanStats.success == nil {
+                self.scanStats.success = false
+                self.scanStats.endTime = Date()
+                self.mainLoopDelegate = nil
+            }
+        }
     }
     
     public func push(fullImage: CGImage, roiRectangle: CGRect) {
@@ -163,10 +209,12 @@ public class OcrMainLoop : MachineLearningLoop {
                 guard let self = self else { return }
                 self.blockingSemaphore?.signal()
                 self.scanStats.scans += 1
+                let delegate = self.mainLoopDelegate
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
+                    guard !self.userDidCancel else { return }
                     guard let squareCardImage = CreditCardOcrImplementation.squareCardImage(fullCardImage: image, roiRectangle: roi) else { return }
-                    self.mainLoopDelegate?.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: image)
+                    delegate?.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: image)
                 }
                 guard let result = self.combine(prediction: prediction), result.isFinished else {
                     self.postAnalyzerToQueueAndRun(ocr: ocr)
@@ -179,12 +227,18 @@ public class OcrMainLoop : MachineLearningLoop {
     func combine(prediction: CreditCardOcrPrediction) -> CreditCardOcrResult? {
         guard mainLoopDelegate?.shouldUsePrediction(errorCorrectedNumber: errorCorrection.number, prediction: prediction) ?? true else { return nil }
         guard let result = errorCorrection.add(prediction: prediction) else { return nil }
+        let delegate = mainLoopDelegate
+        if result.isFinished && scanStats.success == nil {
+            scanStats.success = true
+            scanStats.endTime = Date()
+            mainLoopDelegate = nil
+        }
         DispatchQueue.main.async { [weak self] in
-            self?.mainLoopDelegate?.showCardDetails(number: result.number, expiry: result.expiry, name: result.name)
+            guard let self = self else { return }
+            guard !self.userDidCancel else { return }
+            delegate?.showCardDetails(number: result.number, expiry: result.expiry, name: result.name)
             if result.isFinished {
-                self?.scanStats.success = true
-                self?.scanStats.endTime = Date()
-                self?.mainLoopDelegate?.complete(creditCardOcrResult: result)
+                delegate?.complete(creditCardOcrResult: result)
             }
         }
         return result
