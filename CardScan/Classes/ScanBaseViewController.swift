@@ -25,6 +25,7 @@ public protocol TestingImageDataSource: AnyObject {
     private weak var blurView: BlurView?
     private weak var cornerView: CornerView?
     private var regionOfInterestLabelFrame: CGRect?
+    private var previewViewFrame: CGRect?
     
     var videoFeed = VideoFeed()
     
@@ -234,6 +235,8 @@ public protocol TestingImageDataSource: AnyObject {
         self.calledOnScannedCard = false
         self.videoFeed.willAppear()
         self.isNavigationBarHidden = self.navigationController?.isNavigationBarHidden ?? true
+        self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIWindow.interfaceOrientation.rawValue)
+        self.videoFeed.videoOrientation = AVCaptureVideoOrientation(rawValue: UIWindow.interfaceOrientation.rawValue)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
@@ -248,6 +251,9 @@ public protocol TestingImageDataSource: AnyObject {
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        guard let previewFrame = self.previewView?.frame else { return }
+        self.previewViewFrame = previewFrame
+
         self.ocrMainLoop()?.scanStats.orientation = UIWindow.interfaceOrientationToString
     }
     
@@ -279,13 +285,18 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     func captureOutputWork(sampleBuffer: CMSampleBuffer) {
+        guard let roiFrame = self.regionOfInterestLabelFrame, let previewFrame = self.previewViewFrame else {
+            print("could not get roi frame / preview view frame")
+            return
+        }
+        
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             print("could not get the pixel buffer, dropping frame")
             return
         }
         
 
-        guard let fullCardImage = pixelBuffer.cgImage() else {
+        guard let bufferImage = pixelBuffer.cgImage() else {
             print("could not get the cgImage from the pixel buffer")
             return
         }
@@ -295,9 +306,8 @@ public protocol TestingImageDataSource: AnyObject {
             assert(self.previewView?.videoPreviewLayer.videoGravity == .resizeAspectFill)
         }
         
-        guard let roiFrame = self.regionOfInterestLabelFrame,
-            let roiRectInPixels = fullCardImage.toRegionOfInterest(regionOfInterestLabelFrame: roiFrame) else {
-            print("could not get the cgImage from the region of interest, dropping frame")
+        guard let (fullCardImage, roiRectInPixels) = bufferImage.toFullScreenAndRoi(previewViewFrame: previewFrame, regionOfInterestLabelFrame: roiFrame) else {
+            print("could not get full card image / region of interest")
             return
         }
         
