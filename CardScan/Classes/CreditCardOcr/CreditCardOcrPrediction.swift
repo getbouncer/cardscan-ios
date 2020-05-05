@@ -8,33 +8,33 @@
 import Foundation
 
 public struct CreditCardOcrPrediction {
-    let image: CGImage
-    let number: String?
-    let expiryMonth: String?
-    let expiryYear: String?
-    let name: String?
-    let computationTime: Double
-    let numberBoxes: [CGRect]?
-    let expiryBoxes: [CGRect]?
-    let nameBoxes: [CGRect]?
+    public let image: CGImage
+    public let number: String?
+    public let expiryMonth: String?
+    public let expiryYear: String?
+    public let name: String?
+    public let computationTime: Double
+    public let numberBoxes: [CGRect]?
+    public let expiryBoxes: [CGRect]?
+    public let nameBoxes: [CGRect]?
     
     static func emptyPrediction(cgImage: CGImage) -> CreditCardOcrPrediction {
         CreditCardOcrPrediction(image: cgImage, number: nil, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
     }
     
-    var expiryForDisplay: String? {
+    public var expiryForDisplay: String? {
         guard let month = expiryMonth, let year = expiryYear else { return nil }
         return "\(month)/\(year)"
     }
     
-    var expiryAsUInt: (UInt, UInt)? {
+    public var expiryAsUInt: (UInt, UInt)? {
         guard let month = expiryMonth.flatMap({ UInt($0) }) else { return nil }
         guard let year = expiryYear.flatMap({ UInt($0) }) else { return nil }
         
         return (month, year)
     }
     
-    var numberBox: CGRect? {
+    public var numberBox: CGRect? {
         let xmin = numberBoxes?.map { $0.minX }.min() ?? 0.0
         let xmax = numberBoxes?.map { $0.maxX }.max() ?? 0.0
         let ymin = numberBoxes?.map { $0.minY }.min() ?? 0.0
@@ -42,7 +42,7 @@ public struct CreditCardOcrPrediction {
         return CGRect(x: xmin, y: ymin, width: (xmax - xmin), height: (ymax - ymin))
     }
     
-    var expiryBox: CGRect? {
+    public var expiryBox: CGRect? {
         return expiryBoxes.flatMap { $0.first }
     }
     
