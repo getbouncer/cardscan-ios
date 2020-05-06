@@ -38,7 +38,6 @@ class LandscapeViewController: UIViewController, ScanDelegate {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
             return
         }
-        vc.includeCardImage = true
         self.navigationController?.present(vc, animated: true, completion: nil)
     }
     
@@ -46,7 +45,6 @@ class LandscapeViewController: UIViewController, ScanDelegate {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
             return
         }
-        vc.includeCardImage = true
         vc.modalPresentationStyle = .formSheet
         self.navigationController?.present(vc, animated: true, completion: nil)
     }
