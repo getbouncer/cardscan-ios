@@ -25,6 +25,10 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
     var currentTestImages: [CGImage]?
     
     func nextSquareAndFullImage() -> (CGImage, CGImage)? {
+        if self.currentTestImages?.first == nil {
+            self.currentTestImages = self.testImages.compactMap { $0.cgImage }
+        }
+        
         guard let fullCardImage = self.currentTestImages?.first else {
             print("could not get full size test image")
             return nil

@@ -202,6 +202,10 @@ public protocol TestingImageDataSource: AnyObject {
         self.ocrMainLoop()?.mainLoopDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
+        if testingImageDataSource != nil {
+            self.ocrMainLoop()?.imageQueueSize = 20
+        }
+        
         self.videoFeed.pauseSession()
         //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
         self.videoFeed.setup(captureDelegate: self, completion: { success in
@@ -314,8 +318,10 @@ public protocol TestingImageDataSource: AnyObject {
         // we allow apps that integrate to supply their own sequence of images
         // for use in testing
         if let dataSource = self.testingImageDataSource {
-            let (_, fullImage) = dataSource.nextSquareAndFullImage() ?? (nil, fullCardImage)
-            let _ = mainLoop?.blockingPush(fullImage: fullImage, roiRectangle: roiRectInPixels)
+            guard let (_, fullImage) = dataSource.nextSquareAndFullImage() else {
+                return
+            }
+            mainLoop?.push(fullImage: fullImage, roiRectangle: roiRectInPixels)
         } else {
             if #available(iOS 11.2, *) {
                 mainLoop?.push(fullImage: fullCardImage, roiRectangle: roiRectInPixels)

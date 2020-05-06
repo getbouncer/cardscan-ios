@@ -58,11 +58,6 @@
     - If it runs after, there is a check and it sets `scanStats.success` iff it isn't already set
  - we use `sync` on the `muxtexQueue` to make sure that when this method returns any subsequent calls to `scanStats` are
  always `success = false`
- 
- ## blockingPush
- The `blockingPush` method is _not_ thread safe, so only call it from a single thread. However, if you're using blocking OCR then
- you wouldn't call it from multiple threads. The standard `push` method and the rest of the code is thread safe.
- 
  */
 
 import UIKit
@@ -76,7 +71,6 @@ public protocol OcrMainLoopDelegate: class {
 
 public protocol MachineLearningLoop: class {
     func push(fullImage: CGImage, roiRectangle: CGRect)
-    func blockingPush(fullImage: CGImage, roiRectangle: CGRect) -> MachineLearningResult?
 }
 
 public class OcrMainLoop : MachineLearningLoop {
@@ -85,16 +79,16 @@ public class OcrMainLoop : MachineLearningLoop {
         case legacy
     }
     
-    var scanStats = ScanStats()
+    public var scanStats = ScanStats()
     
     public weak var mainLoopDelegate: OcrMainLoopDelegate?
     var errorCorrection = ErrorCorrection()
     var imageQueue: [(CGImage, CGRect)] = []
+    public var imageQueueSize = 2
     var analyzerQueue: [CreditCardOcrImplementation] = []
     let mutexQueue = DispatchQueue(label: "OcrMainLoopMuxtex")
     var inBackground = false
     var machineLearningQueues: [DispatchQueue] = []
-    var blockingSemaphore: DispatchSemaphore?
     var userDidCancel = false
     
     public init(analyzers: [AnalyzerType] = [.legacy, .apple]) {
@@ -158,7 +152,7 @@ public class OcrMainLoop : MachineLearningLoop {
             guard !inBackground else { return }
             // only keep the latest images
             imageQueue.insert((fullImage, roiRectangle), at: 0)
-            while imageQueue.count > 2 {
+            while imageQueue.count > imageQueueSize {
                 let _ = imageQueue.popLast()
             }
             
@@ -207,7 +201,6 @@ public class OcrMainLoop : MachineLearningLoop {
             let prediction = ocr.recognizeCard(in: image, roiRectangle: roi)
             self?.mutexQueue.async {
                 guard let self = self else { return }
-                self.blockingSemaphore?.signal()
                 self.scanStats.scans += 1
                 let delegate = self.mainLoopDelegate
                 DispatchQueue.main.async { [weak self] in
@@ -241,27 +234,6 @@ public class OcrMainLoop : MachineLearningLoop {
                 delegate?.complete(creditCardOcrResult: result)
             }
         }
-        return result
-    }
-    
-    /**
-     Note: This function is _not_ thread safe, but the rest of the class is. However, we expect this to only get used
-     during testing.
-     */
-    public func blockingPush(fullImage: CGImage, roiRectangle: CGRect) -> MachineLearningResult? {
-        var result: CreditCardOcrResult?
-        let semaphore = DispatchSemaphore(value: 0)
-        mutexQueue.sync {
-            self.blockingSemaphore = semaphore
-        }
-        push(fullImage: fullImage, roiRectangle: roiRectangle)
-        
-        semaphore.wait()
-        mutexQueue.sync {
-            result = errorCorrection.result()
-            self.blockingSemaphore = nil
-        }
-        
         return result
     }
     
