@@ -183,7 +183,7 @@ import UIKit
         }
     }
     
-    func setStrings() {
+    public func setStrings() {
         guard let dataSource = self.stringDataSource else {
             return
         }
