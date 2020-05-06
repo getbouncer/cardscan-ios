@@ -244,6 +244,12 @@ public protocol TestingImageDataSource: AnyObject {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIWindow.interfaceOrientation.rawValue)
+        self.videoFeed.videoOrientation = AVCaptureVideoOrientation(rawValue: UIWindow.interfaceOrientation.rawValue)
+    }
+    
     override open func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard let roiFrame = self.regionOfInterestLabel?.frame else { return }
