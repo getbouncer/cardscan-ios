@@ -273,7 +273,7 @@ public protocol TestingImageDataSource: AnyObject {
         return self.ocrMainLoop()?.scanStats ?? ScanStats()
     }
     
-    public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    open func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if self.machineLearningSemaphore.wait(timeout: .now()) == .success {
             ScanBaseViewController.machineLearningQueue.async {
                 self.captureOutputWork(sampleBuffer: sampleBuffer)

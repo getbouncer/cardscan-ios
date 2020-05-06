@@ -82,7 +82,7 @@ import UIKit
     #endif
 }
 
-@objc public class ScanViewController: ScanBaseViewController {
+@objc open class ScanViewController: ScanBaseViewController {
     
     public weak var scanDelegate: ScanDelegate?
     @objc public weak var stringDataSource: ScanStringsDataSource?

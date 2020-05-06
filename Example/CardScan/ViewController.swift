@@ -5,9 +5,15 @@
 //  Created by Sam King on 10/15/2018.
 //  Copyright (c) 2018 Sam King. All rights reserved.
 //
-
+import AVFoundation
 import UIKit
 import CardScan
+
+class MyScanViewController: ScanViewController {
+    override open func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        super.captureOutput(output, didOutput: sampleBuffer, from: connection)
+    }
+}
 
 class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanStringsDataSource, TestingImageDataSource {
 
@@ -110,7 +116,7 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         self.present(vc, animated: true)
     }
     @IBAction func scanCardPress() {
-        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+        guard let vc = MyScanViewController.createViewController(withDelegate: self) else {
             print("scan view controller not supported on this hardware")
             return
         }
