@@ -27,6 +27,10 @@ import UIKit
     @objc func skipButton() -> String
 }
 
+@objc public protocol CaptureOutputDelegate {
+    func capture(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection)
+}
+
 // The FullScanStringsDataSource protocol defines all of the strings
 // that the viewcontroller uses. As we add more strings we will update
 // this protocol, which will require you to update your integration on
@@ -82,9 +86,10 @@ import UIKit
     #endif
 }
 
-@objc open class ScanViewController: ScanBaseViewController {
+@objc public class ScanViewController: ScanBaseViewController {
     
     public weak var scanDelegate: ScanDelegate?
+    public weak var captureOutputDelegate: CaptureOutputDelegate?
     @objc public weak var stringDataSource: ScanStringsDataSource?
     @objc public var allowSkip = false
     public var torchLevel: Float? 
@@ -324,6 +329,11 @@ import UIKit
     
     public override func useCurrentFrameNumber(errorCorrectedNumber : String?, currentFrameNumber: String) -> Bool {
         return true
+    }
+    
+    override public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        super.captureOutput(output, didOutput: sampleBuffer, from: connection)
+        captureOutputDelegate?.capture(output, didOutput: sampleBuffer, from: connection)
     }
     
     override public func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) {
