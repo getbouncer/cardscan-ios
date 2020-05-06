@@ -5,7 +5,7 @@ protocol AfterPermissions {
     func permissionDidComplete(granted: Bool, showedPrompt: Bool)
 }
 
-class VideoFeed {
+public class VideoFeed {
     private enum SessionSetupResult {
         case success
         case notAuthorized
@@ -18,6 +18,8 @@ class VideoFeed {
     private var setupResult: SessionSetupResult = .success
     var videoDeviceInput: AVCaptureDeviceInput!
     var videoDevice: AVCaptureDevice?
+    let movieOutput = AVCaptureMovieFileOutput()
+    public var movieOutputDelegate: AVCaptureFileOutputRecordingDelegate?
     
     var torch: Torch?
     
@@ -128,6 +130,11 @@ class VideoFeed {
                 session.sessionPreset = .high
             }
             
+            // Movie output
+            if session.canAddOutput(movieOutput) {
+                session.addOutput(movieOutput)
+            }
+            
             let connection = videoDeviceOutput.connection(with: .video)
             if connection?.isVideoOrientationSupported ?? false {
                 connection?.videoOrientation = .portrait
@@ -195,6 +202,17 @@ class VideoFeed {
         self.torch?.level = level
     }
     
+    func tempURL() -> URL? {
+        let directory = NSTemporaryDirectory() as NSString
+
+        if directory != "" {
+            let path = directory.appendingPathComponent(NSUUID().uuidString + ".mp4")
+            return URL(fileURLWithPath: path)
+        }
+
+        return nil
+    }
+    
     //MARK: -VC Lifecycle Logic
     func willAppear() {
         sessionQueue.async {
@@ -202,6 +220,8 @@ class VideoFeed {
             case .success:
                 self.session.startRunning()
                 self.isSessionRunning = self.session.isRunning
+                guard let delegate = self.movieOutputDelegate else { return }
+                self.tempURL().map { self.movieOutput.startRecording(to: $0, recordingDelegate: delegate) }
             case _:
                 print("could not start session")
             }
@@ -211,6 +231,9 @@ class VideoFeed {
     func willDisappear() {
         sessionQueue.async {
             if self.setupResult == .success {
+                if self.movieOutput.isRecording {
+                    self.movieOutput.stopRecording()
+                }
                 self.session.stopRunning()
                 self.isSessionRunning = self.session.isRunning
             }

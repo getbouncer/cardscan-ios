@@ -26,7 +26,7 @@ public protocol TestingImageDataSource: AnyObject {
     private weak var cornerView: CornerView?
     private var regionOfInterestLabelFrame: CGRect?
     
-    var videoFeed = VideoFeed()
+    public var videoFeed = VideoFeed()
     
     var scannedCardImage: UIImage?
     var isNavigationBarHidden = false
