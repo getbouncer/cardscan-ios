@@ -94,11 +94,8 @@ public class Ocr {
     @available(iOS 11.2, *)
     public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?, useCurrentFrameNumber: (String? , String) -> Bool = { _,_ in true } ) -> String? {
         var findFour = FindFourOcr()
-        var startTime = CFAbsoluteTimeGetCurrent()
         var number = findFour.predict(image: UIImage(cgImage: croppedCardImage))
-        var endTime = CFAbsoluteTimeGetCurrent() - startTime
-        os_log("%@", type: .debug, "Full Forward Pass: \(endTime)")
-        
+
         if let currentNumber = number {
             let errorCorrectedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
             if !useCurrentFrameNumber(errorCorrectedNumber, currentNumber) {
