@@ -93,7 +93,7 @@ public class OcrMainLoop : MachineLearningLoop {
     var machineLearningQueues: [DispatchQueue] = []
     var userDidCancel = false
     
-    public init(analyzers: [AnalyzerType] = [.ssd, .ux]) {
+    public init(analyzers: [AnalyzerType] = [.ssd]) {
         scanStats.model = "legacy+apple"
         machineLearningQueues = []
         for analyzer in analyzers {
