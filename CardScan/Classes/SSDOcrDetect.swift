@@ -65,12 +65,12 @@ struct SSDOcrDetect {
         
         if SSDOcrDetect.ssdOcrModel == nil {
             guard let ssdOcrUrl  = CSBundle.compiledModel(forResource: ssdOcrResource, withExtension: ssdOcrExtension) else {
-                print("Could not find URL for FourRecognize")
+                print("Could not find URL for ssd ocr")
                 return
             }
     
             guard let ssdOcrModel = try? SSDOcr(contentsOf: ssdOcrUrl) else {
-                print("Could not get contents of recognize model with fourRecognize URL")
+                print("Could not get contents of ssd ocr model with ssd ocr URL")
                 return
             }
     
@@ -92,19 +92,19 @@ struct SSDOcrDetect {
         var boxes : [[Float]]
         var filterArray : [Float]
 
-        var startTime = CFAbsoluteTimeGetCurrent()
+        //var startTime = CFAbsoluteTimeGetCurrent()
         (scores, boxes, filterArray) = prediction.getScores(filterThreshold: filterThreshold)
-        var endTime = CFAbsoluteTimeGetCurrent() - startTime
-        os_log("%@", type: .debug, "Get scores and boxes from mult array: \(endTime)")
+        //var endTime = CFAbsoluteTimeGetCurrent() - startTime
+        //os_log("%@", type: .debug, "Get scores and boxes from mult array: \(endTime)")
        
 
-        startTime = CFAbsoluteTimeGetCurrent()
+        //startTime = CFAbsoluteTimeGetCurrent()
         let regularBoxes = prediction.convertLocationsToBoxes(locations: boxes,
                                                               priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(),
                                                               centerVariance: 0.1, sizeVariance: 0.2)
         let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
-        endTime = CFAbsoluteTimeGetCurrent() - startTime
-        os_log("%@", type: .debug, "locations to boxes and center to corner form: \(endTime)")
+        //endTime = CFAbsoluteTimeGetCurrent() - startTime
+        //os_log("%@", type: .debug, "locations to boxes and center to corner form: \(endTime)")
         
         var prunnedScores : [[Float]]
         var prunnedBoxes : [[Float]]
@@ -119,15 +119,15 @@ struct SSDOcrDetect {
             prunnedBoxes = [[Float]](repeating: [Float](repeating: 0.0, count: 2 ), count: 2)
             
         }
-        startTime = CFAbsoluteTimeGetCurrent()
+        //startTime = CFAbsoluteTimeGetCurrent()
         let predAPI = PredictionAPI()
         let result:Result = predAPI.predictionAPI(scores:prunnedScores, boxes: prunnedBoxes,
                                                   probThreshold: probThreshold,
                                                   iouThreshold: iouThreshold,
                                                   candidateSize: candidateSize,
                                                   topK: topK)
-        endTime = CFAbsoluteTimeGetCurrent() - startTime
-        os_log("%@", type: .debug, "NMS: \(endTime)")
+        //endTime = CFAbsoluteTimeGetCurrent() - startTime
+        //os_log("%@", type: .debug, "NMS: \(endTime)")
     
         for idx in 0..<result.pickedBoxes.count {
             DetectedOcrBoxes.allBoxes.append(DetectedSSDOcrBox(category: result.pickedLabels[idx], conf: result.pickedBoxProbs[idx],
@@ -141,7 +141,7 @@ struct SSDOcrDetect {
             return _cardNumber
         }
         else {
-            os_log("%@", type: .error, "Not Quick Read")
+            //os_log("%@", type: .error, "Not Quick Read")
         }
         
 
@@ -175,7 +175,7 @@ struct SSDOcrDetect {
                     return _cardNumber
                 }
                 else {
-                    os_log("%@" , type: .debug, "Could verify \(_cardNumber)")
+                    //os_log("%@" , type: .debug, "Could verify \(_cardNumber)")
             }
             }
         
@@ -224,7 +224,7 @@ struct SSDOcrDetect {
             return _cardNumber
         }
         else {
-            os_log("%@" , type: .debug, "Could verify \(_cardNumber)")
+            //os_log("%@" , type: .debug, "Could verify \(_cardNumber)")
         }
         
         return nil
@@ -233,7 +233,7 @@ struct SSDOcrDetect {
     
     func isQuickRead(allBoxes: DetectedAllOcrBoxes) -> Bool {
         if (allBoxes.allBoxes.isEmpty) || (allBoxes.allBoxes.count != 16) {
-            os_log("%@", type: .debug, "Failed in capacity:\(allBoxes.allBoxes.capacity)")
+            //os_log("%@", type: .debug, "Failed in capacity:\(allBoxes.allBoxes.capacity)")
             return false
         }
         
@@ -287,7 +287,7 @@ struct SSDOcrDetect {
         }
         
         let endTime = CFAbsoluteTimeGetCurrent() - startTime
-        os_log("%@", type: .debug, "Model Run without post-process time: \(endTime)")
+        //os_log("%@", type: .debug, "Model Run without post-process time: \(endTime)")
         
         return self.detectOcrObjects(prediction: prediction, image: image)
 

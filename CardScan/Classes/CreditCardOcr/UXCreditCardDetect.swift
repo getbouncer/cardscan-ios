@@ -19,6 +19,7 @@ class UXCreditCardDetect: CreditCardOcrImplementation {
         let startTime = Date()
         let number = ux.perform(croppedCardImage: image)
         let duration = -startTime.timeIntervalSinceNow
+        print("DEBUG: Inference time for UX model: ", duration)
         self.computationTime += duration
         self.frames += 1
         return CreditCardOcrPrediction(image: image, number: number, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: duration, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
