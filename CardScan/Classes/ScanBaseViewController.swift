@@ -132,8 +132,11 @@ public protocol TestingImageDataSource: AnyObject {
                 return true
             }
             switch Api.deviceType() {
-            case "iPhone3,1", "iPhone3,2", "iPhone3,3", "iPhone4,1", "iPhone5,1", "iPhone5,2", "iPhone5,3", "iPhone5,4", "iPhone6,1", "iPhone6,2", "iPhone7,2", "iPhone7,1":
+            //only block iphone 4 and below
+            case "iPhone3,1", "iPhone3,2", "iPhone3,3", "iPhone4,1":
                 return false
+            case "iPhone5,1", "iPhone5,2", "iPhone5,3", "iPhone5,4", "iPhone6,1", "iPhone6,2", "iPhone7,2", "iPhone7,1":
+                return true
             default:
                 return true
             }
