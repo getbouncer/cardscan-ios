@@ -78,6 +78,7 @@ public class OcrMainLoop : MachineLearningLoop {
         case apple
         case legacy
         case ssd
+        case ux
     }
     
     public var scanStats = ScanStats()
@@ -92,7 +93,7 @@ public class OcrMainLoop : MachineLearningLoop {
     var machineLearningQueues: [DispatchQueue] = []
     var userDidCancel = false
     
-    public init(analyzers: [AnalyzerType] = [.legacy, .apple, .ssd]) {
+    public init(analyzers: [AnalyzerType] = [.ssd, .ux]) {
         scanStats.model = "legacy+apple"
         machineLearningQueues = []
         for analyzer in analyzers {
@@ -102,6 +103,11 @@ public class OcrMainLoop : MachineLearningLoop {
                 if #available(iOS 11.2, *) {
                     analyzerQueue.append(SSDCreditCardOcr(dispatchQueue: queue))
                 }
+            case .ux:
+                if #available(iOS 11.2, *) {
+                    analyzerQueue.append(UXCreditCardDetect(dispatchQueue: queue))
+                }
+                
             case .legacy:
                 if #available(iOS 11.2, *) {
                     analyzerQueue.append(LegacyCreditCardOcr(dispatchQueue: queue))
