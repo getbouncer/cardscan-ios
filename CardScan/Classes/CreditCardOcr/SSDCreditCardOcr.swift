@@ -18,10 +18,10 @@ class SSDCreditCardOcr: CreditCardOcrImplementation {
                 
         let ocr = OcrDD()
         let ux = UXWrapper()
-        let startTime = Date()
+        var startTime = Date()
         let _ = ux.perform(croppedCardImage: image)
         let number = ocr.perform(croppedCardImage: image)
-        let duration = -startTime.timeIntervalSinceNow
+        var duration = -startTime.timeIntervalSinceNow
         print("DEBUG: Inference time for DD Ocr and UX Serial: ", duration)
         self.computationTime += duration
         self.frames += 1
