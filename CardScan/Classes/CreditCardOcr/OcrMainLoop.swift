@@ -249,7 +249,7 @@ public class OcrMainLoop : MachineLearningLoop {
     //   * The willResignActive function blocks the transition to the background until
     //     it completes, which we couldn't find docs on but verified experimentally
     @objc func willResignActive() {
-        inBackground = true
+        mutexQueue.sync { self.inBackground = true }
         // this makes sure that any currently running predictions finish before we
         // let the app go into the background
         for queue in machineLearningQueues {
@@ -260,7 +260,7 @@ public class OcrMainLoop : MachineLearningLoop {
     }
     
     @objc func didBecomeActive() {
-        inBackground = false
+        mutexQueue.sync { self.inBackground = false }
         for queue in machineLearningQueues {
             queue.resume()
         }
@@ -273,6 +273,12 @@ public class OcrMainLoop : MachineLearningLoop {
     }
     
     func unregisterAppNotifications() {
+        // if we're in the background resume our queues so that we can free them but leave `inBackground` set so that they don't run
+        mutexQueue.sync {
+            if self.inBackground {
+                machineLearningQueues.forEach { $0.resume() }
+            }
+        }
         NotificationCenter.default.removeObserver(self)
     }
 }
