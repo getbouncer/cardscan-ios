@@ -58,21 +58,10 @@ class AppleCreditCardOcr: CreditCardOcrImplementation {
     }
     
     static func likelyName(_ text: String) -> String? {
-        let lettersAndSpace = text.reduce(true) { acc, value in
-            let capitalLetter = value >= "A" && value <= "Z"
-            // for now we're only going to accept upper case names
-            //let lowerCaseLetter = value >= "a" && value <= "z"
-            let space = value == " "
-            return acc && (capitalLetter || space)
-        }
-        
         let words = text.split(separator: " ").map { String($0) }
-        let containsBlacklistWord = words.reduce(false) { acc, value in
-            return acc || NonNameWords.match(value)
-        }
+        let validWords = words.filter { !NameWords.nonNameWordMatch($0) && NameWords.onlyLettersAndSpaces($0) }
+        let validWordCount = validWords.count >= 2
         
-        let validWordCount = words.count == 2 || words.count == 3
-        
-        return lettersAndSpace && !containsBlacklistWord && validWordCount ? text : nil
+        return validWordCount ? validWords.joined(separator: " ") : nil
     }
 }
