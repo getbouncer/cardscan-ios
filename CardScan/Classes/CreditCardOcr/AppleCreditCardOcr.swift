@@ -60,7 +60,7 @@ class AppleCreditCardOcr: CreditCardOcrImplementation {
     static func likelyName(_ text: String) -> String? {
         let words = text.split(separator: " ").map { String($0) }
         let validWords = words.filter { !NameWords.nonNameWordMatch($0) && NameWords.onlyLettersAndSpaces($0) }
-        let validWordCount = validWords.count == 2 || validWords.count == 3
+        let validWordCount = validWords.count >= 2
         
         return validWordCount ? validWords.joined(separator: " ") : nil
     }
