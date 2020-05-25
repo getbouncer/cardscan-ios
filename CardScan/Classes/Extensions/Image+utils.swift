@@ -35,52 +35,71 @@ extension CGImage {
         return newImage
     }
     
-    func toRegionOfInterest(regionOfInterestLabelFrame: CGRect) -> CGRect? {
-        // get device screen size
-        let screen = UIScreen.main.bounds
-        let screenWidth = screen.size.width
-        let screenHeight = screen.size.height
-        
-        // ROI center in Points
-        let regionOfInterestCenterX = regionOfInterestLabelFrame.origin.x + regionOfInterestLabelFrame.size.width / 2.0
-        
-        let regionOfInterestCenterY = regionOfInterestLabelFrame.origin.y + regionOfInterestLabelFrame.size.height / 2.0
-        
-        // calculate center of cropping region in Pixels.
-        var cx, cy: CGFloat
+   func toFullScreenAndRoi(previewViewFrame: CGRect, regionOfInterestLabelFrame: CGRect) -> (CGImage, CGRect)? {
+          let screen = UIScreen.main.bounds
+          let screenWidth = screen.size.width
+          let screenHeight = screen.size.height
 
-        // Find out whether left/right or top/bottom of the image was cropped before it was displayed to previewView.
-        // The size of the cropped region is needed to map regionOfInterestCenter to the image center
-        let imageAspectRatio = CGFloat(self.width) / CGFloat(self.height)
-        let screenAspectRatio = screenWidth / screenHeight
-        
-        var pointsToPixels: CGFloat
-        // convert from points to pixels and account for the cropped region
-        if imageAspectRatio > screenAspectRatio {
-            // left and right of the image cropped
-            //      tested on: iPhone XS Max
-            let croppedOffset = (CGFloat(self.width) - CGFloat(self.height) * screenAspectRatio) / 2.0
-            pointsToPixels = CGFloat(self.height) / screenHeight
+          let imageCenterX = CGFloat(self.width) / 2.0
+          let imageCenterY = CGFloat(self.height) / 2.0
             
-            cx = regionOfInterestCenterX * pointsToPixels + croppedOffset
-            cy = regionOfInterestCenterY * pointsToPixels
-        } else {
-            // top and bottom of the image cropped
-            //      tested on: iPad Mini 2
-            let croppedOffset = (CGFloat(self.height) - CGFloat(self.width) / screenAspectRatio) / 2.0
-            pointsToPixels = CGFloat(self.width) / screenWidth
+          let imageAspectRatio = CGFloat(self.height) / CGFloat(self.width)
+          let previewViewAspectRatio = previewViewFrame.height / previewViewFrame.width
+          let screenAspectRatio = screenHeight / screenWidth
+          let cropRatio = CGFloat(16.0) / CGFloat(9.0)
             
-            cx = regionOfInterestCenterX * pointsToPixels
-            cy = regionOfInterestCenterY * pointsToPixels + croppedOffset
-        }
-        
-        let roiWidthInPixels = regionOfInterestLabelFrame.size.width * pointsToPixels
-        let roiHeightInPixels = regionOfInterestLabelFrame.size.height * pointsToPixels
-        return CGRect(x: cx - roiWidthInPixels * 0.5,
-                      y: cy - roiHeightInPixels * 0.5,
-                      width: roiWidthInPixels,
-                      height: roiHeightInPixels)
-    }
+          // Get ratio to convert points to pixels
+          let pointsToPixel: CGFloat = {
+              // image and screen height dont match up, widths match up, get ratio with widths
+              if imageAspectRatio > screenAspectRatio {
+                  return CGFloat(self.width) / screenWidth
+              }
+              // image and screenw width dont match up, heights match up, get ratio with heights
+              return CGFloat(self.height) / screenHeight
+          }()
+           
+          // Get ration to scale previewView up to image size
+          let scale: CGFloat = {
+              // previewView is the same size as screen so no need for scale
+              if screenAspectRatio == previewViewAspectRatio {
+                  return 1.0
+              }
+              // image height is larger than its width => find ratio to scale up preview view width to match image width
+              if imageAspectRatio > previewViewAspectRatio {
+                  return CGFloat(self.width) / (previewViewFrame.width * pointsToPixel)
+              }
+              // image width is larger than its height => find ratio to scale up preview view height to match image height
+              return CGFloat(self.height) / (previewViewFrame.height * pointsToPixel)
+          }()
+          
+          let fullScreenImage: CGImage? = {
+              // if image is already 16:9, no need to crop to match crop ratio
+              if cropRatio == imageAspectRatio {
+                  return self
+              } else {
+                  // imageAspectRatio not being 16:9 implies image being in landscape
+                  // get width to first not cut out any card information
+                  let cropWidth = previewViewFrame.width * pointsToPixel * scale
+                  // then get height to match 16:9 ratio
+                  let cropHeight = cropWidth * (16.0 / 9.0)
+                  return self.cropping(to: CGRect(x: imageCenterX - cropWidth / 2.0, y: imageCenterY - cropHeight / 2.0, width: cropWidth, height: cropHeight))
+              }
+          }()
+          
+          let roiRect: CGRect? = {
+              let roiWidth = regionOfInterestLabelFrame.width * pointsToPixel * scale
+              let roiHeight = regionOfInterestLabelFrame.height * pointsToPixel * scale
+              
+              guard let fullScreenImage = fullScreenImage else { return nil }
+              let fullScreenCenterX = CGFloat(fullScreenImage.width) / 2.0
+              let fullScreenCenterY = CGFloat(fullScreenImage.height) / 2.0
+              
+              return CGRect(x: fullScreenCenterX - roiWidth / 2.0, y: fullScreenCenterY - roiHeight / 2.0, width: roiWidth, height: roiHeight)
+          }()
+          
+          guard let regionOfInterestRect = roiRect, let fullScreenCgImage = fullScreenImage else { return nil }
+          return (fullScreenCgImage, regionOfInterestRect)
+      }
 }
 
 extension CVPixelBuffer {

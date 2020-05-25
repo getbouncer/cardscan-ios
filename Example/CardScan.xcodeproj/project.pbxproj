@@ -18,7 +18,8 @@
 		AE9D9D56237E3E6BF05E2BF6 /* Pods_CardScan_ExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB96CEF7D3ACA685C6EEDC0 /* Pods_CardScan_ExampleUITests.framework */; };
 		D429AFDEA48FC19F87687EE7 /* Pods_CardScan_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE17A7756B77B1770A3295F9 /* Pods_CardScan_ExampleTests.framework */; };
 		D69443EF2DE5EDA4E180206C /* Pods_CardScan_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDCA90BA2C77F14EF08D1026 /* Pods_CardScan_Example.framework */; };
-		F399939924180A2B00D8ECF5 /* ModalViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F399939824180A2B00D8ECF5 /* ModalViewViewController.swift */; };
+		F395FAB5247B332C00EFBA62 /* ModalNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F395FAB4247B332C00EFBA62 /* ModalNavViewController.swift */; };
+		F399939924180A2B00D8ECF5 /* ModalScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F399939824180A2B00D8ECF5 /* ModalScanViewController.swift */; };
 		F3BF1C5C22D51AAA002A2575 /* CardScan_BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */; };
 		F3FA027023A814C4002A8169 /* CardScan_CardUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */; };
 /* End PBXBuildFile section */
@@ -66,7 +67,8 @@
 		CEAB99683846AFF946286335 /* Pods-CardScan_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardScan_Example.debug.xcconfig"; path = "Target Support Files/Pods-CardScan_Example/Pods-CardScan_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D0205FE9CAE506A64EF13F1A /* Pods-CardScan_ExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardScan_ExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-CardScan_ExampleUITests/Pods-CardScan_ExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EFC4AF881BD9C60F9B02584D /* Pods-CardScan_ExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardScan_ExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-CardScan_ExampleUITests/Pods-CardScan_ExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
-		F399939824180A2B00D8ECF5 /* ModalViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewViewController.swift; sourceTree = "<group>"; };
+		F395FAB4247B332C00EFBA62 /* ModalNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNavViewController.swift; sourceTree = "<group>"; };
+		F399939824180A2B00D8ECF5 /* ModalScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalScanViewController.swift; sourceTree = "<group>"; };
 		F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScan_BundleTests.swift; sourceTree = "<group>"; };
 		F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_CardUtilsTests.swift; sourceTree = "<group>"; };
 		FDCA90BA2C77F14EF08D1026 /* Pods_CardScan_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CardScan_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,7 +155,8 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
-				F399939824180A2B00D8ECF5 /* ModalViewViewController.swift */,
+				F399939824180A2B00D8ECF5 /* ModalScanViewController.swift */,
+				F395FAB4247B332C00EFBA62 /* ModalNavViewController.swift */,
 			);
 			name = "Example for CardScan";
 			path = CardScan;
@@ -486,8 +489,9 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				F395FAB5247B332C00EFBA62 /* ModalNavViewController.swift in Sources */,
 				3B2741C5219F99B700BFA3D2 /* ResultViewController.swift in Sources */,
-				F399939924180A2B00D8ECF5 /* ModalViewViewController.swift in Sources */,
+				F399939924180A2B00D8ECF5 /* ModalScanViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
