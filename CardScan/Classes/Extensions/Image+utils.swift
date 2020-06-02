@@ -35,6 +35,21 @@ extension CGImage {
         return newImage
     }
     
+    func drawGrayToFillFullScreen(croppedImage: CGImage, targetSize: CGSize) -> CGImage? {
+        let image = UIImage(cgImage: croppedImage)
+        
+        UIGraphicsBeginImageContext(targetSize)
+        // Make whole image grey
+        UIColor.gray.setFill()
+        UIRectFill(CGRect(x: 0, y: 0, width: targetSize.width, height: targetSize.height))
+        // Put in image in the center
+        image.draw(in: CGRect(x: 0.0, y: (CGFloat(targetSize.height) - CGFloat(croppedImage.height)) / 2.0, width: CGFloat(croppedImage.width), height: CGFloat(croppedImage.height)))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage?.cgImage
+    }
+    
     func toFullScreenAndRoi(previewViewFrame: CGRect, regionOfInterestLabelFrame: CGRect) -> (CGImage, CGRect)? {
         let imageCenterX = CGFloat(self.width) / 2.0
         let imageCenterY = CGFloat(self.height) / 2.0
@@ -50,14 +65,20 @@ extension CGImage {
             // if image is already 16:9, no need to crop to match crop ratio
             if cropRatio == imageAspectRatio {
                 return self
-            } else {
-                // imageAspectRatio not being 16:9 implies image being in landscape
-                // get width to first not cut out any card information
-                let cropWidth = previewViewFrame.width * pointsToPixel
-                // then get height to match 16:9 ratio
-                let cropHeight = cropWidth * (16.0 / 9.0)
-                return self.cropping(to: CGRect(x: imageCenterX - cropWidth / 2.0, y: imageCenterY - cropHeight / 2.0, width: cropWidth, height: cropHeight))
             }
+            // imageAspectRatio not being 16:9 implies image being in landscape
+            // get width to first not cut out any card information
+            let cropWidth = previewViewFrame.width * pointsToPixel
+            let cropHeight = cropWidth * (16.0 / 9.0)
+            let imageHeight = CGFloat(self.height)
+            
+            // If 16:9 crop height is larger than the image height itself (i.e. custom formsheet size height is much shorter than the width), crop the image with full height and add grey boxes
+            if cropHeight > imageHeight {
+                guard let croppedImage = self.cropping(to: CGRect(x: imageCenterX - cropWidth / 2.0, y: imageCenterY - imageHeight / 2.0, width: cropWidth, height: imageHeight)) else { return nil }
+                return self.drawGrayToFillFullScreen(croppedImage: croppedImage, targetSize: CGSize(width: cropWidth, height: cropHeight))
+            }
+            
+            return self.cropping(to: CGRect(x: imageCenterX - cropWidth / 2.0, y: imageCenterY - cropHeight / 2.0, width: cropWidth, height: cropHeight))
         }()
           
         let roiRect: CGRect? = {
