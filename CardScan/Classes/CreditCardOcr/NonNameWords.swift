@@ -18,7 +18,10 @@ struct NameWords {
                                  "expiry", "date", "expiration", "cash", "back", "td", "access", "international", "interac",
                                  "nterac", "entreprise", "business", "md", "enterprise", "fifth", "third", "fifththird",
                                  "world", "rewards", "citi", "member", "cardmember", "cardholder", "valued", "since",
-                                 "membersince", "cardmembersince", "cardholdersince", "freedom", "quicksilver", "penfed"]
+                                 "membersince", "cardmembersince", "cardholdersince", "freedom", "quicksilver", "penfed",
+                                 "use", "this", "card", "is", "subject", "to", "the", "inc", "not", "transferable", "gto",
+                                 "mgy", "sign"]
+
 
     static func nonNameWordMatch(_ text: String) -> Bool {
         let lowerCase = text.lowercased()

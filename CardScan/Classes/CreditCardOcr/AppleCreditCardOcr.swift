@@ -23,6 +23,7 @@ class AppleCreditCardOcr: CreditCardOcrImplementation {
         var nameBox: CGRect?
         var numberBox: CGRect?
         var expiryBox: CGRect?
+        var nameCandidates: [OcrObject] = []
         AppleOcr.recognizeText(in: image) { results in
             for result in results {
                 let predictedPan = CreditCardOcrPrediction.pan(result.text)
@@ -36,17 +37,29 @@ class AppleCreditCardOcr: CreditCardOcrImplementation {
                         if expiryYear == nil { expiryYear = year }
                     }
                 }
-                if pan == nil {
+                if pan == nil && predictedPan != nil {
                     pan = predictedPan
                     numberBox = result.rect
                 }
+                
                 let predictedName = AppleCreditCardOcr.likelyName(result.text)
-                // XXX FIXME we should be smarter about the name
-                if name == nil {
-                    name = predictedName
-                    nameBox = result.rect
+                if predictedName != nil {
+                    nameCandidates.append(result)
                 }
             }
+            
+            let minY = numberBox.map({ $0.minY - $0.height}) ?? expiryBox?.minY
+            let names = nameCandidates.filter { name in
+                let isInExpectedLocation = minY.map({ name.rect.minY >= ($0 - 5.0) }) ?? false
+                return name.confidence >= 0.5 && isInExpectedLocation
+            }
+            
+            // just pick the first one for now
+            if let nameResult = names.first {
+                name = AppleCreditCardOcr.likelyName(nameResult.text)
+                nameBox = nameResult.rect
+            }
+            
             semaphore.signal()
         }
         semaphore.wait()
