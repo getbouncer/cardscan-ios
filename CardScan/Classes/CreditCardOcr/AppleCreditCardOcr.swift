@@ -29,7 +29,6 @@ class AppleCreditCardOcr: CreditCardOcrImplementation {
                 let expiry = CreditCardOcrPrediction.likelyExpiry(result.text)
                 if let (month, year) = expiry {
                     if CreditCardUtils.isValidDate(expMonth: month, expYear: year) {
-                        print("expiry \(expiry) confidence \(result.confidence)")
                         if expiryMonth == nil {
                             expiryBox = result.rect
                             expiryMonth = month
@@ -44,9 +43,6 @@ class AppleCreditCardOcr: CreditCardOcrImplementation {
                 
                 let nameReferenceBox = expiryBox ?? numberBox ?? CGRect(x: 0, y: 0, width: image.width, height: image.height)
                 let predictedName = AppleCreditCardOcr.likelyName(result.text)
-                if predictedName != nil {
-                    print("\(predictedName!) \(result.rect.minY) >= \(nameReferenceBox.maxY)")
-                }
                 // XXX FIXME we should be smarter about the name
                 if name == nil && result.confidence >= 0.5 && result.rect.minY >= (nameReferenceBox.maxY - 5.0) {
                     name = predictedName
