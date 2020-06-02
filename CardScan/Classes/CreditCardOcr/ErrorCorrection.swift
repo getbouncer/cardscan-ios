@@ -16,7 +16,7 @@ class ErrorCorrection {
     var expiries: [String: Int] = [:]
     var names: [String: Int] = [:]
     let startTime = Date()
-    let errorCorrectionTime = 1.5
+    let errorCorrectionTime = 2.0
     var mostRecentPrediction: CreditCardOcrPrediction?
     
     var framesPerSecond: Double {

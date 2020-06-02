@@ -7,11 +7,7 @@ struct AppleOcr {
         // warm up the model eventually
     }
     
-    static func convertToImageRect(boundingBox: VNRectangleObservation?, imageSize: CGSize) -> CGRect {
-        guard let boundingBox = boundingBox else {
-            return CGRect()
-        }
-
+    static func convertToImageRect(boundingBox: VNRectangleObservation, imageSize: CGSize) -> CGRect {
         let topLeft = VNImagePointForNormalizedPoint(boundingBox.topLeft,
                                                      Int(imageSize.width),
                                                      Int(imageSize.height))
@@ -28,21 +24,19 @@ struct AppleOcr {
     static func performOcr(image: CGImage, completion: @escaping ([OcrObject]) -> Void) {
         let textRequest = VNRecognizeTextRequest() { request, error in
             let imageSize = CGSize(width: image.width, height: image.height)
-            var outputObjects: [OcrObject] = []
-            if let results = request.results, !results.isEmpty {
-                if let results = request.results as? [VNRecognizedTextObservation] {
-                    for result in results {
-                        if let candidate = result.topCandidates(1).first {
-                            let string = candidate.string
-                            let box = try? candidate.boundingBox(for: string.startIndex..<string.endIndex)
-                            let boxRect = convertToImageRect(boundingBox: box.flatMap({ $0 }), imageSize: imageSize)
-                            let confidence: Float = 1.0
-                            outputObjects.append(OcrObject(text: string, conf: confidence,
-                                                           textBox: boxRect,
-                                                           imageSize: imageSize))
-                        }
-                    }
+
+            guard let results = request.results as? [VNRecognizedTextObservation], !results.isEmpty else {
+                completion([])
+                return
+            }
+            let outputObjects: [OcrObject] = results.compactMap { result in
+                guard let candidate = result.topCandidates(1).first,
+                    let box = try? candidate.boundingBox(for: candidate.string.startIndex..<candidate.string.endIndex) else {
+                    return nil
                 }
+                let boxRect = convertToImageRect(boundingBox: box, imageSize: imageSize)
+                let confidence: Float = candidate.confidence
+                return OcrObject(text: candidate.string, conf: confidence, textBox: boxRect, imageSize: imageSize)
             }
             
             completion(outputObjects)

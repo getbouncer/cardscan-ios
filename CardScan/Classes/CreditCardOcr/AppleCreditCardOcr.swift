@@ -42,7 +42,7 @@ class AppleCreditCardOcr: CreditCardOcrImplementation {
                 }
                 let predictedName = AppleCreditCardOcr.likelyName(result.text)
                 // XXX FIXME we should be smarter about the name
-                if name == nil {
+                if name == nil && result.confidence >= 0.5 {
                     name = predictedName
                     nameBox = result.rect
                 }
