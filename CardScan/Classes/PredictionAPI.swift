@@ -4,6 +4,7 @@
 //
 //  Created by Zain on 8/6/19.
 //
+
 import Foundation
 
 struct Result{

@@ -26,7 +26,6 @@ extension SSDOcrOutput{
         for idx3 in 0..<self._594.count{
            let offsetFilter = idx3 * self._594.strides[4].intValue
            filterArray[idx3] = Float(pointerFilter[offsetFilter])
-           
        }
 
         var countScores = 0
@@ -45,14 +44,11 @@ extension SSDOcrOutput{
                     boxesTest[idx/numOfColsBoxes][idx%numOfColsBoxes] = Float(pointerBoxes[offset])
                 }
                 countBoxes = countBoxes + numOfColsBoxes
-
             }
-
             else {
                 countScores = countScores + numOfColsScores
                 countBoxes = countBoxes + numOfColsBoxes
             }
-
         }
         return (scoresTest, boxesTest, filterArray)
     }
@@ -142,8 +138,7 @@ extension SSDOcrOutput{
                 prunnedScores.append(scores[i])
                 prunnedBoxes.append(boxes[i])
             }
-        }
-        
+        }        
         return (prunnedScores, prunnedBoxes)
     }
 }

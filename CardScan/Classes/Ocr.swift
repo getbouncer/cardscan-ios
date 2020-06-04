@@ -1,5 +1,4 @@
 import Foundation
-import os.log
 
 public class Ocr {
     public var scanStats = ScanStats()
@@ -12,7 +11,6 @@ public class Ocr {
     
     static func configure() {
         if #available(iOS 11.2, *) {
-            
             let ocr = FindFourOcr()
             ocr.warmUp()
         }

@@ -92,19 +92,11 @@ struct SSDOcrDetect {
         var boxes : [[Float]]
         var filterArray : [Float]
 
-        //var startTime = CFAbsoluteTimeGetCurrent()
         (scores, boxes, filterArray) = prediction.getScores(filterThreshold: filterThreshold)
-        //var endTime = CFAbsoluteTimeGetCurrent() - startTime
-        //os_log("%@", type: .debug, "Get scores and boxes from mult array: \(endTime)")
-       
-
-        //startTime = CFAbsoluteTimeGetCurrent()
         let regularBoxes = prediction.convertLocationsToBoxes(locations: boxes,
                                                               priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(),
                                                               centerVariance: 0.1, sizeVariance: 0.2)
         let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
-        //endTime = CFAbsoluteTimeGetCurrent() - startTime
-        //os_log("%@", type: .debug, "locations to boxes and center to corner form: \(endTime)")
         
         var prunnedScores : [[Float]]
         var prunnedBoxes : [[Float]]
@@ -119,15 +111,13 @@ struct SSDOcrDetect {
             prunnedBoxes = [[Float]](repeating: [Float](repeating: 0.0, count: 2 ), count: 2)
             
         }
-        //startTime = CFAbsoluteTimeGetCurrent()
+        
         let predUtil = PredictionUtilOcr()
         let result:Result = predUtil.predictionUtil(scores:prunnedScores, boxes: prunnedBoxes,
                                                   probThreshold: probThreshold,
                                                   iouThreshold: iouThreshold,
                                                   candidateSize: candidateSize,
                                                   topK: topK)
-        //endTime = CFAbsoluteTimeGetCurrent() - startTime
-        //os_log("%@", type: .debug, "NMS: \(endTime)")
     
         for idx in 0..<result.pickedBoxes.count {
             DetectedOcrBoxes.allBoxes.append(DetectedSSDOcrBox(category: result.pickedLabels[idx], conf: result.pickedBoxProbs[idx],
@@ -278,16 +268,12 @@ struct SSDOcrDetect {
             return nil
         }
         
-        let startTime = CFAbsoluteTimeGetCurrent()
         let input = SSDOcrInput(_0: pixelBuffer)
         
         guard let prediction = try? ocrDetectModel.prediction(input: input) else {
             os_log("Couldn't predict", type: .debug)
             return nil
         }
-        
-        let endTime = CFAbsoluteTimeGetCurrent() - startTime
-        //os_log("%@", type: .debug, "Model Run without post-process time: \(endTime)")
         
         return self.detectOcrObjects(prediction: prediction, image: image)
 
