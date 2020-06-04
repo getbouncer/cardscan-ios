@@ -11,71 +11,6 @@ import Accelerate
 @available(iOS 11.2, *)
 extension SSDOcrOutput{
     
-    /* ------------------------------ more complex getscores function ------------------------
-    
-    func getScores() -> ([[Float]], [[Float]]) {
-        let pointerScores = UnsafeMutablePointer<Float>(OpaquePointer(self.scores.dataPointer))
-        let pointerBoxes = UnsafeMutablePointer<Float>(OpaquePointer(self.boxes.dataPointer))
-        let pointerFilter = UnsafeMutablePointer<Float>(OpaquePointer(self._597.dataPointer))
-        let numOfRowsScores = self.scores.shape[3].intValue
-        let numOfColsScores = self.scores.shape[4].intValue
-        let numOfRowsBoxes = self.boxes.shape[3].intValue
-        let numOfColsBoxes = self.boxes.shape[4].intValue
-        let numOfRowsFilter = self._597.shape[3].intValue
-        var filterArray = [Float](repeating: 0.0, count: numOfRowsFilter)
-        var numToKeep : Int = 0
-        
-        for idx3 in 0..<self._597.count{
-            let offsetFilter = idx3 * self._597.strides[4].intValue
-            filterArray[idx3] = Float(pointerFilter[offsetFilter])
-            if filterArray[idx3] > 0.25{
-                numToKeep = numToKeep + 1
-            }
-        }
-        
-        var scoresTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfColsScores ), count: numToKeep)
-        var boxesTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfColsBoxes ), count: numToKeep)
-        
-        var countScores = 0
-        var countBoxes = 0
-        var scoresI = 0
-        var scoresJ = 0
-        var boxesI = 0
-        var boxesJ = 0
-        for idx2 in 0..<self._597.count{
-            if filterArray[idx2] > 0.25 {
-                scoresJ = 0
-                boxesJ = 0
-                
-                for idx in countScores..<countScores + numOfColsScores{
-                    let offset = idx * self.scores.strides[4].intValue
-                    scoresTest[scoresI][scoresJ] = Float(pointerScores[offset])
-                    scoresJ = scoresJ + 1
-                    }
-                countScores = countScores + numOfColsScores
-                scoresI = scoresI + 1
-                
-                for idx in countBoxes..<countBoxes + numOfColsBoxes{
-                    let offset = idx * self.boxes.strides[4].intValue
-                    boxesTest[boxesI][boxesJ] = Float(pointerBoxes[offset])
-                    boxesJ = boxesJ + 1
-                }
-                countBoxes = countBoxes + numOfColsBoxes
-                boxesI = boxesI + 1
-                
-            }
-            
-            else {
-                countScores = countScores + numOfColsScores
-                countBoxes = countBoxes + numOfColsBoxes
-            }
-
-        }
-        return (scoresTest, boxesTest)
-    }
- 
-    */
-    
     func getScores(filterThreshold: Float) -> ([[Float]], [[Float]], [Float]) {
         let pointerScores = UnsafeMutablePointer<Float>(OpaquePointer(self.scores.dataPointer))
         let pointerBoxes = UnsafeMutablePointer<Float>(OpaquePointer(self.boxes.dataPointer))
@@ -123,22 +58,6 @@ extension SSDOcrOutput{
     }
     
     
-    
-    /*
-    func getScores() -> [[Float]] {
-        let pointer = UnsafeMutablePointer<Float>(OpaquePointer(self.scores.dataPointer))
-        let numOfRows = self.scores.shape[3].intValue
-        let numOfCols = self.scores.shape[4].intValue
-        var scoresTest = [[Float]](repeating: [Float](repeating: 0.0, count: numOfCols ), count: numOfRows)
-        for idx in 0..<self.scores.count{
-            
-            let offset = idx * self.scores.strides[4].intValue
-            scoresTest[idx/numOfCols][idx%numOfCols] = Float(pointer[offset])
-        }
-        return scoresTest
-    }
- */
-
     func getBoxes() ->[[Float]]{
         let pointer = UnsafeMutablePointer<Float>(OpaquePointer(self.boxes.dataPointer))
         let numOfRows = self.boxes.shape[3].intValue
@@ -178,38 +97,6 @@ extension SSDOcrOutput{
         return resultArray
     }
     
-     /* These layers are also moved to the GPU
-     
-     func softmax(_ x: [Float]) -> [Float] {
-        // subtract the max from each value
-        // to prevent exp blowup
-        // raise all elements to power e
-        // and divide by the sum
-        
-        var x = x
-        let len = vDSP_Length(x.count)
-        var max: Float = 0
-        vDSP_maxv(x, 1, &max, len)
-        
-        max = -max
-        vDSP_vsadd(x, 1, &max, &x, 1, len)
-        
-        var count = Int32(x.count)
-        vvexpf(&x, x, &count)
-        
-        var sum: Float = 0
-        vDSP_sve(x, 1, &sum, len)
-        vDSP_vsdiv(x, 1, &sum, &x, 1, len)
-        
-        return x
-    }
-    
-    func fasterSoftmax2D(_ scores: [[Float]]) -> [[Float]]{
-       
-        let normalizedScores = scores.map {softmax($0)}
-        return normalizedScores
-    }
-    */
     
     func convertLocationsToBoxes(locations: [[Float]], priors: [CGRect], centerVariance: Float,
                                  sizeVariance : Float) -> [[Float]]{

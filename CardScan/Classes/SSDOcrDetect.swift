@@ -120,8 +120,8 @@ struct SSDOcrDetect {
             
         }
         //startTime = CFAbsoluteTimeGetCurrent()
-        let predAPI = PredictionAPI()
-        let result:Result = predAPI.predictionAPI(scores:prunnedScores, boxes: prunnedBoxes,
+        let predUtil = PredictionUtilOcr()
+        let result:Result = predUtil.predictionUtil(scores:prunnedScores, boxes: prunnedBoxes,
                                                   probThreshold: probThreshold,
                                                   iouThreshold: iouThreshold,
                                                   candidateSize: candidateSize,
@@ -137,7 +137,7 @@ struct SSDOcrDetect {
         }
         
         if self.isQuickRead(allBoxes: DetectedOcrBoxes){
-            var _cardNumber = processQuickRead(allBoxes: DetectedOcrBoxes)
+            let _cardNumber = processQuickRead(allBoxes: DetectedOcrBoxes)
             return _cardNumber
         }
         else {
