@@ -134,7 +134,6 @@ struct SSDOcrDetect {
             //os_log("%@", type: .error, "Not Quick Read")
         }
         
-
         if (!result.pickedBoxes.isEmpty) {
                 let topCordinates = result.pickedBoxes.map{$0[1]}
                 let bottomCordinates = result.pickedBoxes.map{$0[3]}
@@ -167,8 +166,7 @@ struct SSDOcrDetect {
                 else {
                     //os_log("%@" , type: .debug, "Could verify \(_cardNumber)")
             }
-            }
-        
+        }
         return nil
     }
    
@@ -216,7 +214,6 @@ struct SSDOcrDetect {
         else {
             //os_log("%@" , type: .debug, "Could verify \(_cardNumber)")
         }
-        
         return nil
         
     }
@@ -247,9 +244,7 @@ struct SSDOcrDetect {
         {
             return true
         }
-        
         return false
-        
     }
 
     public func predict(image: UIImage) -> String? {
@@ -274,8 +269,6 @@ struct SSDOcrDetect {
             os_log("Couldn't predict", type: .debug)
             return nil
         }
-        
         return self.detectOcrObjects(prediction: prediction, image: image)
-
     }
 }

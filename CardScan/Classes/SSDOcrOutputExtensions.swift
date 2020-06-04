@@ -109,7 +109,6 @@ extension SSDOcrOutput{
                        exp(locations[i][3] * sizeVariance) * Float(priors[i].height)]
             boxes.append(box)
         }
-        
         return boxes
     }
     func centerFormToCornerForm( regularBoxes: [[Float]]) -> [[Float]]{
@@ -138,7 +137,7 @@ extension SSDOcrOutput{
                 prunnedScores.append(scores[i])
                 prunnedBoxes.append(boxes[i])
             }
-        }        
+        }
         return (prunnedScores, prunnedBoxes)
     }
 }
