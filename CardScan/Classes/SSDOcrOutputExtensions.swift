@@ -53,7 +53,6 @@ extension SSDOcrOutput{
         return (scoresTest, boxesTest, filterArray)
     }
     
-    
     func getBoxes() ->[[Float]]{
         let pointer = UnsafeMutablePointer<Float>(OpaquePointer(self.boxes.dataPointer))
         let numOfRows = self.boxes.shape[3].intValue
@@ -66,7 +65,6 @@ extension SSDOcrOutput{
         }
         return boxesTest
     }
-
     
     func matrixReshape(_ nums: [[Float]], _ r: Int, _ c: Int) -> [[Float]] {
         
@@ -93,7 +91,6 @@ extension SSDOcrOutput{
         return resultArray
     }
     
-    
     func convertLocationsToBoxes(locations: [[Float]], priors: [CGRect], centerVariance: Float,
                                  sizeVariance : Float) -> [[Float]]{
         
@@ -111,6 +108,7 @@ extension SSDOcrOutput{
         }
         return boxes
     }
+    
     func centerFormToCornerForm( regularBoxes: [[Float]]) -> [[Float]]{
         
         /** Convert center from (center_x, center_y, h, w) to
