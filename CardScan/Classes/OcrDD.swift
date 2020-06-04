@@ -20,8 +20,8 @@ public class OcrDD{
 
     @available(iOS 11.2, *)
     public func perform(croppedCardImage: CGImage) -> String?{
-        var ssdOcr = SSDOcrDetect()
-        var number = ssdOcr.predict(image: UIImage(cgImage: croppedCardImage))
+        let ssdOcr = SSDOcrDetect()
+        let number = ssdOcr.predict(image: UIImage(cgImage: croppedCardImage))
         return number
     }
 
