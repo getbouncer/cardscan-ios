@@ -38,7 +38,7 @@ class ModalScanViewController: UIViewController, ScanDelegate {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
             return
         }
-
+        vc.showDebugImageView = true
         self.navigationController?.present(vc, animated: true, completion: nil)
     }
 
@@ -47,7 +47,7 @@ class ModalScanViewController: UIViewController, ScanDelegate {
             return
         }
         vc.showDebugImageView = true
-        vc.modalPresentationStyle = .pageSheet
+        vc.modalPresentationStyle = .formSheet
         self.navigationController?.present(vc, animated: true, completion: nil)
     }
 }

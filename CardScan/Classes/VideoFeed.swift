@@ -18,7 +18,8 @@ class VideoFeed {
     private var setupResult: SessionSetupResult = .success
     var videoDeviceInput: AVCaptureDeviceInput!
     var videoDevice: AVCaptureDevice?
-    
+    var videoDeviceConnection: AVCaptureConnection?
+    var videoOrientation: AVCaptureVideoOrientation?
     var torch: Torch?
     
     func pauseSession() {
@@ -128,9 +129,9 @@ class VideoFeed {
                 session.sessionPreset = .high
             }
             
-            let connection = videoDeviceOutput.connection(with: .video)
-            if connection?.isVideoOrientationSupported ?? false {
-                connection?.videoOrientation = .portrait
+            self.videoDeviceConnection = videoDeviceOutput.connection(with: .video)
+            if self.videoDeviceConnection?.isVideoOrientationSupported ?? false {
+                self.videoDeviceConnection?.videoOrientation = self.videoOrientation ?? .portrait
             }
             
         } catch {
