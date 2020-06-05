@@ -22,12 +22,12 @@ struct SSDOcrDetect {
     static let ssdOcrExtension = "mlmodelc"
     
     //SSD Model parameters
-    static let sigma: Float = 0.4
+    static let sigma: Float = 0.5
     let ssdOcrImageWidth = 600
     let ssdOcrImageHeight = 375
-    let probThreshold: Float = 0.4
+    let probThreshold: Float = 0.45
     let filterThreshold: Float = 0.39
-    let iouThreshold: Float = 0.45
+    let iouThreshold: Float = 0.5
     let centerVariance: Float = 0.1
     let sizeVariance: Float = 0.2
     let candidateSize = 200
