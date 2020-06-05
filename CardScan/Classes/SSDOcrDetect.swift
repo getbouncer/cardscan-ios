@@ -25,8 +25,8 @@ struct SSDOcrDetect {
     static let sigma: Float = 0.4
     let ssdOcrImageWidth = 600
     let ssdOcrImageHeight = 375
-    let probThreshold: Float = 0.3
-    let filterThreshold: Float = 0.29
+    let probThreshold: Float = 0.4
+    let filterThreshold: Float = 0.39
     let iouThreshold: Float = 0.45
     let centerVariance: Float = 0.1
     let sizeVariance: Float = 0.2
