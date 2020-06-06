@@ -363,6 +363,7 @@ import UIKit
     @IBAction func toggleTorch(_ sender: Any) {
         self.toggleTorch()
     }
+    
 }
 
 extension ScanViewController {

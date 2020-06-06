@@ -16,6 +16,7 @@ public protocol TestingImageDataSource: AnyObject {
     public var scanEventsDelegate: ScanEvents?
     
     static var isAppearing = false
+    static var isPadAndFormsheet: Bool = false
     static public let machineLearningQueue = DispatchQueue(label: "CardScanMlQueue")
     private let machineLearningSemaphore = DispatchSemaphore(value: 1)
     
@@ -38,7 +39,6 @@ public protocol TestingImageDataSource: AnyObject {
     private func ocrMainLoop() -> OcrMainLoop? {
         return mainLoop.flatMap { $0 as? OcrMainLoop }
     }
-    
     // this is a hack to avoid changing our public interface
     var predictedName: String?
     
@@ -112,8 +112,7 @@ public protocol TestingImageDataSource: AnyObject {
             
             return mask
         }
-        
-        return UIInterfaceOrientationMask.portrait
+        return ScanBaseViewController.isPadAndFormsheet ? .allButUpsideDown : .portrait
     }
     
     @objc static public func isCompatible() -> Bool {
@@ -185,6 +184,17 @@ public protocol TestingImageDataSource: AnyObject {
         self.videoFeed.requestCameraAccess(permissionDelegate: self)
     }
     
+    func setVideoOrientation() {
+        if ScanBaseViewController.isPadAndFormsheet {
+            self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIWindow.interfaceOrientation.rawValue)
+            self.videoFeed.videoOrientation = self.previewView?.videoOrientation
+        } else {
+            UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
+            self.previewView?.videoOrientation = .portrait
+            self.videoFeed.videoOrientation = .portrait
+        }
+    }
+    
     public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?, torchLevel: Float?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
@@ -201,6 +211,9 @@ public protocol TestingImageDataSource: AnyObject {
   
         self.ocrMainLoop()?.mainLoopDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
+        ScanBaseViewController.isPadAndFormsheet = UIDevice.current.userInterfaceIdiom == .pad && self.modalPresentationStyle == .formSheet
+        
+        self.setVideoOrientation()
         
         if testingImageDataSource != nil {
             self.ocrMainLoop()?.imageQueueSize = 20
@@ -216,24 +229,32 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     override open var shouldAutorotate: Bool {
-        return false
+        return true
     }
     
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
+        return ScanBaseViewController.isPadAndFormsheet ? .allButUpsideDown : .portrait
     }
     
     override open var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .portrait
+        return ScanBaseViewController.isPadAndFormsheet ? UIWindow.interfaceOrientation : .portrait
     }
 
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        if let videoFeedConnection = self.videoFeed.videoDeviceConnection {
+            self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue)
+            videoFeedConnection.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue) ?? .portrait
+        }
+    }
+    
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
         ScanBaseViewController.isAppearing = true
         self.ocrMainLoop()?.reset()
         self.calledOnScannedCard = false
