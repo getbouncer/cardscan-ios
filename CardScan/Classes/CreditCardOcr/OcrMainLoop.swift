@@ -260,9 +260,13 @@ public class OcrMainLoop : MachineLearningLoop {
     }
     
     @objc func didBecomeActive() {
-        mutexQueue.sync { self.inBackground = false }
-        for queue in machineLearningQueues {
-            queue.resume()
+        mutexQueue.sync {
+            if self.inBackground {
+                for queue in machineLearningQueues {
+                    queue.resume()
+                }
+            }
+            self.inBackground = false
         }
     }
     
