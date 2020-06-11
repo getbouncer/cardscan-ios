@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.5034](https://github.com/getbouncer/cardscan-ios/tree/1.0.5034) (2020-06-11)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5033...1.0.5034)
+
+**Merged pull requests:**
+
+- Add device locale to payload [\#168](https://github.com/getbouncer/cardscan-ios/pull/168) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Added strong reference to main loop [\#166](https://github.com/getbouncer/cardscan-ios/pull/166) ([jaimejiyepark](https://github.com/jaimejiyepark))
+
 ## [1.0.5033](https://github.com/getbouncer/cardscan-ios/tree/1.0.5033) (2020-06-10)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5032...1.0.5033)
@@ -543,7 +552,6 @@
 **Merged pull requests:**
 
 - bump the default error correction time [\#8](https://github.com/getbouncer/cardscan-ios/pull/8) ([kingst](https://github.com/kingst))
-- Setup for public cocoapod [\#5](https://github.com/getbouncer/cardscan-ios/pull/5) ([kingst](https://github.com/kingst))
 
 ## [1.0.4041](https://github.com/getbouncer/cardscan-ios/tree/1.0.4041) (2019-04-06)
 
@@ -567,6 +575,7 @@
 
 **Merged pull requests:**
 
+- Setup for public cocoapod [\#5](https://github.com/getbouncer/cardscan-ios/pull/5) ([kingst](https://github.com/kingst))
 - Setup for public cocoapod [\#4](https://github.com/getbouncer/cardscan-ios/pull/4) ([kingst](https://github.com/kingst))
 
 ## [1.0.4036](https://github.com/getbouncer/cardscan-ios/tree/1.0.4036) (2019-04-03)
