@@ -110,6 +110,10 @@ public struct Api {
         return bundle.infoDictionary?["CFBundleShortVersionString"].flatMap { $0 as? String }
     }
     
+    static func getDeviceLocale() -> String? {
+        return NSLocale.preferredLanguages.first
+    }
+    
     static public func apiCallWithDeviceInfo(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         if baseUrl == nil || apiKey == nil {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
@@ -124,6 +128,7 @@ public struct Api {
         apiParameters["platform"] = "ios"
         apiParameters["os"] = osVersion
         apiParameters["device_type"] = deviceType()
+        apiParameters["device_locale"] = getDeviceLocale()
         apiParameters["build"] = build
         apiParameters["sdk_version"] = getSdkVersion()
         
