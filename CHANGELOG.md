@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.5033](https://github.com/getbouncer/cardscan-ios/tree/1.0.5033) (2020-06-02)
+## [1.0.5033](https://github.com/getbouncer/cardscan-ios/tree/1.0.5033) (2020-06-10)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5032...1.0.5033)
 
@@ -12,6 +12,10 @@
 
 **Merged pull requests:**
 
+- Backgrounding logic patch [\#165](https://github.com/getbouncer/cardscan-ios/pull/165) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Update cardscan license [\#164](https://github.com/getbouncer/cardscan-ios/pull/164) ([awushensky](https://github.com/awushensky))
+- Orientation rotation support [\#163](https://github.com/getbouncer/cardscan-ios/pull/163) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Rewrote full screen & ROI image cropping, grey box image function [\#162](https://github.com/getbouncer/cardscan-ios/pull/162) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Clean up Apple OCR logic + use confidence for name [\#160](https://github.com/getbouncer/cardscan-ios/pull/160) ([kingst](https://github.com/kingst))
 - Updating name rules [\#158](https://github.com/getbouncer/cardscan-ios/pull/158) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Resume threads if deallocated when in background [\#157](https://github.com/getbouncer/cardscan-ios/pull/157) ([kingst](https://github.com/kingst))
@@ -399,7 +403,6 @@
 - Add fraud check API call [\#34](https://github.com/getbouncer/cardscan-ios/pull/34) ([kingst](https://github.com/kingst))
 - renamed and relocated bundle unit test [\#33](https://github.com/getbouncer/cardscan-ios/pull/33) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Added ability to run ScanViewController with custom images [\#32](https://github.com/getbouncer/cardscan-ios/pull/32) ([kingst](https://github.com/kingst))
-- bundle moved to model [\#26](https://github.com/getbouncer/cardscan-ios/pull/26) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.4059](https://github.com/getbouncer/cardscan-ios/tree/1.0.4059) (2019-07-03)
 
@@ -431,6 +434,7 @@
 
 - Integrate new model inits [\#28](https://github.com/getbouncer/cardscan-ios/pull/28) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Change models to optionals [\#27](https://github.com/getbouncer/cardscan-ios/pull/27) ([kingst](https://github.com/kingst))
+- bundle moved to model [\#26](https://github.com/getbouncer/cardscan-ios/pull/26) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Shut down ML queue when app enters background [\#25](https://github.com/getbouncer/cardscan-ios/pull/25) ([kingst](https://github.com/kingst))
 
 ## [1.0.4056](https://github.com/getbouncer/cardscan-ios/tree/1.0.4056) (2019-06-21)
@@ -539,6 +543,7 @@
 **Merged pull requests:**
 
 - bump the default error correction time [\#8](https://github.com/getbouncer/cardscan-ios/pull/8) ([kingst](https://github.com/kingst))
+- Setup for public cocoapod [\#5](https://github.com/getbouncer/cardscan-ios/pull/5) ([kingst](https://github.com/kingst))
 
 ## [1.0.4041](https://github.com/getbouncer/cardscan-ios/tree/1.0.4041) (2019-04-06)
 
@@ -552,14 +557,16 @@
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.4037...1.0.4040)
 
+**Merged pull requests:**
+
+- Improve bin checking, shorter error correction duration [\#6](https://github.com/getbouncer/cardscan-ios/pull/6) ([kingst](https://github.com/kingst))
+
 ## [1.0.4037](https://github.com/getbouncer/cardscan-ios/tree/1.0.4037) (2019-04-03)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.4036...1.0.4037)
 
 **Merged pull requests:**
 
-- Improve bin checking, shorter error correction duration [\#6](https://github.com/getbouncer/cardscan-ios/pull/6) ([kingst](https://github.com/kingst))
-- Setup for public cocoapod [\#5](https://github.com/getbouncer/cardscan-ios/pull/5) ([kingst](https://github.com/kingst))
 - Setup for public cocoapod [\#4](https://github.com/getbouncer/cardscan-ios/pull/4) ([kingst](https://github.com/kingst))
 
 ## [1.0.4036](https://github.com/getbouncer/cardscan-ios/tree/1.0.4036) (2019-04-03)

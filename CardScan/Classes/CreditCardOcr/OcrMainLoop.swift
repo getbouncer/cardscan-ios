@@ -265,9 +265,15 @@ public class OcrMainLoop : MachineLearningLoop {
     }
     
     @objc func didBecomeActive() {
-        mutexQueue.sync { self.inBackground = false }
-        for queue in machineLearningQueues {
-            queue.resume()
+        // isBackground is true only when the queues are suspended.
+        // isBackground flag is used as a proxy areQueuesSuspended flag to avoid crash
+        mutexQueue.sync {
+            if self.inBackground {
+                for queue in machineLearningQueues {
+                    queue.resume()
+                }
+            }
+            self.inBackground = false
         }
     }
     

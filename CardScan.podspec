@@ -7,7 +7,7 @@ CardScan is a library for scanning credit cards.
                        DESC
 
   s.homepage         = 'https://cardscan.io'
-  s.license          = { :type => 'BSD', :file => 'LICENSE' }
+  s.license          = { :type => 'Custom', :file => 'LICENSE' }
   s.author           = { 'Sam King' => 'kingst@gmail.com' }
   s.source           = { :git => 'https://github.com/getbouncer/cardscan-ios.git', :tag => s.version.to_s } 
 
