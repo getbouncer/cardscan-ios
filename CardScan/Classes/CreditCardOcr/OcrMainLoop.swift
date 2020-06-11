@@ -128,6 +128,7 @@ public class OcrMainLoop : MachineLearningLoop {
         guard let cgImage = image?.cgImage else { return }
         for ocr in mainLoop.analyzerQueue {
             ocr.dispatchQueue.async {
+                let _ = mainLoop
                 let _ = ocr.recognizeCard(in: cgImage, roiRectangle: roiRectangle)
             }
         }
