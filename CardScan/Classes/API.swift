@@ -110,11 +110,8 @@ public struct Api {
         return bundle.infoDictionary?["CFBundleShortVersionString"].flatMap { $0 as? String }
     }
     
-    static func getLanguageISO() -> String? {
-        guard let languageCode = Locale.current.languageCode, let regionCode = Locale.current.regionCode else {
-            return nil
-        }
-        return languageCode + "_" + regionCode
+    static func getDeviceLocale() -> String? {
+        return NSLocale.preferredLanguages.first
     }
     
     static public func apiCallWithDeviceInfo(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
@@ -131,7 +128,7 @@ public struct Api {
         apiParameters["platform"] = "ios"
         apiParameters["os"] = osVersion
         apiParameters["device_type"] = deviceType()
-        apiParameters["device_locale"] = getLanguageISO()
+        apiParameters["device_locale"] = getDeviceLocale()
         apiParameters["build"] = build
         apiParameters["sdk_version"] = getSdkVersion()
         
