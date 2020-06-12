@@ -289,7 +289,7 @@
 					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = L4TQ6C2R74;
+						DevelopmentTeam = 58Q7WV8B48;
 						LastSwiftMigration = 1140;
 					};
 				};
@@ -752,12 +752,12 @@
 			baseConfigurationReference = CEAB99683846AFF946286335 /* Pods-CardScan_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				DEVELOPMENT_TEAM = 58Q7WV8B48;
 				INFOPLIST_FILE = CardScan/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.getgrowthmetrics.CardScan-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xgetgrowthmetrics.CardScan-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -770,12 +770,12 @@
 			baseConfigurationReference = 1EC7DB4097DACE82DB203C14 /* Pods-CardScan_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				DEVELOPMENT_TEAM = 58Q7WV8B48;
 				INFOPLIST_FILE = CardScan/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.getgrowthmetrics.CardScan-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xgetgrowthmetrics.CardScan-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;

@@ -85,15 +85,15 @@ public class OcrMainLoop : MachineLearningLoop {
     public weak var mainLoopDelegate: OcrMainLoopDelegate?
     var errorCorrection = ErrorCorrection()
     var imageQueue: [(CGImage, CGRect)] = []
-    public var imageQueueSize = 2
+    public var imageQueueSize = 1
     var analyzerQueue: [CreditCardOcrImplementation] = []
     let mutexQueue = DispatchQueue(label: "OcrMainLoopMuxtex")
     var inBackground = false
     var machineLearningQueues: [DispatchQueue] = []
     var userDidCancel = false
     
-    public init(analyzers: [AnalyzerType] = [.ssd, .apple]) {
-        scanStats.model = "ssd+apple"
+    public init(analyzers: [AnalyzerType] = [.ssd]) {
+        scanStats.model = "ssd"
         machineLearningQueues = []
         for analyzer in analyzers {
             let queue = DispatchQueue(label: "\(analyzer) OCR ML")
@@ -128,8 +128,8 @@ public class OcrMainLoop : MachineLearningLoop {
     
     static func warmUp() {
         let mainLoop = OcrMainLoop()
-        let image = UIImage.grayImage(size: CGSize(width: 500, height: 500))
-        let roiRectangle = CGRect(x: 0, y: 0, width: 500, height: 500)
+        let image = UIImage.grayImage(size: CGSize(width: 600, height: 600))
+        let roiRectangle = CGRect(x: 0, y: 0, width: 600, height: 600)
         guard let cgImage = image?.cgImage else { return }
         for ocr in mainLoop.analyzerQueue {
             ocr.dispatchQueue.async {
