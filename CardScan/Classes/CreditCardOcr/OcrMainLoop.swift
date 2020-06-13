@@ -76,7 +76,6 @@ public protocol MachineLearningLoop: class {
 public class OcrMainLoop : MachineLearningLoop {
     public enum AnalyzerType {
         case apple
-        case legacy
         case ssd
     }
     
@@ -102,10 +101,6 @@ public class OcrMainLoop : MachineLearningLoop {
                 if #available(iOS 11.2, *) {
                     analyzerQueue.append(SSDCreditCardOcr(dispatchQueue: queue))
                 }
-            case .legacy:
-                if #available(iOS 11.2, *) {
-                    analyzerQueue.append(LegacyCreditCardOcr(dispatchQueue: queue))
-                }
             case .apple:
                 if #available(iOS 13.0, *) {
                     analyzerQueue.append(AppleCreditCardOcr(dispatchQueue: queue))
@@ -128,8 +123,8 @@ public class OcrMainLoop : MachineLearningLoop {
     
     static func warmUp() {
         let mainLoop = OcrMainLoop()
-        let image = UIImage.grayImage(size: CGSize(width: 500, height: 500))
-        let roiRectangle = CGRect(x: 0, y: 0, width: 500, height: 500)
+        let image = UIImage.grayImage(size: CGSize(width: 600, height: 600))
+        let roiRectangle = CGRect(x: 0, y: 0, width: 600, height: 600)
         guard let cgImage = image?.cgImage else { return }
         for ocr in mainLoop.analyzerQueue {
             ocr.dispatchQueue.async {

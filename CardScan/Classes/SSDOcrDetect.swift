@@ -130,9 +130,6 @@ struct SSDOcrDetect {
             let _cardNumber = processQuickRead(allBoxes: DetectedOcrBoxes)
             return _cardNumber
         }
-        else {
-            //os_log("%@", type: .error, "Not Quick Read")
-        }
         
         if (!result.pickedBoxes.isEmpty) {
                 let topCordinates = result.pickedBoxes.map{$0[1]}
@@ -160,12 +157,8 @@ struct SSDOcrDetect {
         
                 }
                 if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
-                    print(_cardNumber)
                     return _cardNumber
                 }
-                else {
-                    //os_log("%@" , type: .debug, "Could verify \(_cardNumber)")
-            }
         }
         return nil
     }
@@ -208,11 +201,7 @@ struct SSDOcrDetect {
         }
         
         if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
-            print(_cardNumber)
             return _cardNumber
-        }
-        else {
-            //os_log("%@" , type: .debug, "Could verify \(_cardNumber)")
         }
         return nil
         
@@ -220,7 +209,6 @@ struct SSDOcrDetect {
     
     func isQuickRead(allBoxes: DetectedAllOcrBoxes) -> Bool {
         if (allBoxes.allBoxes.isEmpty) || (allBoxes.allBoxes.count != 16) {
-            //os_log("%@", type: .debug, "Failed in capacity:\(allBoxes.allBoxes.capacity)")
             return false
         }
         

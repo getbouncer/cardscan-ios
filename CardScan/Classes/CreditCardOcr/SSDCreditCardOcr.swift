@@ -18,7 +18,6 @@ class SSDCreditCardOcr: CreditCardOcrImplementation {
         let startTime = Date()
         let number = ocr.perform(croppedCardImage: image)
         let duration = -startTime.timeIntervalSinceNow
-        print("DEBUG: Inference time for DD Ocr: ", duration)
         self.computationTime += duration
         self.frames += 1
         return CreditCardOcrPrediction(image: image, number: number, expiryMonth: nil,
