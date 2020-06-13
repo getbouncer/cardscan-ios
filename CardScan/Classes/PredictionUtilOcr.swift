@@ -17,15 +17,14 @@ struct PredictionUtilOcr{
      */
     func predictionUtil(scores: [[Float]], boxes: [[Float]], probThreshold: Float,
                        iouThreshold: Float, candidateSize: Int , topK: Int) -> Result{
-        var pickedBoxes:[[Float]] = [[Float]]()
-        var pickedLabels:[Int] = [Int]()
-        var pickedBoxProbs:[Float] = [Float]()
+        var pickedBoxes = [[Float]]()
+        var pickedLabels = [Int]()
+        var pickedBoxProbs = [Float]()
         
         
         for classIndex in 0..<scores[0].count{
-            var probs: [Float] = [Float]()
-            var subsetBoxes: [[Float]] = [[Float]]()
-            //var indicies : [Int] = [Int]()
+            var probs = [Float]()
+            var subsetBoxes = [[Float]]()
             
             for rowIndex in 0..<scores.count{
                 if scores[rowIndex][classIndex] > probThreshold{
