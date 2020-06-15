@@ -7,6 +7,12 @@
 //
 import Foundation
 
+public enum CenteredCardState {
+    case numberSize
+    case nonNumberSize
+    case none
+}
+
 public struct CreditCardOcrPrediction {
     public let image: CGImage
     public let number: String?
@@ -17,6 +23,9 @@ public struct CreditCardOcrPrediction {
     public let numberBoxes: [CGRect]?
     public let expiryBoxes: [CGRect]?
     public let nameBoxes: [CGRect]?
+    
+    // this is only used by Card Verify and the Liveness check and filled in by the UxModel
+    public var hasCenteredCard: CenteredCardState?
     
     static func emptyPrediction(cgImage: CGImage) -> CreditCardOcrPrediction {
         CreditCardOcrPrediction(image: cgImage, number: nil, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
