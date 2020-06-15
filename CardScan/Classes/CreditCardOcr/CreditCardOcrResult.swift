@@ -15,6 +15,9 @@ public class CreditCardOcrResult: MachineLearningResult {
     public let name: String?
     public let isFinished: Bool
     
+    // this is only used by Card Verify and the Liveness check and filled in by the UxModel
+    public var hasCenteredCard: CenteredCardState?
+    
     init(mostRecentPrediction: CreditCardOcrPrediction, number: String, expiry: String?, name: String?, isFinished: Bool, duration: Double, frames: Int) {
         self.mostRecentPrediction = mostRecentPrediction
         self.number = number

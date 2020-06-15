@@ -22,7 +22,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     private weak var debugImageView: UIImageView?
     private weak var previewView: PreviewView?
-    private weak var regionOfInterestLabel: UILabel?
+    private weak var regionOfInterestLabel: UIView?
     private weak var blurView: BlurView?
     private weak var cornerView: CornerView?
     private var regionOfInterestLabelFrame: CGRect?
@@ -32,7 +32,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     var scannedCardImage: UIImage?
     var isNavigationBarHidden = false
-    private let regionCornerRadius = CGFloat(10.0)
+    public var regionOfInterestCornerRadius = CGFloat(10.0)
     private var calledOnScannedCard = false
     
     public var mainLoop: MachineLearningLoop? = OcrMainLoop()
@@ -195,7 +195,7 @@ public protocol TestingImageDataSource: AnyObject {
         }
     }
     
-    public func setupOnViewDidLoad(regionOfInterestLabel: UILabel, blurView: BlurView, previewView: PreviewView, cornerView: CornerView, debugImageView: UIImageView?, torchLevel: Float?) {
+    public func setupOnViewDidLoad(regionOfInterestLabel: UIView, blurView: BlurView, previewView: PreviewView, cornerView: CornerView?, debugImageView: UIImageView?, torchLevel: Float?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
         self.blurView = blurView
@@ -205,7 +205,7 @@ public protocol TestingImageDataSource: AnyObject {
         
         setNeedsStatusBarAppearanceUpdate()
         regionOfInterestLabel.layer.masksToBounds = true
-        regionOfInterestLabel.layer.cornerRadius = self.regionCornerRadius
+        regionOfInterestLabel.layer.cornerRadius = self.regionOfInterestCornerRadius
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
   
