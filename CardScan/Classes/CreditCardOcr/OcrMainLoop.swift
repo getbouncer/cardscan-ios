@@ -82,7 +82,7 @@ open class OcrMainLoop : MachineLearningLoop {
     public var scanStats = ScanStats()
     
     public weak var mainLoopDelegate: OcrMainLoopDelegate?
-    var errorCorrection = ErrorCorrection()
+    public var errorCorrection = ErrorCorrection()
     var imageQueue: [(CGImage, CGRect)] = []
     public var imageQueueSize = 2
     var analyzerQueue: [CreditCardOcrImplementation] = []

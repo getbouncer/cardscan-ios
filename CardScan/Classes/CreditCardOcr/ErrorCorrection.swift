@@ -1,29 +1,21 @@
-//
-//  ErrorCorrection.swift
-//  ocr-playground-ios
-//
-//  Created by Sam King on 3/22/20.
-//  Copyright © 2020 Sam King. All rights reserved.
-//
-
 import Foundation
 
 open class ErrorCorrection {
     
     var firstPan: Date?
-    var frames = 0
+    public var frames = 0
     var numbers: [String: Int] = [:]
     var expiries: [String: Int] = [:]
     var names: [String: Int] = [:]
-    let startTime = Date()
-    let errorCorrectionTime = 2.0
-    var mostRecentPrediction: CreditCardOcrPrediction?
+    public let startTime = Date()
+    public let errorCorrectionTime = 2.0
+    public var mostRecentPrediction: CreditCardOcrPrediction?
     
     var framesPerSecond: Double {
         return Double(frames) / -startTime.timeIntervalSinceNow
     }
     
-    init() { }
+    public init() { }
     
     var number: String? {
         return self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first

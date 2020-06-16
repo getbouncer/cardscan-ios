@@ -40,7 +40,7 @@ public protocol TestingImageDataSource: AnyObject {
         return mainLoop.flatMap { $0 as? OcrMainLoop }
     }
     // this is a hack to avoid changing our public interface
-    var predictedName: String?
+    public var predictedName: String?
     
     // Child classes should override these three functions
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
@@ -364,7 +364,7 @@ public protocol TestingImageDataSource: AnyObject {
         self.onScannedCard(number: creditCardOcrResult.number, expiryYear: creditCardOcrResult.expiryYear, expiryMonth: creditCardOcrResult.expiryMonth, scannedImage: scannedCardImage)
     }
     
-    public func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
+    open func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
         if self.showDebugImageView {
             let numberBoxes = prediction.numberBoxes?.map { (UIColor.blue, $0) } ?? []
             let expiryBoxes = prediction.expiryBoxes?.map { (UIColor.red, $0) } ?? []
