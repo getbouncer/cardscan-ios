@@ -12,10 +12,10 @@ import UIKit
  and `computationTime` member variables
  */
 
-class CreditCardOcrImplementation {
+open class CreditCardOcrImplementation {
     let dispatchQueue: DispatchQueue
-    var frames = 0
-    var computationTime = 0.0
+    public var frames = 0
+    public var computationTime = 0.0
     let startTime = Date()
     
     var framesPerSecond: Double {
@@ -26,11 +26,11 @@ class CreditCardOcrImplementation {
         return Double(frames) / computationTime
     }
     
-    init(dispatchQueue: DispatchQueue) {
+    public init(dispatchQueue: DispatchQueue) {
         self.dispatchQueue = dispatchQueue
     }
     
-    func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
+    open func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
         preconditionFailure("This method must be overridden")
     }
     
@@ -63,7 +63,8 @@ class CreditCardOcrImplementation {
         return fullCardImage.cropping(to: ssdRoiRectangle) ?? fullCardImage.cropping(to: roiRectangle)
     }
     
-    func croppedImageWithFullWidth(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
+    /// This function is used only by our Legacy OCR and should go away soon
+    public func croppedImageWithFullWidth(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
         let x = CGFloat(0.0)
         let width = CGFloat(fullCardImage.width)
         let cy = roiRectangle.origin.y + 0.5 * roiRectangle.size.height
@@ -74,7 +75,20 @@ class CreditCardOcrImplementation {
         return fullCardImage.cropping(to: cropRect)
     }
     
-    static func squareCardImage(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
+    public func squareImageForUxModel(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
+        // add 10% to our ROI rectangle and make it square centered at the ROI rectangle
+        let deltaX = roiRectangle.size.width * 0.1
+        let deltaY = roiRectangle.size.width + deltaX - roiRectangle.height
+        let roiPlusBuffer = CGRect(x: roiRectangle.origin.x - deltaX * 0.5,
+                                   y: roiRectangle.origin.y - deltaY * 0.5,
+                                   width: roiRectangle.size.width + deltaX,
+                                   height: roiRectangle.size.height + deltaY)
+        
+        // if the expanded roi rectangle is too big, fall back to the tight roi rectangle
+        return fullCardImage.cropping(to: roiPlusBuffer) ?? fullCardImage.cropping(to: roiRectangle)
+    }
+    
+    public static func squareCardImage(fullCardImage: CGImage, roiRectangle: CGRect) -> CGImage? {
         let width = CGFloat(fullCardImage.width)
         let height = width
         let centerY = (roiRectangle.maxY + roiRectangle.minY) * 0.5
