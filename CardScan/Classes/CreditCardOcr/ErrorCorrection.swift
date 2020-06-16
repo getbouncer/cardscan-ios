@@ -1,35 +1,27 @@
-//
-//  ErrorCorrection.swift
-//  ocr-playground-ios
-//
-//  Created by Sam King on 3/22/20.
-//  Copyright © 2020 Sam King. All rights reserved.
-//
-
 import Foundation
 
-class ErrorCorrection {
+open class ErrorCorrection {
     
     var firstPan: Date?
-    var frames = 0
+    public var frames = 0
     var numbers: [String: Int] = [:]
     var expiries: [String: Int] = [:]
     var names: [String: Int] = [:]
-    let startTime = Date()
-    let errorCorrectionTime = 2.0
-    var mostRecentPrediction: CreditCardOcrPrediction?
+    public let startTime = Date()
+    public let errorCorrectionTime = 2.0
+    public var mostRecentPrediction: CreditCardOcrPrediction?
     
     var framesPerSecond: Double {
         return Double(frames) / -startTime.timeIntervalSinceNow
     }
     
-    init() { }
+    public init() { }
     
     var number: String? {
         return self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
     }
     
-    func result() -> CreditCardOcrResult? {
+    open func result() -> CreditCardOcrResult? {
         guard let firstPan = firstPan else { return nil }
         let predictedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         guard let number = predictedNumber else { return nil }
@@ -41,7 +33,7 @@ class ErrorCorrection {
         return CreditCardOcrResult(mostRecentPrediction: prediction, number: number, expiry: predictedExpiry, name: predictedName, isFinished: isFinished, duration: -startTime.timeIntervalSinceNow, frames: frames)
     }
     
-    func add(prediction: CreditCardOcrPrediction) -> CreditCardOcrResult? {
+    open func add(prediction: CreditCardOcrPrediction) -> CreditCardOcrResult? {
         self.frames += 1
         if let pan = prediction.number {
             if self.firstPan == nil {
@@ -60,5 +52,9 @@ class ErrorCorrection {
         self.mostRecentPrediction = prediction
         
         return result()
+    }
+    
+    open func reset() -> ErrorCorrection {
+        return ErrorCorrection()
     }
 }

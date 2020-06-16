@@ -33,4 +33,10 @@ public class CreditCardOcrResult: MachineLearningResult {
     public var expiryYear: String? {
         return expiry.flatMap { $0.split(separator: "/").last.map { String($0) }}
     }
+    
+    public static func finishedWithNonNumberSideCard(prediction: CreditCardOcrPrediction, duration: Double, frames: Int) -> CreditCardOcrResult {
+        let result = CreditCardOcrResult(mostRecentPrediction: prediction, number: "", expiry: nil, name: nil, isFinished: true, duration: duration, frames: frames)
+        result.hasCenteredCard = .nonNumberSide
+        return result
+    }
 }

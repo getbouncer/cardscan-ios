@@ -73,7 +73,7 @@ public protocol MachineLearningLoop: class {
     func push(fullImage: CGImage, roiRectangle: CGRect)
 }
 
-public class OcrMainLoop : MachineLearningLoop {
+open class OcrMainLoop : MachineLearningLoop {
     public enum AnalyzerType {
         case apple
         case legacy
@@ -82,7 +82,7 @@ public class OcrMainLoop : MachineLearningLoop {
     public var scanStats = ScanStats()
     
     public weak var mainLoopDelegate: OcrMainLoopDelegate?
-    var errorCorrection = ErrorCorrection()
+    public var errorCorrection = ErrorCorrection()
     var imageQueue: [(CGImage, CGRect)] = []
     public var imageQueueSize = 2
     var analyzerQueue: [CreditCardOcrImplementation] = []
@@ -92,21 +92,30 @@ public class OcrMainLoop : MachineLearningLoop {
     var userDidCancel = false
     
     public init(analyzers: [AnalyzerType] = [.legacy, .apple]) {
-        scanStats.model = "legacy+apple"
-        machineLearningQueues = []
+        var ocrImplementations: [CreditCardOcrImplementation] = []
         for analyzer in analyzers {
             let queue = DispatchQueue(label: "\(analyzer) OCR ML")
             switch (analyzer) {
             case .legacy:
                 if #available(iOS 11.2, *) {
-                    analyzerQueue.append(LegacyCreditCardOcr(dispatchQueue: queue))
+                    ocrImplementations.append(LegacyCreditCardOcr(dispatchQueue: queue))
                 }
             case .apple:
                 if #available(iOS 13.0, *) {
-                    analyzerQueue.append(AppleCreditCardOcr(dispatchQueue: queue))
+                    ocrImplementations.append(AppleCreditCardOcr(dispatchQueue: queue))
                 }
             }
-            machineLearningQueues.append(queue)
+        }
+        setupMl(ocrImplementations: ocrImplementations)
+    }
+    
+    /// Note: you must call this function in your constructor
+    public func setupMl(ocrImplementations: [CreditCardOcrImplementation]) {
+        machineLearningQueues = []
+        scanStats.model = "legacy+apple"
+        for ocrImplementation in ocrImplementations {
+            machineLearningQueues.append(ocrImplementation.dispatchQueue)
+            analyzerQueue.append(ocrImplementation)
         }
         registerAppNotifications()
     }
@@ -117,7 +126,7 @@ public class OcrMainLoop : MachineLearningLoop {
     
     func reset() {
         mutexQueue.async {
-            self.errorCorrection = ErrorCorrection()
+            self.errorCorrection = self.errorCorrection.reset()
         }
     }
     
