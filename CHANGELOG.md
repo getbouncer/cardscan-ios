@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.5035](https://github.com/getbouncer/cardscan-ios/tree/1.0.5035) (2020-06-16)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5034...1.0.5035)
+
+**Merged pull requests:**
+
+- Liveness ml [\#171](https://github.com/getbouncer/cardscan-ios/pull/171) ([kingst](https://github.com/kingst))
+- Roi crop to accommodate roi not in center [\#170](https://github.com/getbouncer/cardscan-ios/pull/170) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Hooks for liveness check [\#169](https://github.com/getbouncer/cardscan-ios/pull/169) ([kingst](https://github.com/kingst))
+
 ## [1.0.5034](https://github.com/getbouncer/cardscan-ios/tree/1.0.5034) (2020-06-11)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5033...1.0.5034)
