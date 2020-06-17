@@ -129,39 +129,13 @@ struct SSDOcrDetect {
         if OcrDDUtils.isQuickRead(allBoxes: DetectedOcrBoxes){
             return OcrDDUtils.processQuickRead(allBoxes: DetectedOcrBoxes)
         }
-        
-        if (!result.pickedBoxes.isEmpty) {
-                let topCordinates = result.pickedBoxes.map{$0[1]}
-                let bottomCordinates = result.pickedBoxes.map{$0[3]}
-        
-                let medianYmin = topCordinates.sorted(by: <)[topCordinates.count / 2]
-                let medianYmax = bottomCordinates.sorted(by: <)[bottomCordinates.count / 2]
-        
-                let medianHeight = abs(medianYmax - medianYmin)
-                let medianCenter = (medianYmin + medianYmax) / 2
-        
-                let leftCordinates = result.pickedBoxes.map{$0[0]}
-                let sortedLeftCordinates = leftCordinates.enumerated().sorted(by: {$0.element < $1.element})
-                let indices = sortedLeftCordinates.map{$0.offset}
-                var _cardNumber: String = ""
-
-                indices.forEach { index in
-                    // get the box
-                    let box = result.pickedBoxes[index]
-                    let boxCenter = abs(box[3] + box[1]) / 2
-                    let boxHeight = abs(box[3] - box[1])
-                    if abs(boxCenter - medianCenter) < medianHeight && boxHeight < 1.2 * medianHeight {
-                            _cardNumber = _cardNumber + String(result.pickedLabels[index])
-                    }
-        
-                }
-                if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
-                    return _cardNumber
-                }
+        else {
+            return OcrDDUtils.sortAndRemoveFalsePositives(allBoxes: DetectedOcrBoxes)
         }
-        return nil
+        
+        
     }
-   
+
     
 
     public func predict(image: UIImage) -> String? {

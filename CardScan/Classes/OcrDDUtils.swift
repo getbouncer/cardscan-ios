@@ -9,6 +9,8 @@ import Foundation
 
 struct OcrDDUtils {
     static let offsetQuickRead:Float = 2.0
+    static let falsePositiveTolerance:Float = 1.2
+    static let minimumCardDigits = 12
     
     static func isQuickRead(allBoxes: DetectedAllOcrBoxes) -> Bool {
         if (allBoxes.allBoxes.isEmpty) || (allBoxes.allBoxes.count != 16) {
@@ -83,6 +85,42 @@ struct OcrDDUtils {
     
     static func sortAndRemoveFalsePositives(allBoxes: DetectedAllOcrBoxes) -> String? {
         
+        if (allBoxes.allBoxes.isEmpty) || (allBoxes.allBoxes.count < minimumCardDigits) {
+            return nil
+        }
+        
+        var leftCordinates = [Float]()
+        var topCordinates = [Float]()
+        var bottomCordinates = [Float]()
+        
+        for idx in 0..<allBoxes.allBoxes.count {
+            leftCordinates.append(Float(allBoxes.allBoxes[idx].rect.minX))
+            topCordinates.append(Float(allBoxes.allBoxes[idx].rect.minY))
+            bottomCordinates.append(Float(allBoxes.allBoxes[idx].rect.maxY))
+        }
+        
+        let medianYmin = topCordinates.sorted(by: <)[topCordinates.count / 2]
+        let medianYmax = bottomCordinates.sorted(by: <)[bottomCordinates.count / 2]
+        
+        let medianHeight = abs(medianYmax - medianYmin)
+        let medianCenter = (medianYmin + medianYmax) / 2
+        
+        let sortedLeftCordinates = leftCordinates.enumerated().sorted(by: {$0.element < $1.element})
+        let indices = sortedLeftCordinates.map{$0.offset}
+        var _cardNumber: String = ""
+
+        indices.forEach { index in
+            let box = allBoxes.allBoxes[index]
+            let boxCenter = abs(Float(box.rect.maxY) + Float(box.rect.minY)) / 2
+            let boxHeight = abs(Float(box.rect.maxY) - Float(box.rect.minY))
+            if abs(boxCenter - medianCenter) < medianHeight && boxHeight < falsePositiveTolerance * medianHeight {
+                _cardNumber = _cardNumber + String(box.label)
+            }
+        }
+        
+        if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
+            return _cardNumber
+        }
         
         return nil
     }
