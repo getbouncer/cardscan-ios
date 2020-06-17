@@ -10,7 +10,11 @@ import Foundation
 public enum CenteredCardState {
     case numberSide
     case nonNumberSide
-    case none
+    case noCard
+    
+    public func hasCard() -> Bool {
+        return self == .numberSide || self == .nonNumberSide
+    }
 }
 
 public struct CreditCardOcrPrediction {
@@ -25,9 +29,9 @@ public struct CreditCardOcrPrediction {
     public let nameBoxes: [CGRect]?
     
     // this is only used by Card Verify and the Liveness check and filled in by the UxModel
-    public var hasCenteredCard: CenteredCardState?
+    public var centeredCardState: CenteredCardState?
     
-    public init(image: CGImage, number: String?, expiryMonth: String?, expiryYear: String?, name: String?, computationTime: Double, numberBoxes: [CGRect]?, expiryBoxes: [CGRect]?, nameBoxes: [CGRect]?, hasCenteredCard: CenteredCardState? = nil) {
+    public init(image: CGImage, number: String?, expiryMonth: String?, expiryYear: String?, name: String?, computationTime: Double, numberBoxes: [CGRect]?, expiryBoxes: [CGRect]?, nameBoxes: [CGRect]?, centeredCardState: CenteredCardState? = nil) {
         
         self.image = image
         self.number = number
@@ -38,7 +42,7 @@ public struct CreditCardOcrPrediction {
         self.numberBoxes = numberBoxes
         self.expiryBoxes = expiryBoxes
         self.nameBoxes = nameBoxes
-        self.hasCenteredCard = hasCenteredCard
+        self.centeredCardState = centeredCardState
     }
     
     public static func emptyPrediction(cgImage: CGImage) -> CreditCardOcrPrediction {
