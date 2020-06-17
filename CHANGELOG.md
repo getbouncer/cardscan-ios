@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.5036](https://github.com/getbouncer/cardscan-ios/tree/1.0.5036) (2020-06-17)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5035...1.0.5036)
+
+**Merged pull requests:**
+
+- Refactor for the completion loop [\#173](https://github.com/getbouncer/cardscan-ios/pull/173) ([kingst](https://github.com/kingst))
+- Temp hack for roi calculations [\#172](https://github.com/getbouncer/cardscan-ios/pull/172) ([kingst](https://github.com/kingst))
+
 ## [1.0.5035](https://github.com/getbouncer/cardscan-ios/tree/1.0.5035) (2020-06-16)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5034...1.0.5035)
@@ -7,7 +16,7 @@
 **Merged pull requests:**
 
 - Liveness ml [\#171](https://github.com/getbouncer/cardscan-ios/pull/171) ([kingst](https://github.com/kingst))
-- Roi crop to accommodate roi not in center [\#170](https://github.com/getbouncer/cardscan-ios/pull/170) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- roi crop to accommodate roi not in center [\#170](https://github.com/getbouncer/cardscan-ios/pull/170) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Hooks for liveness check [\#169](https://github.com/getbouncer/cardscan-ios/pull/169) ([kingst](https://github.com/kingst))
 
 ## [1.0.5034](https://github.com/getbouncer/cardscan-ios/tree/1.0.5034) (2020-06-11)
@@ -84,7 +93,6 @@
 - Added a mainLoopDelegate with a strong pointer [\#137](https://github.com/getbouncer/cardscan-ios/pull/137) ([kingst](https://github.com/kingst))
 - Add protocol to enable extending the main loop [\#136](https://github.com/getbouncer/cardscan-ios/pull/136) ([kingst](https://github.com/kingst))
 - change cardscan to csbundle [\#135](https://github.com/getbouncer/cardscan-ios/pull/135) ([jaimejiyepark](https://github.com/jaimejiyepark))
-- Pass the full image and roi rectangle only [\#131](https://github.com/getbouncer/cardscan-ios/pull/131) ([kingst](https://github.com/kingst))
 - Provide the ability to override the ML model in ScanBaseViewController [\#129](https://github.com/getbouncer/cardscan-ios/pull/129) ([kingst](https://github.com/kingst))
 - Modifying gitignore and adding back pod shared xcsheme to allow carthage build [\#128](https://github.com/getbouncer/cardscan-ios/pull/128) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
@@ -94,6 +102,7 @@
 
 **Merged pull requests:**
 
+- Pass the full image and roi rectangle only [\#131](https://github.com/getbouncer/cardscan-ios/pull/131) ([kingst](https://github.com/kingst))
 - Update expiry thresholds for better accuracy [\#125](https://github.com/getbouncer/cardscan-ios/pull/125) ([kingst](https://github.com/kingst))
 - made network function public [\#123](https://github.com/getbouncer/cardscan-ios/pull/123) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Obj detect v003 [\#121](https://github.com/getbouncer/cardscan-ios/pull/121) ([dxaen](https://github.com/dxaen))
