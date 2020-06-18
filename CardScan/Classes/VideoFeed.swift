@@ -13,6 +13,7 @@ class VideoFeed {
     }
     
     let session = AVCaptureSession()
+    weak var previewViewDelegate: PreviewViewOrientation?
     private var isSessionRunning = false
     private let sessionQueue = DispatchQueue(label: "session queue")
     private var setupResult: SessionSetupResult = .success
@@ -132,6 +133,10 @@ class VideoFeed {
             self.videoDeviceConnection = videoDeviceOutput.connection(with: .video)
             if self.videoDeviceConnection?.isVideoOrientationSupported ?? false {
                 self.videoDeviceConnection?.videoOrientation = self.videoOrientation ?? .portrait
+            }
+            
+            DispatchQueue.main.async {
+                self.previewViewDelegate?.setPreviewViewVideoOrientation()
             }
             
         } catch {

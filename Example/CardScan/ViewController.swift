@@ -156,6 +156,9 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         self.present(vc, animated: true)
     }
     
+    func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?) { }
+    func onScanComplete(scanStats: ScanStats) {}
+    func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?) {}
     
     @IBAction func scanWithTimeoutPress() {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
@@ -192,18 +195,6 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         vc.testingImageDataSource = self
         vc.showDebugImageView = true
         self.present(vc, animated: true)
-    }
-    
-    func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
-        print("frame detected")
-    }
-    
-    func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {
-        print("number recognized")
-    }
-    
-    func onScanComplete(scanStats: ScanStats) {
-        print("scan complete")
     }
     
     @IBAction func scanWithStatsPress() {

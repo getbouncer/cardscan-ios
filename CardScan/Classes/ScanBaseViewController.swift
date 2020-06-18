@@ -6,7 +6,11 @@ public protocol TestingImageDataSource: AnyObject {
     func nextSquareAndFullImage() -> (CGImage, CGImage)?
 }
 
-@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AfterPermissions, OcrMainLoopDelegate {
+public protocol PreviewViewOrientation: AnyObject {
+    func setPreviewViewVideoOrientation()
+}
+
+@objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AfterPermissions, OcrMainLoopDelegate, PreviewViewOrientation {
     
     public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var errorCorrectionDuration = 1.5
@@ -195,6 +199,12 @@ public protocol TestingImageDataSource: AnyObject {
         }
     }
     
+    public func setPreviewViewVideoOrientation() {
+        if self.previewView?.videoPreviewLayer.connection?.isVideoOrientationSupported ?? false {
+            self.previewView?.videoPreviewLayer.connection?.videoOrientation = self.previewView?.videoOrientation ?? .portrait
+        }
+    }
+    
     public func setupOnViewDidLoad(regionOfInterestLabel: UIView, blurView: BlurView, previewView: PreviewView, cornerView: CornerView?, debugImageView: UIImageView?, torchLevel: Float?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
@@ -202,6 +212,7 @@ public protocol TestingImageDataSource: AnyObject {
         self.previewView = previewView
         self.debugImageView = debugImageView
         self.cornerView = cornerView
+        self.videoFeed.previewViewDelegate = self
         
         setNeedsStatusBarAppearanceUpdate()
         regionOfInterestLabel.layer.masksToBounds = true
@@ -211,6 +222,7 @@ public protocol TestingImageDataSource: AnyObject {
   
         self.ocrMainLoop()?.mainLoopDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
+        
         ScanBaseViewController.isPadAndFormsheet = UIDevice.current.userInterfaceIdiom == .pad && self.modalPresentationStyle == .formSheet
         
         self.setVideoOrientation()
@@ -248,8 +260,10 @@ public protocol TestingImageDataSource: AnyObject {
         super.viewWillTransition(to: size, with: coordinator)
         
         if let videoFeedConnection = self.videoFeed.videoDeviceConnection {
-            self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue)
             videoFeedConnection.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue) ?? .portrait
+        }
+        if let previewViewConnection = self.previewView?.videoPreviewLayer.connection {
+            previewViewConnection.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue) ?? .portrait
         }
     }
     

@@ -53,7 +53,6 @@ public class PreviewView: UIView {
             fatalError("Expected `AVCaptureVideoPreviewLayer` type for layer. Check PreviewView.layerClass implementation.")
         }
         layer.videoGravity = .resizeAspectFill
-        layer.connection?.videoOrientation = self.videoOrientation ?? .portrait
         return layer
     }
     
