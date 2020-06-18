@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.5037](https://github.com/getbouncer/cardscan-ios/tree/1.0.5037) (2020-06-17)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5036...1.0.5037)
+
 ## [1.0.5036](https://github.com/getbouncer/cardscan-ios/tree/1.0.5036) (2020-06-17)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5035...1.0.5036)
@@ -93,6 +97,7 @@
 - Added a mainLoopDelegate with a strong pointer [\#137](https://github.com/getbouncer/cardscan-ios/pull/137) ([kingst](https://github.com/kingst))
 - Add protocol to enable extending the main loop [\#136](https://github.com/getbouncer/cardscan-ios/pull/136) ([kingst](https://github.com/kingst))
 - change cardscan to csbundle [\#135](https://github.com/getbouncer/cardscan-ios/pull/135) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Pass the full image and roi rectangle only [\#131](https://github.com/getbouncer/cardscan-ios/pull/131) ([kingst](https://github.com/kingst))
 - Provide the ability to override the ML model in ScanBaseViewController [\#129](https://github.com/getbouncer/cardscan-ios/pull/129) ([kingst](https://github.com/kingst))
 - Modifying gitignore and adding back pod shared xcsheme to allow carthage build [\#128](https://github.com/getbouncer/cardscan-ios/pull/128) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
@@ -102,7 +107,6 @@
 
 **Merged pull requests:**
 
-- Pass the full image and roi rectangle only [\#131](https://github.com/getbouncer/cardscan-ios/pull/131) ([kingst](https://github.com/kingst))
 - Update expiry thresholds for better accuracy [\#125](https://github.com/getbouncer/cardscan-ios/pull/125) ([kingst](https://github.com/kingst))
 - made network function public [\#123](https://github.com/getbouncer/cardscan-ios/pull/123) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Obj detect v003 [\#121](https://github.com/getbouncer/cardscan-ios/pull/121) ([dxaen](https://github.com/dxaen))
@@ -219,7 +223,6 @@
 **Merged pull requests:**
 
 - Moves setting the sessionPreset after addInput.  [\#90](https://github.com/getbouncer/cardscan-ios/pull/90) ([waltersanford](https://github.com/waltersanford))
-- Fix typo [\#88](https://github.com/getbouncer/cardscan-ios/pull/88) ([kingst](https://github.com/kingst))
 - adapt to new iOS13 card-screen presentation by setting to full-screen [\#87](https://github.com/getbouncer/cardscan-ios/pull/87) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5016](https://github.com/getbouncer/cardscan-ios/tree/1.0.5016) (2019-09-23)
@@ -240,6 +243,7 @@
 
 **Merged pull requests:**
 
+- Fix typo [\#88](https://github.com/getbouncer/cardscan-ios/pull/88) ([kingst](https://github.com/kingst))
 - Deny experience [\#83](https://github.com/getbouncer/cardscan-ios/pull/83) ([kingst](https://github.com/kingst))
 - Move setup until after we pause the sessionQueue [\#82](https://github.com/getbouncer/cardscan-ios/pull/82) ([kingst](https://github.com/kingst))
 - Make creditcardutils public [\#81](https://github.com/getbouncer/cardscan-ios/pull/81) ([kingst](https://github.com/kingst))
@@ -445,10 +449,6 @@
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.4057...1.0.4058)
 
-**Merged pull requests:**
-
-- Tests to exercise model loading exception handling [\#29](https://github.com/getbouncer/cardscan-ios/pull/29) ([kingst](https://github.com/kingst))
-
 ## [1.0.4057](https://github.com/getbouncer/cardscan-ios/tree/1.0.4057) (2019-06-27)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.4056...1.0.4057)
@@ -460,6 +460,7 @@
 
 **Merged pull requests:**
 
+- Tests to exercise model loading exception handling [\#29](https://github.com/getbouncer/cardscan-ios/pull/29) ([kingst](https://github.com/kingst))
 - Integrate new model inits [\#28](https://github.com/getbouncer/cardscan-ios/pull/28) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Change models to optionals [\#27](https://github.com/getbouncer/cardscan-ios/pull/27) ([kingst](https://github.com/kingst))
 - bundle moved to model [\#26](https://github.com/getbouncer/cardscan-ios/pull/26) ([jaimejiyepark](https://github.com/jaimejiyepark))
