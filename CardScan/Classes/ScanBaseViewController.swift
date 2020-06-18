@@ -222,7 +222,6 @@ public protocol TestingImageDataSource: AnyObject {
         //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
         self.videoFeed.setup(captureDelegate: self, completion: { success in
             self.previewView?.videoPreviewLayer.connection?.videoOrientation = self.initialVideoOrientation
-            print("set video orientation")
             if let level = torchLevel {
                 self.setTorchLevel(level: level)
             }
