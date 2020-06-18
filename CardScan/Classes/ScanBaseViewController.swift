@@ -186,7 +186,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     func setVideoOrientation() {
         if ScanBaseViewController.isPadAndFormsheet {
-            self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIWindow.interfaceOrientation.rawValue)
+            self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue)
             self.videoFeed.videoOrientation = self.previewView?.videoOrientation
         } else {
             UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
@@ -209,11 +209,11 @@ public protocol TestingImageDataSource: AnyObject {
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
   
+        ScanBaseViewController.isPadAndFormsheet = UIDevice.current.userInterfaceIdiom == .pad && self.modalPresentationStyle == .formSheet
+        self.setVideoOrientation()
+        
         self.ocrMainLoop()?.mainLoopDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
-        ScanBaseViewController.isPadAndFormsheet = UIDevice.current.userInterfaceIdiom == .pad && self.modalPresentationStyle == .formSheet
-        
-        self.setVideoOrientation()
         
         if testingImageDataSource != nil {
             self.ocrMainLoop()?.imageQueueSize = 20
@@ -248,8 +248,10 @@ public protocol TestingImageDataSource: AnyObject {
         super.viewWillTransition(to: size, with: coordinator)
         
         if let videoFeedConnection = self.videoFeed.videoDeviceConnection {
-            self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue)
             videoFeedConnection.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue) ?? .portrait
+        }
+        if let previewViewConnection = self.previewView?.videoPreviewLayer.connection {
+            previewViewConnection.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue) ?? .portrait
         }
     }
     
