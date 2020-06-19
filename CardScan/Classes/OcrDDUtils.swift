@@ -11,9 +11,12 @@ struct OcrDDUtils {
     static let offsetQuickRead:Float = 2.0
     static let falsePositiveTolerance:Float = 1.2
     static let minimumCardDigits = 12
+    static let numOfQuickReadDigits = 16
+    static let numOfQuickReadDigitsPerGroup = 4
     
     static func isQuickRead(allBoxes: DetectedAllOcrBoxes) -> Bool {
-        if (allBoxes.allBoxes.isEmpty) || (allBoxes.allBoxes.count != 16) {
+        
+        if (allBoxes.allBoxes.isEmpty) || (allBoxes.allBoxes.count != numOfQuickReadDigits) {
             return false
         }
         
@@ -41,46 +44,52 @@ struct OcrDDUtils {
     }
     
     static func processQuickRead(allBoxes: DetectedAllOcrBoxes) -> String? {
+        
+        if (allBoxes.allBoxes.count != numOfQuickReadDigits){
+            return nil
+        }
+        
         var _cardNumber: String = ""
         let sortedBoxes = allBoxes.allBoxes.sorted(by: {($0.rect.minY / 2 + $0.rect.maxY / 2)
                                                             < ($1.rect.minY / 2 + $1.rect.maxY / 2)})
         
-        var groupSlice = sortedBoxes[..<4]
-        var firstGroup = Array(groupSlice)
-        firstGroup = firstGroup.sorted(by: {$0.rect.minX < $1.rect.minX})
-        
-        for idx in 0..<firstGroup.count {
-            _cardNumber = _cardNumber + String(firstGroup[idx].label)
+        var start = 0
+        var end = numOfQuickReadDigitsPerGroup
+        for _ in 0..<sortedBoxes.count / numOfQuickReadDigitsPerGroup {
+            
+            if let partialNumber = OcrDDUtils.sortBoxesInRange(boxes: sortedBoxes,
+                                                               start: start, end: end) {
+                _cardNumber = _cardNumber + partialNumber
+                start = start + numOfQuickReadDigitsPerGroup
+                end = end + numOfQuickReadDigitsPerGroup
+            }
+            else {
+                return nil
+            }
         }
-        
-        groupSlice = sortedBoxes[4..<8]
-        var secondGroup = Array(groupSlice)
-        secondGroup = secondGroup.sorted(by: {$0.rect.minX < $1.rect.minX})
-        
-        for idx in 0..<secondGroup.count {
-            _cardNumber = _cardNumber + String(secondGroup[idx].label)
-        }
-        
-        groupSlice = sortedBoxes[8..<12]
-        var thirdGroup = Array(groupSlice)
-        thirdGroup = thirdGroup.sorted(by: {$0.rect.minX < $1.rect.minX})
-       
-        for idx in 0..<thirdGroup.count {
-            _cardNumber = _cardNumber + String(thirdGroup[idx].label)
-        }
-        
-        groupSlice = sortedBoxes[12..<16]
-        var fourthGroup = Array(groupSlice)
-        fourthGroup = fourthGroup.sorted(by: {$0.rect.minX < $1.rect.minX})
-      
-        for idx in 0..<fourthGroup.count {
-            _cardNumber = _cardNumber + String(fourthGroup[idx].label)
-        }
-        
+
         if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
             return _cardNumber
         }
         return nil
+    }
+    
+    static func sortBoxesInRange(boxes: [DetectedSSDOcrBox], start: Int, end: Int) -> String? {
+        
+        if boxes.indices.contains(start) && boxes.indices.contains(end) {
+            var _groupNumber: String = ""
+            let groupSlice = boxes[start..<end]
+            let group = Array(groupSlice)
+            let sortedGroup = group.sorted(by: {$0.rect.minX < $1.rect.minX})
+            
+            for idx in 0..<sortedGroup.count {
+                _groupNumber = _groupNumber + String(sortedGroup[idx].label)
+            }
+            return _groupNumber
+        }
+        else {
+            return nil
+        }
     }
     
     static func sortAndRemoveFalsePositives(allBoxes: DetectedAllOcrBoxes) -> String? {
