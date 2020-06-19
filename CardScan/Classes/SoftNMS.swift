@@ -27,7 +27,7 @@ struct SoftNMS{
             vDSP_maxvi(probs, 1, &maxElement, &vdspIndex, vDSP_Length(probs.count))
             let maxIdx = Int(vdspIndex)
 
-            var currentBox = subsetBoxes[maxIdx]
+            let currentBox = subsetBoxes[maxIdx]
             pickedBoxes.append(subsetBoxes[maxIdx])
             pickedScores.append(maxElement)
 
