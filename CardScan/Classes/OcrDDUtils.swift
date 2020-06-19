@@ -120,11 +120,13 @@ struct OcrDDUtils {
         var _cardNumber: String = ""
 
         indices.forEach { index in
-            let box = allBoxes.allBoxes[index]
-            let boxCenter = abs(Float(box.rect.maxY) + Float(box.rect.minY)) / 2
-            let boxHeight = abs(Float(box.rect.maxY) - Float(box.rect.minY))
-            if abs(boxCenter - medianCenter) < medianHeight && boxHeight < falsePositiveTolerance * medianHeight {
-                _cardNumber = _cardNumber + String(box.label)
+            if allBoxes.allBoxes.indices.contains(index) {
+                let box = allBoxes.allBoxes[index]
+                let boxCenter = abs(Float(box.rect.maxY) + Float(box.rect.minY)) / 2
+                let boxHeight = abs(Float(box.rect.maxY) - Float(box.rect.minY))
+                if abs(boxCenter - medianCenter) < medianHeight && boxHeight < falsePositiveTolerance * medianHeight {
+                    _cardNumber = _cardNumber + String(box.label)
+                }
             }
         }
         
