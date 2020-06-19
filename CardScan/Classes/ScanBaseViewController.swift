@@ -217,11 +217,12 @@ public protocol TestingImageDataSource: AnyObject {
         self.ocrMainLoop()?.mainLoopDelegate = self
         self.previewView?.videoPreviewLayer.session = self.videoFeed.session
         
-        self.videoFeed.videoOrientation = self.initialVideoOrientation
         self.videoFeed.pauseSession()
         //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
-        self.videoFeed.setup(captureDelegate: self, completion: { success in
-            self.previewView?.videoPreviewLayer.connection?.videoOrientation = self.initialVideoOrientation
+        self.videoFeed.setup(captureDelegate: self, initialVideoOrientation: self.initialVideoOrientation, completion: { success in
+            if self.previewView?.videoPreviewLayer.connection?.isVideoOrientationSupported ?? false {
+                self.previewView?.videoPreviewLayer.connection?.videoOrientation = self.initialVideoOrientation
+            }
             if let level = torchLevel {
                 self.setTorchLevel(level: level)
             }
@@ -247,10 +248,10 @@ public protocol TestingImageDataSource: AnyObject {
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        if let videoFeedConnection = self.videoFeed.videoDeviceConnection {
+        if let videoFeedConnection = self.videoFeed.videoDeviceConnection, videoFeedConnection.isVideoOrientationSupported {
             videoFeedConnection.videoOrientation = AVCaptureVideoOrientation(deviceOrientation: UIDevice.current.orientation) ?? .portrait
         }
-        if let previewViewConnection = self.previewView?.videoPreviewLayer.connection {
+        if let previewViewConnection = self.previewView?.videoPreviewLayer.connection, previewViewConnection.isVideoOrientationSupported {
             previewViewConnection.videoOrientation = AVCaptureVideoOrientation(deviceOrientation: UIDevice.current.orientation) ?? .portrait
         }
     }
