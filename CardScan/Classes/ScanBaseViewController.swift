@@ -29,6 +29,13 @@ public protocol TestingImageDataSource: AnyObject {
     private var previewViewFrame: CGRect?
     
     var videoFeed = VideoFeed()
+    var initialVideoOrientation: AVCaptureVideoOrientation {
+        if ScanBaseViewController.isPadAndFormsheet {
+            return AVCaptureVideoOrientation(interfaceOrientation: UIWindow.interfaceOrientation) ?? .portrait
+        } else {
+            return .portrait
+        }
+    }
     
     var scannedCardImage: UIImage?
     var isNavigationBarHidden = false
@@ -184,17 +191,6 @@ public protocol TestingImageDataSource: AnyObject {
         self.videoFeed.requestCameraAccess(permissionDelegate: self)
     }
     
-    func setVideoOrientation() {
-        if ScanBaseViewController.isPadAndFormsheet {
-            self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIWindow.interfaceOrientation.rawValue)
-            self.videoFeed.videoOrientation = self.previewView?.videoOrientation
-        } else {
-            UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
-            self.previewView?.videoOrientation = .portrait
-            self.videoFeed.videoOrientation = .portrait
-        }
-    }
-    
     public func setupOnViewDidLoad(regionOfInterestLabel: UIView, blurView: BlurView, previewView: PreviewView, cornerView: CornerView?, debugImageView: UIImageView?, torchLevel: Float?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
@@ -202,26 +198,31 @@ public protocol TestingImageDataSource: AnyObject {
         self.previewView = previewView
         self.debugImageView = debugImageView
         self.cornerView = cornerView
+        ScanBaseViewController.isPadAndFormsheet = UIDevice.current.userInterfaceIdiom == .pad && self.modalPresentationStyle == .formSheet
         
         setNeedsStatusBarAppearanceUpdate()
         regionOfInterestLabel.layer.masksToBounds = true
         regionOfInterestLabel.layer.cornerRadius = self.regionOfInterestCornerRadius
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
-  
-        self.ocrMainLoop()?.mainLoopDelegate = self
-        self.previewView?.videoPreviewLayer.session = self.videoFeed.session
-        ScanBaseViewController.isPadAndFormsheet = UIDevice.current.userInterfaceIdiom == .pad && self.modalPresentationStyle == .formSheet
-        
-        self.setVideoOrientation()
+    
+        if !ScanBaseViewController.isPadAndFormsheet {
+            UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
+        }
         
         if testingImageDataSource != nil {
             self.ocrMainLoop()?.imageQueueSize = 20
         }
         
+        self.ocrMainLoop()?.mainLoopDelegate = self
+        self.previewView?.videoPreviewLayer.session = self.videoFeed.session
+        
         self.videoFeed.pauseSession()
         //Apple example app sets up in viewDidLoad: https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
-        self.videoFeed.setup(captureDelegate: self, completion: { success in
+        self.videoFeed.setup(captureDelegate: self, initialVideoOrientation: self.initialVideoOrientation, completion: { success in
+            if self.previewView?.videoPreviewLayer.connection?.isVideoOrientationSupported ?? false {
+                self.previewView?.videoPreviewLayer.connection?.videoOrientation = self.initialVideoOrientation
+            }
             if let level = torchLevel {
                 self.setTorchLevel(level: level)
             }
@@ -247,9 +248,11 @@ public protocol TestingImageDataSource: AnyObject {
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        if let videoFeedConnection = self.videoFeed.videoDeviceConnection {
-            self.previewView?.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue)
-            videoFeedConnection.videoOrientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue) ?? .portrait
+        if let videoFeedConnection = self.videoFeed.videoDeviceConnection, videoFeedConnection.isVideoOrientationSupported {
+            videoFeedConnection.videoOrientation = AVCaptureVideoOrientation(deviceOrientation: UIDevice.current.orientation) ?? .portrait
+        }
+        if let previewViewConnection = self.previewView?.videoPreviewLayer.connection, previewViewConnection.isVideoOrientationSupported {
+            previewViewConnection.videoOrientation = AVCaptureVideoOrientation(deviceOrientation: UIDevice.current.orientation) ?? .portrait
         }
     }
     
