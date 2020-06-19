@@ -95,8 +95,9 @@ extension CGImage {
 
             if fullScreenCropHeight > previewViewHeight {
                 roiCenterY += (fullScreenCropHeight - previewViewHeight) / 2.0
-            } else if fullScreenCropWidth > previewViewWidth {
-                roiCenterX -= (fullScreenCropWidth - previewViewWidth) / 2.0
+            }
+            if fullScreenCropWidth > previewViewWidth {
+                roiCenterX += (fullScreenCropWidth - previewViewWidth) / 2.0
             }
 
             return CGRect(x: roiCenterX - roiWidth / 2.0, y: roiCenterY - roiHeight / 2.0, width: roiWidth, height: roiHeight)
