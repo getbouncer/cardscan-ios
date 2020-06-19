@@ -80,9 +80,7 @@ open class CreditCardOcrImplementation {
         let deltaX = roiRectangle.size.width * 0.1
         let deltaY = roiRectangle.size.width + deltaX - roiRectangle.height
         
-        // todo(stk) don't assume that it's centered, just a quick hack for now
-        let x = CGFloat(fullCardImage.width) * 0.5 - (roiRectangle.size.width + deltaX) * 0.5
-        let roiPlusBuffer = CGRect(x: x,
+       let roiPlusBuffer = CGRect(x: roiRectangle.origin.x - deltaX * 0.5,
                                    y: roiRectangle.origin.y - deltaY * 0.5,
                                    width: roiRectangle.size.width + deltaX,
                                    height: roiRectangle.size.height + deltaY)
