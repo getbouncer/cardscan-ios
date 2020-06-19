@@ -54,7 +54,7 @@ struct OcrDDUtils {
                                                             < ($1.rect.minY / 2 + $1.rect.maxY / 2)})
         
         var start = 0
-        var end = numOfQuickReadDigitsPerGroup
+        var end = numOfQuickReadDigitsPerGroup - 1 // since indices start with 0
         for _ in 0..<sortedBoxes.count / numOfQuickReadDigitsPerGroup {
             
             if let partialNumber = OcrDDUtils.sortBoxesInRange(boxes: sortedBoxes,
@@ -78,13 +78,14 @@ struct OcrDDUtils {
         
         if boxes.indices.contains(start) && boxes.indices.contains(end) {
             var _groupNumber: String = ""
-            let groupSlice = boxes[start..<end]
+            let groupSlice = boxes[start...end]
             let group = Array(groupSlice)
             let sortedGroup = group.sorted(by: {$0.rect.minX < $1.rect.minX})
             
             for idx in 0..<sortedGroup.count {
                 _groupNumber = _groupNumber + String(sortedGroup[idx].label)
             }
+            
             return _groupNumber
         }
         else {
