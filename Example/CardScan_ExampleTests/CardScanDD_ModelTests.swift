@@ -41,5 +41,31 @@ class CardScanDD_ModelTests: XCTestCase {
         ssdOcr.warmUp()
         XCTAssert(SSDOcrDetect.ssdOcrModel == nil)
     }
+    
+    func testModelThrowingAndHandlingExceptions() {
+        
+        let ssdOcr = SSDOcrDetect()
+        ssdOcr.warmUp()
+        
+        let imageWidth = 600
+        let imageHeight = 375
+        
+        // The model expects an image width = 600 and height = 375 and we input the wrong image dimensions
+        // to test the models throwing exceptions
+        
+        UIGraphicsBeginImageContext(CGSize(width: imageHeight, height: imageWidth))
+        UIColor.white.setFill()
+        UIRectFill(CGRect(x: 0, y: 0, width: imageHeight, height: imageWidth))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        let pixelBuffer = newImage.pixelBuffer(width: imageHeight, height: imageWidth)!
+        XCTAssertThrowsError(try SSDOcrDetect.ssdOcrModel!.prediction(_0: pixelBuffer)) { error in
+            XCTAssert(error.localizedDescription == "Input image feature 0 does not match model description")
+        }
+        
+        
+        
+    }
 
 }
