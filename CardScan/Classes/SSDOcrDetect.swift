@@ -18,7 +18,7 @@ struct SSDOcrDetect {
     static var ssdOcrModel: SSDOcr? = nil
     static var priors: [CGRect]? = nil
     
-    static let ssdOcrResource = "SSDOcr"
+    static var ssdOcrResource = "SSDOcr"
     static let ssdOcrExtension = "mlmodelc"
     
     //SSD Model parameters
