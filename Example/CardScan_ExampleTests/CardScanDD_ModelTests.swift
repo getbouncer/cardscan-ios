@@ -16,13 +16,8 @@ class CardScanDD_ModelTests: XCTestCase {
         SSDOcrDetect.ssdOcrResource = "SSDOcr"
 
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
-        
         let ocrModelc = documentDirectory.appendingPathComponent("SSDOcr.mlmodelc")
-
         let _ = try? FileManager.default.removeItem(at: ocrModelc)
-        
-        //let testImages = UIImage(imageLiteralResourceName: "frame19")
-        //print(testImages)
     }
 
     override func tearDown() {
@@ -72,26 +67,6 @@ class CardScanDD_ModelTests: XCTestCase {
         let prediction = ssdOcr.predict(image: newImage)
         XCTAssert(prediction == nil)
         
-    }
-    
-    func testAmex(){
-        let ssdOcr = SSDOcrDetect()
-        ssdOcr.warmUp()
-        
-        let imageWidth = ssdOcr.ssdOcrImageWidth
-        let imageHeight = ssdOcr.ssdOcrImageHeight
-        
-        let amexImage = UIImage(imageLiteralResourceName: "amex")
-        
-        // Resize the image to the current model specification
-        
-        UIGraphicsBeginImageContext(CGSize(width: imageWidth, height: imageHeight))
-        amexImage.draw(in: CGRect(x: 0, y: 0, width: imageWidth, height: imageHeight))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        let prediction = ssdOcr.predict(image: newImage!)
-        // test if the OCR predicted the correct number
-        XCTAssert(prediction! == "379267653791028")
     }
 
 }

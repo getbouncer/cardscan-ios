@@ -20,6 +20,7 @@
 		D69443EF2DE5EDA4E180206C /* Pods_CardScan_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDCA90BA2C77F14EF08D1026 /* Pods_CardScan_Example.framework */; };
 		EBA35644249C8E0500CF6194 /* CardScanDD_BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA35643249C8E0500CF6194 /* CardScanDD_BundleTests.swift */; };
 		EBA35646249DDDDC00CF6194 /* CardScanDD_ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA35645249DDDDC00CF6194 /* CardScanDD_ModelTests.swift */; };
+		EBA35648249EC72B00CF6194 /* CardScanDD_OCRTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA35647249EC72B00CF6194 /* CardScanDD_OCRTest.swift */; };
 		F3594276248784A00063A362 /* ModalNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3594275248784A00063A362 /* ModalNavViewController.swift */; };
 		F3594278248784C40063A362 /* ModalScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3594277248784C40063A362 /* ModalScanViewController.swift */; };
 		F3BF1C5C22D51AAA002A2575 /* CardScan_BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */; };
@@ -70,6 +71,7 @@
 		D0205FE9CAE506A64EF13F1A /* Pods-CardScan_ExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardScan_ExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-CardScan_ExampleUITests/Pods-CardScan_ExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EBA35643249C8E0500CF6194 /* CardScanDD_BundleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScanDD_BundleTests.swift; sourceTree = "<group>"; };
 		EBA35645249DDDDC00CF6194 /* CardScanDD_ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScanDD_ModelTests.swift; sourceTree = "<group>"; };
+		EBA35647249EC72B00CF6194 /* CardScanDD_OCRTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScanDD_OCRTest.swift; sourceTree = "<group>"; };
 		EFC4AF881BD9C60F9B02584D /* Pods-CardScan_ExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardScan_ExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-CardScan_ExampleUITests/Pods-CardScan_ExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F3594275248784A00063A362 /* ModalNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNavViewController.swift; sourceTree = "<group>"; };
 		F3594277248784C40063A362 /* ModalScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalScanViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */,
 				EBA35643249C8E0500CF6194 /* CardScanDD_BundleTests.swift */,
 				EBA35645249DDDDC00CF6194 /* CardScanDD_ModelTests.swift */,
+				EBA35647249EC72B00CF6194 /* CardScanDD_OCRTest.swift */,
 			);
 			path = CardScan_ExampleTests;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				F3BF1C5C22D51AAA002A2575 /* CardScan_BundleTests.swift in Sources */,
 				3B2C41F922C55531006172BE /* CardScan_ExampleTests.swift in Sources */,
 				EBA35644249C8E0500CF6194 /* CardScanDD_BundleTests.swift in Sources */,
+				EBA35648249EC72B00CF6194 /* CardScanDD_OCRTest.swift in Sources */,
 				F3FA027023A814C4002A8169 /* CardScan_CardUtilsTests.swift in Sources */,
 				EBA35646249DDDDC00CF6194 /* CardScanDD_ModelTests.swift in Sources */,
 			);
