@@ -45,7 +45,7 @@ struct SSDOcrDetect {
         UIGraphicsEndImageContext()
         
         guard let ssdOcrModel = SSDOcrDetect.ssdOcrModel else{
-            print("Model not initialized")
+            print("OCR Model not initialized")
             return
         }
         if let pixelBuffer = newImage?.pixelBuffer(width: ssdOcrImageWidth,
@@ -150,14 +150,14 @@ struct SSDOcrDetect {
         }
         
         guard let ocrDetectModel = SSDOcrDetect.ssdOcrModel else {
-            os_log("Model not initialized", type: .debug)
+            os_log("Ocr Model not initialized", type: .debug)
             return nil
         }
         
         let input = SSDOcrInput(_0: pixelBuffer)
         
         guard let prediction = try? ocrDetectModel.prediction(input: input) else {
-            os_log("Couldn't predict", type: .debug)
+            os_log("Ocr Couldn't predict", type: .debug)
             return nil
         }
         return self.detectOcrObjects(prediction: prediction, image: image)
