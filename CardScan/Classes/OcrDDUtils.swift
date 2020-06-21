@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os.log
 
 struct OcrDDUtils {
     static let offsetQuickRead:Float = 2.0
@@ -128,6 +129,11 @@ struct OcrDDUtils {
                     _cardNumber = _cardNumber + String(box.label)
                 }
             }
+        }
+        if #available(iOS 10.0, *) {
+            os_log("Partial card number is: %@", _cardNumber)
+        } else {
+            // Fallback on earlier versions
         }
         
         if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){

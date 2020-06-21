@@ -80,5 +80,20 @@ class CardScanDD_OCRTests: XCTestCase {
         let prediction = ssdOcr.predict(image: quickReadImage!)
         XCTAssert(prediction == nil)
     }
+    
+    func testDiscover(){
+        let ssdOcr = SSDOcrDetect()
+        ssdOcr.warmUp()
+        
+        let imageWidth = ssdOcr.ssdOcrImageWidth
+        let imageHeight = ssdOcr.ssdOcrImageHeight
+        
+        let discoverImage = resizeImage(image: UIImage(imageLiteralResourceName: "discover"),
+                                         imageWidth: imageWidth,
+                                         imageHeight: imageHeight)
+        
+        let prediction = ssdOcr.predict(image: discoverImage!)
+        XCTAssert(prediction! == "6011000047527001")
+    }
 
 }

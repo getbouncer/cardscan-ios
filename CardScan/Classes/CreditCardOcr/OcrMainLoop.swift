@@ -91,14 +91,14 @@ open class OcrMainLoop : MachineLearningLoop {
     var machineLearningQueues: [DispatchQueue] = []
     var userDidCancel = false
     
-    public init(analyzers: [AnalyzerType] = [.legacy, .apple]) {
+    public init(analyzers: [AnalyzerType] = [.ssd, .apple]) {
         var ocrImplementations: [CreditCardOcrImplementation] = []
         for analyzer in analyzers {
             let queue = DispatchQueue(label: "\(analyzer) OCR ML")
             switch (analyzer) {
             case .ssd:
                 if #available(iOS 11.2, *) {
-                    ocrImplementations.append(LegacyCreditCardOcr(dispatchQueue: queue))
+                    ocrImplementations.append(SSDCreditCardOcr(dispatchQueue: queue))
                 }
             case .apple:
                 if #available(iOS 13.0, *) {
@@ -112,7 +112,7 @@ open class OcrMainLoop : MachineLearningLoop {
     /// Note: you must call this function in your constructor
     public func setupMl(ocrImplementations: [CreditCardOcrImplementation]) {
         machineLearningQueues = []
-        scanStats.model = "legacy+apple"
+        scanStats.model = "ssd+apple"
         for ocrImplementation in ocrImplementations {
             machineLearningQueues.append(ocrImplementation.dispatchQueue)
             analyzerQueue.append(ocrImplementation)
