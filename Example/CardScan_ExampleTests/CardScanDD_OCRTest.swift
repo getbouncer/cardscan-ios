@@ -35,6 +35,21 @@ class CardScanDD_OCRTests: XCTestCase {
         return resizedImage
         
     }
+    
+    func testBackground(){
+        let ssdOcr = SSDOcrDetect()
+        ssdOcr.warmUp()
+        
+        let imageWidth = ssdOcr.ssdOcrImageWidth
+        let imageHeight = ssdOcr.ssdOcrImageHeight
+        
+        let quickReadImage = resizeImage(image: UIImage(imageLiteralResourceName: "background"),
+                                         imageWidth: imageWidth,
+                                         imageHeight: imageHeight)
+        
+        let prediction = ssdOcr.predict(image: quickReadImage!)
+        XCTAssert(prediction == nil)
+    }
 
     func testAmex(){
         let ssdOcr = SSDOcrDetect()
@@ -65,22 +80,7 @@ class CardScanDD_OCRTests: XCTestCase {
         let prediction = ssdOcr.predict(image: quickReadImage!)
         XCTAssert(prediction! == "4147098244785499")
     }
-    
-    func testBackground(){
-        let ssdOcr = SSDOcrDetect()
-        ssdOcr.warmUp()
-        
-        let imageWidth = ssdOcr.ssdOcrImageWidth
-        let imageHeight = ssdOcr.ssdOcrImageHeight
-        
-        let quickReadImage = resizeImage(image: UIImage(imageLiteralResourceName: "background"),
-                                         imageWidth: imageWidth,
-                                         imageHeight: imageHeight)
-        
-        let prediction = ssdOcr.predict(image: quickReadImage!)
-        XCTAssert(prediction == nil)
-    }
-    
+
     func testDiscover(){
         let ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
@@ -94,6 +94,36 @@ class CardScanDD_OCRTests: XCTestCase {
         
         let prediction = ssdOcr.predict(image: discoverImage!)
         XCTAssert(prediction! == "6011000047527001")
+    }
+    
+    func testMasterCard(){
+        let ssdOcr = SSDOcrDetect()
+        ssdOcr.warmUp()
+        
+        let imageWidth = ssdOcr.ssdOcrImageWidth
+        let imageHeight = ssdOcr.ssdOcrImageHeight
+        
+        let mastercardImage = resizeImage(image: UIImage(imageLiteralResourceName: "mastercard"),
+                                        imageWidth: imageWidth,
+                                        imageHeight: imageHeight)
+        
+        let prediction = ssdOcr.predict(image: mastercardImage!)
+        XCTAssert(prediction! == "5287108337148625")
+    }
+    
+    func testVisa(){
+        let ssdOcr = SSDOcrDetect()
+        ssdOcr.warmUp()
+        
+        let imageWidth = ssdOcr.ssdOcrImageWidth
+        let imageHeight = ssdOcr.ssdOcrImageHeight
+        
+        let visaImage = resizeImage(image: UIImage(imageLiteralResourceName: "visa"),
+                                          imageWidth: imageWidth,
+                                          imageHeight: imageHeight)
+        
+        let prediction = ssdOcr.predict(image: visaImage!)
+        XCTAssert(prediction! == "4635516434099347")
     }
 
 }
