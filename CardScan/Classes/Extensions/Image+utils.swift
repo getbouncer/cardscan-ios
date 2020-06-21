@@ -55,10 +55,17 @@ extension CGImage {
         
         let imageAspectRatio = CGFloat(self.height) / CGFloat(self.width)
         let previewViewAspectRatio = previewViewFrame.height / previewViewFrame.width
-        let cropRatio = CGFloat(16.0) / CGFloat(9.0)
-        // Get ratio to convert points to pixels
+        
         let pointsToPixel: CGFloat = imageAspectRatio > previewViewAspectRatio ? CGFloat(self.width) / previewViewFrame.width : CGFloat(self.height) / previewViewFrame.height
-
+        
+        let cropRatio = CGFloat(16.0) / CGFloat(9.0)
+        var fullScreenCropHeight: CGFloat = CGFloat(self.height)
+        var fullScreenCropWidth: CGFloat = CGFloat(self.width)
+        
+        let previewViewHeight = previewViewFrame.height * pointsToPixel
+        let previewViewWidth = previewViewFrame.width * pointsToPixel
+        
+        // Get ratio to convert points to pixels
         let fullScreenImage: CGImage? = {
             // if image is already 16:9, no need to crop to match crop ratio
             if cropRatio == imageAspectRatio {
@@ -66,28 +73,34 @@ extension CGImage {
             }
             // imageAspectRatio not being 16:9 implies image being in landscape
             // get width to first not cut out any card information
-            let cropWidth = previewViewFrame.width * pointsToPixel
-            let cropHeight = cropWidth * (16.0 / 9.0)
+            fullScreenCropWidth = previewViewFrame.width * pointsToPixel
+            fullScreenCropHeight = fullScreenCropWidth * (16.0 / 9.0)
             let imageHeight = CGFloat(self.height)
 
             // If 16:9 crop height is larger than the image height itself (i.e. custom formsheet size height is much shorter than the width), crop the image with full height and add grey boxes
-            if cropHeight > imageHeight {
-                guard let croppedImage = self.cropping(to: CGRect(x: imageCenterX - cropWidth / 2.0, y: imageCenterY - imageHeight / 2.0, width: cropWidth, height: imageHeight)) else { return nil }
-                return self.drawGrayToFillFullScreen(croppedImage: croppedImage, targetSize: CGSize(width: cropWidth, height: cropHeight))
+            if fullScreenCropHeight > imageHeight {
+                guard let croppedImage = self.cropping(to: CGRect(x: imageCenterX - fullScreenCropWidth / 2.0, y: imageCenterY - imageHeight / 2.0, width: fullScreenCropWidth, height: imageHeight)) else { return nil }
+                return self.drawGrayToFillFullScreen(croppedImage: croppedImage, targetSize: CGSize(width: fullScreenCropWidth, height: fullScreenCropHeight))
             }
 
-            return self.cropping(to: CGRect(x: imageCenterX - cropWidth / 2.0, y: imageCenterY - cropHeight / 2.0, width: cropWidth, height: cropHeight))
+            return self.cropping(to: CGRect(x: imageCenterX - fullScreenCropWidth / 2.0, y: imageCenterY - fullScreenCropHeight / 2.0, width: fullScreenCropWidth, height: fullScreenCropHeight))
         }()
 
         let roiRect: CGRect? = {
             let roiWidth = regionOfInterestLabelFrame.width * pointsToPixel
             let roiHeight = regionOfInterestLabelFrame.height * pointsToPixel
+            
+            var roiCenterX = roiWidth / 2.0 + regionOfInterestLabelFrame.origin.x * pointsToPixel
+            var roiCenterY = roiHeight / 2.0 + regionOfInterestLabelFrame.origin.y * pointsToPixel
 
-            guard let fullScreenImage = fullScreenImage else { return nil }
-            let fullScreenCenterX = CGFloat(fullScreenImage.width) / 2.0
-            let fullScreenCenterY = CGFloat(fullScreenImage.height) / 2.0
+            if fullScreenCropHeight > previewViewHeight {
+                roiCenterY += (fullScreenCropHeight - previewViewHeight) / 2.0
+            }
+            if fullScreenCropWidth > previewViewWidth {
+                roiCenterX += (fullScreenCropWidth - previewViewWidth) / 2.0
+            }
 
-            return CGRect(x: fullScreenCenterX - roiWidth / 2.0, y: fullScreenCenterY - roiHeight / 2.0, width: roiWidth, height: roiHeight)
+            return CGRect(x: roiCenterX - roiWidth / 2.0, y: roiCenterY - roiHeight / 2.0, width: roiWidth, height: roiHeight)
         }()
 
         guard let regionOfInterestRect = roiRect, let fullScreenCgImage = fullScreenImage else { return nil }

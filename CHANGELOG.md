@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.0.5038](https://github.com/getbouncer/cardscan-ios/tree/1.0.5038) (2020-06-19)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5037...1.0.5038)
+
+**Merged pull requests:**
+
+- Fixing ROI cropping logic [\#176](https://github.com/getbouncer/cardscan-ios/pull/176) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Fixing rotation in release build config [\#175](https://github.com/getbouncer/cardscan-ios/pull/175) ([jaimejiyepark](https://github.com/jaimejiyepark))
+
+## [1.0.5037](https://github.com/getbouncer/cardscan-ios/tree/1.0.5037) (2020-06-18)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5036...1.0.5037)
+
+## [1.0.5036](https://github.com/getbouncer/cardscan-ios/tree/1.0.5036) (2020-06-17)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5035...1.0.5036)
+
+**Merged pull requests:**
+
+- Refactor for the completion loop [\#173](https://github.com/getbouncer/cardscan-ios/pull/173) ([kingst](https://github.com/kingst))
+- Temp hack for roi calculations [\#172](https://github.com/getbouncer/cardscan-ios/pull/172) ([kingst](https://github.com/kingst))
+
+## [1.0.5035](https://github.com/getbouncer/cardscan-ios/tree/1.0.5035) (2020-06-16)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5034...1.0.5035)
+
+**Merged pull requests:**
+
+- Liveness ml [\#171](https://github.com/getbouncer/cardscan-ios/pull/171) ([kingst](https://github.com/kingst))
+- roi crop to accommodate roi not in center [\#170](https://github.com/getbouncer/cardscan-ios/pull/170) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Hooks for liveness check [\#169](https://github.com/getbouncer/cardscan-ios/pull/169) ([kingst](https://github.com/kingst))
+
 ## [1.0.5034](https://github.com/getbouncer/cardscan-ios/tree/1.0.5034) (2020-06-11)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5033...1.0.5034)
@@ -183,6 +215,7 @@
 - New detection model [\#93](https://github.com/getbouncer/cardscan-ios/pull/93) ([kingst](https://github.com/kingst))
 - In prep for the new model [\#92](https://github.com/getbouncer/cardscan-ios/pull/92) ([dxaen](https://github.com/dxaen))
 - Adjust scale before running recognition model [\#91](https://github.com/getbouncer/cardscan-ios/pull/91) ([kingst](https://github.com/kingst))
+- Add ability to modify button text also [\#84](https://github.com/getbouncer/cardscan-ios/pull/84) ([kingst](https://github.com/kingst))
 
 ## [1.0.5018](https://github.com/getbouncer/cardscan-ios/tree/1.0.5018) (2019-10-24)
 
@@ -207,10 +240,6 @@
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5015...1.0.5016)
 
-**Merged pull requests:**
-
-- Add ability to modify button text also [\#84](https://github.com/getbouncer/cardscan-ios/pull/84) ([kingst](https://github.com/kingst))
-
 ## [1.0.5015](https://github.com/getbouncer/cardscan-ios/tree/1.0.5015) (2019-09-22)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5014...1.0.5015)
@@ -226,6 +255,7 @@
 - Make creditcardutils public [\#81](https://github.com/getbouncer/cardscan-ios/pull/81) ([kingst](https://github.com/kingst))
 - Added UnionPay [\#80](https://github.com/getbouncer/cardscan-ios/pull/80) ([kingst](https://github.com/kingst))
 - Api key for readme [\#76](https://github.com/getbouncer/cardscan-ios/pull/76) ([kingst](https://github.com/kingst))
+- Record permission status and deal better with deny [\#70](https://github.com/getbouncer/cardscan-ios/pull/70) ([kingst](https://github.com/kingst))
 
 ## [1.0.5014](https://github.com/getbouncer/cardscan-ios/tree/1.0.5014) (2019-09-17)
 
@@ -261,10 +291,6 @@
 ## [1.0.5010](https://github.com/getbouncer/cardscan-ios/tree/1.0.5010) (2019-08-28)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5009...1.0.5010)
-
-**Merged pull requests:**
-
-- Record permission status and deal better with deny [\#70](https://github.com/getbouncer/cardscan-ios/pull/70) ([kingst](https://github.com/kingst))
 
 ## [1.0.5009](https://github.com/getbouncer/cardscan-ios/tree/1.0.5009) (2019-08-27)
 
@@ -509,6 +535,7 @@
 **Merged pull requests:**
 
 - Give the option of getting the cardImage back in the CreditCard object [\#16](https://github.com/getbouncer/cardscan-ios/pull/16) ([kingst](https://github.com/kingst))
+- Cancel scan function [\#13](https://github.com/getbouncer/cardscan-ios/pull/13) ([kingst](https://github.com/kingst))
 
 ## [1.0.4047](https://github.com/getbouncer/cardscan-ios/tree/1.0.4047) (2019-05-03)
 
@@ -525,7 +552,6 @@
 
 **Merged pull requests:**
 
-- Cancel scan function [\#13](https://github.com/getbouncer/cardscan-ios/pull/13) ([kingst](https://github.com/kingst))
 - Expose strings [\#12](https://github.com/getbouncer/cardscan-ios/pull/12) ([kingst](https://github.com/kingst))
 - first cut at unit tests [\#11](https://github.com/getbouncer/cardscan-ios/pull/11) ([kingst](https://github.com/kingst))
 
