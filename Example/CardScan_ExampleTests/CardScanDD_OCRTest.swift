@@ -36,21 +36,6 @@ class CardScanDD_OCRTests: XCTestCase {
         
     }
     
-    func testBackground(){
-        let ssdOcr = SSDOcrDetect()
-        ssdOcr.warmUp()
-        
-        let imageWidth = ssdOcr.ssdOcrImageWidth
-        let imageHeight = ssdOcr.ssdOcrImageHeight
-        
-        let quickReadImage = resizeImage(image: UIImage(imageLiteralResourceName: "background"),
-                                         imageWidth: imageWidth,
-                                         imageHeight: imageHeight)
-        
-        let prediction = ssdOcr.predict(image: quickReadImage!)
-        XCTAssert(prediction == nil)
-    }
-
     func testAmex(){
         let ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
@@ -124,6 +109,21 @@ class CardScanDD_OCRTests: XCTestCase {
         
         let prediction = ssdOcr.predict(image: visaImage!)
         XCTAssert(prediction! == "4635516434099347")
+    }
+    
+    func testBackground(){
+        let ssdOcr = SSDOcrDetect()
+        ssdOcr.warmUp()
+        
+        let imageWidth = ssdOcr.ssdOcrImageWidth
+        let imageHeight = ssdOcr.ssdOcrImageHeight
+        
+        let quickReadImage = resizeImage(image: UIImage(imageLiteralResourceName: "background"),
+                                         imageWidth: imageWidth,
+                                         imageHeight: imageHeight)
+        
+        let prediction = ssdOcr.predict(image: quickReadImage!)
+        XCTAssert(prediction == nil)
     }
 
 }
