@@ -92,7 +92,7 @@ public class Ocr {
     public func perform(croppedCardImage: CGImage, squareCardImage: CGImage?, fullCardImage: CGImage?, useCurrentFrameNumber: (String? , String) -> Bool = { _,_ in true } ) -> String? {
         var findFour = FindFourOcr()
         var number = findFour.predict(image: UIImage(cgImage: croppedCardImage))
-        
+
         if let currentNumber = number {
             let errorCorrectedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
             if !useCurrentFrameNumber(errorCorrectedNumber, currentNumber) {

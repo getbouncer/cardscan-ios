@@ -41,7 +41,7 @@ struct NMS{
             current = indices.remove(at: 0)
             pickedIndices.append(current)
             
-            if topK > 0 && topK == pickedIndices.count || indices.count == 1{
+            if topK > 0 && topK == pickedIndices.count {
                 break;
             }
             currentBox = subsetBoxes[current]

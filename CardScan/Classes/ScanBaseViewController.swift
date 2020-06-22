@@ -139,10 +139,12 @@ public protocol TestingImageDataSource: AnyObject {
                 return true
             }
             switch Api.deviceType() {
-            case "iPhone3,1", "iPhone3,2", "iPhone3,3", "iPhone4,1", "iPhone5,1", "iPhone5,2", "iPhone5,3", "iPhone5,4", "iPhone6,1", "iPhone6,2", "iPhone7,2", "iPhone7,1":
-                return false
-            default:
-                return true
+                case "iPhone3,1", "iPhone3,2", "iPhone3,3", "iPhone4,1":
+                    return true
+                case "iPhone5,1", "iPhone5,2", "iPhone5,3", "iPhone5,4", "iPhone6,1", "iPhone6,2", "iPhone7,2", "iPhone7,1":
+                    return true
+                default:
+                    return true
             }
         } else {
             return false
@@ -307,7 +309,7 @@ public protocol TestingImageDataSource: AnyObject {
             }
         }
     }
-    
+
     func captureOutputWork(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             print("could not get the pixel buffer, dropping frame")
