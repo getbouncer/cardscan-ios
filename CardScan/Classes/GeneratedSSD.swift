@@ -79,13 +79,7 @@ class SSDOcrOutput : MLFeatureProvider {
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
 class SSDOcr {
     var model: MLModel
-
-/// URL of model assuming it was installed in the same bundle as this class
-    class var urlOfModelInThisBundle : URL {
-        let bundle = Bundle(for: SSDOcr.self)
-        return bundle.url(forResource: "SSDOcr", withExtension:"mlmodelc")!
-    }
-
+    
     /**
         Construct a model with explicit path to mlmodelc file
         - parameters:
@@ -94,34 +88,6 @@ class SSDOcr {
     */
     init(contentsOf url: URL) throws {
         self.model = try MLModel(contentsOf: url)
-    }
-
-    /// Construct a model that automatically loads the model from the app's bundle
-    convenience init() {
-        try! self.init(contentsOf: type(of:self).urlOfModelInThisBundle)
-    }
-
-    /**
-        Construct a model with configuration
-        - parameters:
-           - configuration: the desired model configuration
-           - throws: an NSError object that describes the problem
-    */
-    @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
-    convenience init(configuration: MLModelConfiguration) throws {
-        try self.init(contentsOf: type(of:self).urlOfModelInThisBundle, configuration: configuration)
-    }
-
-    /**
-        Construct a model with explicit path to mlmodelc file and configuration
-        - parameters:
-           - url: the file url of the model
-           - configuration: the desired model configuration
-           - throws: an NSError object that describes the problem
-    */
-    @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
-    init(contentsOf url: URL, configuration: MLModelConfiguration) throws {
-        self.model = try MLModel(contentsOf: url, configuration: configuration)
     }
 
     /**
