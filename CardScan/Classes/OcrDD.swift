@@ -9,6 +9,7 @@ import Foundation
 
 
 public class OcrDD{
+    public var scanStats = ScanStats()
     public init(){}
 
     static func configure(){
@@ -20,8 +21,9 @@ public class OcrDD{
 
     @available(iOS 11.2, *)
     public func perform(croppedCardImage: CGImage) -> String?{
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         let number = ssdOcr.predict(image: UIImage(cgImage: croppedCardImage))
+        self.scanStats.lastFlatBoxes = ssdOcr.lastDetectedBoxes
         return number
     }
 

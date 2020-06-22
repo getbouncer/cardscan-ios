@@ -15,4 +15,9 @@ public struct DetectedAllOcrBoxes {
         let frameArray = self.allBoxes.map{$0.toDict()}
         return frameArray
     }
+    
+    public func getBoundingBoxesOfDigits() -> [CGRect] {
+        let boundingBoxes = self.allBoxes.map{$0.rect}
+        return boundingBoxes
+    }
 }
