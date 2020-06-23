@@ -18,7 +18,7 @@ class SSDCreditCardOcr: CreditCardOcrImplementation {
         let startTime = Date()
         let number = ocr.perform(croppedCardImage: image)
         let duration = -startTime.timeIntervalSinceNow
-        let numberBoxes = ocr.scanStats.lastFlatBoxes
+        let numberBoxes = ocr.lastDetectedBoxes
         
         self.computationTime += duration
         self.frames += 1
