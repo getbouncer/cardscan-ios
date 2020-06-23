@@ -42,7 +42,7 @@ class CardScanDD_ModelTests: XCTestCase {
     
     func testModelThrowingAndHandlingExceptions() {
         
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth

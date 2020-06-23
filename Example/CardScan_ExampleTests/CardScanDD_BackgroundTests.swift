@@ -37,7 +37,7 @@ class CardScanDD_BackgroundTests: XCTestCase {
     }
     
     func testBackgroundTextDigits(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth
@@ -52,7 +52,7 @@ class CardScanDD_BackgroundTests: XCTestCase {
     }
     
     func testBackgroundScreen(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth
@@ -67,7 +67,7 @@ class CardScanDD_BackgroundTests: XCTestCase {
     }
     
     func testBackgroundDesk(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth
@@ -82,7 +82,7 @@ class CardScanDD_BackgroundTests: XCTestCase {
     }
     
     func testBackgroundWindown(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth
@@ -97,7 +97,7 @@ class CardScanDD_BackgroundTests: XCTestCase {
     }
     
     func testBackgroundSpaceGray(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth

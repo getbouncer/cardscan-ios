@@ -37,7 +37,7 @@ class CardScanDD_OCRTests: XCTestCase {
     }
     
     func testAmex(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth
@@ -52,7 +52,7 @@ class CardScanDD_OCRTests: XCTestCase {
     }
     
     func testQuickRead(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth
@@ -67,7 +67,7 @@ class CardScanDD_OCRTests: XCTestCase {
     }
 
     func testDiscover(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth
@@ -82,7 +82,7 @@ class CardScanDD_OCRTests: XCTestCase {
     }
     
     func testMasterCard(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth
@@ -97,7 +97,7 @@ class CardScanDD_OCRTests: XCTestCase {
     }
     
     func testVisa(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth
@@ -112,7 +112,7 @@ class CardScanDD_OCRTests: XCTestCase {
     }
     
     func testBackground(){
-        let ssdOcr = SSDOcrDetect()
+        var ssdOcr = SSDOcrDetect()
         ssdOcr.warmUp()
         
         let imageWidth = ssdOcr.ssdOcrImageWidth

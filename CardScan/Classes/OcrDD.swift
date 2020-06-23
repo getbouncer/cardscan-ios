@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public class OcrDD{
     public var lastDetectedBoxes: [CGRect] = []
     public init(){}
