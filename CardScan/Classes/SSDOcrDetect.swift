@@ -33,6 +33,9 @@ struct SSDOcrDetect {
     let candidateSize = 200
     let topK = 20
     
+    //Statistics about last prediction
+    var lastDetectedBoxes: [CGRect] = []
+    
     
     func warmUp() {
         SSDOcrDetect.initializeModels()
@@ -85,7 +88,7 @@ struct SSDOcrDetect {
         return self.ssdOcrModel != nil
     }
     
-    func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> String? {
+    mutating func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> String? {
         var DetectedOcrBoxes = DetectedAllOcrBoxes()
         
         var scores : [[Float]]
@@ -126,6 +129,10 @@ struct SSDOcrDetect {
                                                                imageSize: image.size))
         }
         
+        if !DetectedOcrBoxes.allBoxes.isEmpty {
+            self.lastDetectedBoxes = DetectedOcrBoxes.getBoundingBoxesOfDigits()
+        }
+        
         if OcrDDUtils.isQuickRead(allBoxes: DetectedOcrBoxes){
             return OcrDDUtils.processQuickRead(allBoxes: DetectedOcrBoxes)
         }
@@ -138,7 +145,7 @@ struct SSDOcrDetect {
 
     
 
-    public func predict(image: UIImage) -> String? {
+    public mutating func predict(image: UIImage) -> String? {
         
         SSDOcrDetect.initializeModels()
         guard let pixelBuffer = image.pixelBuffer(width: ssdOcrImageWidth,
