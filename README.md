@@ -7,6 +7,7 @@ CardScan iOS installation guide
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Permissions](#permissions)
+* [iPad support](#ipad-support)
 * [Configure CardScan (Swift)](#configure-cardscan-swift)
 * [Using CardScan (Swift)](#using-cardscan-swift)
 * [iOS 10 and older (Swift)](#ios-10-and-older-swift)
@@ -62,6 +63,14 @@ github "getbouncer/cardscan-ios" "master"
 ```
 
 Follow the [Carthage instructions for building for iOS](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos) 
+
+## iPad Support
+
+CardScan defaults to a `formSheet` for the iPad, which handles all
+screen orientations and autorotation correctly. However, if you'd like
+to use CardScan in full screen mode instead, make sure to select the
+`Requires full screen` option in your Info.plist file via XCode, or
+else non-portrait orientations won't work.
 
 ## Permissions
 
