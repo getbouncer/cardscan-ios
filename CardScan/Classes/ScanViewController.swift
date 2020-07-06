@@ -149,10 +149,19 @@ import UIKit
         // The forced unwrap here is intentional -- we expect this to crash
         // if someone uses it with an invalid bundle
         let bundle = CSBundle.bundle()!
-        
         let storyboard = UIStoryboard(name: "CardScan", bundle: bundle)
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
             viewController.scanDelegate = delegate
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            // For the iPad you can use the full screen style but you have to select "requires full screen" in
+            // the Info.plist to lock it in portrait mode. For iPads, we recommend using a formSheet, which
+            // handles all orientations correctly.
+            viewController.modalPresentationStyle = .formSheet
+        } else {
+            viewController.modalPresentationStyle = .fullScreen
+        }
+        
         return viewController
     }
     

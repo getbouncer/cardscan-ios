@@ -118,7 +118,6 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
             return
         }
         
-        vc.allowSkip = true
         self.present(vc, animated: true)
     }
     
