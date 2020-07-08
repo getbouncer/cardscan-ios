@@ -15,7 +15,7 @@ import os.log
 @available(iOS 11.2, *)
 
 struct SSDOcrDetect {
-    static var ssdOcrModel: SSDOcr? = nil
+    var ssdOcrModel: SSDOcr? = nil
     static var priors: [CGRect]? = nil
     
     static var ssdOcrResource = "SSDOcr"
@@ -47,7 +47,7 @@ struct SSDOcrDetect {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        guard let ssdOcrModel = SSDOcrDetect.ssdOcrModel else{
+        guard let ssdOcrModel = ssdOcrModel else{
             print("OCR Model not initialized")
             return
         }
@@ -62,30 +62,24 @@ struct SSDOcrDetect {
         if SSDOcrDetect.priors == nil{
             SSDOcrDetect.priors = OcrPriorsGen.combinePriors()
         }
+        guard let ssdOcrUrl  = CSBundle.compiledModel(forResource: SSDOcrDetect.ssdOcrResource, withExtension: SSDOcrDetect.ssdOcrExtension) else {
+
+            print("Could not find URL for ssd ocr")
+            return
+        }
+        
+        guard let ssdOcrModel = try? SSDOcr(contentsOf: ssdOcrUrl) else {
+            print("Could not get contents of ssd ocr model with ssd ocr URL")
+            return
+        }
+        
+        self.ssdOcrModel = ssdOcrModel
     }
     
     static func initializeModels() {
-        
-        if SSDOcrDetect.ssdOcrModel == nil {
-            guard let ssdOcrUrl  = CSBundle.compiledModel(forResource: ssdOcrResource, withExtension: ssdOcrExtension) else {
-                print("Could not find URL for ssd ocr")
-                return
-            }
-    
-            guard let ssdOcrModel = try? SSDOcr(contentsOf: ssdOcrUrl) else {
-                print("Could not get contents of ssd ocr model with ssd ocr URL")
-                return
-            }
-    
-            SSDOcrDetect.ssdOcrModel = ssdOcrModel
-        
         if SSDOcrDetect.priors == nil{
             SSDOcrDetect.priors = OcrPriorsGen.combinePriors()
         }
-    }
-    }
-    public static func isModelLoaded() -> Bool {
-        return self.ssdOcrModel != nil
     }
     
     mutating func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> String? {
@@ -143,8 +137,6 @@ struct SSDOcrDetect {
         
     }
 
-    
-
     public mutating func predict(image: UIImage) -> String? {
         
         SSDOcrDetect.initializeModels()
@@ -156,7 +148,7 @@ struct SSDOcrDetect {
                                                     
         }
         
-        guard let ocrDetectModel = SSDOcrDetect.ssdOcrModel else {
+        guard let ocrDetectModel = ssdOcrModel else {
             os_log("Ocr Model not initialized", type: .debug)
             return nil
         }
