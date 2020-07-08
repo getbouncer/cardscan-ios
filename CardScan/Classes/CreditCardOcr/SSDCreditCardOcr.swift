@@ -7,14 +7,20 @@
 import UIKit
 
 @available(iOS 11.2, *)
-class SSDCreditCardOcr: CreditCardOcrImplementation {
-    override func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
+public class SSDCreditCardOcr: CreditCardOcrImplementation {
+    let ocr: OcrDD
+    
+    public override init(dispatchQueue: DispatchQueue) {
+        ocr = OcrDD()
+        super.init(dispatchQueue: dispatchQueue)
+    }
+    
+    public override func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
         guard let image = croppedImageForSsd(fullCardImage: fullImage, roiRectangle: roiRectangle)
             else {
                 return CreditCardOcrPrediction.emptyPrediction(cgImage: fullImage)
         }
                 
-        let ocr = OcrDD()
         let startTime = Date()
         let number = ocr.perform(croppedCardImage: image)
         let duration = -startTime.timeIntervalSinceNow
