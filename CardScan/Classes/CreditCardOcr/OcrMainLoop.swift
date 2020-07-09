@@ -89,6 +89,8 @@ open class OcrMainLoop : MachineLearningLoop {
     let mutexQueue = DispatchQueue(label: "OcrMainLoopMuxtex")
     var inBackground = false
     var machineLearningQueues: [DispatchQueue] = []
+    var areMachineLearningQueuesSuspended = false
+    var machineLearningQueuesMutex = DispatchQueue(label: "ML queues mutex")
     var userDidCancel = false
     
     public init(analyzers: [AnalyzerType] = [.ssd, .apple]) {
@@ -266,10 +268,15 @@ open class OcrMainLoop : MachineLearningLoop {
         mutexQueue.sync { self.inBackground = true }
         // this makes sure that any currently running predictions finish before we
         // let the app go into the background
-        for queue in machineLearningQueues {
-            queue.sync {
-                queue.suspend()
+        machineLearningQueuesMutex.sync {
+            if !self.areMachineLearningQueuesSuspended {
+                for queue in self.machineLearningQueues {
+                    queue.sync {
+                        queue.suspend()
+                    }
+                }
             }
+            self.areMachineLearningQueuesSuspended = true
         }
     }
     
@@ -277,10 +284,13 @@ open class OcrMainLoop : MachineLearningLoop {
         // isBackground is true only when the queues are suspended.
         // isBackground flag is used as a proxy areQueuesSuspended flag to avoid crash
         mutexQueue.sync {
-            if self.inBackground {
-                for queue in machineLearningQueues {
-                    queue.resume()
+            self.machineLearningQueuesMutex.async {
+                if self.areMachineLearningQueuesSuspended {
+                    for queue in self.machineLearningQueues {
+                        queue.resume()
+                    }
                 }
+                self.areMachineLearningQueuesSuspended = false
             }
             self.inBackground = false
         }
@@ -294,8 +304,11 @@ open class OcrMainLoop : MachineLearningLoop {
     
     func unregisterAppNotifications() {
         // if we're in the background resume our queues so that we can free them but leave `inBackground` set so that they don't run
-        mutexQueue.sync {
-            if self.inBackground {
+        machineLearningQueuesMutex.sync {
+            // don't check `inBackground` explicitly because this may get called from
+            // the muxteQueue already, which would deadlock (we protect `inBackground`
+            // using that queue). Having the ml queues suspended implies inBackground
+            if self.areMachineLearningQueuesSuspended {
                 machineLearningQueues.forEach { $0.resume() }
             }
         }
