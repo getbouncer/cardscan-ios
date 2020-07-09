@@ -149,14 +149,14 @@ open class OcrMainLoop : MachineLearningLoop {
     // Make sure you call this from the main dispatch queue
     func userCancelled() {
         userDidCancel = true
-        //mutexQueue.sync { [weak self] in
-            //guard let self = self else { return }
+        mutexQueue.sync { [weak self] in
+            guard let self = self else { return }
             if self.scanStats.success == nil {
                 self.scanStats.success = false
                 self.scanStats.endTime = Date()
                 self.mainLoopDelegate = nil
             }
-        //}
+        }
     }
     
     public func push(fullImage: CGImage, roiRectangle: CGRect) {
@@ -213,8 +213,6 @@ open class OcrMainLoop : MachineLearningLoop {
             let prediction = ocr.recognizeCard(in: image, roiRectangle: roi)
             self?.mutexQueue.async {
                 guard let self = self else { return }
-                print("sleeping")
-                sleep(20)
                 self.scanStats.scans += 1
                 let delegate = self.mainLoopDelegate
                 DispatchQueue.main.async { [weak self] in
@@ -225,10 +223,8 @@ open class OcrMainLoop : MachineLearningLoop {
                 }
                 guard let result = self.combine(prediction: prediction), result.isFinished else {
                     self.postAnalyzerToQueueAndRun(ocr: ocr)
-                    print("done sleeping, post")
                     return
                 }
-                print("done sleeping, exit")
             }
         }
     }
