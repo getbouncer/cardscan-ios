@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.5040](https://github.com/getbouncer/cardscan-ios/tree/1.0.5040) (2020-07-09)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5039...1.0.5040)
+
+**Merged pull requests:**
+
+- Ocr main loop deadlock bug fix [\#183](https://github.com/getbouncer/cardscan-ios/pull/183) ([kingst](https://github.com/kingst))
+- Cache the OCR model [\#182](https://github.com/getbouncer/cardscan-ios/pull/182) ([kingst](https://github.com/kingst))
+- Remove the old legacy OCR code [\#181](https://github.com/getbouncer/cardscan-ios/pull/181) ([kingst](https://github.com/kingst))
+
 ## [1.0.5039](https://github.com/getbouncer/cardscan-ios/tree/1.0.5039) (2020-07-06)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5038...1.0.5039)
@@ -226,7 +236,6 @@
 - New detection model [\#93](https://github.com/getbouncer/cardscan-ios/pull/93) ([kingst](https://github.com/kingst))
 - In prep for the new model [\#92](https://github.com/getbouncer/cardscan-ios/pull/92) ([dxaen](https://github.com/dxaen))
 - Adjust scale before running recognition model [\#91](https://github.com/getbouncer/cardscan-ios/pull/91) ([kingst](https://github.com/kingst))
-- Moves setting the sessionPreset after addInput.  [\#90](https://github.com/getbouncer/cardscan-ios/pull/90) ([waltersanford](https://github.com/waltersanford))
 
 ## [1.0.5018](https://github.com/getbouncer/cardscan-ios/tree/1.0.5018) (2019-10-24)
 
@@ -243,6 +252,7 @@
 
 **Merged pull requests:**
 
+- Moves setting the sessionPreset after addInput.  [\#90](https://github.com/getbouncer/cardscan-ios/pull/90) ([waltersanford](https://github.com/waltersanford))
 - Fix typo [\#88](https://github.com/getbouncer/cardscan-ios/pull/88) ([kingst](https://github.com/kingst))
 - adapt to new iOS13 card-screen presentation by setting to full-screen [\#87](https://github.com/getbouncer/cardscan-ios/pull/87) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
