@@ -25,7 +25,8 @@
  we access shared state
 
  ## Shared state
- All shared state updates need to happeon on the `mutexQueue`
+ All shared state updates need to happeon on the `mutexQueue` except for `machineLearningQueue`,
+ which we set at the constructor and access it read only.
 
  ## Delegate invocation
  All invocations of delegate methods need to happen on the main queue, and for each prediction there
@@ -58,6 +59,16 @@
     - If it runs after, there is a check and it sets `scanStats.success` iff it isn't already set
  - we use `sync` on the `muxtexQueue` to make sure that when this method returns any subsequent calls to `scanStats` are
  always `success = false`
+ 
+ ## Backgrounding and ML
+ Our ML algorithms use the GPU and can cause crashes when we run them in the background. Thus, we track the app's
+ backgrounding state and stop any ML tasks (analyzers) before the app reaches the background.
+ - Each analyzer has it's own dispatch queue. Within that dispatch queue we pop an image off of the image queue
+    - if the image queue is empty or the the app is in the background the closure will exit without running any ML
+    - If the closure is running ML, we add an empty `sync` block on the ML queue while we're backgrounding that will block until it's finished
+        - After the `sync` call finishes, since there are no images and `isBackground` is set, subsequent invocations of the ML will stop without running any GPU workloads
+    - The analyzers restart after the app leaves the background and the camera starts pushing new images
+ 
  */
 
 import UIKit
@@ -118,10 +129,6 @@ open class OcrMainLoop : MachineLearningLoop {
             analyzerQueue.append(ocrImplementation)
         }
         registerAppNotifications()
-    }
-    
-    deinit {
-        unregisterAppNotifications()
     }
     
     func reset() {
@@ -259,42 +266,32 @@ open class OcrMainLoop : MachineLearningLoop {
     //   * The willResignActive function blocks the transition to the background until
     //     it completes, which we couldn't find docs on but verified experimentally
     @objc func willResignActive() {
-        mutexQueue.sync { self.inBackground = true }
-        // this makes sure that any currently running predictions finish before we
-        // let the app go into the background
-        for queue in machineLearningQueues {
-            queue.sync {
-                queue.suspend()
-            }
+        // make sure that no new images get pushed to our image buffer
+        // and we clear out the image buffer
+        mutexQueue.sync {
+            self.inBackground = true
+            self.imageQueue = []
+        }
+        
+        // make sure that all current prediction finishes. New invocations will block since
+        // the queue is empty and inBackground is set
+        // Note: it's important to call this outside of the mutexQueue to avoid deadlock
+        for queue in self.machineLearningQueues {
+            queue.sync { }
         }
     }
     
     @objc func didBecomeActive() {
-        // isBackground is true only when the queues are suspended.
-        // isBackground flag is used as a proxy areQueuesSuspended flag to avoid crash
         mutexQueue.sync {
-            if self.inBackground {
-                for queue in machineLearningQueues {
-                    queue.resume()
-                }
-            }
             self.inBackground = false
+            self.errorCorrection = self.errorCorrection.reset()
         }
     }
     
-    // Only call this function from the machineLearningQueue
     func registerAppNotifications() {
+        // We don't need to unregister these functions because the system will clean
+        // them up for us
         NotificationCenter.default.addObserver(self, selector: #selector(self.willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-    
-    func unregisterAppNotifications() {
-        // if we're in the background resume our queues so that we can free them but leave `inBackground` set so that they don't run
-        mutexQueue.sync {
-            if self.inBackground {
-                machineLearningQueues.forEach { $0.resume() }
-            }
-        }
-        NotificationCenter.default.removeObserver(self)
     }
 }

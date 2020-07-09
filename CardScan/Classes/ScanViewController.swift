@@ -306,12 +306,6 @@ import UIKit
         super.viewWillAppear(true)
         self.cornerView.layer.borderColor = self.cornerBorderColor
         self.addBackgroundObservers()
-        
-    }
-    
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.removeBackgroundObservers()
     }
     
     public override func viewDidLayoutSubviews() {
@@ -393,17 +387,14 @@ extension ScanViewController {
         if let backgroundBlurEffectView = self.backgroundBlurEffectView {
             backgroundBlurEffectView.removeFromSuperview()
         }
+        cardNumberLabel.isHidden = true
+        expiryLabel.isHidden = true
      }
      
      func addBackgroundObservers() {
          NotificationCenter.default.addObserver(self, selector: #selector(viewOnWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(viewOnDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
      }
-    
-    func removeBackgroundObservers() {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
 }
 
 // https://stackoverflow.com/a/53143736/947883
