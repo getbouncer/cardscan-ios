@@ -167,6 +167,9 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
         vc.allowSkip = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 20.0) {
             vc.cancel(callDelegate: true)
+            let scanStats = vc.getScanStats()
+            let fps = Double(scanStats.scans) / scanStats.duration()
+            print("fps -> \(fps)")
         }
         self.present(vc, animated: true)
     }
