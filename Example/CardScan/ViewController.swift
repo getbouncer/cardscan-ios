@@ -9,8 +9,10 @@ import AVFoundation
 import UIKit
 import CardScan
 
-class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanStringsDataSource, TestingImageDataSource {
-
+class ViewController: UIViewController {
+    @IBOutlet weak var cameraImage: UIImageView!
+    @IBOutlet weak var scanCardButton: UIButton!
+    
     let testImages = [UIImage(imageLiteralResourceName: "frame0"),
                       UIImage(imageLiteralResourceName: "frame19"),
                       UIImage(imageLiteralResourceName: "frame38"),
@@ -21,70 +23,8 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
                       UIImage(imageLiteralResourceName: "frame99"),
                       UIImage(imageLiteralResourceName: "frame114"),
                       UIImage(imageLiteralResourceName: "frame133")]
-    
     var currentTestImages: [CGImage]?
     
-    func nextSquareAndFullImage() -> (CGImage, CGImage)? {
-        if self.currentTestImages?.first == nil {
-            self.currentTestImages = self.testImages.compactMap { $0.cgImage }
-        }
-        
-        guard let fullCardImage = self.currentTestImages?.first else {
-            print("could not get full size test image")
-            return nil
-        }
-        
-        let squareCropImage = fullCardImage
-        let width = CGFloat(squareCropImage.width)
-        let height = width
-        let x = CGFloat(0) 
-        let y = CGFloat(squareCropImage.height) * 0.5 - height * 0.5
-        
-        guard let squareCardImage = squareCropImage.cropping(to: CGRect(x: x, y: y, width: width, height: height)) else {
-            print("could not crop test image")
-            return nil
-        }
-    
-        self.currentTestImages = self.currentTestImages?.dropFirst().map { $0 }
-        return (squareCardImage, fullCardImage)
-    }
-    
-    func scanCard() -> String { return "New Scan Card" }
-    func positionCard() -> String { return "New Position Card" }
-    func backButton() -> String { return "New Back" }
-    func skipButton() -> String { return "New Skip" }
-    func denyPermissionTitle() -> String { return "New Deny" }
-    func denyPermissionMessage() -> String { return "New Deny Message" }
-    func denyPermissionButton() -> String { return "GO" }
-    
-    func userDidSkip(_ scanViewController: ScanViewController) {
-        self.dismiss(animated: true)
-    }
-    
-    func userDidCancel(_ scanViewController: ScanViewController) {
-        self.dismiss(animated: true)
-    }
-    
-    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "results") as! ResultViewController
-        vc.scanStats = scanViewController.getScanStats()
-        vc.number = creditCard.number
-        vc.cardImage = creditCard.image
-        vc.expiration = creditCard.expiryForDisplay()
-        vc.name = creditCard.name
-        
-        self.dismiss(animated: true)
-        self.present(vc, animated: true)
-    }
-
-    func userDidScanQrCode(_ scanViewController: ScanViewController, payload: String) {
-        self.dismiss(animated: true)
-        print(payload)
-    }
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.cameraImage.image = ScanViewController.cameraImage()
@@ -96,13 +36,6 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
             self.scanCardButton.isHidden = true
         }
     }
-    
-    func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?) {}
-    func onScanComplete(scanStats: ScanStats) {}
-    func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?) {}
-    
-    @IBOutlet weak var cameraImage: UIImageView!
-    @IBOutlet weak var scanCardButton: UIButton!
     
     @IBAction func scanQrCodePress() {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
@@ -211,3 +144,77 @@ class ViewController: UIViewController, ScanEvents, ScanDelegate, FullScanString
     }
 }
 
+extension ViewController: ScanDelegate {
+   func userDidSkip(_ scanViewController: ScanViewController) {
+        self.dismiss(animated: true)
+    }
+    
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        self.dismiss(animated: true)
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "results") as! ResultViewController
+        vc.scanStats = scanViewController.getScanStats()
+        vc.number = creditCard.number
+        vc.cardImage = creditCard.image
+        vc.expiration = creditCard.expiryForDisplay()
+        vc.name = creditCard.name
+        
+        self.dismiss(animated: true)
+        self.present(vc, animated: true)
+    }
+    
+    func userDidScanQrCode(_ scanViewController: ScanViewController, payload: String) {
+        self.dismiss(animated: true)
+        print(payload)
+    }
+}
+
+extension ViewController: ScanEvents {
+    func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect,
+                            expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage:
+        CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?) {}
+    func onScanComplete(scanStats: ScanStats) {}
+    func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage,
+                         centeredCardState: CenteredCardState?) {}
+}
+
+extension ViewController: FullScanStringsDataSource {
+    func scanCard() -> String { return "New Scan Card" }
+    func positionCard() -> String { return "New Position Card" }
+    func backButton() -> String { return "New Back" }
+    func skipButton() -> String { return "New Skip" }
+    func denyPermissionTitle() -> String { return "New Deny" }
+    func denyPermissionMessage() -> String { return "New Deny Message" }
+    func denyPermissionButton() -> String { return "GO" }
+}
+
+extension ViewController: TestingImageDataSource {
+    func nextSquareAndFullImage() -> (CGImage, CGImage)? {
+        if self.currentTestImages?.first == nil {
+            self.currentTestImages = self.testImages.compactMap { $0.cgImage }
+        }
+        
+        guard let fullCardImage = self.currentTestImages?.first else {
+            print("could not get full size test image")
+            return nil
+        }
+        
+        let squareCropImage = fullCardImage
+        let width = CGFloat(squareCropImage.width)
+        let height = width
+        let x = CGFloat(0)
+        let y = CGFloat(squareCropImage.height) * 0.5 - height * 0.5
+        
+        guard let squareCardImage = squareCropImage.cropping(to: CGRect(x: x, y: y, width: width, height: height)) else {
+            print("could not crop test image")
+            return nil
+        }
+    
+        self.currentTestImages = self.currentTestImages?.dropFirst().map { $0 }
+        return (squareCardImage, fullCardImage)
+    }
+}
