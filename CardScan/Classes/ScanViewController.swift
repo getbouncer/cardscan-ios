@@ -94,6 +94,7 @@ import UIKit
     @objc public var allowSkip = false
     public var torchLevel: Float? 
     public var scanQrCode = false
+    public var navigationBarIsHidden = true
     @objc public var hideBackButtonImage = false
     @IBOutlet weak var backButtonImageToTextConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButtonWidthConstraint: NSLayoutConstraint!
@@ -255,6 +256,7 @@ import UIKit
             self.torchButtonWidthConstraint.constant = size.width
             self.torchButtonHeightConstraint.constant = size.height
         }
+        self.hideNavigationBar = self.navigationBarIsHidden
     }
     
     func showDenyAlert() {
