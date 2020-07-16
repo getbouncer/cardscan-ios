@@ -135,6 +135,50 @@ public struct Api {
         apiCall(endpoint: endpoint, parameters: apiParameters, completion: completion)
     }
     
+    static public func apiCallGet(endpoint: String, completion: @escaping ApiCompletion) {
+        if baseUrl == nil || apiKey == nil {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+        
+        apiGetCall(endpoint: endpoint, completion: completion)
+    }
+    
+    static func apiGetCall(endpoint: String, completion: @escaping ApiCompletion) {
+        guard let baseUrl = self.baseUrl else {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+
+        guard let url = URL(string: baseUrl + endpoint) else {
+            DispatchQueue.main.async { completion(nil, defaultError) }
+            return
+        }
+
+        let session = URLSession(configuration: configuration())
+        
+        session.dataTask(with: url) { data, response, error in
+            guard let rawData = data else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+
+            let jsonData = try? JSONSerialization.jsonObject(with: rawData)
+            guard let responseData = jsonData as? [String: Any] else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if "ok" == responseData["status"] as? String {
+                    completion(responseData, nil)
+                } else {
+                    completion(nil, ApiError(response: responseData))
+                }
+            }
+        }.resume()
+    }
+    
     static func scanStats(scanStats: ScanStats, completion: @escaping ApiCompletion) {
         self.apiCallWithDeviceInfo(endpoint: "/scan_stats", parameters: ["scan_stats": scanStats.toDictionaryForAnalytics()], completion: completion)
     }
