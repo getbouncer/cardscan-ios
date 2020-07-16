@@ -144,7 +144,7 @@ public struct Api {
         apiGetCall(endpoint: endpoint, completion: completion)
     }
     
-    static func apiGetCall(endpoint: String, completion: @escaping ApiCompletion) {
+    private static func apiGetCall(endpoint: String, completion: @escaping ApiCompletion) {
         guard let baseUrl = self.baseUrl else {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
