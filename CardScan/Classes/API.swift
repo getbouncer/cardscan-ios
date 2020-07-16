@@ -170,10 +170,10 @@ public struct Api {
             }
             
             DispatchQueue.main.async {
-                if "ok" == responseData["status"] as? String {
-                    completion(responseData, nil)
-                } else {
+                if "error" == responseData["status"] as? String {
                     completion(nil, ApiError(response: responseData))
+                } else {
+                    completion(responseData, nil)
                 }
             }
         }.resume()
