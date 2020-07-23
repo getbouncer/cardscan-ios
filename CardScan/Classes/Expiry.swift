@@ -1,9 +1,15 @@
 import Foundation
 
-public struct Expiry: Hashable {
+public class Expiry: Hashable {
     public let string: String
     public let month: UInt
     public let year: UInt
+    
+    init(string: String, month: UInt, year: UInt) {
+        self.string = string
+        self.month = month
+        self.year = year
+    }
     
     public static func == (lhs: Expiry, rhs: Expiry) -> Bool {
         return lhs.string == rhs.string
