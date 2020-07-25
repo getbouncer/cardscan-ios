@@ -38,13 +38,15 @@ class ViewController: UIViewController {
     }
     
     @IBAction func scanQrCodePress() {
-        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
-            print("scan view controller not supported on this hardware")
-            return
+        if #available(iOS 11.2, *) {
+            let vc = SimpleScanViewController.createViewController()
+            vc.delegate = self
+            self.present(vc, animated: true)
+        } else {
+            print("Only supported on iOS 11.2 and above")
         }
-        vc.scanQrCode = true
-        self.present(vc, animated: true)
     }
+    
     @IBAction func scanCardPress() {
         guard let vc = ScanViewController.createViewController(withDelegate: self) else {
             print("scan view controller not supported on this hardware")
@@ -170,6 +172,28 @@ extension ViewController: ScanDelegate {
     func userDidScanQrCode(_ scanViewController: ScanViewController, payload: String) {
         self.dismiss(animated: true)
         print(payload)
+    }
+}
+
+@available(iOS 11.2, *)
+extension ViewController: SimpleScanDelegate {
+    
+    func userDidCancelSimple(_ scanViewController: SimpleScanViewController) {
+        self.dismiss(animated: true)
+    }
+    
+    func userDidScanCardSimple(_ scanViewController: SimpleScanViewController, creditCard: CreditCard) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "results") as! ResultViewController
+        vc.scanStats = scanViewController.getScanStats()
+        vc.number = creditCard.number
+        vc.cardImage = creditCard.image
+        vc.expiration = creditCard.expiryForDisplay()
+        vc.name = creditCard.name
+        
+        self.dismiss(animated: true)
+        self.present(vc, animated: true)
     }
 }
 
