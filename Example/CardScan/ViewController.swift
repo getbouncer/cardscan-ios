@@ -177,9 +177,6 @@ extension ViewController: ScanDelegate {
 
 @available(iOS 11.2, *)
 extension ViewController: SimpleScanDelegate {
-    func userDidSkipSimple(_ scanViewController: SimpleScanViewController) {
-        self.dismiss(animated: true)
-    }
     
     func userDidCancelSimple(_ scanViewController: SimpleScanViewController) {
         self.dismiss(animated: true)

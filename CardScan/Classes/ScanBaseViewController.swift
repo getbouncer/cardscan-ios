@@ -9,7 +9,6 @@ public protocol TestingImageDataSource: AnyObject {
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AfterPermissions, OcrMainLoopDelegate {
     
     public weak var testingImageDataSource: TestingImageDataSource?
-    @objc public var errorCorrectionDuration = 1.5
     @objc public var includeCardImage = false
     @objc public var showDebugImageView = false
     
@@ -208,7 +207,7 @@ public protocol TestingImageDataSource: AnyObject {
         regionOfInterestLabel.layer.cornerRadius = self.regionOfInterestCornerRadius
         regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
-    
+        
         if !ScanBaseViewController.isPadAndFormsheet {
             UIDevice.current.setValue(UIDeviceOrientation.portrait.rawValue, forKey: "orientation")
         }

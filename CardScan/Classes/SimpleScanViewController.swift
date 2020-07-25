@@ -4,7 +4,6 @@ import UIKit
 @objc public protocol SimpleScanDelegate {
     @objc func userDidCancelSimple(_ scanViewController: SimpleScanViewController)
     @objc func userDidScanCardSimple(_ scanViewController: SimpleScanViewController, creditCard: CreditCard)
-    @objc func userDidSkipSimple(_ scanViewController: SimpleScanViewController)
 }
 
 @available(iOS 11.2, *)
@@ -21,6 +20,12 @@ open class SimpleScanViewController: ScanBaseViewController {
     public var closeButton = UIButton()
     public var torchButton = UIButton()
     private var debugView: UIImageView?
+    
+    // Dynamic card details
+    public var numberText = UILabel()
+    public var expiryText = UILabel()
+    public var nameText = UILabel()
+    public var expiryLayoutView = UIView()
     
     public weak var delegate: SimpleScanDelegate?
     
@@ -54,7 +59,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         view.backgroundColor = .white
         regionOfInterestCornerRadius = 32.0
 
-        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton]
+        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton, numberText, expiryText, nameText, expiryLayoutView]
         for child in children {
             self.view.addSubview(child)
         }
@@ -65,6 +70,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         setupCloseButtonUi()
         setupTorchButtonUi()
         setupDescriptionTextUi()
+        setupCardDetailsUi()
         
         if showDebugImageView {
             setupDebugViewUi()
@@ -106,6 +112,24 @@ open class SimpleScanViewController: ScanBaseViewController {
         descriptionText.font = descriptionText.font.withSize(30)
     }
     
+    open func setupCardDetailsUi() {
+        numberText.isHidden = true
+        numberText.textColor = .white
+        numberText.textAlignment = .center
+        numberText.font = numberText.font.withSize(48)
+        numberText.adjustsFontSizeToFitWidth = true
+        numberText.minimumScaleFactor = 0.2
+        
+        expiryText.isHidden = true
+        expiryText.textColor = .white
+        expiryText.textAlignment = .center
+        expiryText.font = expiryText.font.withSize(20)
+        
+        nameText.isHidden = true
+        nameText.textColor = .white
+        nameText.font = expiryText.font.withSize(20)
+    }
+    
     open func setupDebugViewUi() {
         debugView = UIImageView()
         guard let debugView = debugView else { return }
@@ -114,7 +138,7 @@ open class SimpleScanViewController: ScanBaseViewController {
     
     // MARK: -Autolayout constraints
     open func setupConstraints() {
-        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton]
+        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton, numberText, expiryText, nameText, expiryLayoutView]
         for child in children {
             child.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -125,6 +149,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         setupCloseButtonConstraints()
         setupTorchButtonConstraints()
         setupDescriptionTextConstraints()
+        setupCardDetailsConstraints()
         
         if showDebugImageView {
             setupDebugViewConstraints()
@@ -166,6 +191,24 @@ open class SimpleScanViewController: ScanBaseViewController {
         
     }
     
+    open func setupCardDetailsConstraints() {
+        numberText.leadingAnchor.constraint(equalTo: roiView.leadingAnchor, constant: 32).isActive = true
+        numberText.trailingAnchor.constraint(equalTo: roiView.trailingAnchor, constant: -32).isActive = true
+        numberText.centerYAnchor.constraint(equalTo: roiView.centerYAnchor).isActive = true
+        
+        nameText.leadingAnchor.constraint(equalTo: numberText.leadingAnchor).isActive = true
+        nameText.bottomAnchor.constraint(equalTo: roiView.bottomAnchor, constant: -16).isActive = true
+        
+        expiryLayoutView.topAnchor.constraint(equalTo: numberText.bottomAnchor).isActive = true
+        expiryLayoutView.bottomAnchor.constraint(equalTo: nameText.topAnchor).isActive = true
+        expiryLayoutView.leadingAnchor.constraint(equalTo: numberText.leadingAnchor).isActive = true
+        expiryLayoutView.trailingAnchor.constraint(equalTo: numberText.trailingAnchor).isActive = true
+        
+        expiryText.leadingAnchor.constraint(equalTo: expiryLayoutView.leadingAnchor).isActive = true
+        expiryText.trailingAnchor.constraint(equalTo: expiryLayoutView.trailingAnchor).isActive = true
+        expiryText.centerYAnchor.constraint(equalTo: expiryLayoutView.centerYAnchor).isActive = true
+    }
+    
     open func setupDebugViewConstraints() {
         guard let debugView = debugView else { return }
         debugView.translatesAutoresizingMaskIntoConstraints = false
@@ -188,11 +231,29 @@ open class SimpleScanViewController: ScanBaseViewController {
     
     override open func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
         super.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
-        //let centeredCard = prediction.centeredCardState ?? .noCard
-        //let hasOcr = prediction.number != nil
         
-        // XXX FIXME add UI stuff while we're scanning
-
+        guard let number = prediction.number else {
+            return
+        }
+            
+        numberText.text = CreditCardUtils.format(number: number)
+        if numberText.isHidden {
+            numberText.fadeIn()
+        }
+        
+        if let expiry = prediction.expiryForDisplay {
+            expiryText.text = expiry
+            if expiryText.isHidden {
+                expiryText.fadeIn()
+            }
+        }
+        
+        if let name = prediction.name {
+            nameText.text = name
+            if nameText.isHidden {
+                nameText.fadeIn()
+            }
+        }
     }
     
     // MARK: -UI event handlers
