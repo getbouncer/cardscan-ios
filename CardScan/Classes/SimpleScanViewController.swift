@@ -19,9 +19,25 @@ open class SimpleScanViewController: ScanBaseViewController {
     // our UI components
     public var descriptionText = UILabel()
     public var closeButton = UIButton()
+    public var torchButton = UIButton()
     private var debugView: UIImageView?
     
     public weak var delegate: SimpleScanDelegate?
+    
+    public static func createViewController() -> SimpleScanViewController {
+        let vc = SimpleScanViewController()
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            // For the iPad you can use the full screen style but you have to select "requires full screen" in
+            // the Info.plist to lock it in portrait mode. For iPads, we recommend using a formSheet, which
+            // handles all orientations correctly.
+            vc.modalPresentationStyle = .formSheet
+        } else {
+            vc.modalPresentationStyle = .fullScreen
+        }
+ 
+        return vc
+    }
     
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +54,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         view.backgroundColor = .white
         regionOfInterestCornerRadius = 32.0
 
-        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton]
+        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton]
         for child in children {
             self.view.addSubview(child)
         }
@@ -47,6 +63,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         setupBlurViewUi()
         setupRoiViewUi()
         setupCloseButtonUi()
+        setupTorchButtonUi()
         setupDescriptionTextUi()
         
         if showDebugImageView {
@@ -74,9 +91,18 @@ open class SimpleScanViewController: ScanBaseViewController {
         closeButton.addTarget(self, action: #selector(cancelButtonPress), for: .touchUpInside)
     }
     
+    open func setupTorchButtonUi() {
+        torchButton.setTitleColor(.white, for: .normal)
+        torchButton.tintColor = .white
+        torchButton.setTitle("Torch", for: .normal)
+        
+        torchButton.addTarget(self, action: #selector(torchButtonPress), for: .touchUpInside)
+    }
+    
     open func setupDescriptionTextUi() {
-        descriptionText.text = "Scan your card"
+        descriptionText.text = "Scan Card"
         descriptionText.textColor = .white
+        descriptionText.textAlignment = .center
         descriptionText.font = descriptionText.font.withSize(30)
     }
     
@@ -88,7 +114,7 @@ open class SimpleScanViewController: ScanBaseViewController {
     
     // MARK: -Autolayout constraints
     open func setupConstraints() {
-        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton]
+        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton]
         for child in children {
             child.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -97,6 +123,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         setupBlurViewConstraints()
         setupRoiViewConstraints()
         setupCloseButtonConstraints()
+        setupTorchButtonConstraints()
         setupDescriptionTextConstraints()
         
         if showDebugImageView {
@@ -117,19 +144,25 @@ open class SimpleScanViewController: ScanBaseViewController {
         roiView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32).isActive = true
         roiView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32).isActive = true
         roiView.heightAnchor.constraint(equalTo: roiView.widthAnchor, multiplier: 1.0 / 1.586).isActive = true
-        roiView.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 32).isActive = true
+        roiView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     open func setupCloseButtonConstraints() {
         let margins = view.layoutMarginsGuide
         closeButton.topAnchor.constraint(equalTo: margins.topAnchor, constant: 16.0).isActive = true
-        closeButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+        closeButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+    }
+    
+    open func setupTorchButtonConstraints() {
+        let margins = view.layoutMarginsGuide
+        torchButton.topAnchor.constraint(equalTo: margins.topAnchor, constant: 16.0).isActive = true
+        torchButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
     }
     
     open func setupDescriptionTextConstraints() {
         descriptionText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32).isActive = true
         descriptionText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32).isActive = true
-        descriptionText.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 32).isActive = true
+        descriptionText.bottomAnchor.constraint(equalTo: roiView.topAnchor, constant: -16).isActive = true
         
     }
     
@@ -165,6 +198,10 @@ open class SimpleScanViewController: ScanBaseViewController {
     // MARK: -UI event handlers
     @objc open func cancelButtonPress() {
         delegate?.userDidCancelSimple(self)
+    }
+    
+    @objc open func torchButtonPress() {
+        toggleTorch()
     }
 }
 

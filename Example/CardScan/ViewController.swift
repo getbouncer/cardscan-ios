@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     
     @IBAction func scanQrCodePress() {
         if #available(iOS 11.2, *) {
-            let vc = SimpleScanViewController()
+            let vc = SimpleScanViewController.createViewController()
             vc.delegate = self
             self.present(vc, animated: true)
         } else {
