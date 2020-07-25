@@ -1,5 +1,62 @@
 import UIKit
 
+/*
+ This class is all programmatic UI with a small bit of logic to handle
+ the events that ScanBaseViewController expects subclasses to implement.
+ Our goal is to have a fully featured Card Scan implementation with a
+ minimal UI that people can customize fully. You can use this directly or
+ you can subclass and customize it. If you'd like to use an off-the-shelf
+ design as well, we suggest using the `ScanViewController`, which uses
+ mature and well tested UI design patterns.
+ 
+ The default UI looks something like this, with most of the constraints
+ shown:
+ 
+ ------------------------------------
+ |   |                          |   |
+ |-Cancel                     Torch-|
+ |                                  |
+ |                                  |
+ |                                  |
+ |                                  |
+ |                                  |
+ |------------Scan Card-------------|
+ |                |                 |
+ |  ------------------------------  |
+ | |                              | |
+ | |                              | |
+ | |                              | |
+ | |--4242    4242   4242   4242--| |
+ | ||           05/23             | |
+ | ||-Sam King                    | |
+ | |     |                        | |
+ |  ------------------------------  |
+ | |              |               | |
+ | |              |               | |
+ | |   Enable camera permissions  | |
+ | |              |               | |
+ | |              |               | |
+ | |---To scan your card you...---| |
+ |                                  |
+ |                                  |
+ |                                  |
+ ------------------------------------
+ 
+ For the UI we separate out the key components into three parts:
+ - Five `*String` variables that we use to set the copy
+ - For each component or group of components we have:
+   - `setup*Ui` functions for setting the visual look and feel
+   - `setup*Constraints for setting up autolayout
+ - We have top level `setupUiComponents` and `setupConstraints` functions that do
+   a small bit of setup and call the appropriate setup functions for each
+   components
+ 
+ And to customize the UI you can either override any of these functions or you
+ can access components directly to adjust. Also, you're welcome to copy and paste
+ this code and customize it to fit your needs -- we're fine with whatever makes
+ the most sense for your app.
+ */
+
 @available(iOS 11.2, *)
 @objc public protocol SimpleScanDelegate {
     @objc func userDidCancelSimple(_ scanViewController: SimpleScanViewController)
@@ -20,12 +77,21 @@ open class SimpleScanViewController: ScanBaseViewController {
     public var closeButton = UIButton()
     public var torchButton = UIButton()
     private var debugView: UIImageView?
+    public var enableCameraPermissionsButton = UIButton()
+    public var enableCameraPermissionsText = UILabel()
     
     // Dynamic card details
     public var numberText = UILabel()
     public var expiryText = UILabel()
     public var nameText = UILabel()
     public var expiryLayoutView = UIView()
+    
+    // String
+    public var descriptionString = "Scan Card"
+    public var enableCameraPermissionString = "Enable camera access"
+    public var enableCameraPermissionsDescriptionString = "To scan your card you'll need to update your phone settings"
+    public var closeButtonString = "Close"
+    public var torchButtonString = "Torch"
     
     public weak var delegate: SimpleScanDelegate?
     
@@ -59,7 +125,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         view.backgroundColor = .white
         regionOfInterestCornerRadius = 32.0
 
-        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton, numberText, expiryText, nameText, expiryLayoutView]
+        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton, numberText, expiryText, nameText, expiryLayoutView, enableCameraPermissionsButton, enableCameraPermissionsText]
         for child in children {
             self.view.addSubview(child)
         }
@@ -71,6 +137,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         setupTorchButtonUi()
         setupDescriptionTextUi()
         setupCardDetailsUi()
+        setupDenyUi()
         
         if showDebugImageView {
             setupDebugViewUi()
@@ -92,7 +159,7 @@ open class SimpleScanViewController: ScanBaseViewController {
     open func setupCloseButtonUi() {
         closeButton.setTitleColor(.white, for: .normal)
         closeButton.tintColor = .white
-        closeButton.setTitle("Cancel", for: .normal)
+        closeButton.setTitle(closeButtonString, for: .normal)
         
         closeButton.addTarget(self, action: #selector(cancelButtonPress), for: .touchUpInside)
     }
@@ -100,13 +167,13 @@ open class SimpleScanViewController: ScanBaseViewController {
     open func setupTorchButtonUi() {
         torchButton.setTitleColor(.white, for: .normal)
         torchButton.tintColor = .white
-        torchButton.setTitle("Torch", for: .normal)
+        torchButton.setTitle(torchButtonString, for: .normal)
         
         torchButton.addTarget(self, action: #selector(torchButtonPress), for: .touchUpInside)
     }
     
     open func setupDescriptionTextUi() {
-        descriptionText.text = "Scan Card"
+        descriptionText.text = descriptionString
         descriptionText.textColor = .white
         descriptionText.textAlignment = .center
         descriptionText.font = descriptionText.font.withSize(30)
@@ -130,6 +197,27 @@ open class SimpleScanViewController: ScanBaseViewController {
         nameText.font = expiryText.font.withSize(20)
     }
     
+    open func setupDenyUi() {
+        let text = enableCameraPermissionString
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(NSAttributedString.Key.underlineColor, value: UIColor.white, range: NSRange(location: 0, length: text.count))
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: text.count))
+        attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: text.count))
+        let font = enableCameraPermissionsButton.titleLabel?.font.withSize(20) ?? UIFont.systemFont(ofSize: 20.0)
+        attributedString.addAttribute(NSAttributedString.Key.font, value: font, range: NSRange(location: 0, length: text.count))
+        enableCameraPermissionsButton.setAttributedTitle(attributedString, for: .normal)
+        enableCameraPermissionsButton.isHidden = true
+        
+        enableCameraPermissionsButton.addTarget(self, action: #selector(enableCameraPermissionsPress), for: .touchUpInside)
+        
+        enableCameraPermissionsText.text = enableCameraPermissionsDescriptionString
+        enableCameraPermissionsText.textColor = .white
+        enableCameraPermissionsText.textAlignment = .center
+        enableCameraPermissionsText.font = enableCameraPermissionsText.font.withSize(17)
+        enableCameraPermissionsText.numberOfLines = 3
+        enableCameraPermissionsText.isHidden = true
+    }
+    
     open func setupDebugViewUi() {
         debugView = UIImageView()
         guard let debugView = debugView else { return }
@@ -138,7 +226,7 @@ open class SimpleScanViewController: ScanBaseViewController {
     
     // MARK: -Autolayout constraints
     open func setupConstraints() {
-        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton, numberText, expiryText, nameText, expiryLayoutView]
+        let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton, numberText, expiryText, nameText, expiryLayoutView, enableCameraPermissionsButton, enableCameraPermissionsText]
         for child in children {
             child.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -150,6 +238,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         setupTorchButtonConstraints()
         setupDescriptionTextConstraints()
         setupCardDetailsConstraints()
+        setupDenyConstraints()
         
         if showDebugImageView {
             setupDebugViewConstraints()
@@ -209,6 +298,15 @@ open class SimpleScanViewController: ScanBaseViewController {
         expiryText.centerYAnchor.constraint(equalTo: expiryLayoutView.centerYAnchor).isActive = true
     }
     
+    open func setupDenyConstraints() {
+        enableCameraPermissionsButton.topAnchor.constraint(equalTo: roiView.bottomAnchor, constant: 32).isActive = true
+        enableCameraPermissionsButton.centerXAnchor.constraint(equalTo: roiView.centerXAnchor).isActive = true
+        
+        enableCameraPermissionsText.topAnchor.constraint(equalTo: enableCameraPermissionsButton.bottomAnchor, constant: 32).isActive = true
+        enableCameraPermissionsText.leadingAnchor.constraint(equalTo: roiView.leadingAnchor).isActive = true
+        enableCameraPermissionsText.trailingAnchor.constraint(equalTo: roiView.trailingAnchor).isActive = true
+    }
+    
     open func setupDebugViewConstraints() {
         guard let debugView = debugView else { return }
         debugView.translatesAutoresizingMaskIntoConstraints = false
@@ -229,31 +327,43 @@ open class SimpleScanViewController: ScanBaseViewController {
         delegate?.userDidScanCardSimple(self, creditCard: card)
     }
     
-    override open func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
-        super.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
-        
+    open func showScannedCardDetails(prediction: CreditCardOcrPrediction) {
         guard let number = prediction.number else {
             return
         }
-            
-        numberText.text = CreditCardUtils.format(number: number)
-        if numberText.isHidden {
-            numberText.fadeIn()
-        }
+                   
+       numberText.text = CreditCardUtils.format(number: number)
+       if numberText.isHidden {
+           numberText.fadeIn()
+       }
+       
+       if let expiry = prediction.expiryForDisplay {
+           expiryText.text = expiry
+           if expiryText.isHidden {
+               expiryText.fadeIn()
+           }
+       }
+       
+       if let name = prediction.name {
+           nameText.text = name
+           if nameText.isHidden {
+               nameText.fadeIn()
+           }
+       }
+    }
+    
+    override open func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
+        super.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
         
-        if let expiry = prediction.expiryForDisplay {
-            expiryText.text = expiry
-            if expiryText.isHidden {
-                expiryText.fadeIn()
-            }
-        }
+        showScannedCardDetails(prediction: prediction)
+    }
+    
+    override public func onCameraPermissionDenied(showedPrompt: Bool) {
+        descriptionText.isHidden = true
+        torchButton.isHidden = true
         
-        if let name = prediction.name {
-            nameText.text = name
-            if nameText.isHidden {
-                nameText.fadeIn()
-            }
-        }
+        enableCameraPermissionsButton.isHidden = false
+        enableCameraPermissionsText.isHidden = false
     }
     
     // MARK: -UI event handlers
@@ -263,6 +373,16 @@ open class SimpleScanViewController: ScanBaseViewController {
     
     @objc open func torchButtonPress() {
         toggleTorch()
+    }
+    
+    /// Warning: if the user navigates to settings and updates the setting, it'll suspend your app.
+    @objc open func enableCameraPermissionsPress() {
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsUrl) else {
+            print("can't open settings")
+            return
+        }
+        
+        UIApplication.shared.open(settingsUrl)
     }
 }
 
