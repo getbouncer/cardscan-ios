@@ -135,16 +135,16 @@ public struct Api {
         apiCall(endpoint: endpoint, parameters: apiParameters, completion: completion)
     }
     
-    static public func getModelDownloadConfig(endpoint: String, completion: @escaping ApiCompletion) {
+    static public func getModelDownloadConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         if baseUrl == nil || apiKey == nil {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
         }
         
-        modelDownloadConfig(endpoint: endpoint, completion: completion)
+        modelDownloadConfig(endpoint: endpoint, parameters: parameters, completion: completion)
     }
     
-    private static func modelDownloadConfig(endpoint: String, completion: @escaping ApiCompletion) {
+    private static func modelDownloadConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         guard let baseUrl = self.baseUrl else {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
@@ -155,9 +155,20 @@ public struct Api {
             return
         }
 
-        let session = URLSession(configuration: configuration())
+        var components = URLComponents(string: url.absoluteString)
+        components?.queryItems = parameters.map { (key, value) in
+            URLQueryItem(name: key, value: value as? String)
+        }
+        let encodedQuery = components?.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        components?.percentEncodedQuery = encodedQuery
+
+        guard let componentsUrl = components?.url else {
+            DispatchQueue.main.async { completion(nil, defaultError) }
+            return
+        }
         
-        session.dataTask(with: url) { data, response, error in
+        let session = URLSession(configuration: configuration())
+        session.dataTask(with: componentsUrl) { data, response, error in
             guard let rawData = data else {
                 DispatchQueue.main.async { completion(nil, defaultError) }
                 return
