@@ -289,13 +289,13 @@
 				TargetAttributes = {
 					3B2C41F522C55530006172BE = {
 						CreatedOnToolsVersion = 10.2.1;
-						DevelopmentTeam = 58Q7WV8B48;
+						DevelopmentTeam = L4TQ6C2R74;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 					3BE2697B2278DF3800199C31 = {
 						CreatedOnToolsVersion = 10.2.1;
-						DevelopmentTeam = 58Q7WV8B48;
+						DevelopmentTeam = L4TQ6C2R74;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -560,7 +560,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 58Q7WV8B48;
+				DEVELOPMENT_TEAM = L4TQ6C2R74;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CardScan_ExampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -616,7 +616,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 58Q7WV8B48;
+				DEVELOPMENT_TEAM = L4TQ6C2R74;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CardScan_ExampleUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -644,7 +644,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 58Q7WV8B48;
+				DEVELOPMENT_TEAM = L4TQ6C2R74;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CardScan_ExampleUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
