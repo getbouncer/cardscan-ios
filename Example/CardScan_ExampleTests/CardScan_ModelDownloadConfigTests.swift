@@ -21,4 +21,8 @@ class CardScan_ModelDownloadConfigTests: XCTestCase {
     func testModelConfigDownload() {
     // TODO(Jaime): get unit test to work with signing?
     }
+    
+    func testUrlWithQueryParams() {
+    // TODO(Jaime): test api func urlWithQueryParam escaping `+`
+    }
 }
