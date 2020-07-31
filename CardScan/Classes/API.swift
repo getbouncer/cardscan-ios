@@ -149,7 +149,7 @@ public struct Api {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
         }
-
+        
         guard let url = urlWithQueryParameters(baseUrl: baseUrl, endpoint: endpoint, parameters: parameters) else {
             DispatchQueue.main.async { completion(nil, defaultError) }
             return
@@ -179,8 +179,18 @@ public struct Api {
     }
     
     static func urlWithQueryParameters(baseUrl: String, endpoint: String, parameters: [String: Any]) -> URL? {
+        let parametersDict: [String: String] = {
+            var parametersDict: [String: String] = [:]
+            for (key, value) in parameters {
+                if let val = value as? String {
+                    parametersDict[key] = val
+                }
+            }
+            return parametersDict
+        }()
+        
         var components = URLComponents(string: baseUrl + endpoint)
-        components?.queryItems = parameters.map { (key, value) in URLQueryItem(name: key, value: value as? String) }
+        components?.queryItems = parametersDict.map { (key, value) in URLQueryItem(name: key, value: value) }
         let encodedQuery = components?.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         components?.percentEncodedQuery = encodedQuery
         return components?.url
