@@ -179,18 +179,13 @@ public struct Api {
     }
     
     static func urlWithQueryParameters(baseUrl: String, endpoint: String, parameters: [String: Any]) -> URL? {
-        let parametersDict: [String: String] = {
-            var parametersDict: [String: String] = [:]
-            for (key, value) in parameters {
-                if let val = value as? String {
-                    parametersDict[key] = val
-                }
-            }
-            return parametersDict
-        }()
+        var stringParameters: [String: String] = [:]
+        for (key, value) in parameters {
+            stringParameters[key] = "\(value)"
+        }
         
         var components = URLComponents(string: baseUrl + endpoint)
-        components?.queryItems = parametersDict.map { (key, value) in URLQueryItem(name: key, value: value) }
+        components?.queryItems = stringParameters.map { (key, value) in URLQueryItem(name: key, value: value) }
         let encodedQuery = components?.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         components?.percentEncodedQuery = encodedQuery
         return components?.url
