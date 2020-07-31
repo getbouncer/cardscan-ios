@@ -179,7 +179,7 @@ public struct Api {
     }
     
     /**
-     Returns URL for GET request created with parameters casted to [String: String].
+     Returns URL for GET request created with parameters casted to [String: String]. Make sure all parameter values can be easily converted to String. 
     */
     static func urlWithQueryParameters(baseUrl: String, endpoint: String, parameters: [String: Any]) -> URL? {
         var stringParameters: [String: String] = [:]
