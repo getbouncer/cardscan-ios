@@ -178,6 +178,9 @@ public struct Api {
         }.resume()
     }
     
+    /**
+     Returns URL for GET request created with parameters casted to [String: String].
+    */
     static func urlWithQueryParameters(baseUrl: String, endpoint: String, parameters: [String: Any]) -> URL? {
         var stringParameters: [String: String] = [:]
         for (key, value) in parameters {
