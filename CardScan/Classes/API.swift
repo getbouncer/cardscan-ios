@@ -150,25 +150,13 @@ public struct Api {
             return
         }
 
-        guard let url = URL(string: baseUrl + endpoint) else {
+        guard let url = urlWithQueryParameters(baseUrl: baseUrl, endpoint: endpoint, parameters: parameters) else {
             DispatchQueue.main.async { completion(nil, defaultError) }
             return
         }
 
-        var components = URLComponents(string: url.absoluteString)
-        components?.queryItems = parameters.map { (key, value) in
-            URLQueryItem(name: key, value: value as? String)
-        }
-        let encodedQuery = components?.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
-        components?.percentEncodedQuery = encodedQuery
-
-        guard let componentsUrl = components?.url else {
-            DispatchQueue.main.async { completion(nil, defaultError) }
-            return
-        }
-        
         let session = URLSession(configuration: configuration())
-        session.dataTask(with: componentsUrl) { data, response, error in
+        session.dataTask(with: url) { data, response, error in
             guard let rawData = data else {
                 DispatchQueue.main.async { completion(nil, defaultError) }
                 return
@@ -188,6 +176,14 @@ public struct Api {
                 }
             }
         }.resume()
+    }
+    
+    static func urlWithQueryParameters(baseUrl: String, endpoint: String, parameters: [String: Any]) -> URL? {
+        var components = URLComponents(string: baseUrl + endpoint)
+        components?.queryItems = parameters.map { (key, value) in URLQueryItem(name: key, value: value as? String) }
+        let encodedQuery = components?.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        components?.percentEncodedQuery = encodedQuery
+        return components?.url
     }
     
     static func scanStats(scanStats: ScanStats, completion: @escaping ApiCompletion) {
