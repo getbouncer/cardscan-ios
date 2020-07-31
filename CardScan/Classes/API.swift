@@ -135,6 +135,65 @@ public struct Api {
         apiCall(endpoint: endpoint, parameters: apiParameters, completion: completion)
     }
     
+    static public func getModelDownloadConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
+        if baseUrl == nil || apiKey == nil {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+        
+        modelDownloadConfig(endpoint: endpoint, parameters: parameters, completion: completion)
+    }
+    
+    private static func modelDownloadConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
+        guard let baseUrl = self.baseUrl else {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+        
+        guard let url = urlWithQueryParameters(baseUrl: baseUrl, endpoint: endpoint, parameters: parameters) else {
+            DispatchQueue.main.async { completion(nil, defaultError) }
+            return
+        }
+
+        let session = URLSession(configuration: configuration())
+        session.dataTask(with: url) { data, response, error in
+            guard let rawData = data else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+
+            let jsonData = try? JSONSerialization.jsonObject(with: rawData)
+            guard let responseData = jsonData as? [String: Any] else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if "error" == responseData["status"] as? String {
+                    completion(nil, ApiError(response: responseData))
+                } else {
+                    completion(responseData, nil)
+                }
+            }
+        }.resume()
+    }
+    
+    /**
+     Returns URL for GET request created with parameters casted to [String: String]. Make sure all parameter values can be easily converted to String. 
+    */
+    static func urlWithQueryParameters(baseUrl: String, endpoint: String, parameters: [String: Any]) -> URL? {
+        var stringParameters: [String: String] = [:]
+        for (key, value) in parameters {
+            stringParameters[key] = "\(value)"
+        }
+        
+        var components = URLComponents(string: baseUrl + endpoint)
+        components?.queryItems = stringParameters.map { (key, value) in URLQueryItem(name: key, value: value) }
+        let encodedQuery = components?.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        components?.percentEncodedQuery = encodedQuery
+        return components?.url
+    }
+    
     static func scanStats(scanStats: ScanStats, completion: @escaping ApiCompletion) {
         self.apiCallWithDeviceInfo(endpoint: "/scan_stats", parameters: ["scan_stats": scanStats.toDictionaryForAnalytics()], completion: completion)
     }

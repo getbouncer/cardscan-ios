@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3B2741C5219F99B700BFA3D2 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2741C4219F99B700BFA3D2 /* ResultViewController.swift */; };
-		3B2C41F922C55531006172BE /* CardScan_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C41F822C55531006172BE /* CardScan_ExampleTests.swift */; };
 		3BE2697F2278DF3800199C31 /* CardScan_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2697E2278DF3800199C31 /* CardScan_ExampleUITests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -24,6 +23,7 @@
 		EBA3564A24A0244800CF6194 /* CardScanDD_BackgroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA3564924A0244800CF6194 /* CardScanDD_BackgroundTests.swift */; };
 		F3594276248784A00063A362 /* ModalNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3594275248784A00063A362 /* ModalNavViewController.swift */; };
 		F3594278248784C40063A362 /* ModalScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3594277248784C40063A362 /* ModalScanViewController.swift */; };
+		F39F8B7F24D251FF00912494 /* CardScan_ModelDownloadConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39F8B7E24D251FF00912494 /* CardScan_ModelDownloadConfigTests.swift */; };
 		F3BF1C5C22D51AAA002A2575 /* CardScan_BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */; };
 		F3FA027023A814C4002A8169 /* CardScan_CardUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */; };
 /* End PBXBuildFile section */
@@ -50,7 +50,6 @@
 		39CA34DF8B2C20EFC6C2477B /* Pods-CardScan_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardScan_ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-CardScan_ExampleTests/Pods-CardScan_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3B2741C4219F99B700BFA3D2 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		3B2C41F622C55530006172BE /* CardScan_ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScan_ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B2C41F822C55531006172BE /* CardScan_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_ExampleTests.swift; sourceTree = "<group>"; };
 		3B2C41FA22C55531006172BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3BE2697C2278DF3800199C31 /* CardScan_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScan_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BE2697E2278DF3800199C31 /* CardScan_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_ExampleUITests.swift; sourceTree = "<group>"; };
@@ -77,6 +76,7 @@
 		EFC4AF881BD9C60F9B02584D /* Pods-CardScan_ExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardScan_ExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-CardScan_ExampleUITests/Pods-CardScan_ExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F3594275248784A00063A362 /* ModalNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNavViewController.swift; sourceTree = "<group>"; };
 		F3594277248784C40063A362 /* ModalScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalScanViewController.swift; sourceTree = "<group>"; };
+		F39F8B7E24D251FF00912494 /* CardScan_ModelDownloadConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_ModelDownloadConfigTests.swift; sourceTree = "<group>"; };
 		F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScan_BundleTests.swift; sourceTree = "<group>"; };
 		F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_CardUtilsTests.swift; sourceTree = "<group>"; };
 		FDCA90BA2C77F14EF08D1026 /* Pods_CardScan_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CardScan_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,13 +114,13 @@
 			isa = PBXGroup;
 			children = (
 				F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */,
-				3B2C41F822C55531006172BE /* CardScan_ExampleTests.swift */,
 				3B2C41FA22C55531006172BE /* Info.plist */,
 				F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */,
 				EBA35643249C8E0500CF6194 /* CardScanDD_BundleTests.swift */,
 				EBA35645249DDDDC00CF6194 /* CardScanDD_ModelTests.swift */,
 				EBA35647249EC72B00CF6194 /* CardScanDD_OCRTest.swift */,
 				EBA3564924A0244800CF6194 /* CardScanDD_BackgroundTests.swift */,
+				F39F8B7E24D251FF00912494 /* CardScan_ModelDownloadConfigTests.swift */,
 			);
 			path = CardScan_ExampleTests;
 			sourceTree = "<group>";
@@ -482,7 +482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F3BF1C5C22D51AAA002A2575 /* CardScan_BundleTests.swift in Sources */,
-				3B2C41F922C55531006172BE /* CardScan_ExampleTests.swift in Sources */,
+				F39F8B7F24D251FF00912494 /* CardScan_ModelDownloadConfigTests.swift in Sources */,
 				EBA35644249C8E0500CF6194 /* CardScanDD_BundleTests.swift in Sources */,
 				EBA35648249EC72B00CF6194 /* CardScanDD_OCRTest.swift in Sources */,
 				F3FA027023A814C4002A8169 /* CardScan_CardUtilsTests.swift in Sources */,
@@ -589,7 +589,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 58Q7WV8B48;
+				DEVELOPMENT_TEAM = L4TQ6C2R74;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CardScan_ExampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
