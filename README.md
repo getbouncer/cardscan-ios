@@ -1,5 +1,7 @@
 # CardScan
 
+![Unit Tests](https://github.com/getbouncer/cardscan-ios/workflows/Unit%20Tests/badge.svg)
+
 CardScan iOS installation guide
 
 ## Contents
