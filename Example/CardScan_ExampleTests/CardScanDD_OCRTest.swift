@@ -9,6 +9,8 @@
 import XCTest
 @testable import CardScan
 
+// TODO: These tests were failing. Fix them
+
 //class CardScanDD_OCRTests: XCTestCase {
 //
 //    override func setUp() {

@@ -7,6 +7,9 @@
 //
 
 import XCTest
+
+// TODO: These tests were failing. Fix them
+
 //@testable import CardScan
 //class CardScan_BundleTests: XCTestCase {
 //    override func setUp() {
