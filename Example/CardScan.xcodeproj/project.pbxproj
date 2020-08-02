@@ -24,7 +24,6 @@
 		F3594276248784A00063A362 /* ModalNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3594275248784A00063A362 /* ModalNavViewController.swift */; };
 		F3594278248784C40063A362 /* ModalScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3594277248784C40063A362 /* ModalScanViewController.swift */; };
 		F39F8B7F24D251FF00912494 /* CardScan_ModelDownloadConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39F8B7E24D251FF00912494 /* CardScan_ModelDownloadConfigTests.swift */; };
-		F3BF1C5C22D51AAA002A2575 /* CardScan_BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */; };
 		F3FA027023A814C4002A8169 /* CardScan_CardUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,7 +76,6 @@
 		F3594275248784A00063A362 /* ModalNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNavViewController.swift; sourceTree = "<group>"; };
 		F3594277248784C40063A362 /* ModalScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalScanViewController.swift; sourceTree = "<group>"; };
 		F39F8B7E24D251FF00912494 /* CardScan_ModelDownloadConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_ModelDownloadConfigTests.swift; sourceTree = "<group>"; };
-		F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScan_BundleTests.swift; sourceTree = "<group>"; };
 		F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_CardUtilsTests.swift; sourceTree = "<group>"; };
 		FDCA90BA2C77F14EF08D1026 /* Pods_CardScan_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CardScan_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -113,7 +111,6 @@
 		3B2C41F722C55531006172BE /* CardScan_ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				F3BF1C5B22D51AAA002A2575 /* CardScan_BundleTests.swift */,
 				3B2C41FA22C55531006172BE /* Info.plist */,
 				F3FA026F23A814C4002A8169 /* CardScan_CardUtilsTests.swift */,
 				EBA35643249C8E0500CF6194 /* CardScanDD_BundleTests.swift */,
@@ -289,19 +286,19 @@
 				TargetAttributes = {
 					3B2C41F522C55530006172BE = {
 						CreatedOnToolsVersion = 10.2.1;
-						DevelopmentTeam = L4TQ6C2R74;
+						DevelopmentTeam = 58Q7WV8B48;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 					3BE2697B2278DF3800199C31 = {
 						CreatedOnToolsVersion = 10.2.1;
-						DevelopmentTeam = L4TQ6C2R74;
+						DevelopmentTeam = 58Q7WV8B48;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = L4TQ6C2R74;
+						DevelopmentTeam = 58Q7WV8B48;
 						LastSwiftMigration = 1140;
 					};
 				};
@@ -481,7 +478,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3BF1C5C22D51AAA002A2575 /* CardScan_BundleTests.swift in Sources */,
 				F39F8B7F24D251FF00912494 /* CardScan_ModelDownloadConfigTests.swift in Sources */,
 				EBA35644249C8E0500CF6194 /* CardScanDD_BundleTests.swift in Sources */,
 				EBA35648249EC72B00CF6194 /* CardScanDD_OCRTest.swift in Sources */,
@@ -560,7 +556,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				DEVELOPMENT_TEAM = 58Q7WV8B48;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CardScan_ExampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -589,7 +585,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				DEVELOPMENT_TEAM = 58Q7WV8B48;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CardScan_ExampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -616,7 +612,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				DEVELOPMENT_TEAM = 58Q7WV8B48;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CardScan_ExampleUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -644,7 +640,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				DEVELOPMENT_TEAM = 58Q7WV8B48;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CardScan_ExampleUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -768,7 +764,7 @@
 			baseConfigurationReference = CEAB99683846AFF946286335 /* Pods-CardScan_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				DEVELOPMENT_TEAM = 58Q7WV8B48;
 				INFOPLIST_FILE = CardScan/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -786,7 +782,7 @@
 			baseConfigurationReference = 1EC7DB4097DACE82DB203C14 /* Pods-CardScan_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				DEVELOPMENT_TEAM = 58Q7WV8B48;
 				INFOPLIST_FILE = CardScan/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
