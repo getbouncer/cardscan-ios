@@ -135,6 +135,24 @@ public struct Api {
         apiCall(endpoint: endpoint, parameters: apiParameters, completion: completion)
     }
     
+    static func modelDownload(signedUrl: String, completion: @escaping ApiCompletion) {
+        guard let url = URL(string: signedUrl) else {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+        
+        let session = URLSession(configuration: configuration())
+        session.downloadTask(with: url) { (location: URL?, response: URLResponse?, error: Error?) in
+            guard let location = location else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+            DispatchQueue.main.async {
+                completion(["mlmodel_url": location], nil)
+            }
+        }.resume()
+    }
+    
     static public func getModelDownloadConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         if baseUrl == nil || apiKey == nil {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
