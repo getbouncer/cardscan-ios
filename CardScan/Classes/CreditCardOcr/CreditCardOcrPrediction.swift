@@ -74,7 +74,7 @@ public struct CreditCardOcrPrediction {
     }
     
     static func likelyExpiry(_ string: String) -> (String, String)? {
-        guard let regex = try? NSRegularExpression(pattern: "^.*(0[1-9]|1[0-2])\\/([1-2][0-9])$") else {
+        guard let regex = try? NSRegularExpression(pattern: "^.*(0[1-9]|1[0-2])[./]([1-2][0-9])$") else {
             return nil
         }
 
