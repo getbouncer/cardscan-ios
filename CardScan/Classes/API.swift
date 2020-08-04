@@ -137,7 +137,7 @@ public struct Api {
     
     static func modelDownload(signedUrl: String, completion: @escaping ApiCompletion) {
         guard let url = URL(string: signedUrl) else {
-            completion(nil, apiUrlNotSet)
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
         }
         
