@@ -144,11 +144,12 @@ public struct Api {
         let session = URLSession(configuration: configuration())
         session.downloadTask(with: url) { (location: URL?, response: URLResponse?, error: Error?) in
             guard let location = location else {
-                completion(nil, defaultError)
+                DispatchQueue.main.async { completion(nil, defaultError) }
                 return
             }
-            
-            completion(["mlmodel_url": location], nil)
+            DispatchQueue.main.async {
+                completion(["mlmodel_url": location], nil)
+            }
         }.resume()
     }
     
