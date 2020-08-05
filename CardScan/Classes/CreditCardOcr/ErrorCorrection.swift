@@ -1,15 +1,15 @@
 import Foundation
 
 open class ErrorCorrection {
-    
-    var firstPan: Date?
+    let state: MainLoopStateMachine = OcrMainLoopStateMachine()
     public var frames = 0
     var numbers: [String: Int] = [:]
     var expiries: [String: Int] = [:]
     var names: [String: Int] = [:]
     public let startTime = Date()
-    public let errorCorrectionTime = 2.0
     public var mostRecentPrediction: CreditCardOcrPrediction?
+    
+    
     
     var framesPerSecond: Double {
         return Double(frames) / -startTime.timeIntervalSinceNow
@@ -22,12 +22,12 @@ open class ErrorCorrection {
     }
     
     open func result() -> CreditCardOcrResult? {
-        guard let firstPan = firstPan else { return nil }
+        guard state.loopState() != .initial else { return nil }
         let predictedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         guard let number = predictedNumber else { return nil }
         let predictedExpiry = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let predictedName = self.names.sorted { $0.1 > $1.1 }.map { $0.0 }.first
-        let isFinished = -firstPan.timeIntervalSinceNow >= errorCorrectionTime
+        let isFinished = state.loopState() == .finished
         guard let prediction = self.mostRecentPrediction else { return nil }
         
         return CreditCardOcrResult(mostRecentPrediction: prediction, number: number, expiry: predictedExpiry, name: predictedName, isFinished: isFinished, duration: -startTime.timeIntervalSinceNow, frames: frames)
@@ -36,9 +36,6 @@ open class ErrorCorrection {
     open func add(prediction: CreditCardOcrPrediction) -> CreditCardOcrResult? {
         self.frames += 1
         if let pan = prediction.number {
-            if self.firstPan == nil {
-                self.firstPan = Date()
-            }
             self.numbers[pan] = (self.numbers[pan] ?? 0) + 1
         }
         if let expiry = prediction.expiryForDisplay {
@@ -50,6 +47,8 @@ open class ErrorCorrection {
         }
         
         self.mostRecentPrediction = prediction
+        
+        let _ = state.event(prediction: prediction)
         
         return result()
     }
