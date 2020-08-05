@@ -24,18 +24,14 @@ open class OcrMainLoopStateMachine: MainLoopStateMachine {
     
     var state: MainLoopState = .initial
     var startTimeForCurrentState = Date()
-    var timeOfFirstOcr: Date?
     
-    public let errorCorrectionDuration = 2.0
+    public let errorCorrectionDurationSeconds = 2.0
     
     public func loopState() -> MainLoopState {
         return state
     }
     
     public func event(prediction: CreditCardOcrPrediction) -> MainLoopState {
-        if prediction.number != nil && timeOfFirstOcr == nil {
-            timeOfFirstOcr = Date()
-        }
                 
         let currentState = state
         state = transition(prediction: prediction)
@@ -47,12 +43,12 @@ open class OcrMainLoopStateMachine: MainLoopStateMachine {
     }
     
     open func transition(prediction: CreditCardOcrPrediction) -> MainLoopState {
-        let timeInCurrentState = -startTimeForCurrentState.timeIntervalSinceNow
+        let timeInCurrentStateSeconds = -startTimeForCurrentState.timeIntervalSinceNow
         
-        switch (state, timeInCurrentState, timeOfFirstOcr) {
+        switch (state, timeInCurrentStateSeconds, prediction.number) {
         case (.initial, _, .some):
             return .ocrOnly
-        case (.ocrOnly, errorCorrectionDuration..., _):
+        case (.ocrOnly, errorCorrectionDurationSeconds..., _):
             return .finished
         default:
             // no state transitions
