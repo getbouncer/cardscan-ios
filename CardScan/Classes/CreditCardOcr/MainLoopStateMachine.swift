@@ -44,9 +44,10 @@ open class OcrMainLoopStateMachine: MainLoopStateMachine {
     
     open func transition(prediction: CreditCardOcrPrediction) -> MainLoopState {
         let timeInCurrentStateSeconds = -startTimeForCurrentState.timeIntervalSinceNow
+        let frameHasOcr = prediction.number != nil
         
-        switch (state, timeInCurrentStateSeconds, prediction.number) {
-        case (.initial, _, .some):
+        switch (state, timeInCurrentStateSeconds, frameHasOcr) {
+        case (.initial, _, true):
             return .ocrOnly
         case (.ocrOnly, errorCorrectionDurationSeconds..., _):
             return .finished
