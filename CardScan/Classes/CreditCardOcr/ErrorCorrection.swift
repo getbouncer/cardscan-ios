@@ -30,7 +30,7 @@ open class ErrorCorrection {
         
         guard let number = predictedNumber else {
             // TODO(stk): this is a hack to deal with the case where we are finished
-            // but don't have a card
+            // but don't have a OCR (e.g., non-number side for liveness)
             if state.loopState() == .finished {
                 return CreditCardOcrResult.finishedWithNonNumberSideCard(prediction: prediction, duration: -startTime.timeIntervalSinceNow, frames: frames)
             }
