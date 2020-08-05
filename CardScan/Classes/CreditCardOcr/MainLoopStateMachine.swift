@@ -18,12 +18,17 @@ public enum MainLoopState {
 public protocol MainLoopStateMachine {
     func loopState() -> MainLoopState
     func event(prediction: CreditCardOcrPrediction) -> MainLoopState
+    func reset() -> MainLoopStateMachine
 }
 
+// Note: This class is _not_ thread safe, it relies on syncrhonization
+// from the `OcrMainLoop`
 open class OcrMainLoopStateMachine: MainLoopStateMachine {
     
-    var state: MainLoopState = .initial
-    var startTimeForCurrentState = Date()
+    public var state: MainLoopState = .initial
+    public var startTimeForCurrentState = Date()
+    
+    public init() { }
     
     public let errorCorrectionDurationSeconds = 2.0
     
@@ -55,5 +60,9 @@ open class OcrMainLoopStateMachine: MainLoopStateMachine {
             // no state transitions
             return state
         }
+    }
+    
+    open func reset() -> MainLoopStateMachine {
+        return OcrMainLoopStateMachine()
     }
 }
