@@ -9,8 +9,6 @@ open class ErrorCorrection {
     public let startTime = Date()
     public var mostRecentPrediction: CreditCardOcrPrediction?
     
-    
-    
     var framesPerSecond: Double {
         return Double(frames) / -startTime.timeIntervalSinceNow
     }
@@ -27,10 +25,9 @@ open class ErrorCorrection {
         guard let number = predictedNumber else { return nil }
         let predictedExpiry = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let predictedName = self.names.sorted { $0.1 > $1.1 }.map { $0.0 }.first
-        let isFinished = state.loopState() == .finished
         guard let prediction = self.mostRecentPrediction else { return nil }
         
-        return CreditCardOcrResult(mostRecentPrediction: prediction, number: number, expiry: predictedExpiry, name: predictedName, isFinished: isFinished, duration: -startTime.timeIntervalSinceNow, frames: frames)
+        return CreditCardOcrResult(mostRecentPrediction: prediction, number: number, expiry: predictedExpiry, name: predictedName, state: state.loopState(), duration: -startTime.timeIntervalSinceNow, frames: frames)
     }
     
     open func add(prediction: CreditCardOcrPrediction) -> CreditCardOcrResult? {
