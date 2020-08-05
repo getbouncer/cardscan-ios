@@ -1,6 +1,18 @@
 # Changelog
 
-## [1.0.5041](https://github.com/getbouncer/cardscan-ios/tree/1.0.5041) (2020-07-25)
+## [1.0.5042](https://github.com/getbouncer/cardscan-ios/tree/1.0.5042) (2020-08-04)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5041...1.0.5042)
+
+**Merged pull requests:**
+
+- Support dot expiry [\#196](https://github.com/getbouncer/cardscan-ios/pull/196) ([awushensky](https://github.com/awushensky))
+- Added model download function [\#195](https://github.com/getbouncer/cardscan-ios/pull/195) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Fix unit tests [\#194](https://github.com/getbouncer/cardscan-ios/pull/194) ([dxaen](https://github.com/dxaen))
+- Testing CI [\#191](https://github.com/getbouncer/cardscan-ios/pull/191) ([awushensky](https://github.com/awushensky))
+- Adding model config downloading to API [\#189](https://github.com/getbouncer/cardscan-ios/pull/189) ([jaimejiyepark](https://github.com/jaimejiyepark))
+
+## [1.0.5041](https://github.com/getbouncer/cardscan-ios/tree/1.0.5041) (2020-07-28)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5040...1.0.5041)
 
@@ -70,6 +82,7 @@
 **Merged pull requests:**
 
 - Add device locale to payload [\#168](https://github.com/getbouncer/cardscan-ios/pull/168) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Added strong reference to main loop [\#166](https://github.com/getbouncer/cardscan-ios/pull/166) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5033](https://github.com/getbouncer/cardscan-ios/tree/1.0.5033) (2020-06-10)
 
@@ -83,7 +96,6 @@
 
 **Merged pull requests:**
 
-- Added strong reference to main loop [\#166](https://github.com/getbouncer/cardscan-ios/pull/166) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Backgrounding logic patch [\#165](https://github.com/getbouncer/cardscan-ios/pull/165) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Update cardscan license [\#164](https://github.com/getbouncer/cardscan-ios/pull/164) ([awushensky](https://github.com/awushensky))
 - Orientation rotation support [\#163](https://github.com/getbouncer/cardscan-ios/pull/163) ([jaimejiyepark](https://github.com/jaimejiyepark))
@@ -211,7 +223,6 @@
 **Merged pull requests:**
 
 - Update the ScanCard protocol to include the cropped card image size [\#104](https://github.com/getbouncer/cardscan-ios/pull/104) ([kingst](https://github.com/kingst))
-- First cut at sending square and full images to the ML pipeline [\#103](https://github.com/getbouncer/cardscan-ios/pull/103) ([kingst](https://github.com/kingst))
 - modifying testing image protocol to return square and full-screen images [\#102](https://github.com/getbouncer/cardscan-ios/pull/102) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - added button identifier for UITest [\#100](https://github.com/getbouncer/cardscan-ios/pull/100) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Adapt to iOS 9 [\#99](https://github.com/getbouncer/cardscan-ios/pull/99) ([igor-makarov](https://github.com/igor-makarov))
@@ -220,6 +231,10 @@
 ## [1.0.5022](https://github.com/getbouncer/cardscan-ios/tree/1.0.5022) (2019-11-13)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5021...1.0.5022)
+
+**Merged pull requests:**
+
+- Let apps set the bundle name [\#95](https://github.com/getbouncer/cardscan-ios/pull/95) ([kingst](https://github.com/kingst))
 
 ## [1.0.5021](https://github.com/getbouncer/cardscan-ios/tree/1.0.5021) (2019-11-04)
 
@@ -239,6 +254,7 @@
 
 **Merged pull requests:**
 
+- First cut at sending square and full images to the ML pipeline [\#103](https://github.com/getbouncer/cardscan-ios/pull/103) ([kingst](https://github.com/kingst))
 - New detection model [\#93](https://github.com/getbouncer/cardscan-ios/pull/93) ([kingst](https://github.com/kingst))
 - In prep for the new model [\#92](https://github.com/getbouncer/cardscan-ios/pull/92) ([dxaen](https://github.com/dxaen))
 - Adjust scale before running recognition model [\#91](https://github.com/getbouncer/cardscan-ios/pull/91) ([kingst](https://github.com/kingst))
@@ -258,7 +274,6 @@
 
 **Merged pull requests:**
 
-- Let apps set the bundle name [\#95](https://github.com/getbouncer/cardscan-ios/pull/95) ([kingst](https://github.com/kingst))
 - Moves setting the sessionPreset after addInput.  [\#90](https://github.com/getbouncer/cardscan-ios/pull/90) ([waltersanford](https://github.com/waltersanford))
 - Fix typo [\#88](https://github.com/getbouncer/cardscan-ios/pull/88) ([kingst](https://github.com/kingst))
 - adapt to new iOS13 card-screen presentation by setting to full-screen [\#87](https://github.com/getbouncer/cardscan-ios/pull/87) ([jaimejiyepark](https://github.com/jaimejiyepark))
@@ -578,6 +593,7 @@
 
 - Models as resources [\#15](https://github.com/getbouncer/cardscan-ios/pull/15) ([kingst](https://github.com/kingst))
 - Move models to resources, compile on the device [\#14](https://github.com/getbouncer/cardscan-ios/pull/14) ([kingst](https://github.com/kingst))
+- Switch to weak\_framework in podspec [\#9](https://github.com/getbouncer/cardscan-ios/pull/9) ([kingst](https://github.com/kingst))
 
 ## [1.0.4045](https://github.com/getbouncer/cardscan-ios/tree/1.0.4045) (2019-04-30)
 
@@ -600,10 +616,6 @@
 ## [1.0.4043](https://github.com/getbouncer/cardscan-ios/tree/1.0.4043) (2019-04-30)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.4042...1.0.4043)
-
-**Merged pull requests:**
-
-- Switch to weak\_framework in podspec [\#9](https://github.com/getbouncer/cardscan-ios/pull/9) ([kingst](https://github.com/kingst))
 
 ## [1.0.4042](https://github.com/getbouncer/cardscan-ios/tree/1.0.4042) (2019-04-08)
 
