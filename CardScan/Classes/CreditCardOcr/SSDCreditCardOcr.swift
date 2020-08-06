@@ -16,7 +16,7 @@ public class SSDCreditCardOcr: CreditCardOcrImplementation {
     }
     
     public override func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
-        guard let image = croppedImageForSsd(fullCardImage: fullImage, roiRectangle: roiRectangle)
+        guard let image = fullImage.croppedImageForSsd(roiRectangle: roiRectangle)
             else {
                 return CreditCardOcrPrediction.emptyPrediction(cgImage: fullImage)
         }
