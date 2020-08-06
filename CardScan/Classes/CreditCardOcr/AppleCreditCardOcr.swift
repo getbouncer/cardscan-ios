@@ -14,6 +14,7 @@ public class AppleCreditCardOcr: CreditCardOcrImplementation {
             return CreditCardOcrPrediction.emptyPrediction(cgImage: fullImage)
         }
         
+        print("predict apple")
         var pan: String?
         var expiryMonth: String?
         var expiryYear: String?

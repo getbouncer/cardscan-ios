@@ -10,12 +10,13 @@ import UIKit
 public class SSDCreditCardOcr: CreditCardOcrImplementation {
     let ocr: OcrDD
     
-    public override init(dispatchQueue: DispatchQueue) {
+    public override init(dispatchQueueLabel: String) {
         ocr = OcrDD()
-        super.init(dispatchQueue: dispatchQueue)
+        super.init(dispatchQueueLabel: dispatchQueueLabel)
     }
     
     public override func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
+        print("predict DD")
         guard let image = fullImage.croppedImageForSsd(roiRectangle: roiRectangle)
             else {
                 return CreditCardOcrPrediction.emptyPrediction(cgImage: fullImage)

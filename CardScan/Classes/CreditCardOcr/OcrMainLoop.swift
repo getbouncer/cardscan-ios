@@ -16,10 +16,6 @@
  access. One thing to be careful with is we use `sync` in places to access our `mutexQueue`. This
  method can lead to deadlock if you aren't careful.
 
- We also have `machineLearningQueues` that we use to run each individual OCR algorithm.
- One important aspect of our `machineLearningQueues` is that we monitor when the app goes into
- the background and kill all ML before letting the app go into the background.
-
  # Correcness criteria
  We make heavy use of dispatch queues for paralellism, so it's important to be disciplined about how
  we access shared state
@@ -60,15 +56,12 @@
  - we use `sync` on the `muxtexQueue` to make sure that when this method returns any subsequent calls to `scanStats` are
  always `success = false`
  
- ## Backgrounding and ML
- Our ML algorithms use the GPU and can cause crashes when we run them in the background. Thus, we track the app's
- backgrounding state and stop any ML tasks (analyzers) before the app reaches the background.
- - Each analyzer has it's own dispatch queue. Within that dispatch queue we pop an image off of the image queue
-    - if the image queue is empty or the the app is in the background the closure will exit without running any ML
-    - If the closure is running ML, we add an empty `sync` block on the ML queue while we're backgrounding that will block until it's finished
-        - After the `sync` call finishes, since there are no images and `isBackground` is set, subsequent invocations of the ML will stop without running any GPU workloads
-    - The analyzers restart after the app leaves the background and the camera starts pushing new images
+ ## backgrounding
+ We track when the app is in the active state and stop accepting images when it's inactive. When it becomes active we reset
+ the `errorCorrection` state before re-enabling computation.
  
+ This backgrounding logic is less about correctness and more about making sure that the SDK doesn't send the caller predictions
+ at unexpected times by making sure that the app is active if and when it sends notifications of success.
  */
 
 import UIKit
@@ -97,7 +90,7 @@ open class OcrMainLoop : MachineLearningLoop {
     var imageQueue: [(CGImage, CGRect)] = []
     public var imageQueueSize = 2
     var analyzerQueue: [CreditCardOcrImplementation] = []
-    let mutexQueue = DispatchQueue(label: "OcrMainLoopMuxtex")
+    let mutexQueue = DispatchQueue(label: "OcrMainLoopMutex")
     var inBackground = false
     var machineLearningQueues: [DispatchQueue] = []
     var userDidCancel = false
@@ -105,15 +98,15 @@ open class OcrMainLoop : MachineLearningLoop {
     public init(analyzers: [AnalyzerType] = [.ssd, .apple]) {
         var ocrImplementations: [CreditCardOcrImplementation] = []
         for analyzer in analyzers {
-            let queue = DispatchQueue(label: "\(analyzer) OCR ML")
+            let queueLabel = "\(analyzer) OCR ML"
             switch (analyzer) {
             case .ssd:
                 if #available(iOS 11.2, *) {
-                    ocrImplementations.append(SSDCreditCardOcr(dispatchQueue: queue))
+                    ocrImplementations.append(SSDCreditCardOcr(dispatchQueueLabel: queueLabel))
                 }
             case .apple:
                 if #available(iOS 13.0, *) {
-                    ocrImplementations.append(AppleCreditCardOcr(dispatchQueue: queue))
+                    ocrImplementations.append(AppleCreditCardOcr(dispatchQueueLabel: queueLabel))
                 }
             }
         }
@@ -122,10 +115,8 @@ open class OcrMainLoop : MachineLearningLoop {
     
     /// Note: you must call this function in your constructor
     public func setupMl(ocrImplementations: [CreditCardOcrImplementation]) {
-        machineLearningQueues = []
         scanStats.model = "ssd+apple"
         for ocrImplementation in ocrImplementations {
-            machineLearningQueues.append(ocrImplementation.dispatchQueue)
             analyzerQueue.append(ocrImplementation)
         }
         registerAppNotifications()
@@ -138,16 +129,7 @@ open class OcrMainLoop : MachineLearningLoop {
     }
     
     static func warmUp() {
-        let mainLoop = OcrMainLoop()
-        let image = UIImage.grayImage(size: CGSize(width: 600, height: 600))
-        let roiRectangle = CGRect(x: 0, y: 0, width: 600, height: 600)
-        guard let cgImage = image?.cgImage else { return }
-        for ocr in mainLoop.analyzerQueue {
-            ocr.dispatchQueue.async {
-                let _ = mainLoop
-                let _ = ocr.recognizeCard(in: cgImage, roiRectangle: roiRectangle)
-            }
-        }
+        // TODO(stk): Implement this later
     }
     
     // see the Correctness Criteria note in the comments above for why this is correct
@@ -255,29 +237,12 @@ open class OcrMainLoop : MachineLearningLoop {
     }
     
     // MARK: -backrounding logic
-    
-    // We're keeping track of the app's background state because we need to shut down
-    // our ML threads, which use the GPU. Since there can be ML tasks in flight when
-    // this happens our correctness criteria is:
-    //   * For any new tasks, if we have `inBackground` set then we know that they
-    //     won't hit the GPU
-    //   * For any pending tasks, our sync block ensures that they finish before
-    //     this returns
-    //   * The willResignActive function blocks the transition to the background until
-    //     it completes, which we couldn't find docs on but verified experimentally
     @objc func willResignActive() {
         // make sure that no new images get pushed to our image buffer
         // and we clear out the image buffer
         mutexQueue.sync {
             self.inBackground = true
             self.imageQueue = []
-        }
-        
-        // make sure that all current prediction finishes. New invocations will block since
-        // the queue is empty and inBackground is set
-        // Note: it's important to call this outside of the mutexQueue to avoid deadlock
-        for queue in self.machineLearningQueues {
-            queue.sync { }
         }
     }
     

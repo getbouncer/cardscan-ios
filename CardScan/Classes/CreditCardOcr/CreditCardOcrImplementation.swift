@@ -13,7 +13,7 @@ import UIKit
  */
 
 open class CreditCardOcrImplementation {
-    let dispatchQueue: DispatchQueue
+    let dispatchQueue: ActiveStateComputation
     public var frames = 0
     public var computationTime = 0.0
     let startTime = Date()
@@ -26,8 +26,8 @@ open class CreditCardOcrImplementation {
         return Double(frames) / computationTime
     }
     
-    public init(dispatchQueue: DispatchQueue) {
-        self.dispatchQueue = dispatchQueue
+    public init(dispatchQueueLabel: String) {
+        self.dispatchQueue = ActiveStateComputation(label: dispatchQueueLabel)
     }
     
     open func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
