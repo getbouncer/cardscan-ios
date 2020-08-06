@@ -135,7 +135,7 @@ public struct Api {
         apiCall(endpoint: endpoint, parameters: apiParameters, completion: completion)
     }
     
-    static func modelDownload(signedUrl: String, completion: @escaping ApiCompletion) {
+    static public func donwloadLatestModel(signedUrl: String, completion: @escaping ApiCompletion) {
         guard let url = URL(string: signedUrl) else {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
@@ -153,16 +153,16 @@ public struct Api {
         }.resume()
     }
     
-    static public func getModelDownloadConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
+    static public func getLatestModelConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         if baseUrl == nil || apiKey == nil {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
         }
         
-        modelDownloadConfig(endpoint: endpoint, parameters: parameters, completion: completion)
+        downloadLatestModelConfig(endpoint: endpoint, parameters: parameters, completion: completion)
     }
     
-    private static func modelDownloadConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
+    private static func downloadLatestModelConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         guard let baseUrl = self.baseUrl else {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
