@@ -14,6 +14,50 @@ extension UIImage {
 }
 
 extension CGImage {
+    
+    // Crop a full image
+    public func croppedImageForSsd(roiRectangle: CGRect) -> CGImage? {
+        
+        // add 10% to our ROI rectangle
+        let centerX = roiRectangle.origin.x + roiRectangle.size.width * 0.5
+        let centerY = roiRectangle.origin.y + roiRectangle.size.height * 0.5
+        
+        let width = (roiRectangle.size.width * 1.1) < roiRectangle.size.width ? (roiRectangle.size.width * 1.1) : roiRectangle.size.width
+        let height = 375.0 * width / 600.0
+        let x = centerX - width * 0.5
+        let y = centerY - height * 0.5
+        
+        let ssdRoiRectangle = CGRect(x: x, y: y, width: width, height: height)
+        
+        // if the expanded roi rectangle is too big, fall back to the tight roi rectangle
+        return self.cropping(to: ssdRoiRectangle) ?? self.cropping(to: roiRectangle)
+    }
+    
+    // crop a full image
+    public func squareImageForUxModel(roiRectangle: CGRect) -> CGImage? {
+        // add 10% to our ROI rectangle and make it square centered at the ROI rectangle
+        let deltaX = roiRectangle.size.width * 0.1
+        let deltaY = roiRectangle.size.width + deltaX - roiRectangle.height
+        
+       let roiPlusBuffer = CGRect(x: roiRectangle.origin.x - deltaX * 0.5,
+                                   y: roiRectangle.origin.y - deltaY * 0.5,
+                                   width: roiRectangle.size.width + deltaX,
+                                   height: roiRectangle.size.height + deltaY)
+        
+        // if the expanded roi rectangle is too big, fall back to the tight roi rectangle
+        return self.cropping(to: roiPlusBuffer) ?? self.cropping(to: roiRectangle)
+    }
+    
+    // This cropping is used by the object detector
+    public func squareCardImage(roiRectangle: CGRect) -> CGImage? {
+        let width = CGFloat(self.width)
+        let height = width
+        let centerY = (roiRectangle.maxY + roiRectangle.minY) * 0.5
+        let cropRectangle = CGRect(x: 0.0, y: centerY - height * 0.5,
+                                   width: width, height: height)
+        return self.cropping(to: cropRectangle)
+    }
+    
     func drawBoundingBoxesOnImage(boxes: [(UIColor, CGRect)]) -> UIImage? {
         let image = UIImage(cgImage: self)
         let imageSize = image.size

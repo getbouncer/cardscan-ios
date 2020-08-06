@@ -223,7 +223,7 @@ open class OcrMainLoop : MachineLearningLoop {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     guard !self.userDidCancel else { return }
-                    guard let squareCardImage = CreditCardOcrImplementation.squareCardImage(fullCardImage: image, roiRectangle: roi) else { return }
+                    guard let squareCardImage = image.squareCardImage(roiRectangle: roi) else { return }
                     delegate?.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: image)
                 }
                 guard let result = self.combine(prediction: prediction), result.isFinished else {
