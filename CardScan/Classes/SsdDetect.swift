@@ -37,23 +37,7 @@ public struct SsdDetect {
     */
     
     static public func warmUp() {
-        guard let image = UIImage.blankGrayImage(width: ssdImageWidth, height: ssdImageHeight) else {
-            return
-        }
-        
-        guard let ssdModel = SsdDetect.ssdModel else {
-            print("Models not initialized")
-            return
-        }
-        
-        if let pixelBuffer = image.pixelBuffer(width: ssdImageWidth, height: ssdImageHeight) {
-            let input = SSDInput(_0: pixelBuffer)
-            let options = MLPredictionOptions()
-            // just in case this runs in the background
-            options.usesCPUOnly = true
-            let _ = try? ssdModel.prediction(input: input, options: options)
-        }
-        
+        // TODO(stk): implement this after we finish up dynamic model updating
     }
     
     public init() {
@@ -117,9 +101,7 @@ public struct SsdDetect {
        
         let startTime = CFAbsoluteTimeGetCurrent()
         let input = SSDInput(_0: pixelBuffer)
-        let options = MLPredictionOptions()
-        options.usesCPUOnly = true
-        guard let prediction = try? detectModel.prediction(input: input, options: options) else {
+        guard let prediction = try? detectModel.prediction(input: input) else {
             os_log("Couldn't predict", type: .debug)
             return nil
         }
