@@ -126,12 +126,20 @@
                                     <segue destination="QHk-Pe-Pgw" kind="show" id="KAt-Cl-VDw"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWV-5A-wUg">
+                                <rect key="frame" x="145.5" y="151.5" width="84" height="30"/>
+                                <state key="normal" title="Scan w/ MIR"/>
+                                <connections>
+                                    <action selector="scanWithMirPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Py8-zH-DVS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="top" secondItem="9tR-DO-gyb" secondAttribute="bottom" constant="16" id="1PH-rJ-mXS"/>
                             <constraint firstItem="ohs-2Q-mlC" firstAttribute="top" secondItem="f3P-G8-yKq" secondAttribute="bottom" constant="8" id="2fc-SR-27T"/>
                             <constraint firstItem="ohs-2Q-mlC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="16" id="420-Q5-1Ny"/>
+                            <constraint firstItem="NWV-5A-wUg" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="5mz-pX-oBH"/>
                             <constraint firstItem="f3P-G8-yKq" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="8CR-et-Rxz"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="AkZ-f5-Cw0"/>
                             <constraint firstItem="LBI-Nj-Ojb" firstAttribute="top" secondItem="pIK-as-bko" secondAttribute="bottom" constant="8" id="DKk-6B-vtM"/>
@@ -154,6 +162,7 @@
                             <constraint firstItem="HGF-3W-kd7" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="jJ2-Kn-FQ2"/>
                             <constraint firstItem="HGF-3W-kd7" firstAttribute="top" secondItem="LBI-Nj-Ojb" secondAttribute="bottom" constant="8" id="n9T-02-cay"/>
                             <constraint firstItem="6NY-p4-OvD" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="sRZ-M5-dWl"/>
+                            <constraint firstItem="f3P-G8-yKq" firstAttribute="top" secondItem="NWV-5A-wUg" secondAttribute="bottom" constant="8" id="snC-PU-qzF"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="tRj-Xx-bJf"/>
                             <constraint firstItem="Hq5-Pp-QoB" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="wMV-F7-j4i"/>
                         </constraints>

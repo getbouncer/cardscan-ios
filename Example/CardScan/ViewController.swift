@@ -36,6 +36,15 @@ class ViewController: UIViewController {
             self.scanCardButton.isHidden = true
         }
     }
+    @IBAction func scanWithMirPress() {
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
+        }
+        CreditCardUtils.prefixesRegional = ["2200", "2201", "2202", "2203", "2204"]
+        
+        self.present(vc, animated: true)
+    }
     
     @IBAction func scanQrCodePress() {
         if #available(iOS 11.2, *) {

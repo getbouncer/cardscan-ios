@@ -15,6 +15,7 @@ import Foundation
     case UNIONPAY
     case JCB
     case DINERSCLUB
+    case REGIONAL
     case UNKNOWN
     
     public func toString() -> String {
@@ -26,6 +27,7 @@ import Foundation
         case .UNIONPAY: return "Union Pay"
         case .JCB: return "Jcb"
         case .DINERSCLUB: return "Diners Club"
+        case .REGIONAL: return "Regional"
         case .UNKNOWN: return "Unknown"
         }
     }

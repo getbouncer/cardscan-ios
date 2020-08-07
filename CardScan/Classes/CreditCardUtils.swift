@@ -19,6 +19,8 @@ public struct CreditCardUtils {
                                      "67"]
     private static let prefixesUnionPay = ["62"]
     private static let prefixesVisa = ["4"]
+
+    public static var prefixesRegional: [String] = []
     
     /**
         Checks if the card number is valid.
@@ -246,6 +248,8 @@ public struct CreditCardUtils {
             return CardNetwork.MASTERCARD
         case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesUnionPay):
             return CardNetwork.UNIONPAY
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesRegional):
+            return CardNetwork.REGIONAL
         default:
             return CardNetwork.UNKNOWN
         }
