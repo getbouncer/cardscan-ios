@@ -23,6 +23,13 @@ public struct CreditCardUtils {
     public static var prefixesRegional: [String] = []
     
     /**
+        Adds the BINs implemented by the MIR network in Russia as regional cards
+     */
+    public static func addMirSupport() {
+        prefixesRegional += ["2200", "2201", "2202", "2203", "2204"]
+    }
+    
+    /**
         Checks if the card number is valid.
         -   Parameter cardNumber: The card number as a string .
         -   Returns: `true` if valid, `false` otherwise

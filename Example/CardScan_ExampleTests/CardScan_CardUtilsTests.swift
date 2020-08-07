@@ -80,4 +80,11 @@ class CardScan_CardUtilsTests: XCTestCase {
         XCTAssert(CreditCardUtils.isValidNumber(cardNumber: "2200000000000061"))
         CreditCardUtils.prefixesRegional = []
     }
+    
+    func testMirCards() {
+        XCTAssert(!CreditCardUtils.isValidNumber(cardNumber: "2200000000000061"))
+        CreditCardUtils.addMirSupport()
+        XCTAssert(CreditCardUtils.isValidNumber(cardNumber: "2200000000000061"))
+        CreditCardUtils.prefixesRegional = []
+    }
 }
