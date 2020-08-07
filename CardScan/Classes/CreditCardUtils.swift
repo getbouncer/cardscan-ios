@@ -19,6 +19,15 @@ public struct CreditCardUtils {
                                      "67"]
     private static let prefixesUnionPay = ["62"]
     private static let prefixesVisa = ["4"]
+
+    public static var prefixesRegional: [String] = []
+    
+    /**
+        Adds the BINs implemented by the MIR network in Russia as regional cards
+     */
+    public static func addMirSupport() {
+        prefixesRegional += ["2200", "2201", "2202", "2203", "2204"]
+    }
     
     /**
         Checks if the card number is valid.
@@ -246,6 +255,8 @@ public struct CreditCardUtils {
             return CardNetwork.MASTERCARD
         case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesUnionPay):
             return CardNetwork.UNIONPAY
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesRegional):
+            return CardNetwork.REGIONAL
         default:
             return CardNetwork.UNKNOWN
         }

@@ -73,4 +73,18 @@ class CardScan_CardUtilsTests: XCTestCase {
         XCTAssert(CreditCardUtils.isValidDate(expMonth: expMonth, expYear: validExpYear))
         XCTAssert(!CreditCardUtils.isValidDate(expMonth: expMonth, expYear: invalidExpYear))
     }
+    
+    func testRegionalCards() {
+        XCTAssert(!CreditCardUtils.isValidNumber(cardNumber: "2200000000000061"))
+        CreditCardUtils.prefixesRegional = ["2200"]
+        XCTAssert(CreditCardUtils.isValidNumber(cardNumber: "2200000000000061"))
+        CreditCardUtils.prefixesRegional = []
+    }
+    
+    func testMirCards() {
+        XCTAssert(!CreditCardUtils.isValidNumber(cardNumber: "2200000000000061"))
+        CreditCardUtils.addMirSupport()
+        XCTAssert(CreditCardUtils.isValidNumber(cardNumber: "2200000000000061"))
+        CreditCardUtils.prefixesRegional = []
+    }
 }
