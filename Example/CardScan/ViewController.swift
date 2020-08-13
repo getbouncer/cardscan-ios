@@ -119,13 +119,15 @@ class ViewController: UIViewController {
     }
     
     @IBAction func scanAndShowImagePress() {
-        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
-            print("scan view controller not supported on this hardware")
-            return
-        }
-        vc.includeCardImage = true
+        if #available(iOS 11.2, *) {
+            let vc = SimpleScanViewController.createViewController()
+            vc.includeCardImage = true
+            vc.delegate = self
 
-        self.present(vc, animated: true)
+            self.present(vc, animated: true)
+        } else {
+            // Fallback on earlier versions
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
