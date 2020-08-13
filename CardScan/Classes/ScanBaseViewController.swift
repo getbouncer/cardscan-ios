@@ -81,13 +81,6 @@ public protocol TestingImageDataSource: AnyObject {
         if let apiKey = apiKey {
             Api.apiKey = apiKey
         }
-        
-        self.machineLearningQueue.async {
-            if #available(iOS 11.2, *) {
-                //Ocr.configure()
-                OcrMainLoop.warmUp()
-            }
-        }
     }
     
     @objc public static func supportedOrientationMaskOrDefault() -> UIInterfaceOrientationMask {
