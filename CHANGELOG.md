@@ -1,6 +1,27 @@
 # Changelog
 
-## [1.0.5042](https://github.com/getbouncer/cardscan-ios/tree/1.0.5042) (2020-08-04)
+## [1.0.5043](https://github.com/getbouncer/cardscan-ios/tree/1.0.5043) (2020-08-13)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5042...1.0.5043)
+
+**Implemented enhancements:**
+
+- Update payment systems [\#202](https://github.com/getbouncer/cardscan-ios/issues/202)
+
+**Merged pull requests:**
+
+- Share cardscan pod project framework for Carthage [\#207](https://github.com/getbouncer/cardscan-ios/pull/207) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Remove the warm up calls from configure [\#206](https://github.com/getbouncer/cardscan-ios/pull/206) ([kingst](https://github.com/kingst))
+- Enable SimpleCardScan to capture images when set [\#205](https://github.com/getbouncer/cardscan-ios/pull/205) ([kingst](https://github.com/kingst))
+- Add states for cardverify [\#204](https://github.com/getbouncer/cardscan-ios/pull/204) ([awushensky](https://github.com/awushensky))
+- Added support for regional cards [\#203](https://github.com/getbouncer/cardscan-ios/pull/203) ([kingst](https://github.com/kingst))
+- Make model download function public [\#201](https://github.com/getbouncer/cardscan-ios/pull/201) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Move SsdDetect to use hardware acceleration [\#200](https://github.com/getbouncer/cardscan-ios/pull/200) ([kingst](https://github.com/kingst))
+- ActiveStateComputation: make it easy to run ML in active state [\#199](https://github.com/getbouncer/cardscan-ios/pull/199) ([kingst](https://github.com/kingst))
+- Clean up the image cropping functions [\#198](https://github.com/getbouncer/cardscan-ios/pull/198) ([kingst](https://github.com/kingst))
+- Main loop state machine [\#197](https://github.com/getbouncer/cardscan-ios/pull/197) ([kingst](https://github.com/kingst))
+
+## [1.0.5042](https://github.com/getbouncer/cardscan-ios/tree/1.0.5042) (2020-08-05)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5041...1.0.5042)
 
@@ -8,7 +29,7 @@
 
 - Support dot expiry [\#196](https://github.com/getbouncer/cardscan-ios/pull/196) ([awushensky](https://github.com/awushensky))
 - Added model download function [\#195](https://github.com/getbouncer/cardscan-ios/pull/195) ([jaimejiyepark](https://github.com/jaimejiyepark))
-- Fix unit tests [\#194](https://github.com/getbouncer/cardscan-ios/pull/194) ([dxaen](https://github.com/dxaen))
+- fix unit tests [\#194](https://github.com/getbouncer/cardscan-ios/pull/194) ([dxaen](https://github.com/dxaen))
 - Testing CI [\#191](https://github.com/getbouncer/cardscan-ios/pull/191) ([awushensky](https://github.com/awushensky))
 - Adding model config downloading to API [\#189](https://github.com/getbouncer/cardscan-ios/pull/189) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
@@ -151,7 +172,6 @@
 - change cardscan to csbundle [\#135](https://github.com/getbouncer/cardscan-ios/pull/135) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Pass the full image and roi rectangle only [\#131](https://github.com/getbouncer/cardscan-ios/pull/131) ([kingst](https://github.com/kingst))
 - Provide the ability to override the ML model in ScanBaseViewController [\#129](https://github.com/getbouncer/cardscan-ios/pull/129) ([kingst](https://github.com/kingst))
-- Modifying gitignore and adding back pod shared xcsheme to allow carthage build [\#128](https://github.com/getbouncer/cardscan-ios/pull/128) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5029](https://github.com/getbouncer/cardscan-ios/tree/1.0.5029) (2020-02-11)
 
@@ -159,6 +179,7 @@
 
 **Merged pull requests:**
 
+- Modifying gitignore and adding back pod shared xcsheme to allow carthage build [\#128](https://github.com/getbouncer/cardscan-ios/pull/128) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Update expiry thresholds for better accuracy [\#125](https://github.com/getbouncer/cardscan-ios/pull/125) ([kingst](https://github.com/kingst))
 - made network function public [\#123](https://github.com/getbouncer/cardscan-ios/pull/123) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Obj detect v003 [\#121](https://github.com/getbouncer/cardscan-ios/pull/121) ([dxaen](https://github.com/dxaen))
@@ -223,6 +244,7 @@
 **Merged pull requests:**
 
 - Update the ScanCard protocol to include the cropped card image size [\#104](https://github.com/getbouncer/cardscan-ios/pull/104) ([kingst](https://github.com/kingst))
+- First cut at sending square and full images to the ML pipeline [\#103](https://github.com/getbouncer/cardscan-ios/pull/103) ([kingst](https://github.com/kingst))
 - modifying testing image protocol to return square and full-screen images [\#102](https://github.com/getbouncer/cardscan-ios/pull/102) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - added button identifier for UITest [\#100](https://github.com/getbouncer/cardscan-ios/pull/100) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Adapt to iOS 9 [\#99](https://github.com/getbouncer/cardscan-ios/pull/99) ([igor-makarov](https://github.com/igor-makarov))
@@ -254,7 +276,6 @@
 
 **Merged pull requests:**
 
-- First cut at sending square and full images to the ML pipeline [\#103](https://github.com/getbouncer/cardscan-ios/pull/103) ([kingst](https://github.com/kingst))
 - New detection model [\#93](https://github.com/getbouncer/cardscan-ios/pull/93) ([kingst](https://github.com/kingst))
 - In prep for the new model [\#92](https://github.com/getbouncer/cardscan-ios/pull/92) ([dxaen](https://github.com/dxaen))
 - Adjust scale before running recognition model [\#91](https://github.com/getbouncer/cardscan-ios/pull/91) ([kingst](https://github.com/kingst))
@@ -593,7 +614,6 @@
 
 - Models as resources [\#15](https://github.com/getbouncer/cardscan-ios/pull/15) ([kingst](https://github.com/kingst))
 - Move models to resources, compile on the device [\#14](https://github.com/getbouncer/cardscan-ios/pull/14) ([kingst](https://github.com/kingst))
-- Switch to weak\_framework in podspec [\#9](https://github.com/getbouncer/cardscan-ios/pull/9) ([kingst](https://github.com/kingst))
 
 ## [1.0.4045](https://github.com/getbouncer/cardscan-ios/tree/1.0.4045) (2019-04-30)
 
@@ -616,6 +636,10 @@
 ## [1.0.4043](https://github.com/getbouncer/cardscan-ios/tree/1.0.4043) (2019-04-30)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.4042...1.0.4043)
+
+**Merged pull requests:**
+
+- Switch to weak\_framework in podspec [\#9](https://github.com/getbouncer/cardscan-ios/pull/9) ([kingst](https://github.com/kingst))
 
 ## [1.0.4042](https://github.com/getbouncer/cardscan-ios/tree/1.0.4042) (2019-04-08)
 
