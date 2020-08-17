@@ -1,0 +1,6 @@
+framework module CardScanPrivate {
+  umbrella header "CardScanPrivate-umbrella.h"
+
+  export *
+  module * { export * }
+}
