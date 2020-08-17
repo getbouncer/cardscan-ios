@@ -5,25 +5,25 @@ target 'CardScan_Example' do
   use_frameworks!
 
   # Pods for CardScan_Example
-  pod 'CardScan', :path => '../'  
+  pod 'CardScanPrivate', :path => '../'  
 
   target 'CardScan_ExampleUITests' do
     inherit! :search_paths
     # Pods for testing
-    pod 'CardScan', :path => '../'  
+    pod 'CardScanPrivate', :path => '../'  
   end
 
   target 'CardScan_ExampleTests' do
     inherit! :search_paths
     # Pods for testing
-    pod 'CardScan', :path => '../'  
+    pod 'CardScanPrivate', :path => '../'  
   end
 
 end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
-    if ['CardScan'].include? target.name
+    if ['CardScanPrivate'].include? target.name
       target.build_configurations.each do |config|
         # use this to test older version of swift
         #config.build_settings['SWIFT_VERSION'] = '4.2'

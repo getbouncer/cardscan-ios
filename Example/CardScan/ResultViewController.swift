@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CardScan
+import CardScanPrivate
 
 class ResultViewController: UIViewController {
 

@@ -193,7 +193,7 @@ MATTER DURING THE TERM OF THIS AGREEMENT.
 			<key>License</key>
 			<string>Custom</string>
 			<key>Title</key>
-			<string>CardScan</string>
+			<string>CardScanPrivate</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
