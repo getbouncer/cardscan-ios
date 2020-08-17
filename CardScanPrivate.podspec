@@ -17,6 +17,6 @@ CardScan is a library for scanning credit cards.
   s.swift_version = '5.0'
 
   s.source_files = 'CardScan/Classes/**/*'
-  s.resource_bundles = { 'CardScan' => ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodelc'] }
+  s.resource_bundles = { 'CardScanPrivate' => ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodelc'] }
   s.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
 end
