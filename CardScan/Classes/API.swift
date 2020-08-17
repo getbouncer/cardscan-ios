@@ -137,7 +137,7 @@ public struct Api {
     }
     
     @available(iOS 11.0, *)
-    static public func donwloadAndCompileLatestModel(signedUrl: String, completion: @escaping ApiCompletion) {
+    static public func downloadAndCompileLatestModel(signedUrl: String, completion: @escaping ApiCompletion) {
         guard let url = URL(string: signedUrl) else {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
