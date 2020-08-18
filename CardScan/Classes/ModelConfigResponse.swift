@@ -8,8 +8,8 @@
 import Foundation
 
 public struct ModelConfigResponse {
-    let modelVersion: String
-    let hash: String
-    let hashAlgorithm: String
-    let signedUrl: String
+    public let modelVersion: String
+    public let hash: String
+    public let hashAlgorithm: String
+    public let signedUrl: String
 }
