@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreML
 
 public struct Api {
     
@@ -135,7 +136,8 @@ public struct Api {
         apiCall(endpoint: endpoint, parameters: apiParameters, completion: completion)
     }
     
-    static public func donwloadLatestModel(signedUrl: String, completion: @escaping ApiCompletion) {
+    @available(iOS 11.0, *)
+    static public func downloadAndCompileLatestModel(signedUrl: String, completion: @escaping ApiCompletion) {
         guard let url = URL(string: signedUrl) else {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
@@ -143,12 +145,13 @@ public struct Api {
         
         let session = URLSession(configuration: configuration())
         session.downloadTask(with: url) { (location: URL?, response: URLResponse?, error: Error?) in
-            guard let location = location else {
+            guard let location = location, let compiledUrl = try? MLModel.compileModel(at: location) else {
                 DispatchQueue.main.async { completion(nil, defaultError) }
                 return
             }
+            
             DispatchQueue.main.async {
-                completion(["mlmodel_url": location], nil)
+                completion(["compiled_model_url": compiledUrl], nil)
             }
         }.resume()
     }
