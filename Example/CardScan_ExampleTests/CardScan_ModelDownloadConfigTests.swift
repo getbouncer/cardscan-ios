@@ -17,20 +17,6 @@ class CardScan_ModelDownloadConfigTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
-
-    // TODO: These tests were failing. Fix them
-
-//    func testModelConfigDownload() {
-//        let expectation = XCTestExpectation()
-//        Api.apiKey = "<Put in proper api key>"
-//        Api.getModelDownloadConfig(endpoint: "/v1/model/ios/bob/1", parameters: [:]) { response, error in
-//            guard let _ = response, error == nil else {
-//                return
-//            }
-//            expectation.fulfill()
-//        }
-//        wait(for: [expectation], timeout: 20.0)
-//    }
     
     func testUrlWithQueryParams() {
         guard let urlNoParam = Api.urlWithQueryParameters(baseUrl: "https://api.getbouncer.com", endpoint: "/test", parameters: [:]),
