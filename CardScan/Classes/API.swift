@@ -137,7 +137,7 @@ public struct Api {
     }
     
     @available(iOS 11.0, *)
-    static public func downloadAndCompileLatestModel(signedUrl: String, completion: @escaping ApiCompletion) {
+    static public func downloadAndCompileLatestModel(signedUrl: String, completion: @escaping ((_ response: URL?, _ error: ApiError?) -> Void)) {
         guard let url = URL(string: signedUrl) else {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
@@ -151,18 +151,36 @@ public struct Api {
             }
             
             DispatchQueue.main.async {
-                completion(["compiled_model_url": compiledUrl], nil)
+                completion(compiledUrl, nil)
             }
         }.resume()
     }
     
-    static public func getLatestModelConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
+    static public func getLatestModelConfig(modelClass: String, modelFrameworkVersion: String, parameters: [String: Any], completion: @escaping ((_ response: ModelConfigResponse?, _ error: ApiError?) -> Void)) {
         if baseUrl == nil || apiKey == nil {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
             return
         }
         
-        downloadLatestModelConfig(endpoint: endpoint, parameters: parameters, completion: completion)
+        let endpoint = "/v1/model/ios/\(modelClass)/\(modelFrameworkVersion)"
+        downloadLatestModelConfig(endpoint: endpoint, parameters: [:]) { response, error in
+            guard let response = response, error == nil else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+           
+            guard let modelVersion = response["model_version"] as? String,
+                let hash = response["model_hash"] as? String,
+                let hashAlgorithm = response["model_hash_algorithm"] as? String,
+                let signedUrl = response["model_url"] as? String else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                completion(ModelConfigResponse(modelVersion: modelVersion, hash: hash, hashAlgorithm: hashAlgorithm, signedUrl: signedUrl), nil)
+            }
+        }
     }
     
     private static func downloadLatestModelConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
