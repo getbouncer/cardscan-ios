@@ -240,9 +240,6 @@ open class OcrMainLoop : MachineLearningLoop {
             case MainLoopState.finished:
                 delegate?.complete(creditCardOcrResult: result)
             }
-            if result.isFinished {
-                delegate?.complete(creditCardOcrResult: result)
-            }
         }
         return result
     }
