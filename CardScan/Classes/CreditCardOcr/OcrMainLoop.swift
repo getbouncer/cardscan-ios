@@ -210,7 +210,7 @@ open class OcrMainLoop : MachineLearningLoop {
                     guard let squareCardImage = image.squareCardImage(roiRectangle: roi) else { return }
                     delegate?.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: image)
                 }
-                guard let result = self.combine(prediction: prediction), result.isFinished else {
+                guard let result = self.combine(prediction: prediction), result.state == .finished else {
                     self.postAnalyzerToQueueAndRun(ocr: ocr)
                     return
                 }
@@ -222,7 +222,7 @@ open class OcrMainLoop : MachineLearningLoop {
         guard mainLoopDelegate?.shouldUsePrediction(errorCorrectedNumber: errorCorrection.number, prediction: prediction) ?? true else { return nil }
         guard let result = errorCorrection.add(prediction: prediction) else { return nil }
         let delegate = mainLoopDelegate
-        if result.isFinished && scanStats.success == nil {
+        if result.state == .finished && scanStats.success == nil {
             scanStats.success = true
             scanStats.endTime = Date()
             mainLoopDelegate = nil

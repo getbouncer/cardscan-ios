@@ -14,7 +14,6 @@ public class CreditCardOcrResult: MachineLearningResult {
     public let expiry: String?
     public let name: String?
     public let state: MainLoopState
-    public let isFinished: Bool
     
     // this is only used by Card Verify and the Liveness check and filled in by the UxModel
     public var hasCenteredCard: CenteredCardState?
@@ -25,7 +24,6 @@ public class CreditCardOcrResult: MachineLearningResult {
         self.expiry = expiry
         self.name = name
         self.state = state
-        self.isFinished = state == .finished
         super.init(duration: duration, frames: frames)
     }
     

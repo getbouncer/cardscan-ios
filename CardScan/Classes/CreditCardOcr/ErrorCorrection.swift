@@ -1,7 +1,7 @@
 import Foundation
 
 open class ErrorCorrection {
-    public let state: MainLoopStateMachine
+    public let stateMachine: MainLoopStateMachine
     public var frames = 0
     var numbers: [String: Int] = [:]
     var expiries: [String: Int] = [:]
@@ -14,7 +14,7 @@ open class ErrorCorrection {
     }
     
     public init(stateMachine: MainLoopStateMachine) {
-        self.state = stateMachine
+        self.stateMachine = stateMachine
     }
     
     var number: String? {
@@ -22,7 +22,7 @@ open class ErrorCorrection {
     }
     
     open func result() -> CreditCardOcrResult? {
-        guard state.loopState() != .initial else { return nil }
+        guard stateMachine.loopState() != .initial else { return nil }
         let predictedNumber = self.numbers.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let predictedExpiry = self.expiries.sorted { $0.1 > $1.1 }.map { $0.0 }.first
         let predictedName = self.names.sorted { $0.1 > $1.1 }.map { $0.0 }.first
@@ -31,36 +31,43 @@ open class ErrorCorrection {
         guard let number = predictedNumber else {
             // TODO(stk): this is a hack to deal with the case where we are finished
             // but don't have a OCR (e.g., non-number side for liveness)
-            if state.loopState() == .finished {
+            if stateMachine.loopState() == .finished {
                 return CreditCardOcrResult.finishedWithNonNumberSideCard(prediction: prediction, duration: -startTime.timeIntervalSinceNow, frames: frames)
             }
+            
+            if stateMachine.loopState() == .ocrIncorrect, let number = prediction.number {
+                return CreditCardOcrResult(mostRecentPrediction: prediction, number: number, expiry: prediction.expiryForDisplay, name: prediction.name, state: stateMachine.loopState(), duration: -startTime.timeIntervalSinceNow, frames: frames)
+            }
+            
             return nil
         }
         
-        return CreditCardOcrResult(mostRecentPrediction: prediction, number: number, expiry: predictedExpiry, name: predictedName, state: state.loopState(), duration: -startTime.timeIntervalSinceNow, frames: frames)
+        return CreditCardOcrResult(mostRecentPrediction: prediction, number: number, expiry: predictedExpiry, name: predictedName, state: stateMachine.loopState(), duration: -startTime.timeIntervalSinceNow, frames: frames)
     }
     
     open func add(prediction: CreditCardOcrPrediction) -> CreditCardOcrResult? {
         self.frames += 1
-        if let pan = prediction.number {
-            self.numbers[pan] = (self.numbers[pan] ?? 0) + 1
-        }
-        if let expiry = prediction.expiryForDisplay {
-            self.expiries[expiry] = (self.expiries[expiry] ?? 0) + 1
-        }
         
-        for name in prediction.name?.split(separator: "\n").map({String($0)}) ?? [] {
-            self.names[name] = (self.names[name] ?? 0) + 1
+        let newState = stateMachine.event(prediction: prediction)
+        
+        if (newState != .ocrIncorrect) {
+            if let pan = prediction.number {
+                self.numbers[pan] = (self.numbers[pan] ?? 0) + 1
+            }
+            if let expiry = prediction.expiryForDisplay {
+                self.expiries[expiry] = (self.expiries[expiry] ?? 0) + 1
+            }
+            for name in prediction.name?.split(separator: "\n").map({String($0)}) ?? [] {
+                self.names[name] = (self.names[name] ?? 0) + 1
+            }
         }
         
         self.mostRecentPrediction = prediction
-        
-        let _ = state.event(prediction: prediction)
         
         return result()
     }
     
     open func reset() -> ErrorCorrection {
-        return ErrorCorrection(stateMachine: state.reset())
+        return ErrorCorrection(stateMachine: stateMachine.reset())
     }
 }
