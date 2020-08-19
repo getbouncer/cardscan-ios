@@ -49,9 +49,11 @@ public protocol TestingImageDataSource: AnyObject {
     // this is a hack to avoid changing our public interface
     public var predictedName: String?
     
-    // Child classes should override these three functions
+    // Child classes should override these functions
     @objc open func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) { }
     @objc open func showCardNumber(_ number: String, expiry: String?) { }
+    @objc open func showWrongCard(number: String?, expiry: String?, name: String?) { }
+    @objc open func showNoCard() { }
     @objc open func onCameraPermissionDenied(showedPrompt: Bool) { }
     @objc open func useCurrentFrameNumber(errorCorrectedNumber: String?, currentFrameNumber: String) -> Bool { return true }
     
