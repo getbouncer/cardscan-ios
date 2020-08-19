@@ -58,7 +58,7 @@ open class OcrMainLoopStateMachine: MainLoopStateMachine {
             return .finished
         default:
             // no state transitions
-            return state
+            return nil
         }
     }
     

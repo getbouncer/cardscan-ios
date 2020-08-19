@@ -25,4 +25,4 @@ jobs:
         if: failure()
         with:
           name: test-report
-          path: ${{ github.workspace }}/*/Logs/Test/
+          path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
