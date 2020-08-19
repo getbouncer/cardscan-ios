@@ -21,7 +21,7 @@ import Foundation
     public func toString() -> String {
         switch self {
         case .VISA: return "Visa"
-        case .MASTERCARD: return "Mastercard"
+        case .MASTERCARD: return "MasterCard"
         case .AMEX: return "Amex"
         case .DISCOVER: return "Discover"
         case .UNIONPAY: return "Union Pay"

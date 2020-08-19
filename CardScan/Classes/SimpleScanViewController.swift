@@ -277,7 +277,6 @@ open class SimpleScanViewController: ScanBaseViewController {
         descriptionText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32).isActive = true
         descriptionText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32).isActive = true
         descriptionText.bottomAnchor.constraint(equalTo: roiView.topAnchor, constant: -16).isActive = true
-        
     }
     
     open func setupCardDetailsConstraints() {
