@@ -26,7 +26,6 @@ public protocol MainLoopStateMachine {
 // Note: This class is _not_ thread safe, it relies on syncrhonization
 // from the `OcrMainLoop`
 open class OcrMainLoopStateMachine: MainLoopStateMachine {
-    
     public var state: MainLoopState = .initial
     public var startTimeForCurrentState = Date()
     
@@ -39,17 +38,16 @@ open class OcrMainLoopStateMachine: MainLoopStateMachine {
     }
     
     public func event(prediction: CreditCardOcrPrediction) -> MainLoopState {
-                
-        let currentState = state
-        state = transition(prediction: prediction)
-        if state != currentState {
+        let newState = transition(prediction: prediction)
+        if let newState = newState {
             startTimeForCurrentState = Date()
+            state = newState
         }
         
-        return state
+        return newState ?? state
     }
     
-    open func transition(prediction: CreditCardOcrPrediction) -> MainLoopState {
+    open func transition(prediction: CreditCardOcrPrediction) -> MainLoopState? {
         let timeInCurrentStateSeconds = -startTimeForCurrentState.timeIntervalSinceNow
         let frameHasOcr = prediction.number != nil
         
