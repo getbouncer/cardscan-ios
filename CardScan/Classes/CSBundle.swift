@@ -10,7 +10,7 @@ import Foundation
 public class CSBundle {
     // If you change the bundle name make sure to set these before
     // initializing the library
-    public static var bundleName = "CardScan"
+    public static var bundleName = "CardScanPrivate"
     public static var extensionName = "bundle"
     public static var cardScanBundle: Bundle?
     

@@ -7,7 +7,7 @@
 //
 import AVFoundation
 import UIKit
-import CardScan
+import CardScanPrivate
 
 class ViewController: UIViewController {
     @IBOutlet weak var cameraImage: UIImageView!

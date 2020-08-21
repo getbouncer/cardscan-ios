@@ -1,7 +1,7 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## CardScan
+## CardScanPrivate
 
 Bouncer Technologies, Inc.
 No-Cost Software License Agreement
