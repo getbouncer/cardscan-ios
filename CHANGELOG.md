@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.0.5044](https://github.com/getbouncer/cardscan-ios/tree/1.0.5044) (2020-08-21)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/private-1.0.5043.02...1.0.5044)
+
+**Merged pull requests:**
+
+- Add remaining .xcscheme framework [\#215](https://github.com/getbouncer/cardscan-ios/pull/215) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Add .xcscheme to share framework for Carthage [\#214](https://github.com/getbouncer/cardscan-ios/pull/214) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Do not capture wrong card [\#213](https://github.com/getbouncer/cardscan-ios/pull/213) ([awushensky](https://github.com/awushensky))
+- Ensure scan compeltes [\#212](https://github.com/getbouncer/cardscan-ios/pull/212) ([awushensky](https://github.com/awushensky))
+- Support same-state transitions in state machines [\#211](https://github.com/getbouncer/cardscan-ios/pull/211) ([awushensky](https://github.com/awushensky))
+- Use loop state to drive UI [\#210](https://github.com/getbouncer/cardscan-ios/pull/210) ([awushensky](https://github.com/awushensky))
+- Update API calls for ModelUpdates [\#209](https://github.com/getbouncer/cardscan-ios/pull/209) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Download and compile model function fix [\#208](https://github.com/getbouncer/cardscan-ios/pull/208) ([jaimejiyepark](https://github.com/jaimejiyepark))
+
+## [private-1.0.5043.02](https://github.com/getbouncer/cardscan-ios/tree/private-1.0.5043.02) (2020-08-17)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/private-1.0.5043.01...private-1.0.5043.02)
+
+## [private-1.0.5043.01](https://github.com/getbouncer/cardscan-ios/tree/private-1.0.5043.01) (2020-08-17)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/private-1.0.5043...private-1.0.5043.01)
+
+## [private-1.0.5043](https://github.com/getbouncer/cardscan-ios/tree/private-1.0.5043) (2020-08-17)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5043...private-1.0.5043)
+
 ## [1.0.5043](https://github.com/getbouncer/cardscan-ios/tree/1.0.5043) (2020-08-13)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5042...1.0.5043)
@@ -17,7 +44,6 @@
 - Added support for regional cards [\#203](https://github.com/getbouncer/cardscan-ios/pull/203) ([kingst](https://github.com/kingst))
 - Make model download function public [\#201](https://github.com/getbouncer/cardscan-ios/pull/201) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Move SsdDetect to use hardware acceleration [\#200](https://github.com/getbouncer/cardscan-ios/pull/200) ([kingst](https://github.com/kingst))
-- ActiveStateComputation: make it easy to run ML in active state [\#199](https://github.com/getbouncer/cardscan-ios/pull/199) ([kingst](https://github.com/kingst))
 - Clean up the image cropping functions [\#198](https://github.com/getbouncer/cardscan-ios/pull/198) ([kingst](https://github.com/kingst))
 - Main loop state machine [\#197](https://github.com/getbouncer/cardscan-ios/pull/197) ([kingst](https://github.com/kingst))
 
@@ -27,6 +53,7 @@
 
 **Merged pull requests:**
 
+- ActiveStateComputation: make it easy to run ML in active state [\#199](https://github.com/getbouncer/cardscan-ios/pull/199) ([kingst](https://github.com/kingst))
 - Support dot expiry [\#196](https://github.com/getbouncer/cardscan-ios/pull/196) ([awushensky](https://github.com/awushensky))
 - Added model download function [\#195](https://github.com/getbouncer/cardscan-ios/pull/195) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - fix unit tests [\#194](https://github.com/getbouncer/cardscan-ios/pull/194) ([dxaen](https://github.com/dxaen))
@@ -172,6 +199,7 @@
 - change cardscan to csbundle [\#135](https://github.com/getbouncer/cardscan-ios/pull/135) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Pass the full image and roi rectangle only [\#131](https://github.com/getbouncer/cardscan-ios/pull/131) ([kingst](https://github.com/kingst))
 - Provide the ability to override the ML model in ScanBaseViewController [\#129](https://github.com/getbouncer/cardscan-ios/pull/129) ([kingst](https://github.com/kingst))
+- Modifying gitignore and adding back pod shared xcsheme to allow carthage build [\#128](https://github.com/getbouncer/cardscan-ios/pull/128) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5029](https://github.com/getbouncer/cardscan-ios/tree/1.0.5029) (2020-02-11)
 
@@ -179,7 +207,6 @@
 
 **Merged pull requests:**
 
-- Modifying gitignore and adding back pod shared xcsheme to allow carthage build [\#128](https://github.com/getbouncer/cardscan-ios/pull/128) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Update expiry thresholds for better accuracy [\#125](https://github.com/getbouncer/cardscan-ios/pull/125) ([kingst](https://github.com/kingst))
 - made network function public [\#123](https://github.com/getbouncer/cardscan-ios/pull/123) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Obj detect v003 [\#121](https://github.com/getbouncer/cardscan-ios/pull/121) ([dxaen](https://github.com/dxaen))
