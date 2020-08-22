@@ -61,5 +61,6 @@ And then test CardScan to make sure that it works.
 After it's all ready, push it to a branch so we can use it with Verify
 
 ```bash
+git commit -a -m "Update module to CardScanPrivate"
 git push --set-upstream origin cardscan-private-1.0.5044
 ```
