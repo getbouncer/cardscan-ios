@@ -271,70 +271,47 @@ public struct CreditCardUtils {
      */
     public static func determineCardType(cardNumber: String) -> CardType {
         guard let iin = Int(cardNumber.prefix(6)) else {
-            print("AGW UNABLE TO GET IIN FROM \(cardNumber)")
             return .UNKNOWN
         }
         
         let cardTypes: [(ClosedRange<Int>, CardType)]
         if let cardTypeMap = self.cardTypeMap {
-            print("AGW USING CACHED CARD_TYPE_MAP \(self.cardTypeMap?.count ?? 0)")
             cardTypes = cardTypeMap
         } else {
-//            let frameworkBundle = Bundle(url: )
+            guard let filePath = Bundle.allBundles.compactMap({ $0.path(forResource: "card_types", ofType: "txt", inDirectory: "Config") }).first else {
+                // unable to find the file
+                return .UNKNOWN
+            }
             
-            
-            
-//            print("AGW FOUND \(Bundle.allBundles.count) BUNDLES")
-//            print("AGW BUNDLES: \(Bundle.allBundles)")
-//            Bundle.allBundles.forEach {
-//                print("AGW path=\($0.bundlePath) identifier=\($0.bundleIdentifier) loaded=\($0.isLoaded)")
-//            }
-//            return .UNKNOWN
-            
-            
-            
-            print("AGW MAIN RESOURCE PATH=\(Bundle.main.resourcePath)")
-            if let filePath = Bundle.main.path(forResource: "card_types", ofType: "txt", inDirectory: "Config") {
-                do {
-                    let contents = try String(contentsOfFile: filePath)
-                    cardTypes = contents.components(separatedBy: "\n").compactMap {
-                        let items = $0.components(separatedBy: ",")
-                        let cardType = CardType.fromString(items[2])
-                        
-                        guard let startIin = Int(items[0]), let endIin = Int(items[1]) else {
-                            return nil
-                        }
-                        guard cardType != .UNKNOWN else {
-                            return nil
-                        }
-                        
-                        return (startIin...endIin, cardType)
+            do {
+                let contents = try String(contentsOfFile: filePath)
+                cardTypes = contents.components(separatedBy: "\n").compactMap {
+                    let items = $0.components(separatedBy: ",")
+                    guard items.count == 3 else {
+                        return nil
                     }
                     
-                    self.cardTypeMap = cardTypes
-                } catch {
-                    print("AGW FAILED TO READ CONTENST OF \(filePath)")
-                    // unable to read the contents of the file
-                    return .UNKNOWN
+                    let cardType = CardType.fromString(items[2])
+                    guard let startIin = Int(items[0]), let endIin = Int(items[1]) else {
+                        return nil
+                    }
+                    guard cardType != .UNKNOWN else {
+                        return nil
+                    }
+                    
+                    return (startIin...endIin, cardType)
                 }
-            } else {
-                print("AGW UNABLE TO FIND FILE card_types")
-                // unable to find the file
+                
+                if !cardTypes.isEmpty {
+                    self.cardTypeMap = cardTypes
+                }
+            } catch {
+                // unable to read the contents of the file
                 return .UNKNOWN
             }
         }
         
-        print("AGW GOT cardTypes \(cardTypes.count)")
-        
-        for mapping in cardTypes {
-            if mapping.0.contains(iin) {
-                print("AGW FOUND MAPPING \(mapping.1) for \(iin)")
-                return mapping.1
-            }
-        }
-        
-        print("AGW NO MAPPING FOUND FOR \(iin)")
-        return .UNKNOWN
+        return cardTypes.first { $0.0.contains(iin) }?.1 ?? .UNKNOWN
     }
     
     /**
