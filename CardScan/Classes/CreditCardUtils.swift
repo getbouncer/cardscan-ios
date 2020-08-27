@@ -22,6 +22,8 @@ public struct CreditCardUtils {
 
     public static var prefixesRegional: [String] = []
     
+    private static var cardTypeMap: [(ClosedRange<Int>, CardType)]? = nil
+    
     /**
         Adds the BINs implemented by the MIR network in Russia as regional cards
      */
@@ -260,6 +262,55 @@ public struct CreditCardUtils {
         default:
             return CardNetwork.UNKNOWN
         }
+    }
+    
+    /**
+        Returns the card's type (debit, credit, preiad, unknown) based on the card number
+        -   Parameter cardNumber: The card number as a string
+        -   Returns: The card's type as a CardType enum
+     */
+    public static func determineCardType(cardNumber: String) -> CardType {
+        guard let iin = Int(cardNumber.prefix(6)) else {
+            return .UNKNOWN
+        }
+        
+        let cardTypes: [(ClosedRange<Int>, CardType)]
+        if let cardTypeMap = self.cardTypeMap {
+            cardTypes = cardTypeMap
+        } else {
+            if let filePath = Bundle.main.path(forResource: "card_types", ofType: "txt") {
+                do {
+                    let contents = try String(contentsOfFile: filePath)
+                    cardTypes = contents.components(separatedBy: "\n").compactMap {
+                        let items = $0.components(separatedBy: ",")
+                        let startIin = Int(items[0]) ?? -1
+                        let endIin = Int(items[1]) ?? -1
+                        let cardType = CardType.fromString(items[2])
+                        
+                        if startIin > 0 && endIin > 0 && cardType != .UNKNOWN {
+                            return (startIin...endIin, cardType)
+                        } else {
+                            return nil
+                        }
+                    }
+                    self.cardTypeMap = cardTypes
+                } catch {
+                    // unable to read the contents of the file
+                    return .UNKNOWN
+                }
+            } else {
+                // unable to find the file
+                return .UNKNOWN
+            }
+        }
+        
+        for mapping in cardTypes {
+            if mapping.0.contains(iin) {
+                return mapping.1
+            }
+        }
+        
+        return .UNKNOWN
     }
     
     /**
