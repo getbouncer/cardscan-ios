@@ -87,4 +87,12 @@ class CardScan_CardUtilsTests: XCTestCase {
         XCTAssert(CreditCardUtils.isValidNumber(cardNumber: "2200000000000061"))
         CreditCardUtils.prefixesRegional = []
     }
+    
+    func testCardTypes() {
+        XCTAssert(CreditCardUtils.determineCardType(cardNumber: "349011") == CardType.DEBIT)
+        XCTAssert(CreditCardUtils.determineCardType(cardNumber: "648298") == CardType.CREDIT)
+        XCTAssert(CreditCardUtils.determineCardType(cardNumber: "648299") == CardType.CREDIT)
+        XCTAssert(CreditCardUtils.determineCardType(cardNumber: "531306") == CardType.PREPAID)
+        XCTAssert(CreditCardUtils.determineCardType(cardNumber: "123456") == CardType.UNKNOWN)
+    }
 }
