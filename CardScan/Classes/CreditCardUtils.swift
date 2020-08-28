@@ -283,31 +283,30 @@ public struct CreditCardUtils {
                 return .UNKNOWN
             }
             
-            do {
-                let contents = try String(contentsOfFile: filePath)
-                cardTypes = contents.components(separatedBy: "\n").compactMap {
-                    let items = $0.components(separatedBy: ",")
-                    guard items.count == 3 else {
-                        return nil
-                    }
-                    
-                    let cardType = CardType.fromString(items[2])
-                    guard let startIin = Int(items[0]), let endIin = Int(items[1]) else {
-                        return nil
-                    }
-                    guard cardType != .UNKNOWN else {
-                        return nil
-                    }
-                    
-                    return (startIin...endIin, cardType)
-                }
-                
-                if !cardTypes.isEmpty {
-                    self.cardTypeMap = cardTypes
-                }
-            } catch {
+            guard let contents = try? String(contentsOfFile: filePath) else {
                 // unable to read the contents of the file
                 return .UNKNOWN
+            }
+            
+            cardTypes = contents.components(separatedBy: "\n").compactMap {
+                let items = $0.components(separatedBy: ",")
+                guard items.count == 3 else {
+                    return nil
+                }
+                
+                let cardType = CardType.fromString(items[2])
+                guard let startIin = Int(items[0]), let endIin = Int(items[1]) else {
+                    return nil
+                }
+                guard cardType != .UNKNOWN else {
+                    return nil
+                }
+                
+                return (startIin...endIin, cardType)
+            }
+            
+            if !cardTypes.isEmpty {
+                self.cardTypeMap = cardTypes
             }
         }
         
