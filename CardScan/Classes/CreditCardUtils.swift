@@ -305,9 +305,11 @@ public struct CreditCardUtils {
                 return (startIin...endIin, cardType)
             }
             
-            if !cardTypes.isEmpty {
-                self.cardTypeMap = cardTypes
+            guard !cardTypes.isEmpty else {
+                return .UNKNOWN
             }
+            
+            self.cardTypeMap = cardTypes
         }
         
         return cardTypes.first { $0.0.contains(iin) }?.1 ?? .UNKNOWN
