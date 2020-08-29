@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CardScan
+import CardScanPrivate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

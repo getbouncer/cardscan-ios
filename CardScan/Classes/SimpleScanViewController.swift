@@ -123,7 +123,7 @@ open class SimpleScanViewController: ScanBaseViewController {
     // MARK: -Visual and UI event setup for UI components
     open func setupUiComponents() {
         view.backgroundColor = .white
-        regionOfInterestCornerRadius = 32.0
+        regionOfInterestCornerRadius = 15.0
 
         let children: [UIView] = [previewView, blurView, roiView, descriptionText, closeButton, torchButton, numberText, expiryText, nameText, expiryLayoutView, enableCameraPermissionsButton, enableCameraPermissionsText]
         for child in children {
@@ -255,8 +255,8 @@ open class SimpleScanViewController: ScanBaseViewController {
     }
     
     open func setupRoiViewConstraints() {
-        roiView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32).isActive = true
-        roiView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32).isActive = true
+        roiView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        roiView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         roiView.heightAnchor.constraint(equalTo: roiView.widthAnchor, multiplier: 1.0 / 1.586).isActive = true
         roiView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }

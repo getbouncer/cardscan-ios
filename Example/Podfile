@@ -5,18 +5,18 @@ target 'CardScan_Example' do
   use_frameworks!
 
   # Pods for CardScan_Example
-  pod 'CardScan', :path => '../'  
+  pod 'CardScanPrivate', :path => '../'  
 
   target 'CardScan_ExampleUITests' do
     inherit! :search_paths
     # Pods for testing
-    pod 'CardScan', :path => '../'  
+    pod 'CardScanPrivate', :path => '../'  
   end
 
   target 'CardScan_ExampleTests' do
     inherit! :search_paths
     # Pods for testing
-    pod 'CardScan', :path => '../'  
+    pod 'CardScanPrivate', :path => '../'  
   end
 
 end

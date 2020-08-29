@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import CardScan
+@testable import CardScanPrivate
 
 class CardScan_ModelDownloadConfigTests: XCTestCase {
     override func setUp() {

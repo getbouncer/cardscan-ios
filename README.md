@@ -105,7 +105,7 @@ put in the following line.
 
 ```swift
 import UIKit
-import CardScan
+import CardScanPrivate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -138,7 +138,7 @@ implement the `ScanDelegate` protocol to get the results.
 
 ```swift
 import UIKit
-import CardScan
+import CardScanPrivate
 
 class ViewController: UIViewController, ScanDelegate {
     override func viewWillAppear() {
@@ -212,7 +212,7 @@ when your application launches:
 
 ```objective-c
 #import "AppDelegate.h"
-@import CardScan;
+@import CardScanPrivate;
 
 @implementation AppDelegate
 

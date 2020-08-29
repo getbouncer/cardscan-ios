@@ -10,7 +10,7 @@ import XCTest
 
 // TODO: These tests were failing. Fix them
 
-//@testable import CardScan
+//@testable import CardScanPrivate
 //class CardScan_BundleTests: XCTestCase {
 //    override func setUp() {
 //        let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)

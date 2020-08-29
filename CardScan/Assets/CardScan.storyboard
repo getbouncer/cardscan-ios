@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,15 +11,15 @@
         <!--Scan View Controller-->
         <scene sceneID="tgv-Xg-mB7">
             <objects>
-                <viewController storyboardIdentifier="scanCardViewController" modalPresentationStyle="fullScreen" id="RWC-EC-Zxy" customClass="ScanViewController" customModule="CardScan" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="scanCardViewController" modalPresentationStyle="fullScreen" id="RWC-EC-Zxy" customClass="ScanViewController" customModule="CardScanPrivate" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dia-FZ-zQY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZr-lh-2mZ" customClass="PreviewView" customModule="CardScan" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZr-lh-2mZ" customClass="PreviewView" customModule="CardScanPrivate">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aju-0L-PxB" customClass="BlurView" customModule="CardScan" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aju-0L-PxB" customClass="BlurView" customModule="CardScanPrivate">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" red="0.18431372549019609" green="0.20784313725490194" blue="0.25882352941176467" alpha="0.70205479452054798" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     </view>
@@ -135,7 +135,7 @@
                                     <constraint firstItem="FbV-Jw-mRi" firstAttribute="top" secondItem="NRD-Sd-k9r" secondAttribute="top" id="yx5-KZ-MVe"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJ3-a3-k94" customClass="CornerView" customModule="CardScan" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJ3-a3-k94" customClass="CornerView" customModule="CardScanPrivate">
                                 <rect key="frame" x="11" y="220.5" width="353" height="226"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>

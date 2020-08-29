@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import CardScan
+import CardScanPrivate
 
 class ModalScanViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIBarButtonItem!

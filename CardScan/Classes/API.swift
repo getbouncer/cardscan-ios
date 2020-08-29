@@ -234,7 +234,10 @@ public struct Api {
     }
     
     static func scanStats(scanStats: ScanStats, completion: @escaping ApiCompletion) {
+        // Comment out for DoorDash
+        /*
         self.apiCallWithDeviceInfo(endpoint: "/scan_stats", parameters: ["scan_stats": scanStats.toDictionaryForAnalytics()], completion: completion)
+         */
     }
 }
 
