@@ -6,7 +6,10 @@ Once we have a build on master we want to publish:
 
 0. Bump the `CardScan.podspec` with the new version of our library
 
-1. Run CardScan systems iOS test. Make sure to watch the videos to double check that everything looks good.
+1. Run [CardScan systems iOS test](https://github.com/getbouncer/cardscan-system-tests). 
+    * Make sure the `Podfile` in `ios/CardScanSystemTest` is pointed to the master.
+    * Go into the `.xcworkspace`, clean, and build. Make sure there are no errors.
+    * Make sure to watch the videos to double check that everything looks good.
 
 2. If a new file is added in `CardScan/`, run `pod install` and commit the newly created `Pod/` directory
 
