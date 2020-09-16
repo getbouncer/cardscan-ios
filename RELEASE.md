@@ -10,13 +10,8 @@ Once we have a build on master we want to publish:
 
 2. If a new file is added in `CardScan/`, run `pod install` and commit the newly created `Pod/` directory
 
-3. Verify Carthage build is working in the same directory as `.xcodeproj`
+3. Verify Carthage build is working by installing `CardScan` into the example [Carthage App](https://github.com/getbouncer/cardscan-carthage-example). Instructions to install and build are located in the README.md of the `Carthage Example App`.
 
-   ```bash
-   carthage build --no-skip-current
-   ```
-   *  If you get the error: `no shared framework schemes`, reclick `shared` on the project schemes in xcode.
-   *  Make sure to commit files that are modified after reclicking `shared` 
 
 4. Run the Cocoapods linter to make sure that everything is going to pass
 
