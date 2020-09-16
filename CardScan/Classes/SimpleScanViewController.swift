@@ -87,11 +87,11 @@ open class SimpleScanViewController: ScanBaseViewController {
     public var expiryLayoutView = UIView()
     
     // String
-    public var descriptionString = "Scan Card"
-    public var enableCameraPermissionString = "Enable camera access"
-    public var enableCameraPermissionsDescriptionString = "To scan your card you'll need to update your phone settings"
-    public var closeButtonString = "Close"
-    public var torchButtonString = "Torch"
+    public static var descriptionString = "Scan Card"
+    public static var enableCameraPermissionString = "Enable camera access"
+    public static var enableCameraPermissionsDescriptionString = "To scan your card you'll need to update your phone settings"
+    public static var closeButtonString = "Close"
+    public static var torchButtonString = "Torch"
     
     public weak var delegate: SimpleScanDelegate?
     
@@ -159,7 +159,7 @@ open class SimpleScanViewController: ScanBaseViewController {
     open func setupCloseButtonUi() {
         closeButton.setTitleColor(.white, for: .normal)
         closeButton.tintColor = .white
-        closeButton.setTitle(closeButtonString, for: .normal)
+        closeButton.setTitle(SimpleScanViewController.closeButtonString, for: .normal)
         
         closeButton.addTarget(self, action: #selector(cancelButtonPress), for: .touchUpInside)
     }
@@ -167,13 +167,13 @@ open class SimpleScanViewController: ScanBaseViewController {
     open func setupTorchButtonUi() {
         torchButton.setTitleColor(.white, for: .normal)
         torchButton.tintColor = .white
-        torchButton.setTitle(torchButtonString, for: .normal)
+        torchButton.setTitle(SimpleScanViewController.torchButtonString, for: .normal)
         
         torchButton.addTarget(self, action: #selector(torchButtonPress), for: .touchUpInside)
     }
     
     open func setupDescriptionTextUi() {
-        descriptionText.text = descriptionString
+        descriptionText.text = SimpleScanViewController.descriptionString
         descriptionText.textColor = .white
         descriptionText.textAlignment = .center
         descriptionText.font = descriptionText.font.withSize(30)
@@ -198,7 +198,7 @@ open class SimpleScanViewController: ScanBaseViewController {
     }
     
     open func setupDenyUi() {
-        let text = enableCameraPermissionString
+        let text = SimpleScanViewController.enableCameraPermissionString
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttribute(NSAttributedString.Key.underlineColor, value: UIColor.white, range: NSRange(location: 0, length: text.count))
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: text.count))
@@ -210,7 +210,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         
         enableCameraPermissionsButton.addTarget(self, action: #selector(enableCameraPermissionsPress), for: .touchUpInside)
         
-        enableCameraPermissionsText.text = enableCameraPermissionsDescriptionString
+        enableCameraPermissionsText.text = SimpleScanViewController.enableCameraPermissionsDescriptionString
         enableCameraPermissionsText.textColor = .white
         enableCameraPermissionsText.textAlignment = .center
         enableCameraPermissionsText.font = enableCameraPermissionsText.font.withSize(17)
