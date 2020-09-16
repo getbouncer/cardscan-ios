@@ -1,6 +1,16 @@
 # Changelog
 
-## [1.0.5045](https://github.com/getbouncer/cardscan-ios/tree/1.0.5045) (2020-08-28)
+## [Unreleased](https://github.com/getbouncer/cardscan-ios/tree/HEAD)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5045...HEAD)
+
+**Merged pull requests:**
+
+- Update RELEASE.md [\#220](https://github.com/getbouncer/cardscan-ios/pull/220) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Make RN localization easier [\#219](https://github.com/getbouncer/cardscan-ios/pull/219) ([awushensky](https://github.com/awushensky))
+- Small tweaks to the SimpleScanViewController UI [\#217](https://github.com/getbouncer/cardscan-ios/pull/217) ([kingst](https://github.com/kingst))
+
+## [1.0.5045](https://github.com/getbouncer/cardscan-ios/tree/1.0.5045) (2020-08-29)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5044...1.0.5045)
 
@@ -282,6 +292,7 @@
 - First cut at sending square and full images to the ML pipeline [\#103](https://github.com/getbouncer/cardscan-ios/pull/103) ([kingst](https://github.com/kingst))
 - modifying testing image protocol to return square and full-screen images [\#102](https://github.com/getbouncer/cardscan-ios/pull/102) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - added button identifier for UITest [\#100](https://github.com/getbouncer/cardscan-ios/pull/100) ([jaimejiyepark](https://github.com/jaimejiyepark))
+- Adapt to iOS 9 [\#99](https://github.com/getbouncer/cardscan-ios/pull/99) ([igor-makarov](https://github.com/igor-makarov))
 - created public interface to get/set torch levels [\#97](https://github.com/getbouncer/cardscan-ios/pull/97) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5022](https://github.com/getbouncer/cardscan-ios/tree/1.0.5022) (2019-11-13)
@@ -298,7 +309,6 @@
 
 **Merged pull requests:**
 
-- Adapt to iOS 9 [\#99](https://github.com/getbouncer/cardscan-ios/pull/99) ([igor-makarov](https://github.com/igor-makarov))
 - Update object detection serialization format [\#94](https://github.com/getbouncer/cardscan-ios/pull/94) ([kingst](https://github.com/kingst))
 
 ## [1.0.5020](https://github.com/getbouncer/cardscan-ios/tree/1.0.5020) (2019-11-01)
@@ -385,6 +395,10 @@
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5010...1.0.5011)
 
+**Merged pull requests:**
+
+- Adds a dialog for users who deny access, uses this by default [\#71](https://github.com/getbouncer/cardscan-ios/pull/71) ([kingst](https://github.com/kingst))
+
 ## [1.0.5010](https://github.com/getbouncer/cardscan-ios/tree/1.0.5010) (2019-08-28)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5009...1.0.5010)
@@ -411,7 +425,6 @@
 
 **Merged pull requests:**
 
-- Adds a dialog for users who deny access, uses this by default [\#71](https://github.com/getbouncer/cardscan-ios/pull/71) ([kingst](https://github.com/kingst))
 - return normlized co-ordinates from SSD [\#68](https://github.com/getbouncer/cardscan-ios/pull/68) ([dxaen](https://github.com/dxaen))
 - fix priors generation to include more built in types [\#67](https://github.com/getbouncer/cardscan-ios/pull/67) ([dxaen](https://github.com/dxaen))
 - Removed NMSUtils, added IOU as CGRect extension. [\#66](https://github.com/getbouncer/cardscan-ios/pull/66) ([dxaen](https://github.com/dxaen))
@@ -430,10 +443,10 @@
 - Use single delegate object for scanEvents [\#60](https://github.com/getbouncer/cardscan-ios/pull/60) ([kingst](https://github.com/kingst))
 - Image fraud check [\#59](https://github.com/getbouncer/cardscan-ios/pull/59) ([dxaen](https://github.com/dxaen))
 - Add a helper function to display expiries [\#58](https://github.com/getbouncer/cardscan-ios/pull/58) ([kingst](https://github.com/kingst))
-- Removed nonessential files for Carthage [\#57](https://github.com/getbouncer/cardscan-ios/pull/57) ([Li-Andy](https://github.com/Li-Andy))
+- Removed nonessential files for Carthage [\#57](https://github.com/getbouncer/cardscan-ios/pull/57) ([li-andy](https://github.com/li-andy))
 - Add a  protocol for scanning extensibility [\#56](https://github.com/getbouncer/cardscan-ios/pull/56) ([kingst](https://github.com/kingst))
 - Add scan events protocol [\#55](https://github.com/getbouncer/cardscan-ios/pull/55) ([kingst](https://github.com/kingst))
-- Added Carthage support [\#53](https://github.com/getbouncer/cardscan-ios/pull/53) ([Li-Andy](https://github.com/Li-Andy))
+- Added Carthage support [\#53](https://github.com/getbouncer/cardscan-ios/pull/53) ([li-andy](https://github.com/li-andy))
 
 ## [1.0.5006](https://github.com/getbouncer/cardscan-ios/tree/1.0.5006) (2019-08-08)
 
@@ -443,6 +456,7 @@
 
 - mini bug @ viewwillappear [\#54](https://github.com/getbouncer/cardscan-ios/pull/54) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Remove unused debug data [\#52](https://github.com/getbouncer/cardscan-ios/pull/52) ([kingst](https://github.com/kingst))
+- Changed up the video feed set up in the base VC [\#46](https://github.com/getbouncer/cardscan-ios/pull/46) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5005](https://github.com/getbouncer/cardscan-ios/tree/1.0.5005) (2019-08-05)
 
@@ -468,7 +482,6 @@
 
 **Merged pull requests:**
 
-- Changed up the video feed set up in the base VC [\#46](https://github.com/getbouncer/cardscan-ios/pull/46) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Drop iPhone 6 and older using a device blacklist [\#45](https://github.com/getbouncer/cardscan-ios/pull/45) ([kingst](https://github.com/kingst))
 
 ## [1.0.5002](https://github.com/getbouncer/cardscan-ios/tree/1.0.5002) (2019-07-25)
@@ -600,7 +613,7 @@
 
 **Merged pull requests:**
 
-- Moved mask setup to viewWillAppear\(\) to patch race condition [\#20](https://github.com/getbouncer/cardscan-ios/pull/20) ([Li-Andy](https://github.com/Li-Andy))
+- Moved mask setup to viewWillAppear\(\) to patch race condition [\#20](https://github.com/getbouncer/cardscan-ios/pull/20) ([li-andy](https://github.com/li-andy))
 
 ## [1.0.4052](https://github.com/getbouncer/cardscan-ios/tree/1.0.4052) (2019-06-12)
 
@@ -608,7 +621,7 @@
 
 **Merged pull requests:**
 
-- Movable region of interest [\#19](https://github.com/getbouncer/cardscan-ios/pull/19) ([Li-Andy](https://github.com/Li-Andy))
+- Movable region of interest [\#19](https://github.com/getbouncer/cardscan-ios/pull/19) ([li-andy](https://github.com/li-andy))
 
 ## [1.0.4051](https://github.com/getbouncer/cardscan-ios/tree/1.0.4051) (2019-06-12)
 
