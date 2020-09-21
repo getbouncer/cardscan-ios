@@ -11,6 +11,7 @@ public protocol TestingImageDataSource: AnyObject {
     public weak var testingImageDataSource: TestingImageDataSource?
     @objc public var includeCardImage = false
     @objc public var showDebugImageView = false
+    @objc public var sendScanStats = true
     
     public var scanEventsDelegate: ScanEvents?
     
@@ -159,7 +160,10 @@ public protocol TestingImageDataSource: AnyObject {
             return
         }
         ocrMainLoop.userCancelled()
-        Api.scanStats(scanStats: ocrMainLoop.scanStats, completion: {_, _ in })
+        
+        if (self.sendScanStats) {
+            Api.scanStats(scanStats: ocrMainLoop.scanStats, completion: {_, _ in })
+        }
     }
      
     func setupMask() {
@@ -357,8 +361,10 @@ public protocol TestingImageDataSource: AnyObject {
         // hack to work around having to change our public interface
         predictedName = creditCardOcrResult.name
 
-        // fire and forget
-        Api.scanStats(scanStats: self.getScanStats(), completion: {_, _ in })
+        if (self.sendScanStats) {
+            // fire and forget
+            Api.scanStats(scanStats: self.getScanStats(), completion: {_, _ in })
+        }
         self.onScannedCard(number: creditCardOcrResult.number, expiryYear: creditCardOcrResult.expiryYear, expiryMonth: creditCardOcrResult.expiryMonth, scannedImage: scannedCardImage)
     }
     
