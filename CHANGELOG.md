@@ -1,8 +1,22 @@
 # Changelog
 
-## [Unreleased](https://github.com/getbouncer/cardscan-ios/tree/HEAD)
+## [1.0.5047](https://github.com/getbouncer/cardscan-ios/tree/1.0.5047) (2020-09-22)
 
-[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5045...HEAD)
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5046...1.0.5047)
+
+**Closed issues:**
+
+- Can I custmor card type? [\#218](https://github.com/getbouncer/cardscan-ios/issues/218)
+
+**Merged pull requests:**
+
+- Update release version [\#223](https://github.com/getbouncer/cardscan-ios/pull/223) ([awushensky](https://github.com/awushensky))
+- Add hook to disable scan stats [\#222](https://github.com/getbouncer/cardscan-ios/pull/222) ([awushensky](https://github.com/awushensky))
+- Update documentation [\#221](https://github.com/getbouncer/cardscan-ios/pull/221) ([awushensky](https://github.com/awushensky))
+
+## [1.0.5046](https://github.com/getbouncer/cardscan-ios/tree/1.0.5046) (2020-09-16)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5045...1.0.5046)
 
 **Merged pull requests:**
 
