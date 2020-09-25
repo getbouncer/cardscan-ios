@@ -23,4 +23,4 @@ jobs:
         if: failure()
         with:
           name: test-report
-          path: /var/folders/*/*/T/carthage-xcodebuild.*.log
+          path: /var/folders/**/carthage-xcodebuild.*.log
