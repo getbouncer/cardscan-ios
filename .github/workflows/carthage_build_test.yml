@@ -16,7 +16,6 @@ jobs:
       - name: test
         run: |
           cd Example
-          rm Cartfile.resolved
           carthage update --platform iOS
 
 #      - name: upload-artifacts
