@@ -1,0 +1,27 @@
+name: Carthage Build Test
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+
+    runs-on: macOS-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: test
+        run: |
+          cd Example
+          rm Cartfile.resolved
+          carthage update --platform iOS
+
+#      - name: upload-artifacts
+#        uses: actions/upload-artifact@v2
+#        if: failure()
+#        with:
+#          name: test-report
+#          path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
