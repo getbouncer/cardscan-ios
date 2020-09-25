@@ -23,4 +23,4 @@ jobs:
         if: failure()
         with:
           name: test-report
-#          path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
+          path: /var/folders/*/*/T/carthage-xcodebuild.*.log
