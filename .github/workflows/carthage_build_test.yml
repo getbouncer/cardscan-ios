@@ -10,8 +10,10 @@ jobs:
 
     runs-on: macOS-latest
     steps:
-#      - name: checkout
-#        uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+            token: ${{secrets.SERVICE_PERSONAL_ACCESS_TOKEN}}
 
       - name: test
         run: |
