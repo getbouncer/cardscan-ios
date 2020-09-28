@@ -18,7 +18,7 @@ jobs:
       - name: test
         run: |
           cd Example
-          carthage update --platform iOS
+          carthage update --platform iOS --no-use-binaries
 
       - name: upload-artifacts
         uses: actions/upload-artifact@v2
