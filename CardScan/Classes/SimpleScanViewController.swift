@@ -87,11 +87,11 @@ open class SimpleScanViewController: ScanBaseViewController {
     public var expiryLayoutView = UIView()
     
     // String
-    public static var descriptionString = "Scan Card"
-    public static var enableCameraPermissionString = "Enable camera access"
-    public static var enableCameraPermissionsDescriptionString = "To scan your card you'll need to update your phone settings"
-    public static var closeButtonString = "Close"
-    public static var torchButtonString = "Torch"
+    @objc public static var descriptionString = "Scan Card"
+    @objc public static var enableCameraPermissionString = "Enable camera access"
+    @objc public static var enableCameraPermissionsDescriptionString = "To scan your card you'll need to update your phone settings"
+    @objc public static var closeButtonString = "Close"
+    @objc public static var torchButtonString = "Torch"
     
     public weak var delegate: SimpleScanDelegate?
     
