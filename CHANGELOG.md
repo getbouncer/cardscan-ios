@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.5048](https://github.com/getbouncer/cardscan-ios/tree/1.0.5048) (2020-10-05)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5047...1.0.5048)
+
+**Merged pull requests:**
+
+- Make strings accessible to RN [\#227](https://github.com/getbouncer/cardscan-ios/pull/227) ([awushensky](https://github.com/awushensky))
+- Adding build rules to exclude x86 in iPhone Sim for XCode 12 [\#224](https://github.com/getbouncer/cardscan-ios/pull/224) ([jaimejiyepark](https://github.com/jaimejiyepark))
+
 ## [1.0.5047](https://github.com/getbouncer/cardscan-ios/tree/1.0.5047) (2020-09-22)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5046...1.0.5047)
