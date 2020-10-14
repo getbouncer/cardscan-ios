@@ -7,6 +7,20 @@
 //
 import Foundation
 
+public struct UxFrameConfidenceValues {
+    public let hasOcr: Bool
+    public let uxPan: Double
+    public let uxNoPan: Double
+    public let uxNoCard: Double
+    
+    public init(hasOcr: Bool, uxPan: Double, uxNoPan: Double, uxNoCard: Double) {
+        self.hasOcr = hasOcr
+        self.uxPan = uxPan
+        self.uxNoPan = uxNoPan
+        self.uxNoCard = uxNoCard
+    }
+}
+
 public enum CenteredCardState {
     case numberSide
     case nonNumberSide
@@ -30,8 +44,9 @@ public struct CreditCardOcrPrediction {
     
     // this is only used by Card Verify and the Liveness check and filled in by the UxModel
     public var centeredCardState: CenteredCardState?
+    public var uxFrameConfidenceValues: UxFrameConfidenceValues?
     
-    public init(image: CGImage, number: String?, expiryMonth: String?, expiryYear: String?, name: String?, computationTime: Double, numberBoxes: [CGRect]?, expiryBoxes: [CGRect]?, nameBoxes: [CGRect]?, centeredCardState: CenteredCardState? = nil) {
+    public init(image: CGImage, number: String?, expiryMonth: String?, expiryYear: String?, name: String?, computationTime: Double, numberBoxes: [CGRect]?, expiryBoxes: [CGRect]?, nameBoxes: [CGRect]?, centeredCardState: CenteredCardState? = nil, uxFrameConfidenceValues: UxFrameConfidenceValues? = nil) {
         
         self.image = image
         self.number = number
@@ -43,6 +58,7 @@ public struct CreditCardOcrPrediction {
         self.expiryBoxes = expiryBoxes
         self.nameBoxes = nameBoxes
         self.centeredCardState = centeredCardState
+        self.uxFrameConfidenceValues = uxFrameConfidenceValues
     }
     
     public static func emptyPrediction(cgImage: CGImage) -> CreditCardOcrPrediction {
