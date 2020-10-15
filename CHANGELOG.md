@@ -1,5 +1,8 @@
 # Changelog
 
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5049...1.0.5050)
+
 ## [1.0.5049](https://github.com/getbouncer/cardscan-ios/tree/1.0.5049) (2020-10-14)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5048...1.0.5049)
@@ -31,7 +34,6 @@
 
 **Merged pull requests:**
 
-- Update release version [\#223](https://github.com/getbouncer/cardscan-ios/pull/223) ([awushensky](https://github.com/awushensky))
 - Add hook to disable scan stats [\#222](https://github.com/getbouncer/cardscan-ios/pull/222) ([awushensky](https://github.com/awushensky))
 - Update documentation [\#221](https://github.com/getbouncer/cardscan-ios/pull/221) ([awushensky](https://github.com/awushensky))
 
@@ -41,6 +43,7 @@
 
 **Merged pull requests:**
 
+- Update release version [\#223](https://github.com/getbouncer/cardscan-ios/pull/223) ([awushensky](https://github.com/awushensky))
 - Update RELEASE.md [\#220](https://github.com/getbouncer/cardscan-ios/pull/220) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Make RN localization easier [\#219](https://github.com/getbouncer/cardscan-ios/pull/219) ([awushensky](https://github.com/awushensky))
 - Small tweaks to the SimpleScanViewController UI [\#217](https://github.com/getbouncer/cardscan-ios/pull/217) ([kingst](https://github.com/kingst))
@@ -125,20 +128,13 @@
 
 ## [1.0.5040](https://github.com/getbouncer/cardscan-ios/tree/1.0.5040) (2020-07-09)
 
-[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5039...1.0.5040)
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5038...1.0.5040)
 
 **Merged pull requests:**
 
 - Ocr main loop deadlock bug fix [\#183](https://github.com/getbouncer/cardscan-ios/pull/183) ([kingst](https://github.com/kingst))
 - Cache the OCR model [\#182](https://github.com/getbouncer/cardscan-ios/pull/182) ([kingst](https://github.com/kingst))
 - Remove the old legacy OCR code [\#181](https://github.com/getbouncer/cardscan-ios/pull/181) ([kingst](https://github.com/kingst))
-
-## [1.0.5039](https://github.com/getbouncer/cardscan-ios/tree/1.0.5039) (2020-07-06)
-
-[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5038...1.0.5039)
-
-**Merged pull requests:**
-
 - Sets the default for the iPad to a formSheet [\#180](https://github.com/getbouncer/cardscan-ios/pull/180) ([kingst](https://github.com/kingst))
 - Add the bounding box of individual digits to the items the OCR returns. [\#179](https://github.com/getbouncer/cardscan-ios/pull/179) ([dxaen](https://github.com/dxaen))
 - Update project file and remove unused init functions [\#178](https://github.com/getbouncer/cardscan-ios/pull/178) ([kingst](https://github.com/kingst))
@@ -205,7 +201,6 @@
 - Updating name rules [\#158](https://github.com/getbouncer/cardscan-ios/pull/158) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Resume threads if deallocated when in background [\#157](https://github.com/getbouncer/cardscan-ios/pull/157) ([kingst](https://github.com/kingst))
 - Expose the OcrMainLoop variables as public [\#156](https://github.com/getbouncer/cardscan-ios/pull/156) ([kingst](https://github.com/kingst))
-- Clean up our threading code a bit and add documentation [\#154](https://github.com/getbouncer/cardscan-ios/pull/154) ([kingst](https://github.com/kingst))
 - Producer consumer ocr [\#153](https://github.com/getbouncer/cardscan-ios/pull/153) ([kingst](https://github.com/kingst))
 
 ## [1.0.5032](https://github.com/getbouncer/cardscan-ios/tree/1.0.5032) (2020-04-29)
@@ -222,6 +217,7 @@
 
 **Merged pull requests:**
 
+- Clean up our threading code a bit and add documentation [\#154](https://github.com/getbouncer/cardscan-ios/pull/154) ([kingst](https://github.com/kingst))
 - Changed interface orientation values to snake case [\#150](https://github.com/getbouncer/cardscan-ios/pull/150) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Put orientation into stats [\#149](https://github.com/getbouncer/cardscan-ios/pull/149) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Migrating to Swift5 [\#148](https://github.com/getbouncer/cardscan-ios/pull/148) ([jaimejiyepark](https://github.com/jaimejiyepark))
@@ -621,7 +617,6 @@
 - Change models to optionals [\#27](https://github.com/getbouncer/cardscan-ios/pull/27) ([kingst](https://github.com/kingst))
 - bundle moved to model [\#26](https://github.com/getbouncer/cardscan-ios/pull/26) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Shut down ML queue when app enters background [\#25](https://github.com/getbouncer/cardscan-ios/pull/25) ([kingst](https://github.com/kingst))
-- Moved mask setup to viewWillAppear\(\) to patch race condition [\#20](https://github.com/getbouncer/cardscan-ios/pull/20) ([li-andy](https://github.com/li-andy))
 
 ## [1.0.4056](https://github.com/getbouncer/cardscan-ios/tree/1.0.4056) (2019-06-21)
 
@@ -646,6 +641,10 @@
 ## [1.0.4053](https://github.com/getbouncer/cardscan-ios/tree/1.0.4053) (2019-06-12)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.4052...1.0.4053)
+
+**Merged pull requests:**
+
+- Moved mask setup to viewWillAppear\(\) to patch race condition [\#20](https://github.com/getbouncer/cardscan-ios/pull/20) ([li-andy](https://github.com/li-andy))
 
 ## [1.0.4052](https://github.com/getbouncer/cardscan-ios/tree/1.0.4052) (2019-06-12)
 
