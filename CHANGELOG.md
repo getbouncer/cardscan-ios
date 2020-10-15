@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.5049](https://github.com/getbouncer/cardscan-ios/tree/1.0.5049) (2020-10-14)
+
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5048...1.0.5049)
+
+**Closed issues:**
+
+- Add Support to Swift Package Manager [\#228](https://github.com/getbouncer/cardscan-ios/issues/228)
+
+**Merged pull requests:**
+
+- Add ux confidence value to prediction [\#229](https://github.com/getbouncer/cardscan-ios/pull/229) ([jaimejiyepark](https://github.com/jaimejiyepark))
+
 ## [1.0.5048](https://github.com/getbouncer/cardscan-ios/tree/1.0.5048) (2020-10-05)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5047...1.0.5048)
@@ -609,6 +621,7 @@
 - Change models to optionals [\#27](https://github.com/getbouncer/cardscan-ios/pull/27) ([kingst](https://github.com/kingst))
 - bundle moved to model [\#26](https://github.com/getbouncer/cardscan-ios/pull/26) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Shut down ML queue when app enters background [\#25](https://github.com/getbouncer/cardscan-ios/pull/25) ([kingst](https://github.com/kingst))
+- Moved mask setup to viewWillAppear\(\) to patch race condition [\#20](https://github.com/getbouncer/cardscan-ios/pull/20) ([li-andy](https://github.com/li-andy))
 
 ## [1.0.4056](https://github.com/getbouncer/cardscan-ios/tree/1.0.4056) (2019-06-21)
 
@@ -633,10 +646,6 @@
 ## [1.0.4053](https://github.com/getbouncer/cardscan-ios/tree/1.0.4053) (2019-06-12)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.4052...1.0.4053)
-
-**Merged pull requests:**
-
-- Moved mask setup to viewWillAppear\(\) to patch race condition [\#20](https://github.com/getbouncer/cardscan-ios/pull/20) ([li-andy](https://github.com/li-andy))
 
 ## [1.0.4052](https://github.com/getbouncer/cardscan-ios/tree/1.0.4052) (2019-06-12)
 
