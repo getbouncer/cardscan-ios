@@ -368,7 +368,7 @@ public protocol TestingImageDataSource: AnyObject {
         self.onScannedCard(number: creditCardOcrResult.number, expiryYear: creditCardOcrResult.expiryYear, expiryMonth: creditCardOcrResult.expiryMonth, scannedImage: scannedCardImage)
     }
     
-    open func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage) {
+    open func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage, state: MainLoopState) {
         if self.showDebugImageView {
             let numberBoxes = prediction.numberBoxes?.map { (UIColor.blue, $0) } ?? []
             let expiryBoxes = prediction.expiryBoxes?.map { (UIColor.red, $0) } ?? []
@@ -384,22 +384,34 @@ public protocol TestingImageDataSource: AnyObject {
             self.scannedCardImage = UIImage(cgImage: prediction.image)
         }
         
+        let isFlashForcedOn: Bool
+        switch (state) {
+        case .ocrForceFlash: isFlashForcedOn = true
+        default: isFlashForcedOn = false
+        }
+        
         let cardSize = CGSize(width: prediction.image.width, height: prediction.image.height)
         if let number = prediction.number, let numberBox = prediction.numberBox {
             let expiry = prediction.expiryObject()
             let expiryBox = prediction.expiryBox
             
             ScanBaseViewController.machineLearningQueue.async {
-                self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBox, expiryBoundingBox: expiryBox, croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage, centeredCardState: prediction.centeredCardState, uxFrameConfidenceValues: prediction.uxFrameConfidenceValues)
+                self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBox, expiryBoundingBox: expiryBox, croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage, centeredCardState: prediction.centeredCardState, uxFrameConfidenceValues: prediction.uxFrameConfidenceValues, flashForcedOn: isFlashForcedOn)
             }
         } else {
             ScanBaseViewController.machineLearningQueue.async {
-                self.scanEventsDelegate?.onFrameDetected(croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage, centeredCardState: prediction.centeredCardState, uxFrameConfidenceValues: prediction.uxFrameConfidenceValues)
+                self.scanEventsDelegate?.onFrameDetected(croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage, centeredCardState: prediction.centeredCardState, uxFrameConfidenceValues: prediction.uxFrameConfidenceValues, flashForcedOn: isFlashForcedOn)
             }
         }
     }
     
     public func showCardDetails(number: String?, expiry: String?, name: String?) {
+        guard let number = number else { return }
+        showCardNumber(number, expiry: expiry)
+    }
+    
+    public func showCardDetailsWithFlash(number: String?, expiry: String?, name: String?) {
+        if !isTorchOn() { toggleTorch() }
         guard let number = number else { return }
         showCardNumber(number, expiry: expiry)
     }

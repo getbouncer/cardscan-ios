@@ -68,8 +68,9 @@ import UIKit
 
 public protocol OcrMainLoopDelegate: class {
     func complete(creditCardOcrResult: CreditCardOcrResult)
-    func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage)
+    func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage, state: MainLoopState)
     func showCardDetails(number: String?, expiry: String?, name: String?)
+    func showCardDetailsWithFlash(number: String?, expiry: String?, name: String?)
     func showWrongCard(number: String?, expiry: String?, name: String?)
     func showNoCard()
     func shouldUsePrediction(errorCorrectedNumber: String?, prediction: CreditCardOcrPrediction) -> Bool
@@ -208,7 +209,7 @@ open class OcrMainLoop : MachineLearningLoop {
                     guard let self = self else { return }
                     guard !self.userDidCancel else { return }
                     guard let squareCardImage = image.squareCardImage(roiRectangle: roi) else { return }
-                    delegate?.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: image)
+                    delegate?.prediction(prediction: prediction, squareCardImage: squareCardImage, fullCardImage: image, state: self.errorCorrection.stateMachine.loopState())
                 }
                 guard let result = self.combine(prediction: prediction), result.state == .finished else {
                     self.postAnalyzerToQueueAndRun(ocr: ocr)
@@ -237,6 +238,8 @@ open class OcrMainLoop : MachineLearningLoop {
                 delegate?.showWrongCard(number: result.number, expiry: result.expiry, name: result.name)
             case MainLoopState.ocrOnly, MainLoopState.ocrAndCard, MainLoopState.ocrDelayForCard:
                 delegate?.showCardDetails(number: result.number, expiry: result.expiry, name: result.name)
+            case .ocrForceFlash:
+                delegate?.showCardDetailsWithFlash(number: result.number, expiry: result.expiry, name: result.name)
             case MainLoopState.finished:
                 delegate?.complete(creditCardOcrResult: result)
             }

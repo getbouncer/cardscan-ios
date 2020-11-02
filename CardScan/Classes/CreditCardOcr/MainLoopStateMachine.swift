@@ -14,6 +14,7 @@ public enum MainLoopState {
     case ocrAndCard
     case ocrIncorrect
     case ocrDelayForCard
+    case ocrForceFlash
     case finished
 }
 

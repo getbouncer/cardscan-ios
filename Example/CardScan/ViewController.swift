@@ -211,10 +211,10 @@ extension ViewController: SimpleScanDelegate {
 extension ViewController: ScanEvents {
     func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect,
                             expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage:
-        CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?) {}
+                                CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?, flashForcedOn: Bool) {}
     func onScanComplete(scanStats: ScanStats) {}
     func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage,
-                         centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?) {}
+                         centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?, flashForcedOn: Bool) {}
 }
 
 extension ViewController: FullScanStringsDataSource {
