@@ -26,11 +26,11 @@ public protocol MainLoopStateMachine {
 
 // Note: This class is _not_ thread safe, it relies on syncrhonization
 // from the `OcrMainLoop`
-open class OcrMainLoopStateMachine: MainLoopStateMachine {
+@objc open class OcrMainLoopStateMachine: NSObject, MainLoopStateMachine {
     public var state: MainLoopState = .initial
     public var startTimeForCurrentState = Date()
     
-    public init() { }
+    public override init() { }
     
     public let errorCorrectionDurationSeconds = 2.0
     
