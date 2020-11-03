@@ -1,16 +1,14 @@
 # Changelog
 
-## [Unreleased](https://github.com/getbouncer/cardscan-ios/tree/HEAD)
+## [1.0.5050](https://github.com/getbouncer/cardscan-ios/tree/1.0.5050) (2020-11-03)
 
-[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5050...HEAD)
+[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5049...1.0.5050)
 
 **Merged pull requests:**
 
+- Make main loop state objc accessible [\#232](https://github.com/getbouncer/cardscan-ios/pull/232) ([awushensky](https://github.com/awushensky))
+- Collect flash frames [\#231](https://github.com/getbouncer/cardscan-ios/pull/231) ([awushensky](https://github.com/awushensky))
 - Release 1.0.5050 [\#230](https://github.com/getbouncer/cardscan-ios/pull/230) ([awushensky](https://github.com/awushensky))
-
-## [1.0.5050](https://github.com/getbouncer/cardscan-ios/tree/1.0.5050) (2020-10-15)
-
-[Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.5049...1.0.5050)
 
 ## [1.0.5049](https://github.com/getbouncer/cardscan-ios/tree/1.0.5049) (2020-10-15)
 
@@ -23,10 +21,6 @@
 **Closed issues:**
 
 - Add Support to Swift Package Manager [\#228](https://github.com/getbouncer/cardscan-ios/issues/228)
-
-**Merged pull requests:**
-
-- Add ux confidence value to prediction [\#229](https://github.com/getbouncer/cardscan-ios/pull/229) ([jaimejiyepark](https://github.com/jaimejiyepark))
 
 ## [1.0.5048](https://github.com/getbouncer/cardscan-ios/tree/1.0.5048) (2020-10-05)
 
@@ -57,6 +51,7 @@
 
 **Merged pull requests:**
 
+- Add ux confidence value to prediction [\#229](https://github.com/getbouncer/cardscan-ios/pull/229) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Update RELEASE.md [\#220](https://github.com/getbouncer/cardscan-ios/pull/220) ([jaimejiyepark](https://github.com/jaimejiyepark))
 - Make RN localization easier [\#219](https://github.com/getbouncer/cardscan-ios/pull/219) ([awushensky](https://github.com/awushensky))
 - Small tweaks to the SimpleScanViewController UI [\#217](https://github.com/getbouncer/cardscan-ios/pull/217) ([kingst](https://github.com/kingst))
@@ -666,7 +661,6 @@
 **Merged pull requests:**
 
 - Movable region of interest [\#19](https://github.com/getbouncer/cardscan-ios/pull/19) ([li-andy](https://github.com/li-andy))
-- Give the option of getting the cardImage back in the CreditCard object [\#16](https://github.com/getbouncer/cardscan-ios/pull/16) ([kingst](https://github.com/kingst))
 
 ## [1.0.4051](https://github.com/getbouncer/cardscan-ios/tree/1.0.4051) (2019-06-12)
 
@@ -691,6 +685,10 @@
 ## [1.0.4048](https://github.com/getbouncer/cardscan-ios/tree/1.0.4048) (2019-05-04)
 
 [Full Changelog](https://github.com/getbouncer/cardscan-ios/compare/1.0.4047...1.0.4048)
+
+**Merged pull requests:**
+
+- Give the option of getting the cardImage back in the CreditCard object [\#16](https://github.com/getbouncer/cardscan-ios/pull/16) ([kingst](https://github.com/kingst))
 
 ## [1.0.4047](https://github.com/getbouncer/cardscan-ios/tree/1.0.4047) (2019-05-03)
 
