@@ -14,6 +14,7 @@ public protocol TestingImageDataSource: AnyObject {
     @objc public var sendScanStats = true
     
     public var scanEventsDelegate: ScanEvents?
+    @objc public var onScanEventDelegate: ScanEventsDelegate?
     
     static var isAppearing = false
     static var isPadAndFormsheet: Bool = false
@@ -356,6 +357,7 @@ public protocol TestingImageDataSource: AnyObject {
         ocrMainLoop()?.mainLoopDelegate = nil
         ScanBaseViewController.machineLearningQueue.async {
             self.scanEventsDelegate?.onScanComplete(scanStats: self.getScanStats())
+            self.onScanEventDelegate?.onScanComplete(scanStats: self.getScanStats())
         }
         
         // hack to work around having to change our public interface
@@ -392,15 +394,17 @@ public protocol TestingImageDataSource: AnyObject {
         
         let cardSize = CGSize(width: prediction.image.width, height: prediction.image.height)
         if let number = prediction.number, let numberBox = prediction.numberBox {
-            let expiry = prediction.expiryObject()
-            let expiryBox = prediction.expiryBox
+            let expiry = prediction.expiryObject() ?? Expiry(string: "", month: 0, year: 0)
+            let expiryBox = prediction.expiryBox ?? CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
             
             ScanBaseViewController.machineLearningQueue.async {
                 self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBox, expiryBoundingBox: expiryBox, croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage, centeredCardState: prediction.centeredCardState, uxFrameConfidenceValues: prediction.uxFrameConfidenceValues, flashForcedOn: isFlashForcedOn)
+                self.onScanEventDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBox, expiryBoundingBox: expiryBox, croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
             }
         } else {
             ScanBaseViewController.machineLearningQueue.async {
                 self.scanEventsDelegate?.onFrameDetected(croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage, centeredCardState: prediction.centeredCardState, uxFrameConfidenceValues: prediction.uxFrameConfidenceValues, flashForcedOn: isFlashForcedOn)
+                self.onScanEventDelegate?.onFrameDetected(croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage)
             }
         }
     }

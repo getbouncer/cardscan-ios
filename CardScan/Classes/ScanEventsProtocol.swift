@@ -6,8 +6,17 @@
 // Both of these methods will always be invoked on the machineLearningQueue
 // serial dispatch queue.
 //
+import Foundation
+import CoreGraphics
+
 public protocol ScanEvents {
     mutating func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?, flashForcedOn: Bool)
     mutating func onScanComplete(scanStats: ScanStats)
     mutating func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?, flashForcedOn: Bool)
+}
+
+@objc public protocol ScanEventsDelegate {
+    @objc func onNumberRecognized(number: String, expiry: Expiry, numberBoundingBox: CGRect, expiryBoundingBox: CGRect, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage)
+    @objc func onScanComplete(scanStats: ScanStats)
+    @objc func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage)
 }

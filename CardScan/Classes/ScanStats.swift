@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import CoreGraphics
 
-public struct ScanStats {
+@objc public class ScanStats: NSObject {
     var startTime = Date()
     public var scans = 0
     public var flatDigitsRecognized = 0
@@ -29,7 +30,7 @@ public struct ScanStats {
     public var cardsDetected = 0
     public var permissionGranted: Bool?
     
-    init() {
+    override init() {
         var systemInfo = utsname()
         uname(&systemInfo)
         var deviceType = ""

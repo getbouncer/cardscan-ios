@@ -93,9 +93,9 @@ open class SimpleScanViewController: ScanBaseViewController {
     @objc public static var closeButtonString = "Close"
     @objc public static var torchButtonString = "Torch"
     
-    public weak var delegate: SimpleScanDelegate?
+    @objc public weak var delegate: SimpleScanDelegate?
     
-    public static func createViewController() -> SimpleScanViewController {
+    @objc public static func createViewController() -> SimpleScanViewController {
         let vc = SimpleScanViewController()
 
         if UIDevice.current.userInterfaceIdiom == .pad {

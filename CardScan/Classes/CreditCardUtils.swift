@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CreditCardUtils {
+@objc public class CreditCardUtils: NSObject {
     static let maxCvvLength = 3
     static let maxCvvLengthAmex = 4
     
@@ -20,7 +20,7 @@ public struct CreditCardUtils {
     private static let prefixesUnionPay = ["62"]
     private static let prefixesVisa = ["4"]
 
-    public static var prefixesRegional: [String] = []
+    @objc public static var prefixesRegional: [String] = []
     
     private static var cardTypeMap: [(ClosedRange<Int>, CardType)]? = nil
     
