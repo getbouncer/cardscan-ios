@@ -205,7 +205,6 @@ public protocol TestingImageDataSource: AnyObject {
         setNeedsStatusBarAppearanceUpdate()
         regionOfInterestLabel.layer.masksToBounds = true
         regionOfInterestLabel.layer.cornerRadius = self.regionOfInterestCornerRadius
-        regionOfInterestLabel.layer.borderColor = UIColor.white.cgColor
         regionOfInterestLabel.layer.borderWidth = 2.0
         
         if !ScanBaseViewController.isPadAndFormsheet {

@@ -57,12 +57,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func scanCardPress() {
-        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
-            print("scan view controller not supported on this hardware")
-            return
+//        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+//            print("scan view controller not supported on this hardware")
+//            return
+//        }
+//
+        if #available(iOS 13.0, *) {
+            let vc = WrapperSimpleScanViewController.createWrapperSimpleViewController()
+            vc.delegate = self
+            self.present(vc, animated: true)
+        } else {
+            // Fallback on earlier versions
         }
-        
-        self.present(vc, animated: true)
+//        self.present(vc, animated: true)
     }
     
     @IBAction func scanCardOldDevicePress() {
@@ -123,7 +130,8 @@ class ViewController: UIViewController {
             let vc = SimpleScanViewController.createViewController()
             vc.includeCardImage = true
             vc.delegate = self
-
+            vc.onScanEventDelegate = self
+            
             self.present(vc, animated: true)
         } else {
             // Fallback on earlier versions
@@ -151,7 +159,7 @@ class ViewController: UIViewController {
             print("scan view controller not supported on this hardware")
             return
         }
-        vc.scanEventsDelegate = self
+//        vc.scanEventsDelegate = self
         
         self.present(vc, animated: true)
     }
@@ -208,13 +216,12 @@ extension ViewController: SimpleScanDelegate {
     }
 }
 
-extension ViewController: ScanEvents {
-    func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect,
-                            expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage:
-                                CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?, flashForcedOn: Bool) {}
+extension ViewController: ScanEventsDelegate {
+    func onNumberRecognized(number: String, expiry: Expiry, numberBoundingBox: CGRect, expiryBoundingBox: CGRect, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {}
+    
     func onScanComplete(scanStats: ScanStats) {}
-    func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage,
-                         centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?, flashForcedOn: Bool) {}
+    
+    func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {}
 }
 
 extension ViewController: FullScanStringsDataSource {
