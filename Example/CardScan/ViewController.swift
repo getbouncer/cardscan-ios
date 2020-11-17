@@ -57,19 +57,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func scanCardPress() {
-//        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
-//            print("scan view controller not supported on this hardware")
-//            return
-//        }
-//
-        if #available(iOS 13.0, *) {
-            let vc = WrapperSimpleScanViewController.createWrapperSimpleViewController()
-            vc.delegate = self
-            self.present(vc, animated: true)
-        } else {
-            // Fallback on earlier versions
+        guard let vc = ScanViewController.createViewController(withDelegate: self) else {
+            print("scan view controller not supported on this hardware")
+            return
         }
-//        self.present(vc, animated: true)
+
+        self.present(vc, animated: true)
     }
     
     @IBAction func scanCardOldDevicePress() {

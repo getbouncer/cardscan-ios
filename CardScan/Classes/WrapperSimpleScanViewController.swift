@@ -14,6 +14,7 @@ import Foundation
     @objc public var roiViewBorderColor: UIColor?
     
     @objc public var descriptionTextUILabel: UILabel?
+    @objc public var positionLabel: UILabel?
     @objc public var closeUIButton: UIButton?
     @objc public var torchUIButton: UIButton?
     @objc public var enableCameraPermissionsUILabel: UILabel?
@@ -28,6 +29,34 @@ import Foundation
         // Do any additional setup after loading the view.
     }
     
+    public override func setupUiComponents() {
+        super.setupUiComponents()
+        if let positionLabel = positionLabel {
+            self.view.addSubview(positionLabel)
+        }
+    }
+    
+    override public func setupConstraints() {
+        super.setupConstraints()
+        setUpPositionLabelConstraints()
+    }
+    
+    @objc public static func createWrapperSimpleViewController() -> WrapperSimpleScanViewController {
+        let vc = WrapperSimpleScanViewController()
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+           // For the iPad you can use the full screen style but you have to select "requires full screen" in
+           // the Info.plist to lock it in portrait mode. For iPads, we recommend using a formSheet, which
+           // handles all orientations correctly.
+            vc.modalPresentationStyle = .formSheet
+        } else {
+            vc.modalPresentationStyle = .fullScreen
+        }
+
+        return vc
+    }
+    
+//MARK: UI Set Up
     //MARK: Background UI
     override public func setupBlurViewUi() {
         super.setupBlurViewUi()
@@ -123,19 +152,18 @@ import Foundation
         }
     }
     
-    @objc public static func createWrapperSimpleViewController() -> WrapperSimpleScanViewController {
-        let vc = WrapperSimpleScanViewController()
-
-        if UIDevice.current.userInterfaceIdiom == .pad {
-           // For the iPad you can use the full screen style but you have to select "requires full screen" in
-           // the Info.plist to lock it in portrait mode. For iPads, we recommend using a formSheet, which
-           // handles all orientations correctly.
-            vc.modalPresentationStyle = .formSheet
-        } else {
-            vc.modalPresentationStyle = .fullScreen
+//MARK: Constraint Set up
+    public func setUpPositionLabelConstraints() {
+        if let positionLabel = positionLabel {
+            positionLabel.topAnchor.constraint(equalTo: roiView.bottomAnchor, constant: 32).isActive = true
+            positionLabel.centerXAnchor.constraint(equalTo: roiView.centerXAnchor).isActive = true
+            positionLabel.translatesAutoresizingMaskIntoConstraints = false
         }
-
-        return vc
+    }
+    
+    override public func onCameraPermissionDenied(showedPrompt: Bool) {
+        super.onCameraPermissionDenied(showedPrompt: showedPrompt)
+        positionLabel?.isHidden = true
     }
 }
 
