@@ -123,7 +123,6 @@ class ViewController: UIViewController {
             let vc = SimpleScanViewController.createViewController()
             vc.includeCardImage = true
             vc.delegate = self
-            vc.scanEventDelegate = self
             
             self.present(vc, animated: true)
         } else {
