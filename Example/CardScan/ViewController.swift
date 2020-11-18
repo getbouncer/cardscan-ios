@@ -123,7 +123,7 @@ class ViewController: UIViewController {
             let vc = SimpleScanViewController.createViewController()
             vc.includeCardImage = true
             vc.delegate = self
-            vc.onScanEventDelegate = self
+            vc.scanEventDelegate = self
             
             self.present(vc, animated: true)
         } else {
@@ -152,7 +152,7 @@ class ViewController: UIViewController {
             print("scan view controller not supported on this hardware")
             return
         }
-//        vc.scanEventsDelegate = self
+        vc.scanEventsDelegate = self
         
         self.present(vc, animated: true)
     }
@@ -207,18 +207,12 @@ extension ViewController: SimpleScanDelegate {
         self.dismiss(animated: true)
         self.present(vc, animated: true)
     }
-    
-    func userDidPressTorchSimple(_ scanViewController: SimpleScanViewController, isTorchOn: Bool) {
-        print(isTorchOn ? "torch is on" : "torch is off")
-    }
 }
 
-extension ViewController: ScanEventsDelegate {
-    func onNumberRecognized(number: String, expiry: Expiry, numberBoundingBox: CGRect, expiryBoundingBox: CGRect, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {}
-    
+extension ViewController: ScanEvents {
+    func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?, flashForcedOn: Bool) {}
+    func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?, flashForcedOn: Bool) {}
     func onScanComplete(scanStats: ScanStats) {}
-    
-    func onFrameDetected(croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage) {}
 }
 
 extension ViewController: FullScanStringsDataSource {
