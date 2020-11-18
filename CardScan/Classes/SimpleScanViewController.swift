@@ -61,7 +61,6 @@ import UIKit
 @objc public protocol SimpleScanDelegate {
     @objc func userDidCancelSimple(_ scanViewController: SimpleScanViewController)
     @objc func userDidScanCardSimple(_ scanViewController: SimpleScanViewController, creditCard: CreditCard)
-    @objc optional func userDidPressTorchSimple(_ scanViewController: SimpleScanViewController)
 }
 
 @available(iOS 11.2, *)
@@ -374,7 +373,6 @@ open class SimpleScanViewController: ScanBaseViewController {
     
     @objc open func torchButtonPress() {
         toggleTorch()
-        delegate?.userDidPressTorchSimple?(self)
     }
     
     /// Warning: if the user navigates to settings and updates the setting, it'll suspend your app.

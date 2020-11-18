@@ -14,7 +14,6 @@ import Foundation
     @objc public var roiViewBorderColor: UIColor?
     
     @objc public var descriptionTextUILabel: UILabel?
-    @objc public var positionLabel: UILabel?
     @objc public var closeUIButton: UIButton?
     @objc public var torchUIButton: UIButton?
     @objc public var enableCameraPermissionsUILabel: UILabel?
@@ -27,18 +26,6 @@ import Foundation
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-    }
-    
-    public override func setupUiComponents() {
-        super.setupUiComponents()
-        if let positionLabel = positionLabel {
-            self.view.addSubview(positionLabel)
-        }
-    }
-    
-    override public func setupConstraints() {
-        super.setupConstraints()
-        setUpPositionLabelConstraints()
     }
     
     @objc public static func createWrapperSimpleViewController() -> WrapperSimpleScanViewController {
@@ -150,20 +137,6 @@ import Foundation
         if let nameTextColor = cardNameTextColor {
             nameText.textColor = nameTextColor
         }
-    }
-    
-//MARK: Constraint Set up
-    public func setUpPositionLabelConstraints() {
-        if let positionLabel = positionLabel {
-            positionLabel.topAnchor.constraint(equalTo: roiView.bottomAnchor, constant: 32).isActive = true
-            positionLabel.centerXAnchor.constraint(equalTo: roiView.centerXAnchor).isActive = true
-            positionLabel.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    
-    override public func onCameraPermissionDenied(showedPrompt: Bool) {
-        super.onCameraPermissionDenied(showedPrompt: showedPrompt)
-        positionLabel?.isHidden = true
     }
 }
 

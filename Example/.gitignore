@@ -3,3 +3,7 @@ Podfile.lock
 
 Pods/Local Podspecs/
 Pods/Manifest.lock
+
+CardScan.xcframework/
+CardScanArchive.xcarchive/
+CardScanSimulatorArchive.xcarchive/

@@ -207,6 +207,10 @@ extension ViewController: SimpleScanDelegate {
         self.dismiss(animated: true)
         self.present(vc, animated: true)
     }
+    
+    func userDidPressTorchSimple(_ scanViewController: SimpleScanViewController, isTorchOn: Bool) {
+        print(isTorchOn ? "torch is on" : "torch is off")
+    }
 }
 
 extension ViewController: ScanEventsDelegate {
