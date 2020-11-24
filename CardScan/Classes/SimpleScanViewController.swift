@@ -358,7 +358,7 @@ open class SimpleScanViewController: ScanBaseViewController {
         showScannedCardDetails(prediction: prediction)
     }
     
-    override public func onCameraPermissionDenied(showedPrompt: Bool) {
+    override open func onCameraPermissionDenied(showedPrompt: Bool) {
         descriptionText.isHidden = true
         torchButton.isHidden = true
         
