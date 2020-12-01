@@ -1,0 +1,3 @@
+# git "https://github.com/getbouncer/cardscan-ios/" "9c8e4215e54d999b2621af12aed1e91c339aacd0"
+github "getbouncer/cardscan-ios" "master"
+#write branch name after repo in quotes
