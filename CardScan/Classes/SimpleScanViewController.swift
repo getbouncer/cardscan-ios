@@ -74,10 +74,10 @@ open class SimpleScanViewController: ScanBaseViewController {
 
     // our UI components
     public var descriptionText = UILabel()
-    public var closeButton = UIButton()
-    public var torchButton = UIButton()
+    public var closeButton = UIButton(type: .system)
+    public var torchButton = UIButton(type: .system)
     private var debugView: UIImageView?
-    public var enableCameraPermissionsButton = UIButton()
+    public var enableCameraPermissionsButton = UIButton(type: .system)
     public var enableCameraPermissionsText = UILabel()
     
     // Dynamic card details
