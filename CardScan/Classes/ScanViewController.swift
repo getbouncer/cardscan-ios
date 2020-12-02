@@ -51,6 +51,8 @@ import UIKit
     @objc public var expiryYear: String?
     @objc public var name: String?
     @objc public var image: UIImage?
+    @objc public var cvv: String?
+    @objc public var postalCode: String?
     
     public init(number: String) {
         self.number = number
