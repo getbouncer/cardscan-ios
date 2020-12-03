@@ -21,6 +21,7 @@ DerivedData
 *.hmap
 *.ipa
 *.idea
+*.resolved
 
 # Bundler
 .bundle
