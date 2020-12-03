@@ -3,6 +3,8 @@ github_token
 # OS X
 .DS_Store
 
+*.resolved
+
 # Xcode
 build/
 *.pbxuser
@@ -21,7 +23,6 @@ DerivedData
 *.hmap
 *.ipa
 *.idea
-*.resolved
 
 # Bundler
 .bundle
