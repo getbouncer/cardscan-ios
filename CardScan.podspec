@@ -18,14 +18,14 @@ CardScan is a library for scanning credit cards.
   s.swift_version = '5.0'
 
   s.subspec 'Core' do |core|
-    core.source_files = 'CardScan/Classes/**/*'
-    core.resource_bundles = { 'CardScan' => ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodelc', 'CardScan/Assets/Config'] }
+     core.source_files = 'Sources/CardScan/**/*'
+     core.resource_bundles = { 'CardScan' => ['Sources/Assets/*.xcassets', 'Sources/Assets/*.storyboard', 'Sources/Assets/*.mlmodelc', 'Sources/Assets/Config'] }
     core.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
   end
 
   s.subspec 'Stripe' do |stripe|
-    stripe.source_files = 'CardScan/Classes/**/*'
-    stripe.resource_bundles = { 'CardScan' => ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodelc', 'CardScan/Assets/Config'] }
+     stripe.source_files = 'Sources/CardScan/**/*'
+     stripe.resource_bundles = { 'CardScan' => ['Sources/Assets/*.xcassets', 'Sources/Assets/*.storyboard', 'Sources/CardScan/Assets/*.mlmodelc', 'Sources/Assets/Config'] }
     stripe.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
     stripe.dependency  'Stripe'
   end
