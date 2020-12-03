@@ -5,7 +5,10 @@
 //  Created by xaen on 3/22/20.
 //
 
+import CoreGraphics
 import Foundation
+import UIKit
+
 struct DetectedSSDOcrBox {
     let rect: CGRect
     let label: Int
