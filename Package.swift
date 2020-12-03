@@ -27,7 +27,7 @@ let package = Package(
             checksum: "fe459dd443beee5140018388fd6933e09b8787d5b473ec9c2234d75ff0d968bd"),
         .target(
             name: "CardScan",
-            dependencies: ["Stripe", "UIKit"]),
+            dependencies: ["Stripe"]),
 
         //https://github.com/stripe/stripe-ios/releases/download/20.1.1/Stripe.xcframework.zip
         //67865abafbe168f768bb40fe417f9977338f90847bfda25592fb33a22730d0c4
