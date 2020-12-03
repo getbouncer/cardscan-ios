@@ -29,7 +29,9 @@
  After the system calls resign, then all work items are added to the `pendingComputations` list in order, which are then posted to the `queue` in order on the `become` call before releasing the main queue. Subsequent calls to `async` will post to the `queue` but
  because the posting happens in the main queue, we can ensure correct execution ordering.
  */
+
 import Foundation
+import UIKit
 
 public class ActiveStateComputation {
     let queue: DispatchQueue

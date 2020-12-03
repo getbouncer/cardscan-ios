@@ -5,6 +5,8 @@
 //  Created by Sam King on 3/19/20.
 //  Copyright © 2020 Sam King. All rights reserved.
 //
+
+import CoreGraphics
 import Foundation
 
 public struct UxFrameConfidenceValues {

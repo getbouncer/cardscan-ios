@@ -5,7 +5,9 @@
 //  Created by xaen on 3/21/20.
 //
 
+import CoreGraphics
 import Foundation
+import UIKit
 import os.log
 
 /** Documentation for SSD OCR

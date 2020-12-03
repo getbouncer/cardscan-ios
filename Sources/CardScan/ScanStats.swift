@@ -5,7 +5,9 @@
 //  Created by Sam King on 11/13/18.
 //
 
+import CoreGraphics
 import Foundation
+import UIKit
 
 public struct ScanStats {
     var startTime = Date()

@@ -5,6 +5,7 @@
 //  Created by xaen on 4/14/20.
 //
 
+import CoreGraphics
 import Foundation
 
 @available(iOS 11.2, *)

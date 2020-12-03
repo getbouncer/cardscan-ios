@@ -5,7 +5,9 @@
 //  Created by Sam King on 11/16/18.
 //
 
+import CoreGraphics
 import Foundation
+import UIKit
 
 //
 // The PredictionResult includes images of the bin and the last four. The OCR model returns clusters of 4 digits for

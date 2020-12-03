@@ -5,6 +5,7 @@
 //  Created by Zain on 8/7/19.
 //
 
+import CoreGraphics
 import Foundation
 
 struct DetectedSSDBox {

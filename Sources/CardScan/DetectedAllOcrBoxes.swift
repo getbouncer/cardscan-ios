@@ -5,7 +5,9 @@
 //  Created by xaen on 3/22/20.
 //
 
+import CoreGraphics
 import Foundation
+
 public struct DetectedAllOcrBoxes {
     var allBoxes: [DetectedSSDOcrBox] = []
     

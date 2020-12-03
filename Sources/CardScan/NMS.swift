@@ -5,8 +5,10 @@
 //  Created by Zain on 8/6/19.
 //
 
+import CoreGraphics
 import Foundation
 import os.log
+
 struct NMS{
     static func hardNMS(subsetBoxes: [[Float]], probs: [Float], iouThreshold: Float, topK: Int, candidateSize: Int) -> [Int] {
         /** In this project we implement HARD NMS and NOT Soft NMS

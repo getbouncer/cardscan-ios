@@ -7,7 +7,9 @@
 
 ///* Don't need this, since this is happening on the GPU now ...............
  
+import CoreGraphics
 import Foundation
+
 @available(iOS 11.2, *)
 struct OcrPriorsGen{
     /**
