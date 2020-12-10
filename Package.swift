@@ -22,7 +22,7 @@ let package = Package(
 //        )
         .binaryTarget(
             name: "CardScan",
-            path: "XCFramework/CardScan_2.xcframework"
+            path: "XCFramework/CardScan.xcframework"
         )
     ]
 )
