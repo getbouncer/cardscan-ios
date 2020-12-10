@@ -68,12 +68,22 @@ struct SSDOcrDetect {
             return
         }
         
-        guard let ssdOcrModel = try? SSDOcr(contentsOf: ssdOcrUrl) else {
-            print("Could not get contents of ssd ocr model with ssd ocr URL")
-            return
+        if let mlmodelcFiles = try? FileManager.default.contentsOfDirectory(at: ssdOcrUrl, includingPropertiesForKeys: nil, options: []) {
+            print("SSDOcr.mlmodelc files: \(mlmodelcFiles.map { $0.lastPathComponent})\n")
         }
         
-        self.ssdOcrModel = ssdOcrModel
+//        guard let ssdOcrModel = try? SSDOcr(contentsOf: ssdOcrUrl) else {
+//            print("Could not get contents of ssd ocr model with ssd ocr URL")
+//            return
+//        }
+        do {
+            let ssdOcrModel = try SSDOcr(contentsOf: ssdOcrUrl)
+            self.ssdOcrModel = ssdOcrModel
+        } catch {
+            print("\nCould not get contents of ssd ocr model with ssd ocr URL \nError description: \(error.localizedDescription)\n")
+            return
+        }
+//        self.ssdOcrModel = ssdOcrModel
     }
     
     static func initializeModels() {
