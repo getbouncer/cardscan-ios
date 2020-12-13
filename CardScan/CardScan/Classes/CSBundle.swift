@@ -20,17 +20,6 @@ public class CSBundle {
             return cardScanBundle
         }
         
-        /*
-        guard let bundleUrl = Bundle(for: ScanViewController.self).url(forResource: bundleName, withExtension: extensionName) else {
-            print("bundleURL could not be found")
-            return nil
-        }
-            
-        guard let bundle = Bundle(url: bundleUrl) else {
-            print("bundle with bundleURL could not be found")
-            return nil
-        }*/
-        
         return Bundle(for: ScanViewController.self)
     }
     
