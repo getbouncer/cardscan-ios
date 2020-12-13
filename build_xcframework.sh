@@ -6,6 +6,7 @@ if [ -z "$1" ]; then
     echo
     echo       ${0} 2.0.0000-beta0
     echo
+    exit
 fi
 
 rm -rf build
