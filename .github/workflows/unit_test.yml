@@ -16,9 +16,7 @@ jobs:
 
       - name: test
         run: |
-          cd Example
-          pod install
-          xcodebuild test -workspace CardScan.xcworkspace -scheme CardScan_Example -destination 'platform=iOS Simulator,name=iPhone 11'
+          xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanExample -destination 'platform=iOS Simulator,name=iPhone 11'
 
       - name: upload-artifacts
         uses: actions/upload-artifact@v2

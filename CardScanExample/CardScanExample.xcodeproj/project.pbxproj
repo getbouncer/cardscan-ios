@@ -17,7 +17,23 @@
 		3B20EE5A25865CAE00CBF05E /* ModalNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EE5725865CAE00CBF05E /* ModalNavViewController.swift */; };
 		3B20EE5B25865CAE00CBF05E /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EE5825865CAE00CBF05E /* ResultViewController.swift */; };
 		3B20EE5D25865D1400CBF05E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B20EE5C25865D1400CBF05E /* Images.xcassets */; };
+		3BB80998258768C800C244EA /* CardScanDD_BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB80991258768C700C244EA /* CardScanDD_BundleTests.swift */; };
+		3BB80999258768C800C244EA /* CardScanDD_OCRTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB80992258768C800C244EA /* CardScanDD_OCRTest.swift */; };
+		3BB8099A258768C800C244EA /* CardScan_ModelDownloadConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB80993258768C800C244EA /* CardScan_ModelDownloadConfigTests.swift */; };
+		3BB8099B258768C800C244EA /* CardScanDD_ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB80994258768C800C244EA /* CardScanDD_ModelTests.swift */; };
+		3BB8099D258768C800C244EA /* CardScanDD_BackgroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB80996258768C800C244EA /* CardScanDD_BackgroundTests.swift */; };
+		3BB8099E258768C800C244EA /* CardScan_CardUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB80997258768C800C244EA /* CardScan_CardUtilsTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3BB8098B2587686D00C244EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3B20ED712586531D00CBF05E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3B20ED782586531D00CBF05E;
+			remoteInfo = CardScanExample;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		3B20EDB02586545600CBF05E /* Embed Frameworks */ = {
@@ -45,6 +61,14 @@
 		3B20EE5725865CAE00CBF05E /* ModalNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalNavViewController.swift; sourceTree = "<group>"; };
 		3B20EE5825865CAE00CBF05E /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		3B20EE5C25865D1400CBF05E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3BB809862587686D00C244EA /* CardScanExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScanExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BB8098A2587686D00C244EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3BB80991258768C700C244EA /* CardScanDD_BundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScanDD_BundleTests.swift; sourceTree = "<group>"; };
+		3BB80992258768C800C244EA /* CardScanDD_OCRTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScanDD_OCRTest.swift; sourceTree = "<group>"; };
+		3BB80993258768C800C244EA /* CardScan_ModelDownloadConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScan_ModelDownloadConfigTests.swift; sourceTree = "<group>"; };
+		3BB80994258768C800C244EA /* CardScanDD_ModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScanDD_ModelTests.swift; sourceTree = "<group>"; };
+		3BB80996258768C800C244EA /* CardScanDD_BackgroundTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScanDD_BackgroundTests.swift; sourceTree = "<group>"; };
+		3BB80997258768C800C244EA /* CardScan_CardUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScan_CardUtilsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +80,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3BB809832587686D00C244EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -63,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				3B20ED7B2586531D00CBF05E /* CardScanExample */,
+				3BB809872587686D00C244EA /* CardScanExampleTests */,
 				3B20ED7A2586531D00CBF05E /* Products */,
 				3B20EDAC2586545500CBF05E /* Frameworks */,
 			);
@@ -72,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				3B20ED792586531D00CBF05E /* CardScanExample.app */,
+				3BB809862587686D00C244EA /* CardScanExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,6 +133,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3BB809872587686D00C244EA /* CardScanExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				3BB8098A2587686D00C244EA /* Info.plist */,
+				3BB80997258768C800C244EA /* CardScan_CardUtilsTests.swift */,
+				3BB80993258768C800C244EA /* CardScan_ModelDownloadConfigTests.swift */,
+				3BB80996258768C800C244EA /* CardScanDD_BackgroundTests.swift */,
+				3BB80991258768C700C244EA /* CardScanDD_BundleTests.swift */,
+				3BB80994258768C800C244EA /* CardScanDD_ModelTests.swift */,
+				3BB80992258768C800C244EA /* CardScanDD_OCRTest.swift */,
+			);
+			path = CardScanExampleTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -121,6 +168,24 @@
 			productReference = 3B20ED792586531D00CBF05E /* CardScanExample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3BB809852587686D00C244EA /* CardScanExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BB8098F2587686D00C244EA /* Build configuration list for PBXNativeTarget "CardScanExampleTests" */;
+			buildPhases = (
+				3BB809822587686D00C244EA /* Sources */,
+				3BB809832587686D00C244EA /* Frameworks */,
+				3BB809842587686D00C244EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3BB8098C2587686D00C244EA /* PBXTargetDependency */,
+			);
+			name = CardScanExampleTests;
+			productName = CardScanExampleTests;
+			productReference = 3BB809862587686D00C244EA /* CardScanExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -132,6 +197,10 @@
 				TargetAttributes = {
 					3B20ED782586531D00CBF05E = {
 						CreatedOnToolsVersion = 12.2;
+					};
+					3BB809852587686D00C244EA = {
+						CreatedOnToolsVersion = 12.2;
+						TestTargetID = 3B20ED782586531D00CBF05E;
 					};
 				};
 			};
@@ -149,6 +218,7 @@
 			projectRoot = "";
 			targets = (
 				3B20ED782586531D00CBF05E /* CardScanExample */,
+				3BB809852587686D00C244EA /* CardScanExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -161,6 +231,13 @@
 				3B20ED892586532100CBF05E /* LaunchScreen.storyboard in Resources */,
 				3B20EE5D25865D1400CBF05E /* Images.xcassets in Resources */,
 				3B20ED842586531D00CBF05E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BB809842587686D00C244EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +256,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3BB809822587686D00C244EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BB80999258768C800C244EA /* CardScanDD_OCRTest.swift in Sources */,
+				3BB80998258768C800C244EA /* CardScanDD_BundleTests.swift in Sources */,
+				3BB8099A258768C800C244EA /* CardScan_ModelDownloadConfigTests.swift in Sources */,
+				3BB8099E258768C800C244EA /* CardScan_CardUtilsTests.swift in Sources */,
+				3BB8099D258768C800C244EA /* CardScanDD_BackgroundTests.swift in Sources */,
+				3BB8099B258768C800C244EA /* CardScanDD_ModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3BB8098C2587686D00C244EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3B20ED782586531D00CBF05E /* CardScanExample */;
+			targetProxy = 3BB8098B2587686D00C244EA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3B20ED822586531D00CBF05E /* Main.storyboard */ = {
@@ -357,6 +455,46 @@
 			};
 			name = Release;
 		};
+		3BB8098D2587686D00C244EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				INFOPLIST_FILE = CardScanExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.CardScanExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CardScanExample.app/CardScanExample";
+			};
+			name = Debug;
+		};
+		3BB8098E2587686D00C244EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				INFOPLIST_FILE = CardScanExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.CardScanExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CardScanExample.app/CardScanExample";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -374,6 +512,15 @@
 			buildConfigurations = (
 				3B20ED8E2586532100CBF05E /* Debug */,
 				3B20ED8F2586532100CBF05E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3BB8098F2587686D00C244EA /* Build configuration list for PBXNativeTarget "CardScanExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BB8098D2587686D00C244EA /* Debug */,
+				3BB8098E2587686D00C244EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

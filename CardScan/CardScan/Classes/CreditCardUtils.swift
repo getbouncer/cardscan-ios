@@ -278,7 +278,7 @@ public struct CreditCardUtils {
         if let cardTypeMap = self.cardTypeMap {
             cardTypes = cardTypeMap
         } else {
-            guard let filePath = CSBundle.bundle()?.path(forResource: "card_types", ofType: "txt", inDirectory: "Config") else {
+            guard let filePath = CSBundle.bundle()?.path(forResource: "card_types", ofType: "txt") else {
                 // unable to find the file
                 return .UNKNOWN
             }
