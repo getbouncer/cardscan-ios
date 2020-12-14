@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "CardScan",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v11_2)
     ],
     products: [
         .library(
