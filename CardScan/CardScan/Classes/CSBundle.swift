@@ -10,8 +10,7 @@ import Foundation
 public class CSBundle {
     // If you change the bundle name make sure to set these before
     // initializing the library
-    public static var bundleName = "CardScan"
-    public static var extensionName = "bundle"
+    public static var bundleIdentifier = "com.getbouncer.CardScan"
     public static var cardScanBundle: Bundle?
     
     // Public for testing
@@ -20,7 +19,7 @@ public class CSBundle {
             return cardScanBundle
         }
         
-        return Bundle(for: ScanViewController.self)
+        return Bundle(identifier: bundleIdentifier)
     }
     
     static func compiledModel(forResource: String, withExtension: String) -> URL? {
