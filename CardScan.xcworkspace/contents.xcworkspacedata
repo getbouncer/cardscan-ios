@@ -5,6 +5,9 @@
       location = "container:CardScanExample/CardScanExample.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:CardScanSystemTest/CardScanSystemTest.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:CardScan/CardScan.xcodeproj">
    </FileRef>
 </Workspace>
