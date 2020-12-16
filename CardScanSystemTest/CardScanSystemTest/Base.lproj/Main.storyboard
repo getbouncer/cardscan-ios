@@ -47,40 +47,8 @@
                                     <action selector="deleteModelsPress" destination="BYZ-38-t0r" eventType="touchUpInside" id="gdf-Mc-0Be"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nhA-EB-GD4">
-                                <rect key="frame" x="20" y="168" width="280" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="VerifyMatchButton"/>
-                                <state key="normal" title="Verify match"/>
-                                <connections>
-                                    <action selector="verifyMatchPress" destination="BYZ-38-t0r" eventType="touchUpInside" id="yL0-IA-tSe"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FZg-KI-cwm">
-                                <rect key="frame" x="20" y="206" width="280" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="FailVerifyMatch"/>
-                                <state key="normal" title="Fail verify match"/>
-                                <connections>
-                                    <action selector="failVerifyPress" destination="BYZ-38-t0r" eventType="touchUpInside" id="TrP-E2-ooe"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3RE-JB-eDo">
-                                <rect key="frame" x="20" y="244" width="280" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="FailVerifyNoMatch"/>
-                                <state key="normal" title="Fail verify no match"/>
-                                <connections>
-                                    <action selector="failVerifyNoMatchPress" destination="BYZ-38-t0r" eventType="touchUpInside" id="6He-VW-Unj"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Huk-ym-jMZ">
-                                <rect key="frame" x="20" y="282" width="280" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="CustomVerifyStringsButton"/>
-                                <state key="normal" title="Verify Custom Strings"/>
-                                <connections>
-                                    <action selector="verifyCustomStringsPress" destination="BYZ-38-t0r" eventType="touchUpInside" id="T6Y-AG-krp"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyR-7q-gjI">
-                                <rect key="frame" x="95" y="320" width="130" height="30"/>
+                                <rect key="frame" x="95" y="180" width="130" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="OpenImagePicker"/>
                                 <state key="normal" title="Open Image Picker"/>
                                 <connections>
@@ -88,7 +56,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WzM-QJ-Fh2">
-                                <rect key="frame" x="104" y="358" width="112" height="30"/>
+                                <rect key="frame" x="104" y="218" width="112" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="OpenCardScan"/>
                                 <state key="normal" title="Open Card Scan"/>
                                 <connections>
@@ -96,7 +64,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZ0-fi-Bk3">
-                                <rect key="frame" x="59" y="396" width="202" height="30"/>
+                                <rect key="frame" x="59" y="256" width="202" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="OpenTorchCheckCardScan"/>
                                 <state key="normal" title="Open Torch Check Card Scan"/>
                                 <connections>
@@ -104,7 +72,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eZA-34-Tbx">
-                                <rect key="frame" x="63.5" y="434" width="193" height="30"/>
+                                <rect key="frame" x="63.5" y="294" width="193" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="AcceptCameraPermissionsButton"/>
                                 <state key="normal" title="Accept Camera Permissions"/>
                                 <connections>
@@ -116,32 +84,20 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="WyR-7q-gjI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0zk-Kl-gIq"/>
-                            <constraint firstItem="Huk-ym-jMZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="3dA-FZ-rGf"/>
-                            <constraint firstItem="3RE-JB-eDo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="3it-j6-0ew"/>
                             <constraint firstItem="WzM-QJ-Fh2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5MC-Mu-2u1"/>
                             <constraint firstItem="J3H-hj-Fuy" firstAttribute="top" secondItem="5y5-TF-OLq" secondAttribute="bottom" constant="8" id="6p8-4d-mND"/>
                             <constraint firstItem="WzM-QJ-Fh2" firstAttribute="top" secondItem="WyR-7q-gjI" secondAttribute="bottom" constant="8" id="9G2-9N-Nlw"/>
-                            <constraint firstItem="nhA-EB-GD4" firstAttribute="top" secondItem="D4c-hS-c1h" secondAttribute="bottom" constant="8" id="A59-L5-HHW"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3RE-JB-eDo" secondAttribute="trailing" constant="20" id="GGp-wB-g2H"/>
                             <constraint firstItem="uVc-aM-ieG" firstAttribute="top" secondItem="J3H-hj-Fuy" secondAttribute="bottom" constant="8" id="HJq-Kf-hMl"/>
                             <constraint firstItem="sZ0-fi-Bk3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IKB-OK-nUg"/>
                             <constraint firstItem="5y5-TF-OLq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ll7-T1-mFl"/>
                             <constraint firstItem="D4c-hS-c1h" firstAttribute="top" secondItem="uVc-aM-ieG" secondAttribute="bottom" constant="8" id="OK2-wj-CuD"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Huk-ym-jMZ" secondAttribute="trailing" constant="20" id="PCi-bh-OfG"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FZg-KI-cwm" secondAttribute="trailing" constant="20" id="Rfd-Gg-xqg"/>
-                            <constraint firstItem="3RE-JB-eDo" firstAttribute="top" secondItem="FZg-KI-cwm" secondAttribute="bottom" constant="8" id="TqT-YX-ECd"/>
                             <constraint firstItem="eZA-34-Tbx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WcH-iC-31p"/>
-                            <constraint firstItem="nhA-EB-GD4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Xcs-hL-irq"/>
                             <constraint firstItem="D4c-hS-c1h" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dKC-15-4Le"/>
+                            <constraint firstItem="WyR-7q-gjI" firstAttribute="top" secondItem="D4c-hS-c1h" secondAttribute="bottom" constant="20" id="dRe-cL-3zm"/>
                             <constraint firstItem="sZ0-fi-Bk3" firstAttribute="top" secondItem="WzM-QJ-Fh2" secondAttribute="bottom" constant="8" id="eZA-1O-GYC"/>
                             <constraint firstItem="5y5-TF-OLq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="eaZ-BP-Kuu"/>
-                            <constraint firstItem="Huk-ym-jMZ" firstAttribute="top" secondItem="3RE-JB-eDo" secondAttribute="bottom" constant="8" id="fUb-WT-KoL"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nhA-EB-GD4" secondAttribute="trailing" constant="20" id="h9S-VJ-63I"/>
                             <constraint firstItem="uVc-aM-ieG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hT1-xi-Tc9"/>
-                            <constraint firstItem="FZg-KI-cwm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ind-LL-HeN"/>
                             <constraint firstItem="eZA-34-Tbx" firstAttribute="top" secondItem="sZ0-fi-Bk3" secondAttribute="bottom" constant="8" symbolic="YES" id="puq-7b-vWL"/>
-                            <constraint firstItem="FZg-KI-cwm" firstAttribute="top" secondItem="nhA-EB-GD4" secondAttribute="bottom" constant="8" id="qCQ-Ri-eys"/>
-                            <constraint firstItem="WyR-7q-gjI" firstAttribute="top" secondItem="Huk-ym-jMZ" secondAttribute="bottom" constant="8" id="u0I-WC-m8T"/>
                             <constraint firstItem="J3H-hj-Fuy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v0U-R3-rEq"/>
                         </constraints>
                     </view>

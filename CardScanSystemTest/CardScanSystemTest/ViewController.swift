@@ -53,39 +53,6 @@ class ViewController: UIViewController, TestingImageDataSource {
         self.present(cameraPermissionViewController, animated: true, completion: nil)
      }
     
-    @IBAction func verifyMatchPress() {
-        self.startVerifyViewController(bin: "463551", last4: "9347")
-    }
-    
-    @IBAction func verifyCustomStringsPress() {
-       /*
-        guard let vc = Bouncer.createVerifyViewController(last4: "4242", expiryMonth: "11", expiryYear: "23", network: .VISA, withDelegate: self) else {
-            print("This device is incompatible with CardVerify")
-            return
-        }
-        
-        vc.stringDataSource = self
-        vc.verifyCardFont = UIFont(name: "Verdana", size: CGFloat(17.0))
-        vc.explanationFont = UIFont(name: "Verdana", size: CGFloat(14.0))
-        vc.paymentCardFont = UIFont(name: "Verdana", size: CGFloat(15.0))
-        vc.last4ExpiryFont = UIFont(name: "Chalkduster", size: CGFloat(15.0))
-        vc.scanCardButtonFont = UIFont(name: "Chalkduster", size: CGFloat(15.0))
-        vc.cancelButtonImage = ScanViewController.cameraImage()
-        vc.torchButtonImage = ScanViewController.cameraImage()
-        vc.scanCardButtonBackgroundColor = UIColor.blue
-        
-        self.present(vc, animated: true)
-         */
-    }
-    
-    @IBAction func failVerifyNoMatchPress() {
-        self.startVerifyViewController(bin: "463551", last4: "4242", apiError: "bin_mismatch")
-    }
-    
-    @IBAction func failVerifyPress() {
-        self.startVerifyViewController(bin: "463551", last4: "9347", apiError: "bin_mismatch")
-    }
-    
     @IBAction func runPress() {
         self.startScanViewController()
     }
@@ -156,33 +123,6 @@ class ViewController: UIViewController, TestingImageDataSource {
         self.present(vc, animated: true)
     }
     
-    func startVerifyViewController(bin: String, last4: String, apiError: String? = nil, useNewViewController: Bool = false) {
-        /*
-        if #available(iOS 11.2, *), useNewViewController {
-            let vc = VerifyScanCardViewController.createVerifyScanViewController()
-            vc.bin = bin
-            vc.lastFour = last4
-            vc.verifyScanDelegate = self
-            vc.testingImageDataSource = self
-            vc.showDebugImageView = true
-            self.currentTestImages = self.testImages.compactMap { $0.cgImage }
-            self.present(vc, animated: true)
-        } else {
-            guard let vc = Bouncer.createVerifyViewController(last4: last4, expiryMonth: "11", expiryYear: "23", network: .VISA, withDelegate: self) else {
-                return
-            }
-            vc.testingImageDataSource = self
-            vc.showDebugImageView = true
-            self.currentTestImages = self.testImages.compactMap { $0.cgImage }
-
-            if let apiError = apiError {
-                vc.debugForceApiError = apiError
-            }
-            self.present(vc, animated: true)
-        }*/
-    }
-    
-    
     func startScanViewController() {
         let config = ScanConfiguration()
         config.runOnOldDevices = true
@@ -200,29 +140,6 @@ class ViewController: UIViewController, TestingImageDataSource {
         self.present(vc, animated: true)
     }
 }
-
-/*
-@available (iOS 11.2, *)
-extension ViewController: CardVerifyResults {
-    func userDidScanCard(viewController: VerifyScanCardViewController, number: String?, name: String?, expiryYear: String?, expiryMonth: String?, isCardValid: Bool, cardValidationFailureReason: String?) {
-        self.dismiss(animated: true)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "results") as! ResultViewController
-        vc.cardNumber = number
-        vc.verifiedMatch = isCardValid
-        vc.verifiedCard = cardValidationFailureReason == nil
-        self.present(vc, animated: true)
-    }
-    
-    func userMissingCard(viewController: VerifyScanCardViewController) {
-        self.dismiss(animated: true)
-    }
-    
-    func userCanceledScan(viewController: VerifyScanCardViewController) {
-        self.dismiss(animated: true)
-    }
-}
-*/
 
 extension ViewController: ScanDelegate {
     func userDidSkip(_ scanViewController: ScanViewController) {
@@ -251,98 +168,6 @@ extension ViewController: ScanStringsDataSource {
     func skipButton() -> String { return "New Skip" }
 }
 
-/*
-extension ViewController: VerifyStringsDataSource {
-    //MARK: Custom strings protocol
-    func verifyCard() -> String { return "New Verify Card" }
-    func explanation() -> String { return "Do something with your card" }
-    func paymentMethod() -> String { return "Debit/Credit Card" }
-    func scanCardButton() -> String { return "New Scan Card" }
-    func denyPermissionTitle() -> String { return "Deny title" }
-    func denyPermissionMessage() -> String { return "You denied camera permissions" }
-    func denyPermissionButton() -> String { return "GO" }
-}
-
-extension ViewController: VerifyDelegate {
-    // MARK: VerifyDelegate protocol implementation
-     func userDidScanSameCard(_ viewController: VerifyCardViewController, card: PaymentCard) {
-         self.dismiss(animated: true)
-         
-         guard let encryptedPayload = card.encryptedPayload else {
-             print("Missing encryptedPayload")
-             return
-         }
-         
-         var parameters: [String: Any] = [:]
-         parameters["payload"] = encryptedPayload
-         parameters["test_error"] = viewController.debugForceApiError
-         
-         MyAppsApi.fraudCheck(parameters: parameters) { response, error in
-             // Api Request Error, No Result VC
-             guard let response = response, error == nil else {
-                 print(error?.message ?? "Api Error")
-                 return
-             }
-             
-             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-             let vc = storyboard.instantiateViewController(withIdentifier: "results") as! ResultViewController
-             vc.cardNumber = card.number
-             
-             // Api Request Response In, Failure Reasons In
-             if let failureReasonArr = response["failure_reasons"] as? NSArray, failureReasonArr.count > 0 {
-                 vc.verifiedMatch = !card.isNewCard
-                 vc.verifiedCard = false
-             } else { // Api Request Response In, No Failure Reasons In
-                 vc.verifiedMatch = true
-                 vc.verifiedCard = true
-             }
-             
-             self.present(vc, animated: true)
-         }
-     }
-     
-     func userDidScanDifferentCard(_ viewController: VerifyCardViewController, card: PaymentCard) {
-         self.dismiss(animated: true)
-                
-         guard let encryptedPayload = card.encryptedPayload else {
-             print("Missing encryptedPayload")
-             return
-         }
-        
-         var parameters: [String: Any] = [:]
-         parameters["payload"] = encryptedPayload
-         parameters["test_error"] = viewController.debugForceApiError
-        
-         MyAppsApi.fraudCheck(parameters: parameters) { response, error in
-             // Api Request Error, No Result VC
-             guard let response = response, error == nil else {
-                 print(error?.message ?? "Api Error")
-                 return
-             }
-            
-             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-             let vc = storyboard.instantiateViewController(withIdentifier: "results") as! ResultViewController
-             vc.cardNumber = card.number
-            
-             // Api Request Response In, Failure Reasons In
-             if let failureReasonArr = response["failure_reasons"] as? NSArray, failureReasonArr.count > 0 {
-                 vc.verifiedMatch = !card.isNewCard
-                 vc.verifiedCard = false
-             } else { // Api Request Response In, No Failure Reasons In
-                 vc.verifiedMatch = false
-                 vc.verifiedCard = true
-             }
-            
-             self.present(vc, animated: true)
-         }
-         
-     }
-         
-     func userDidCancelVerify(_ viewController: VerifyCardViewController) {
-         self.dismiss(animated: true)
-     }
-}
-*/
 extension ViewController: UIImagePickerControllerDelegate {
     
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
