@@ -39,4 +39,11 @@ cd build
 zip -r CardScan.xcframework.zip CardScan.xcframework
 cd ..
 
+source venv/bin/activate
+
 gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_manager/${1}/
+
+checksum=`swift package compute-checksum build/CardScan.xcframework.zip`
+python scripts/generate_package_swift.py ${1} ${checksum} < Package.template > Package.swift
+
+swift build
