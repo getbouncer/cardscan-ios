@@ -1,0 +1,627 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3B20EDA12586539600CBF05E /* CardScan.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B20ED9F2586539600CBF05E /* CardScan.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3B20EDF22586550600CBF05E /* VideoFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB32586550600CBF05E /* VideoFeed.swift */; };
+		3B20EDF32586550600CBF05E /* ActiveStateComputation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB42586550600CBF05E /* ActiveStateComputation.swift */; };
+		3B20EDF42586550600CBF05E /* OcrObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB62586550600CBF05E /* OcrObject.swift */; };
+		3B20EDF52586550600CBF05E /* CreditCardOcrImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB72586550600CBF05E /* CreditCardOcrImplementation.swift */; };
+		3B20EDF62586550600CBF05E /* CreditCardOcrPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB82586550600CBF05E /* CreditCardOcrPrediction.swift */; };
+		3B20EDF72586550600CBF05E /* MachineLearningResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB92586550600CBF05E /* MachineLearningResult.swift */; };
+		3B20EDF82586550600CBF05E /* AppleCreditCardOcr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDBA2586550600CBF05E /* AppleCreditCardOcr.swift */; };
+		3B20EDF92586550600CBF05E /* SSDCreditCardOcr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDBB2586550600CBF05E /* SSDCreditCardOcr.swift */; };
+		3B20EDFA2586550600CBF05E /* CreditCardOcrResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDBC2586550600CBF05E /* CreditCardOcrResult.swift */; };
+		3B20EDFB2586550600CBF05E /* MainLoopStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDBD2586550600CBF05E /* MainLoopStateMachine.swift */; };
+		3B20EDFC2586550600CBF05E /* NonNameWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDBE2586550600CBF05E /* NonNameWords.swift */; };
+		3B20EDFD2586550600CBF05E /* OcrMainLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDBF2586550600CBF05E /* OcrMainLoop.swift */; };
+		3B20EDFE2586550600CBF05E /* ErrorCorrection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDC02586550600CBF05E /* ErrorCorrection.swift */; };
+		3B20EDFF2586550600CBF05E /* PriorsGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDC12586550600CBF05E /* PriorsGen.swift */; };
+		3B20EE002586550600CBF05E /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDC22586550600CBF05E /* PreviewView.swift */; };
+		3B20EE012586550600CBF05E /* Expiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDC32586550600CBF05E /* Expiry.swift */; };
+		3B20EE022586550600CBF05E /* DetectedAllOcrBoxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDC42586550600CBF05E /* DetectedAllOcrBoxes.swift */; };
+		3B20EE032586550600CBF05E /* SsdDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDC52586550600CBF05E /* SsdDetect.swift */; };
+		3B20EE042586550600CBF05E /* CSBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDC62586550600CBF05E /* CSBundle.swift */; };
+		3B20EE052586550600CBF05E /* NMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDC72586550600CBF05E /* NMS.swift */; };
+		3B20EE062586550600CBF05E /* DetectedAllBoxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDC82586550600CBF05E /* DetectedAllBoxes.swift */; };
+		3B20EE082586550600CBF05E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDCA2586550600CBF05E /* API.swift */; };
+		3B20EE092586550600CBF05E /* OcrPriorsGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDCB2586550600CBF05E /* OcrPriorsGen.swift */; };
+		3B20EE0A2586550600CBF05E /* PostDetectionAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDCC2586550600CBF05E /* PostDetectionAlgorithm.swift */; };
+		3B20EE0B2586550600CBF05E /* SSDOcrDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDCD2586550600CBF05E /* SSDOcrDetect.swift */; };
+		3B20EE0C2586550600CBF05E /* OcrDD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDCE2586550600CBF05E /* OcrDD.swift */; };
+		3B20EE0D2586550600CBF05E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDCF2586550600CBF05E /* AppState.swift */; };
+		3B20EE0E2586550600CBF05E /* UIImage+pixelBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD02586550600CBF05E /* UIImage+pixelBuffer.swift */; };
+		3B20EE0F2586550600CBF05E /* CreditCardUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD12586550600CBF05E /* CreditCardUtils.swift */; };
+		3B20EE102586550600CBF05E /* ScanConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD22586550600CBF05E /* ScanConfiguration.swift */; };
+		3B20EE112586550600CBF05E /* DetectedSSDBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD32586550600CBF05E /* DetectedSSDBox.swift */; };
+		3B20EE122586550600CBF05E /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD42586550600CBF05E /* CGRectExtension.swift */; };
+		3B20EE132586550600CBF05E /* Torch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD52586550600CBF05E /* Torch.swift */; };
+		3B20EE142586550600CBF05E /* DetectedBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD62586550600CBF05E /* DetectedBox.swift */; };
+		3B20EE152586550600CBF05E /* SimpleScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD72586550600CBF05E /* SimpleScanViewController.swift */; };
+		3B20EE162586550600CBF05E /* CardNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD82586550600CBF05E /* CardNetwork.swift */; };
+		3B20EE172586550600CBF05E /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDD92586550600CBF05E /* CardType.swift */; };
+		3B20EE182586550600CBF05E /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDDA2586550600CBF05E /* CornerView.swift */; };
+		3B20EE192586550600CBF05E /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDDB2586550600CBF05E /* ScanViewController.swift */; };
+		3B20EE1A2586550600CBF05E /* SoftNMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDDC2586550600CBF05E /* SoftNMS.swift */; };
+		3B20EE1B2586550600CBF05E /* PredictionUtilOcr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDDD2586550600CBF05E /* PredictionUtilOcr.swift */; };
+		3B20EE1C2586550600CBF05E /* PredictionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDDE2586550600CBF05E /* PredictionResult.swift */; };
+		3B20EE1D2586550600CBF05E /* ScanEventsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDDF2586550600CBF05E /* ScanEventsProtocol.swift */; };
+		3B20EE1E2586550600CBF05E /* SSDOcrOutputExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDE02586550600CBF05E /* SSDOcrOutputExtensions.swift */; };
+		3B20EE1F2586550600CBF05E /* SSDOutputExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDE12586550600CBF05E /* SSDOutputExtensions.swift */; };
+		3B20EE212586550600CBF05E /* ScanBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDE32586550600CBF05E /* ScanBaseViewController.swift */; };
+		3B20EE222586550600CBF05E /* DetectedSSDOcrBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDE42586550600CBF05E /* DetectedSSDOcrBox.swift */; };
+		3B20EE232586550600CBF05E /* CreditCardOcrPrediction+expiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDE62586550600CBF05E /* CreditCardOcrPrediction+expiry.swift */; };
+		3B20EE242586550600CBF05E /* Image+utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDE72586550600CBF05E /* Image+utils.swift */; };
+		3B20EE252586550600CBF05E /* InterfaceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDE82586550600CBF05E /* InterfaceOrientation.swift */; };
+		3B20EE262586550600CBF05E /* ScanStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDE92586550600CBF05E /* ScanStats.swift */; };
+		3B20EE272586550600CBF05E /* OcrDDUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDEA2586550600CBF05E /* OcrDDUtils.swift */; };
+		3B20EE282586550600CBF05E /* AppleOcr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDEC2586550600CBF05E /* AppleOcr.swift */; };
+		3B20EE292586550600CBF05E /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDED2586550600CBF05E /* BlurView.swift */; };
+		3B20EE2A2586550600CBF05E /* PredictionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDEE2586550600CBF05E /* PredictionAPI.swift */; };
+		3B20EE2B2586550600CBF05E /* SSDOcr.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDEF2586550600CBF05E /* SSDOcr.mlmodel */; };
+		3B20EE2D2586550600CBF05E /* ModelConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDF12586550600CBF05E /* ModelConfigResponse.swift */; };
+		3B20EE48258655DC00CBF05E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B20EE42258655DC00CBF05E /* Assets.xcassets */; };
+		3B20EE49258655DC00CBF05E /* card_types.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3B20EE44258655DC00CBF05E /* card_types.txt */; };
+		3B20EE4A258655DC00CBF05E /* CardScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B20EE45258655DC00CBF05E /* CardScan.storyboard */; };
+		3B20EE54258658F900CBF05E /* SSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EE53258658F900CBF05E /* SSD.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3B20ED9C2586539600CBF05E /* CardScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CardScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B20ED9F2586539600CBF05E /* CardScan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardScan.h; sourceTree = "<group>"; };
+		3B20EDA02586539600CBF05E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B20EDB32586550600CBF05E /* VideoFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoFeed.swift; sourceTree = "<group>"; };
+		3B20EDB42586550600CBF05E /* ActiveStateComputation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveStateComputation.swift; sourceTree = "<group>"; };
+		3B20EDB62586550600CBF05E /* OcrObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OcrObject.swift; sourceTree = "<group>"; };
+		3B20EDB72586550600CBF05E /* CreditCardOcrImplementation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardOcrImplementation.swift; sourceTree = "<group>"; };
+		3B20EDB82586550600CBF05E /* CreditCardOcrPrediction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardOcrPrediction.swift; sourceTree = "<group>"; };
+		3B20EDB92586550600CBF05E /* MachineLearningResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineLearningResult.swift; sourceTree = "<group>"; };
+		3B20EDBA2586550600CBF05E /* AppleCreditCardOcr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleCreditCardOcr.swift; sourceTree = "<group>"; };
+		3B20EDBB2586550600CBF05E /* SSDCreditCardOcr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSDCreditCardOcr.swift; sourceTree = "<group>"; };
+		3B20EDBC2586550600CBF05E /* CreditCardOcrResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardOcrResult.swift; sourceTree = "<group>"; };
+		3B20EDBD2586550600CBF05E /* MainLoopStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLoopStateMachine.swift; sourceTree = "<group>"; };
+		3B20EDBE2586550600CBF05E /* NonNameWords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonNameWords.swift; sourceTree = "<group>"; };
+		3B20EDBF2586550600CBF05E /* OcrMainLoop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OcrMainLoop.swift; sourceTree = "<group>"; };
+		3B20EDC02586550600CBF05E /* ErrorCorrection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorCorrection.swift; sourceTree = "<group>"; };
+		3B20EDC12586550600CBF05E /* PriorsGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorsGen.swift; sourceTree = "<group>"; };
+		3B20EDC22586550600CBF05E /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		3B20EDC32586550600CBF05E /* Expiry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expiry.swift; sourceTree = "<group>"; };
+		3B20EDC42586550600CBF05E /* DetectedAllOcrBoxes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedAllOcrBoxes.swift; sourceTree = "<group>"; };
+		3B20EDC52586550600CBF05E /* SsdDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SsdDetect.swift; sourceTree = "<group>"; };
+		3B20EDC62586550600CBF05E /* CSBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSBundle.swift; sourceTree = "<group>"; };
+		3B20EDC72586550600CBF05E /* NMS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NMS.swift; sourceTree = "<group>"; };
+		3B20EDC82586550600CBF05E /* DetectedAllBoxes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedAllBoxes.swift; sourceTree = "<group>"; };
+		3B20EDCA2586550600CBF05E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		3B20EDCB2586550600CBF05E /* OcrPriorsGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OcrPriorsGen.swift; sourceTree = "<group>"; };
+		3B20EDCC2586550600CBF05E /* PostDetectionAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetectionAlgorithm.swift; sourceTree = "<group>"; };
+		3B20EDCD2586550600CBF05E /* SSDOcrDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSDOcrDetect.swift; sourceTree = "<group>"; };
+		3B20EDCE2586550600CBF05E /* OcrDD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OcrDD.swift; sourceTree = "<group>"; };
+		3B20EDCF2586550600CBF05E /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		3B20EDD02586550600CBF05E /* UIImage+pixelBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+pixelBuffer.swift"; sourceTree = "<group>"; };
+		3B20EDD12586550600CBF05E /* CreditCardUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardUtils.swift; sourceTree = "<group>"; };
+		3B20EDD22586550600CBF05E /* ScanConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanConfiguration.swift; sourceTree = "<group>"; };
+		3B20EDD32586550600CBF05E /* DetectedSSDBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedSSDBox.swift; sourceTree = "<group>"; };
+		3B20EDD42586550600CBF05E /* CGRectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
+		3B20EDD52586550600CBF05E /* Torch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Torch.swift; sourceTree = "<group>"; };
+		3B20EDD62586550600CBF05E /* DetectedBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedBox.swift; sourceTree = "<group>"; };
+		3B20EDD72586550600CBF05E /* SimpleScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleScanViewController.swift; sourceTree = "<group>"; };
+		3B20EDD82586550600CBF05E /* CardNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNetwork.swift; sourceTree = "<group>"; };
+		3B20EDD92586550600CBF05E /* CardType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardType.swift; sourceTree = "<group>"; };
+		3B20EDDA2586550600CBF05E /* CornerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CornerView.swift; sourceTree = "<group>"; };
+		3B20EDDB2586550600CBF05E /* ScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
+		3B20EDDC2586550600CBF05E /* SoftNMS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftNMS.swift; sourceTree = "<group>"; };
+		3B20EDDD2586550600CBF05E /* PredictionUtilOcr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictionUtilOcr.swift; sourceTree = "<group>"; };
+		3B20EDDE2586550600CBF05E /* PredictionResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictionResult.swift; sourceTree = "<group>"; };
+		3B20EDDF2586550600CBF05E /* ScanEventsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanEventsProtocol.swift; sourceTree = "<group>"; };
+		3B20EDE02586550600CBF05E /* SSDOcrOutputExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSDOcrOutputExtensions.swift; sourceTree = "<group>"; };
+		3B20EDE12586550600CBF05E /* SSDOutputExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSDOutputExtensions.swift; sourceTree = "<group>"; };
+		3B20EDE32586550600CBF05E /* ScanBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanBaseViewController.swift; sourceTree = "<group>"; };
+		3B20EDE42586550600CBF05E /* DetectedSSDOcrBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedSSDOcrBox.swift; sourceTree = "<group>"; };
+		3B20EDE62586550600CBF05E /* CreditCardOcrPrediction+expiry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreditCardOcrPrediction+expiry.swift"; sourceTree = "<group>"; };
+		3B20EDE72586550600CBF05E /* Image+utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+utils.swift"; sourceTree = "<group>"; };
+		3B20EDE82586550600CBF05E /* InterfaceOrientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceOrientation.swift; sourceTree = "<group>"; };
+		3B20EDE92586550600CBF05E /* ScanStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanStats.swift; sourceTree = "<group>"; };
+		3B20EDEA2586550600CBF05E /* OcrDDUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OcrDDUtils.swift; sourceTree = "<group>"; };
+		3B20EDEC2586550600CBF05E /* AppleOcr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleOcr.swift; sourceTree = "<group>"; };
+		3B20EDED2586550600CBF05E /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		3B20EDEE2586550600CBF05E /* PredictionAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictionAPI.swift; sourceTree = "<group>"; };
+		3B20EDEF2586550600CBF05E /* SSDOcr.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SSDOcr.mlmodel; sourceTree = "<group>"; };
+		3B20EDF12586550600CBF05E /* ModelConfigResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelConfigResponse.swift; sourceTree = "<group>"; };
+		3B20EE42258655DC00CBF05E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3B20EE44258655DC00CBF05E /* card_types.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = card_types.txt; sourceTree = "<group>"; };
+		3B20EE45258655DC00CBF05E /* CardScan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CardScan.storyboard; sourceTree = "<group>"; };
+		3B20EE53258658F900CBF05E /* SSD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSD.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3B20ED992586539600CBF05E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3B20ED922586539600CBF05E = {
+			isa = PBXGroup;
+			children = (
+				3B20ED9E2586539600CBF05E /* CardScan */,
+				3B20ED9D2586539600CBF05E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3B20ED9D2586539600CBF05E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3B20ED9C2586539600CBF05E /* CardScan.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3B20ED9E2586539600CBF05E /* CardScan */ = {
+			isa = PBXGroup;
+			children = (
+				3B20EE3F258655DC00CBF05E /* Resources */,
+				3B20EDB22586550600CBF05E /* Classes */,
+				3B20ED9F2586539600CBF05E /* CardScan.h */,
+				3B20EDA02586539600CBF05E /* Info.plist */,
+			);
+			path = CardScan;
+			sourceTree = "<group>";
+		};
+		3B20EDB22586550600CBF05E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				3B20EE53258658F900CBF05E /* SSD.swift */,
+				3B20EDB32586550600CBF05E /* VideoFeed.swift */,
+				3B20EDB42586550600CBF05E /* ActiveStateComputation.swift */,
+				3B20EDB52586550600CBF05E /* CreditCardOcr */,
+				3B20EDC12586550600CBF05E /* PriorsGen.swift */,
+				3B20EDC22586550600CBF05E /* PreviewView.swift */,
+				3B20EDC32586550600CBF05E /* Expiry.swift */,
+				3B20EDC42586550600CBF05E /* DetectedAllOcrBoxes.swift */,
+				3B20EDC52586550600CBF05E /* SsdDetect.swift */,
+				3B20EDC62586550600CBF05E /* CSBundle.swift */,
+				3B20EDC72586550600CBF05E /* NMS.swift */,
+				3B20EDC82586550600CBF05E /* DetectedAllBoxes.swift */,
+				3B20EDCA2586550600CBF05E /* API.swift */,
+				3B20EDCB2586550600CBF05E /* OcrPriorsGen.swift */,
+				3B20EDCC2586550600CBF05E /* PostDetectionAlgorithm.swift */,
+				3B20EDCD2586550600CBF05E /* SSDOcrDetect.swift */,
+				3B20EDCE2586550600CBF05E /* OcrDD.swift */,
+				3B20EDCF2586550600CBF05E /* AppState.swift */,
+				3B20EDD02586550600CBF05E /* UIImage+pixelBuffer.swift */,
+				3B20EDD12586550600CBF05E /* CreditCardUtils.swift */,
+				3B20EDD22586550600CBF05E /* ScanConfiguration.swift */,
+				3B20EDD32586550600CBF05E /* DetectedSSDBox.swift */,
+				3B20EDD42586550600CBF05E /* CGRectExtension.swift */,
+				3B20EDD52586550600CBF05E /* Torch.swift */,
+				3B20EDD62586550600CBF05E /* DetectedBox.swift */,
+				3B20EDD72586550600CBF05E /* SimpleScanViewController.swift */,
+				3B20EDD82586550600CBF05E /* CardNetwork.swift */,
+				3B20EDD92586550600CBF05E /* CardType.swift */,
+				3B20EDDA2586550600CBF05E /* CornerView.swift */,
+				3B20EDDB2586550600CBF05E /* ScanViewController.swift */,
+				3B20EDDC2586550600CBF05E /* SoftNMS.swift */,
+				3B20EDDD2586550600CBF05E /* PredictionUtilOcr.swift */,
+				3B20EDDE2586550600CBF05E /* PredictionResult.swift */,
+				3B20EDDF2586550600CBF05E /* ScanEventsProtocol.swift */,
+				3B20EDE02586550600CBF05E /* SSDOcrOutputExtensions.swift */,
+				3B20EDE12586550600CBF05E /* SSDOutputExtensions.swift */,
+				3B20EDE32586550600CBF05E /* ScanBaseViewController.swift */,
+				3B20EDE42586550600CBF05E /* DetectedSSDOcrBox.swift */,
+				3B20EDE52586550600CBF05E /* Extensions */,
+				3B20EDE82586550600CBF05E /* InterfaceOrientation.swift */,
+				3B20EDE92586550600CBF05E /* ScanStats.swift */,
+				3B20EDEA2586550600CBF05E /* OcrDDUtils.swift */,
+				3B20EDEB2586550600CBF05E /* AppleOcr */,
+				3B20EDED2586550600CBF05E /* BlurView.swift */,
+				3B20EDEE2586550600CBF05E /* PredictionAPI.swift */,
+				3B20EDEF2586550600CBF05E /* SSDOcr.mlmodel */,
+				3B20EDF12586550600CBF05E /* ModelConfigResponse.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		3B20EDB52586550600CBF05E /* CreditCardOcr */ = {
+			isa = PBXGroup;
+			children = (
+				3B20EDB62586550600CBF05E /* OcrObject.swift */,
+				3B20EDB72586550600CBF05E /* CreditCardOcrImplementation.swift */,
+				3B20EDB82586550600CBF05E /* CreditCardOcrPrediction.swift */,
+				3B20EDB92586550600CBF05E /* MachineLearningResult.swift */,
+				3B20EDBA2586550600CBF05E /* AppleCreditCardOcr.swift */,
+				3B20EDBB2586550600CBF05E /* SSDCreditCardOcr.swift */,
+				3B20EDBC2586550600CBF05E /* CreditCardOcrResult.swift */,
+				3B20EDBD2586550600CBF05E /* MainLoopStateMachine.swift */,
+				3B20EDBE2586550600CBF05E /* NonNameWords.swift */,
+				3B20EDBF2586550600CBF05E /* OcrMainLoop.swift */,
+				3B20EDC02586550600CBF05E /* ErrorCorrection.swift */,
+			);
+			path = CreditCardOcr;
+			sourceTree = "<group>";
+		};
+		3B20EDE52586550600CBF05E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3B20EDE62586550600CBF05E /* CreditCardOcrPrediction+expiry.swift */,
+				3B20EDE72586550600CBF05E /* Image+utils.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3B20EDEB2586550600CBF05E /* AppleOcr */ = {
+			isa = PBXGroup;
+			children = (
+				3B20EDEC2586550600CBF05E /* AppleOcr.swift */,
+			);
+			path = AppleOcr;
+			sourceTree = "<group>";
+		};
+		3B20EE3F258655DC00CBF05E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3B20EE42258655DC00CBF05E /* Assets.xcassets */,
+				3B20EE43258655DC00CBF05E /* Config */,
+				3B20EE45258655DC00CBF05E /* CardScan.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3B20EE43258655DC00CBF05E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				3B20EE44258655DC00CBF05E /* card_types.txt */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3B20ED972586539600CBF05E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B20EDA12586539600CBF05E /* CardScan.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3B20ED9B2586539600CBF05E /* CardScan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3B20EDA42586539600CBF05E /* Build configuration list for PBXNativeTarget "CardScan" */;
+			buildPhases = (
+				3B20ED972586539600CBF05E /* Headers */,
+				3B20ED982586539600CBF05E /* Sources */,
+				3B20ED992586539600CBF05E /* Frameworks */,
+				3B20ED9A2586539600CBF05E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CardScan;
+			productName = CardScan;
+			productReference = 3B20ED9C2586539600CBF05E /* CardScan.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3B20ED932586539600CBF05E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1220;
+				TargetAttributes = {
+					3B20ED9B2586539600CBF05E = {
+						CreatedOnToolsVersion = 12.2;
+					};
+				};
+			};
+			buildConfigurationList = 3B20ED962586539600CBF05E /* Build configuration list for PBXProject "CardScan" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3B20ED922586539600CBF05E;
+			productRefGroup = 3B20ED9D2586539600CBF05E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3B20ED9B2586539600CBF05E /* CardScan */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3B20ED9A2586539600CBF05E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B20EE49258655DC00CBF05E /* card_types.txt in Resources */,
+				3B20EE48258655DC00CBF05E /* Assets.xcassets in Resources */,
+				3B20EE4A258655DC00CBF05E /* CardScan.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3B20ED982586539600CBF05E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B20EE1D2586550600CBF05E /* ScanEventsProtocol.swift in Sources */,
+				3B20EE152586550600CBF05E /* SimpleScanViewController.swift in Sources */,
+				3B20EE082586550600CBF05E /* API.swift in Sources */,
+				3B20EE062586550600CBF05E /* DetectedAllBoxes.swift in Sources */,
+				3B20EE132586550600CBF05E /* Torch.swift in Sources */,
+				3B20EE162586550600CBF05E /* CardNetwork.swift in Sources */,
+				3B20EDF22586550600CBF05E /* VideoFeed.swift in Sources */,
+				3B20EE0D2586550600CBF05E /* AppState.swift in Sources */,
+				3B20EE1B2586550600CBF05E /* PredictionUtilOcr.swift in Sources */,
+				3B20EE0E2586550600CBF05E /* UIImage+pixelBuffer.swift in Sources */,
+				3B20EE222586550600CBF05E /* DetectedSSDOcrBox.swift in Sources */,
+				3B20EE1E2586550600CBF05E /* SSDOcrOutputExtensions.swift in Sources */,
+				3B20EE1C2586550600CBF05E /* PredictionResult.swift in Sources */,
+				3B20EE262586550600CBF05E /* ScanStats.swift in Sources */,
+				3B20EE122586550600CBF05E /* CGRectExtension.swift in Sources */,
+				3B20EDF82586550600CBF05E /* AppleCreditCardOcr.swift in Sources */,
+				3B20EE052586550600CBF05E /* NMS.swift in Sources */,
+				3B20EE142586550600CBF05E /* DetectedBox.swift in Sources */,
+				3B20EDF52586550600CBF05E /* CreditCardOcrImplementation.swift in Sources */,
+				3B20EE032586550600CBF05E /* SsdDetect.swift in Sources */,
+				3B20EDF72586550600CBF05E /* MachineLearningResult.swift in Sources */,
+				3B20EDF92586550600CBF05E /* SSDCreditCardOcr.swift in Sources */,
+				3B20EE54258658F900CBF05E /* SSD.swift in Sources */,
+				3B20EE022586550600CBF05E /* DetectedAllOcrBoxes.swift in Sources */,
+				3B20EE192586550600CBF05E /* ScanViewController.swift in Sources */,
+				3B20EE0F2586550600CBF05E /* CreditCardUtils.swift in Sources */,
+				3B20EE002586550600CBF05E /* PreviewView.swift in Sources */,
+				3B20EE0A2586550600CBF05E /* PostDetectionAlgorithm.swift in Sources */,
+				3B20EE212586550600CBF05E /* ScanBaseViewController.swift in Sources */,
+				3B20EE172586550600CBF05E /* CardType.swift in Sources */,
+				3B20EDF42586550600CBF05E /* OcrObject.swift in Sources */,
+				3B20EDFB2586550600CBF05E /* MainLoopStateMachine.swift in Sources */,
+				3B20EE012586550600CBF05E /* Expiry.swift in Sources */,
+				3B20EE2A2586550600CBF05E /* PredictionAPI.swift in Sources */,
+				3B20EDFD2586550600CBF05E /* OcrMainLoop.swift in Sources */,
+				3B20EE042586550600CBF05E /* CSBundle.swift in Sources */,
+				3B20EDFE2586550600CBF05E /* ErrorCorrection.swift in Sources */,
+				3B20EE242586550600CBF05E /* Image+utils.swift in Sources */,
+				3B20EE292586550600CBF05E /* BlurView.swift in Sources */,
+				3B20EDFA2586550600CBF05E /* CreditCardOcrResult.swift in Sources */,
+				3B20EE232586550600CBF05E /* CreditCardOcrPrediction+expiry.swift in Sources */,
+				3B20EE112586550600CBF05E /* DetectedSSDBox.swift in Sources */,
+				3B20EE2B2586550600CBF05E /* SSDOcr.mlmodel in Sources */,
+				3B20EE182586550600CBF05E /* CornerView.swift in Sources */,
+				3B20EE282586550600CBF05E /* AppleOcr.swift in Sources */,
+				3B20EE1F2586550600CBF05E /* SSDOutputExtensions.swift in Sources */,
+				3B20EE0B2586550600CBF05E /* SSDOcrDetect.swift in Sources */,
+				3B20EDF32586550600CBF05E /* ActiveStateComputation.swift in Sources */,
+				3B20EDFF2586550600CBF05E /* PriorsGen.swift in Sources */,
+				3B20EE1A2586550600CBF05E /* SoftNMS.swift in Sources */,
+				3B20EE2D2586550600CBF05E /* ModelConfigResponse.swift in Sources */,
+				3B20EE272586550600CBF05E /* OcrDDUtils.swift in Sources */,
+				3B20EDF62586550600CBF05E /* CreditCardOcrPrediction.swift in Sources */,
+				3B20EE092586550600CBF05E /* OcrPriorsGen.swift in Sources */,
+				3B20EE252586550600CBF05E /* InterfaceOrientation.swift in Sources */,
+				3B20EE0C2586550600CBF05E /* OcrDD.swift in Sources */,
+				3B20EDFC2586550600CBF05E /* NonNameWords.swift in Sources */,
+				3B20EE102586550600CBF05E /* ScanConfiguration.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3B20EDA22586539600CBF05E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3B20EDA32586539600CBF05E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3B20EDA52586539600CBF05E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CardScan/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0.0001;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.CardScan;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3B20EDA62586539600CBF05E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CardScan/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0.0001;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.CardScan;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3B20ED962586539600CBF05E /* Build configuration list for PBXProject "CardScan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B20EDA22586539600CBF05E /* Debug */,
+				3B20EDA32586539600CBF05E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3B20EDA42586539600CBF05E /* Build configuration list for PBXNativeTarget "CardScan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B20EDA52586539600CBF05E /* Debug */,
+				3B20EDA62586539600CBF05E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3B20ED932586539600CBF05E /* Project object */;
+}

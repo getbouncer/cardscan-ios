@@ -19,9 +19,8 @@ they are scanned.
 * [License](#license)
 
 ## Requirements
-* Objective C or Swift 4.0 or higher
-* iOS 11 or higher (supports development target of iOS 10.0 or higher)
-* iPhone 6s or newer (iPhone 6 and iPhone 6 plus are no longer supported)
+* Xcode 11 or higher
+* iOS 11 or higher
 
 ## Demo
 This repository contains a demonstration app for the CardScan product. To build and run the demo app, follow the

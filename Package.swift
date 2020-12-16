@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "CardScan",
     platforms: [
-        .iOS(.v10)
+        .iOS(.v11)
     ],
     products: [
         .library(
@@ -17,8 +17,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "CardScan",
-            url: "https://downloads.getbouncer.com/swift_package_manager/1.0.5052/CardScan.xcframework.zip",
-            checksum: "a521b121abe9edf712fb480a9ea1bddd5b994e4a205c2aae72ef1c6387a778db"
+            url: "https://downloads.getbouncer.com/swift_package_manager/2.0.0000-beta2/CardScan.xcframework.zip",
+            checksum: "2a36855e5c58b2c3683050e272c81b5bb1c25942de5857394c6369f6a93cbc68"
         )
     ]
 )

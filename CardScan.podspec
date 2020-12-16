@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'CardScan'
-  s.version          = '1.0.5052'
+  s.version          = '2.0.0001'
   s.summary          = 'Scan credit cards'
   s.description      = <<-DESC
 CardScan is a library for scanning credit cards.
@@ -13,20 +13,8 @@ CardScan is a library for scanning credit cards.
 
   # lint warning, who knows
   #s.social_media_url = 'https://twitter.com/stk'
-  s.default_subspec = 'Core'
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '11.2'
   s.swift_version = '5.3.1'
-
-  s.subspec 'Core' do |core|
-    core.source_files = 'CardScan/Classes/**/*'
-    core.resource_bundles = { 'CardScan' => ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodelc', 'CardScan/Assets/Config'] }
-    core.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
-  end
-
-  s.subspec 'Stripe' do |stripe|
-    stripe.source_files = 'CardScan/Classes/**/*'
-    stripe.resource_bundles = { 'CardScan' => ['CardScan/Assets/*.xcassets', 'CardScan/Assets/*.storyboard', 'CardScan/Assets/*.mlmodelc', 'CardScan/Assets/Config'] }
-    stripe.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
-    stripe.dependency  'Stripe'
-  end
+  s.vendored_frameworks = 'build/CardVerify.xcframework'
+  s.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
 end
