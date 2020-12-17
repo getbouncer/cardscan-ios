@@ -39,14 +39,20 @@ git checkout -b $PROD_BRANCH
 
 ./scripts/build_xcframework.sh
 
-./scripts/copy_archive_and_package.sh ${PROD_BRANCH} ${PROD_BRANCH}
+# Copy the archive to Google Storage
+gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_manager/${PROD_BRANCH}/
+
+./scripts/setup_package.sh ${PROD_BRANCH} ${PROD_BRANCH}
 
 ./scripts/run_xcframework_test.sh ${PROD_BRANCH} "https://github.com/getbouncer/cardscan-ios.git"
 
 git checkout .
 
 # we're all done, copy the prod archive and tag the prod branch
-./scripts/copy_archive_and_package.sh ${PROD_BRANCH} ${1}
+# Copy the archive to Google Storage
+gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_manager/${1}/
+
+./scripts/setup_package.sh ${PROD_BRANCH} ${1}
 
 # one last test
 ./scripts/run_xcframework_test.sh ${PROD_BRANCH} "https://github.com/getbouncer/cardscan-ios.git"

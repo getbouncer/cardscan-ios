@@ -8,9 +8,6 @@ if [[ -z "${1}" || -z "${2}" ]]; then
     exit
 fi
 
-# Copy the archive to Google Storage
-gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_manager/${2}/
-
 # Setup the Package.swift file
 touch Package.swift
 git add Package.swift
