@@ -33,12 +33,13 @@ git checkout -b $PROD_BRANCH
 ./scripts/build_xcframework.sh
 
 # test our local build
+touch Package.swift
+git add Package.swift
 
 url="file://`pwd`/build/CardScan.xcframework.zip"
 checksum=`swift package compute-checksum build/CardScan.xcframework.zip`
 python scripts/generate_package_swift.py ${url} ${checksum} < Package.template > Package.swift
 
-git add Package.swift
 git commit -a -m "Prep for prod, run xcframework test"
 
 ./scripts/run_xcframework_test.sh ${PROD_BRANCH} "file://`pwd`"
