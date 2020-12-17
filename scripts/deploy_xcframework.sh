@@ -23,8 +23,7 @@ fi
 
 if [ "$(git symbolic-ref --short HEAD)" != "master" ]; then
     echo 'will only deploy from master branch, bailing'
-    echo 'uncomment before committing'
-    #exit
+    exit
 fi
 
 if [ -z "$(git tag | grep ${1})" ]; then
