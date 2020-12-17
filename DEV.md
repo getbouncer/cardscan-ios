@@ -46,16 +46,31 @@ UI tests in the `CardScanSystemTest` project.
 
 ## Deploy
 
+You need to install a few python libraries and setup a venv before you
+can run the deploy process. Your setup should look something like
+this:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
 Please see the `scripts/deploy_xcframework.sh` script for more
 details. From a high level the process is:
 
-- Generate the XCFramework and copy it to google cloud storage
+- Create a prod branch
 
-- Generate the `Package.swift` file
+- Generate the XCFramework and copy it to google cloud storage for testing
 
-- Tag the branch and commit the changes
+- Generate the `Package.swift` file for testing
 
-- Deploy to Cocoapods
+- Test the branch
 
-Parts of this process are still manual currently, but this is going to
-change very soon.
+- Copy the XCFramework to google cloud storage for prod
+
+- Generate the `Package.swift` file for release
+
+- Test again
+
+- Tag the prod branch with the release tag

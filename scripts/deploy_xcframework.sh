@@ -14,29 +14,43 @@ fi
 
 rm -rf build
 
-xcodebuild archive \
-  -workspace CardScan.xcworkspace \
-  -scheme CardScanExample \
-  -destination "generic/platform=iOS" \
-  -archivePath "build/CardScanArchive" \
-  SKIP_INSTALL=NO \
-  BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+if [ -z "$(git status --porcelain)" ]; then
+    echo 'git status is clean'
+else
+    echo 'uncommitted changes, run `git status` for more information'
+    exit
+fi
 
-xcodebuild archive \
-  -workspace CardScan.xcworkspace \
-  -scheme CardScanExample \
-  -destination "generic/platform=iOS Simulator" \
-  -archivePath "build/CardScanSimulatorArchive" \
-  SKIP_INSTALL=NO \
-  BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+if [ "$(git symbolic-ref --short HEAD)" != "master" ]; then
+    echo 'will only deploy from master branch, bailing'
+    exit
+fi
 
-xcodebuild -create-xcframework \
-	   -framework "build/CardScanArchive.xcarchive/Products/Library/Frameworks/CardScan.framework" \
-	   -framework "build/CardScanSimulatorArchive.xcarchive/Products/Library/Frameworks/CardScan.framework" \
-	   -output build/CardScan.xcframework
+if [ -z "$(git tag | grep ${1})" ]; then
+    echo "git tag is clean"
+else
+    echo "the tag ${1} already exists, bailing"
+    exit
+fi
 
-cd build
-zip -r CardScan.xcframework.zip CardScan.xcframework
-cd ..
+PROD_BRANCH="production-$(date +"%Y%m%d-%s")"
+git checkout -b $PROD_BRANCH
 
-gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_manager/${1}/
+./scripts/build_xcframework.sh
+
+./scripts/setup_package.sh ${PROD_BRANCH} ${PROD_BRANCH}
+
+./scripts/run_xcframework_test.sh ${PROD_BRANCH} "https://github.com/getbouncer/cardscan-ios.git"
+
+# we're all done, copy the prod archive and tag the prod branch
+./scripts/setup_package.sh ${PROD_BRANCH} ${1}
+
+# one last test
+./scripts/run_xcframework_test.sh ${PROD_BRANCH} "https://github.com/getbouncer/cardscan-ios.git"
+
+# Success tag the branch and we're done
+echo "xcarchive deployed successfully and tested, tagging branch"
+
+git tag ${1}
+git push origin ${PROD_BRANCH} --tags
+git checkout master
