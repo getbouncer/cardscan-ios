@@ -1,600 +1,1169 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 50;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		3B24F15C258B95CD00C47E4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F15B258B95CD00C47E4D /* AppDelegate.swift */; };
-		3B24F15E258B95CD00C47E4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F15D258B95CD00C47E4D /* SceneDelegate.swift */; };
-		3B24F160258B95CD00C47E4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F15F258B95CD00C47E4D /* ViewController.swift */; };
-		3B24F163258B95CD00C47E4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B24F161258B95CD00C47E4D /* Main.storyboard */; };
-		3B24F165258B95D100C47E4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B24F164258B95D100C47E4D /* Assets.xcassets */; };
-		3B24F168258B95D100C47E4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B24F166258B95D100C47E4D /* LaunchScreen.storyboard */; };
-		3B24F173258B95D200C47E4D /* SpmXCFrameworkTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F172258B95D200C47E4D /* SpmXCFrameworkTestTests.swift */; };
-		3B24F17E258B95D200C47E4D /* SpmXCFrameworkTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F17D258B95D200C47E4D /* SpmXCFrameworkTestUITests.swift */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		3B24F16F258B95D200C47E4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3B24F150258B95CD00C47E4D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3B24F157258B95CD00C47E4D;
-			remoteInfo = SpmXCFrameworkTest;
-		};
-		3B24F17A258B95D200C47E4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3B24F150258B95CD00C47E4D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3B24F157258B95CD00C47E4D;
-			remoteInfo = SpmXCFrameworkTest;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXFileReference section */
-		3B24F158258B95CD00C47E4D /* SpmXCFrameworkTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpmXCFrameworkTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B24F15B258B95CD00C47E4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3B24F15D258B95CD00C47E4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3B24F15F258B95CD00C47E4D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3B24F162258B95CD00C47E4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3B24F164258B95D100C47E4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3B24F167258B95D100C47E4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		3B24F169258B95D100C47E4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3B24F16E258B95D200C47E4D /* SpmXCFrameworkTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpmXCFrameworkTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B24F172258B95D200C47E4D /* SpmXCFrameworkTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpmXCFrameworkTestTests.swift; sourceTree = "<group>"; };
-		3B24F174258B95D200C47E4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3B24F179258B95D200C47E4D /* SpmXCFrameworkTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpmXCFrameworkTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B24F17D258B95D200C47E4D /* SpmXCFrameworkTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpmXCFrameworkTestUITests.swift; sourceTree = "<group>"; };
-		3B24F17F258B95D200C47E4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		3B24F155258B95CD00C47E4D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B24F16B258B95D200C47E4D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B24F176258B95D200C47E4D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		3B24F14F258B95CD00C47E4D = {
-			isa = PBXGroup;
-			children = (
-				3B24F15A258B95CD00C47E4D /* SpmXCFrameworkTest */,
-				3B24F171258B95D200C47E4D /* SpmXCFrameworkTestTests */,
-				3B24F17C258B95D200C47E4D /* SpmXCFrameworkTestUITests */,
-				3B24F159258B95CD00C47E4D /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		3B24F159258B95CD00C47E4D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3B24F158258B95CD00C47E4D /* SpmXCFrameworkTest.app */,
-				3B24F16E258B95D200C47E4D /* SpmXCFrameworkTestTests.xctest */,
-				3B24F179258B95D200C47E4D /* SpmXCFrameworkTestUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3B24F15A258B95CD00C47E4D /* SpmXCFrameworkTest */ = {
-			isa = PBXGroup;
-			children = (
-				3B24F15B258B95CD00C47E4D /* AppDelegate.swift */,
-				3B24F15D258B95CD00C47E4D /* SceneDelegate.swift */,
-				3B24F15F258B95CD00C47E4D /* ViewController.swift */,
-				3B24F161258B95CD00C47E4D /* Main.storyboard */,
-				3B24F164258B95D100C47E4D /* Assets.xcassets */,
-				3B24F166258B95D100C47E4D /* LaunchScreen.storyboard */,
-				3B24F169258B95D100C47E4D /* Info.plist */,
-			);
-			path = SpmXCFrameworkTest;
-			sourceTree = "<group>";
-		};
-		3B24F171258B95D200C47E4D /* SpmXCFrameworkTestTests */ = {
-			isa = PBXGroup;
-			children = (
-				3B24F172258B95D200C47E4D /* SpmXCFrameworkTestTests.swift */,
-				3B24F174258B95D200C47E4D /* Info.plist */,
-			);
-			path = SpmXCFrameworkTestTests;
-			sourceTree = "<group>";
-		};
-		3B24F17C258B95D200C47E4D /* SpmXCFrameworkTestUITests */ = {
-			isa = PBXGroup;
-			children = (
-				3B24F17D258B95D200C47E4D /* SpmXCFrameworkTestUITests.swift */,
-				3B24F17F258B95D200C47E4D /* Info.plist */,
-			);
-			path = SpmXCFrameworkTestUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		3B24F157258B95CD00C47E4D /* SpmXCFrameworkTest */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3B24F182258B95D200C47E4D /* Build configuration list for PBXNativeTarget "SpmXCFrameworkTest" */;
-			buildPhases = (
-				3B24F154258B95CD00C47E4D /* Sources */,
-				3B24F155258B95CD00C47E4D /* Frameworks */,
-				3B24F156258B95CD00C47E4D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SpmXCFrameworkTest;
-			productName = SpmXCFrameworkTest;
-			productReference = 3B24F158258B95CD00C47E4D /* SpmXCFrameworkTest.app */;
-			productType = "com.apple.product-type.application";
-		};
-		3B24F16D258B95D200C47E4D /* SpmXCFrameworkTestTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3B24F185258B95D200C47E4D /* Build configuration list for PBXNativeTarget "SpmXCFrameworkTestTests" */;
-			buildPhases = (
-				3B24F16A258B95D200C47E4D /* Sources */,
-				3B24F16B258B95D200C47E4D /* Frameworks */,
-				3B24F16C258B95D200C47E4D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3B24F170258B95D200C47E4D /* PBXTargetDependency */,
-			);
-			name = SpmXCFrameworkTestTests;
-			productName = SpmXCFrameworkTestTests;
-			productReference = 3B24F16E258B95D200C47E4D /* SpmXCFrameworkTestTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		3B24F178258B95D200C47E4D /* SpmXCFrameworkTestUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3B24F188258B95D200C47E4D /* Build configuration list for PBXNativeTarget "SpmXCFrameworkTestUITests" */;
-			buildPhases = (
-				3B24F175258B95D200C47E4D /* Sources */,
-				3B24F176258B95D200C47E4D /* Frameworks */,
-				3B24F177258B95D200C47E4D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3B24F17B258B95D200C47E4D /* PBXTargetDependency */,
-			);
-			name = SpmXCFrameworkTestUITests;
-			productName = SpmXCFrameworkTestUITests;
-			productReference = 3B24F179258B95D200C47E4D /* SpmXCFrameworkTestUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		3B24F150258B95CD00C47E4D /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1220;
-				TargetAttributes = {
-					3B24F157258B95CD00C47E4D = {
-						CreatedOnToolsVersion = 12.2;
-					};
-					3B24F16D258B95D200C47E4D = {
-						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 3B24F157258B95CD00C47E4D;
-					};
-					3B24F178258B95D200C47E4D = {
-						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 3B24F157258B95CD00C47E4D;
-					};
-				};
-			};
-			buildConfigurationList = 3B24F153258B95CD00C47E4D /* Build configuration list for PBXProject "SpmXCFrameworkTest" */;
-			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = en;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = 3B24F14F258B95CD00C47E4D;
-			productRefGroup = 3B24F159258B95CD00C47E4D /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				3B24F157258B95CD00C47E4D /* SpmXCFrameworkTest */,
-				3B24F16D258B95D200C47E4D /* SpmXCFrameworkTestTests */,
-				3B24F178258B95D200C47E4D /* SpmXCFrameworkTestUITests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		3B24F156258B95CD00C47E4D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3B24F168258B95D100C47E4D /* LaunchScreen.storyboard in Resources */,
-				3B24F165258B95D100C47E4D /* Assets.xcassets in Resources */,
-				3B24F163258B95CD00C47E4D /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B24F16C258B95D200C47E4D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B24F177258B95D200C47E4D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		3B24F154258B95CD00C47E4D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3B24F160258B95CD00C47E4D /* ViewController.swift in Sources */,
-				3B24F15C258B95CD00C47E4D /* AppDelegate.swift in Sources */,
-				3B24F15E258B95CD00C47E4D /* SceneDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B24F16A258B95D200C47E4D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3B24F173258B95D200C47E4D /* SpmXCFrameworkTestTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B24F175258B95D200C47E4D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3B24F17E258B95D200C47E4D /* SpmXCFrameworkTestUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		3B24F170258B95D200C47E4D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3B24F157258B95CD00C47E4D /* SpmXCFrameworkTest */;
-			targetProxy = 3B24F16F258B95D200C47E4D /* PBXContainerItemProxy */;
-		};
-		3B24F17B258B95D200C47E4D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3B24F157258B95CD00C47E4D /* SpmXCFrameworkTest */;
-			targetProxy = 3B24F17A258B95D200C47E4D /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		3B24F161258B95CD00C47E4D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3B24F162258B95CD00C47E4D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		3B24F166258B95D100C47E4D /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3B24F167258B95D100C47E4D /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
-/* Begin XCBuildConfiguration section */
-		3B24F180258B95D200C47E4D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		3B24F181258B95D200C47E4D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		3B24F183258B95D200C47E4D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
-				INFOPLIST_FILE = SpmXCFrameworkTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.SpmXCFrameworkTest;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		3B24F184258B95D200C47E4D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
-				INFOPLIST_FILE = SpmXCFrameworkTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.SpmXCFrameworkTest;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		3B24F186258B95D200C47E4D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
-				INFOPLIST_FILE = SpmXCFrameworkTestTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.SpmXCFrameworkTestTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpmXCFrameworkTest.app/SpmXCFrameworkTest";
-			};
-			name = Debug;
-		};
-		3B24F187258B95D200C47E4D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
-				INFOPLIST_FILE = SpmXCFrameworkTestTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.SpmXCFrameworkTestTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpmXCFrameworkTest.app/SpmXCFrameworkTest";
-			};
-			name = Release;
-		};
-		3B24F189258B95D200C47E4D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
-				INFOPLIST_FILE = SpmXCFrameworkTestUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.SpmXCFrameworkTestUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SpmXCFrameworkTest;
-			};
-			name = Debug;
-		};
-		3B24F18A258B95D200C47E4D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L4TQ6C2R74;
-				INFOPLIST_FILE = SpmXCFrameworkTestUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.SpmXCFrameworkTestUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SpmXCFrameworkTest;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		3B24F153258B95CD00C47E4D /* Build configuration list for PBXProject "SpmXCFrameworkTest" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3B24F180258B95D200C47E4D /* Debug */,
-				3B24F181258B95D200C47E4D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3B24F182258B95D200C47E4D /* Build configuration list for PBXNativeTarget "SpmXCFrameworkTest" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3B24F183258B95D200C47E4D /* Debug */,
-				3B24F184258B95D200C47E4D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3B24F185258B95D200C47E4D /* Build configuration list for PBXNativeTarget "SpmXCFrameworkTestTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3B24F186258B95D200C47E4D /* Debug */,
-				3B24F187258B95D200C47E4D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3B24F188258B95D200C47E4D /* Build configuration list for PBXNativeTarget "SpmXCFrameworkTestUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3B24F189258B95D200C47E4D /* Debug */,
-				3B24F18A258B95D200C47E4D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = 3B24F150258B95CD00C47E4D /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>52</string>
+	<key>objects</key>
+	<dict>
+		<key>3B24F14F258B95CD00C47E4D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3B24F15A258B95CD00C47E4D</string>
+				<string>3B24F171258B95D200C47E4D</string>
+				<string>3B24F17C258B95D200C47E4D</string>
+				<string>3B24F159258B95CD00C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F150258B95CD00C47E4D</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastSwiftUpdateCheck</key>
+				<string>1220</string>
+				<key>LastUpgradeCheck</key>
+				<string>1220</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>3B24F157258B95CD00C47E4D</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>12.2</string>
+					</dict>
+					<key>3B24F16D258B95D200C47E4D</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>12.2</string>
+						<key>TestTargetID</key>
+						<string>3B24F157258B95CD00C47E4D</string>
+					</dict>
+					<key>3B24F178258B95D200C47E4D</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>12.2</string>
+						<key>TestTargetID</key>
+						<string>3B24F157258B95CD00C47E4D</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>3B24F153258B95CD00C47E4D</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 9.3</string>
+			<key>developmentRegion</key>
+			<string>en</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+				<string>Base</string>
+			</array>
+			<key>mainGroup</key>
+			<string>3B24F14F258B95CD00C47E4D</string>
+			<key>packageReferences</key>
+			<array>
+				<string>3B24F191258B971900C47E4D</string>
+			</array>
+			<key>productRefGroup</key>
+			<string>3B24F159258B95CD00C47E4D</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>3B24F157258B95CD00C47E4D</string>
+				<string>3B24F16D258B95D200C47E4D</string>
+				<string>3B24F178258B95D200C47E4D</string>
+			</array>
+		</dict>
+		<key>3B24F153258B95CD00C47E4D</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>3B24F180258B95D200C47E4D</string>
+				<string>3B24F181258B95D200C47E4D</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>3B24F154258B95CD00C47E4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>3B24F160258B95CD00C47E4D</string>
+				<string>3B24F15C258B95CD00C47E4D</string>
+				<string>3B24F15E258B95CD00C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3B24F155258B95CD00C47E4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>3B24F193258B971900C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3B24F156258B95CD00C47E4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>3B24F168258B95D100C47E4D</string>
+				<string>3B24F165258B95D100C47E4D</string>
+				<string>3B24F163258B95CD00C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3B24F157258B95CD00C47E4D</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>3B24F182258B95D200C47E4D</string>
+			<key>buildPhases</key>
+			<array>
+				<string>3B24F154258B95CD00C47E4D</string>
+				<string>3B24F155258B95CD00C47E4D</string>
+				<string>3B24F156258B95CD00C47E4D</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>SpmXCFrameworkTest</string>
+			<key>packageProductDependencies</key>
+			<array>
+				<string>3B24F192258B971900C47E4D</string>
+			</array>
+			<key>productName</key>
+			<string>SpmXCFrameworkTest</string>
+			<key>productReference</key>
+			<string>3B24F158258B95CD00C47E4D</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>3B24F158258B95CD00C47E4D</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>SpmXCFrameworkTest.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>3B24F159258B95CD00C47E4D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3B24F158258B95CD00C47E4D</string>
+				<string>3B24F16E258B95D200C47E4D</string>
+				<string>3B24F179258B95D200C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F15A258B95CD00C47E4D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3B24F15B258B95CD00C47E4D</string>
+				<string>3B24F15D258B95CD00C47E4D</string>
+				<string>3B24F15F258B95CD00C47E4D</string>
+				<string>3B24F161258B95CD00C47E4D</string>
+				<string>3B24F164258B95D100C47E4D</string>
+				<string>3B24F166258B95D100C47E4D</string>
+				<string>3B24F169258B95D100C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>SpmXCFrameworkTest</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F15B258B95CD00C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>AppDelegate.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F15C258B95CD00C47E4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3B24F15B258B95CD00C47E4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3B24F15D258B95CD00C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>SceneDelegate.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F15E258B95CD00C47E4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3B24F15D258B95CD00C47E4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3B24F15F258B95CD00C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>ViewController.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F160258B95CD00C47E4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3B24F15F258B95CD00C47E4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3B24F161258B95CD00C47E4D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3B24F162258B95CD00C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F162258B95CD00C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F163258B95CD00C47E4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3B24F161258B95CD00C47E4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3B24F164258B95D100C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>path</key>
+			<string>Assets.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F165258B95D100C47E4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3B24F164258B95D100C47E4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3B24F166258B95D100C47E4D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3B24F167258B95D100C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F167258B95D100C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F168258B95D100C47E4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3B24F166258B95D100C47E4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3B24F169258B95D100C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F16A258B95D200C47E4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>3B24F173258B95D200C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3B24F16B258B95D200C47E4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3B24F16C258B95D200C47E4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3B24F16D258B95D200C47E4D</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>3B24F185258B95D200C47E4D</string>
+			<key>buildPhases</key>
+			<array>
+				<string>3B24F16A258B95D200C47E4D</string>
+				<string>3B24F16B258B95D200C47E4D</string>
+				<string>3B24F16C258B95D200C47E4D</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>3B24F170258B95D200C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>SpmXCFrameworkTestTests</string>
+			<key>productName</key>
+			<string>SpmXCFrameworkTestTests</string>
+			<key>productReference</key>
+			<string>3B24F16E258B95D200C47E4D</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>3B24F16E258B95D200C47E4D</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>SpmXCFrameworkTestTests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>3B24F16F258B95D200C47E4D</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>3B24F150258B95CD00C47E4D</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>3B24F157258B95CD00C47E4D</string>
+			<key>remoteInfo</key>
+			<string>SpmXCFrameworkTest</string>
+		</dict>
+		<key>3B24F170258B95D200C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>3B24F157258B95CD00C47E4D</string>
+			<key>targetProxy</key>
+			<string>3B24F16F258B95D200C47E4D</string>
+		</dict>
+		<key>3B24F171258B95D200C47E4D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3B24F172258B95D200C47E4D</string>
+				<string>3B24F174258B95D200C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>SpmXCFrameworkTestTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F172258B95D200C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>SpmXCFrameworkTestTests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F173258B95D200C47E4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3B24F172258B95D200C47E4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3B24F174258B95D200C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F175258B95D200C47E4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>3B24F17E258B95D200C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3B24F176258B95D200C47E4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3B24F177258B95D200C47E4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3B24F178258B95D200C47E4D</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>3B24F188258B95D200C47E4D</string>
+			<key>buildPhases</key>
+			<array>
+				<string>3B24F175258B95D200C47E4D</string>
+				<string>3B24F176258B95D200C47E4D</string>
+				<string>3B24F177258B95D200C47E4D</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>3B24F17B258B95D200C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>SpmXCFrameworkTestUITests</string>
+			<key>productName</key>
+			<string>SpmXCFrameworkTestUITests</string>
+			<key>productReference</key>
+			<string>3B24F179258B95D200C47E4D</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.ui-testing</string>
+		</dict>
+		<key>3B24F179258B95D200C47E4D</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>SpmXCFrameworkTestUITests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>3B24F17A258B95D200C47E4D</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>3B24F150258B95CD00C47E4D</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>3B24F157258B95CD00C47E4D</string>
+			<key>remoteInfo</key>
+			<string>SpmXCFrameworkTest</string>
+		</dict>
+		<key>3B24F17B258B95D200C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>3B24F157258B95CD00C47E4D</string>
+			<key>targetProxy</key>
+			<string>3B24F17A258B95D200C47E4D</string>
+		</dict>
+		<key>3B24F17C258B95D200C47E4D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3B24F17D258B95D200C47E4D</string>
+				<string>3B24F17F258B95D200C47E4D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>SpmXCFrameworkTestUITests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F17D258B95D200C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>SpmXCFrameworkTestUITests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F17E258B95D200C47E4D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3B24F17D258B95D200C47E4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3B24F17F258B95D200C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3B24F180258B95D200C47E4D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_ANALYZER_NONNULL</key>
+				<string>YES</string>
+				<key>CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++14</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_WEAK</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_COMMA</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_DOCUMENTATION_COMMENTS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INFINITE_RECURSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_NON_LITERAL_NULL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_LITERAL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER</key>
+				<string>YES</string>
+				<key>CLANG_WARN_RANGE_LOOP_ANALYSIS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_STRICT_PROTOTYPES</key>
+				<string>YES</string>
+				<key>CLANG_WARN_SUSPICIOUS_MOVE</key>
+				<string>YES</string>
+				<key>CLANG_WARN_UNGUARDED_AVAILABILITY</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>ENABLE_TESTABILITY</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu11</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>14.2</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>INCLUDE_SOURCE</string>
+				<key>MTL_FAST_MATH</key>
+				<string>YES</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SWIFT_ACTIVE_COMPILATION_CONDITIONS</key>
+				<string>DEBUG</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-Onone</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>3B24F181258B95D200C47E4D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_ANALYZER_NONNULL</key>
+				<string>YES</string>
+				<key>CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++14</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_WEAK</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_COMMA</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_DOCUMENTATION_COMMENTS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INFINITE_RECURSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_NON_LITERAL_NULL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_LITERAL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER</key>
+				<string>YES</string>
+				<key>CLANG_WARN_RANGE_LOOP_ANALYSIS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_STRICT_PROTOTYPES</key>
+				<string>YES</string>
+				<key>CLANG_WARN_SUSPICIOUS_MOVE</key>
+				<string>YES</string>
+				<key>CLANG_WARN_UNGUARDED_AVAILABILITY</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu11</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>14.2</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>MTL_FAST_MATH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SWIFT_COMPILATION_MODE</key>
+				<string>wholemodule</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-O</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>3B24F182258B95D200C47E4D</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>3B24F183258B95D200C47E4D</string>
+				<string>3B24F184258B95D200C47E4D</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>3B24F183258B95D200C47E4D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME</key>
+				<string>AccentColor</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Automatic</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>L4TQ6C2R74</string>
+				<key>INFOPLIST_FILE</key>
+				<string>SpmXCFrameworkTest/Info.plist</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>13.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+				</array>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.getbouncer.SpmXCFrameworkTest</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SWIFT_VERSION</key>
+				<string>5.0</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>3B24F184258B95D200C47E4D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME</key>
+				<string>AccentColor</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Automatic</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>L4TQ6C2R74</string>
+				<key>INFOPLIST_FILE</key>
+				<string>SpmXCFrameworkTest/Info.plist</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>13.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+				</array>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.getbouncer.SpmXCFrameworkTest</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SWIFT_VERSION</key>
+				<string>5.0</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>3B24F185258B95D200C47E4D</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>3B24F186258B95D200C47E4D</string>
+				<string>3B24F187258B95D200C47E4D</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>3B24F186258B95D200C47E4D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES</key>
+				<string>YES</string>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Automatic</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>L4TQ6C2R74</string>
+				<key>INFOPLIST_FILE</key>
+				<string>SpmXCFrameworkTestTests/Info.plist</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>14.2</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.getbouncer.SpmXCFrameworkTestTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SWIFT_VERSION</key>
+				<string>5.0</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/SpmXCFrameworkTest.app/SpmXCFrameworkTest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>3B24F187258B95D200C47E4D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES</key>
+				<string>YES</string>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Automatic</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>L4TQ6C2R74</string>
+				<key>INFOPLIST_FILE</key>
+				<string>SpmXCFrameworkTestTests/Info.plist</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>14.2</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.getbouncer.SpmXCFrameworkTestTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SWIFT_VERSION</key>
+				<string>5.0</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/SpmXCFrameworkTest.app/SpmXCFrameworkTest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>3B24F188258B95D200C47E4D</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>3B24F189258B95D200C47E4D</string>
+				<string>3B24F18A258B95D200C47E4D</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>3B24F189258B95D200C47E4D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES</key>
+				<string>YES</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Automatic</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>L4TQ6C2R74</string>
+				<key>INFOPLIST_FILE</key>
+				<string>SpmXCFrameworkTestUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.getbouncer.SpmXCFrameworkTestUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SWIFT_VERSION</key>
+				<string>5.0</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>TEST_TARGET_NAME</key>
+				<string>SpmXCFrameworkTest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>3B24F18A258B95D200C47E4D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES</key>
+				<string>YES</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Automatic</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>L4TQ6C2R74</string>
+				<key>INFOPLIST_FILE</key>
+				<string>SpmXCFrameworkTestUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.getbouncer.SpmXCFrameworkTestUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SWIFT_VERSION</key>
+				<string>5.0</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>TEST_TARGET_NAME</key>
+				<string>SpmXCFrameworkTest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>3B24F191258B971900C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>XCRemoteSwiftPackageReference</string>
+			<key>repositoryURL</key>
+			<string>file:///Users/kingst/work/cardscan-ios</string>
+			<key>requirement</key>
+			<dict>
+				<key>branch</key>
+				<string>build_and_deploy_script</string>
+				<key>kind</key>
+				<string>branch</string>
+			</dict>
+		</dict>
+		<key>3B24F192258B971900C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>XCSwiftPackageProductDependency</string>
+			<key>package</key>
+			<string>3B24F191258B971900C47E4D</string>
+			<key>productName</key>
+			<string>CardScan</string>
+		</dict>
+		<key>3B24F193258B971900C47E4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>productRef</key>
+			<string>3B24F192258B971900C47E4D</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>3B24F150258B95CD00C47E4D</string>
+</dict>
+</plist>
