@@ -1137,11 +1137,11 @@
 			<key>isa</key>
 			<string>XCRemoteSwiftPackageReference</string>
 			<key>repositoryURL</key>
-			<string>file:///Users/kingst/work/cardscan-ios</string>
+			<string></string>
 			<key>requirement</key>
 			<dict>
 				<key>branch</key>
-				<string>build_and_deploy_script</string>
+				<string></string>
 				<key>kind</key>
 				<string>branch</string>
 			</dict>

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$1" || -z "$2" || -z "$3"]; then
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3"]; then
     echo Usage ${0}: branch repo_url xcframework_url
     echo       for example:
     echo
@@ -15,7 +15,7 @@ url="${3}"
 checksum=`swift package compute-checksum build/CardScan.xcframework.zip`
 python scripts/generate_package_swift.py ${url} ${checksum} < Package.template > Package.swift
 
-git commit -a -m "Prep for prod"
+git commit -a -m "Prep for prod, run xcframework test"
 
 cd SpmXCFrameworkTest
 
