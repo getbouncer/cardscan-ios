@@ -53,3 +53,4 @@ echo "xcarchive deployed successfully and tested, tagging branch"
 
 git tag ${1}
 git push origin ${PROD_BRANCH} --tags
+git checkout master
