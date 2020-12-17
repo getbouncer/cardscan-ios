@@ -38,6 +38,7 @@ url="file://`pwd`/build/CardScan.xcframework.zip"
 checksum=`swift package compute-checksum build/CardScan.xcframework.zip`
 python scripts/generate_package_swift.py ${url} ${checksum} < Package.template > Package.swift
 
+git add Package.swift
 git commit -a -m "Prep for prod, run xcframework test"
 
 ./scripts/run_xcframework_test.sh ${PROD_BRANCH} "file://`pwd`"
@@ -59,4 +60,7 @@ git push origin ${PROD_BRANCH}
 
 git checkout .
 
-echo "xcarchive deployed successfully"
+echo "xcarchive deployed successfully, tagging branch"
+
+git tag ${1}
+git push origin ${PROD_BRANCH} --tags

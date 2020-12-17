@@ -19,7 +19,7 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "CardScan",
-            url: 
+            url: "{{url}}",
             checksum: "{{checksum}}"
         )
     ]

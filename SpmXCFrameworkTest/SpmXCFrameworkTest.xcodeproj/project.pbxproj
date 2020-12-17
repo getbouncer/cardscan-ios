@@ -1141,7 +1141,7 @@
 			<key>requirement</key>
 			<dict>
 				<key>branch</key>
-				<string>build_and_deploy_script</string>
+				<string>production-20201217-1608220925</string>
 				<key>kind</key>
 				<string>branch</string>
 			</dict>
