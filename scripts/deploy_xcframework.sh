@@ -27,33 +27,30 @@ if [ "$(git symbolic-ref --short HEAD)" != "master" ]; then
     #exit
 fi
 
+if [ -z "$(git tag | grep ${1})" ]; then
+    echo "git tag is clean"
+else
+    echo "the tag ${1} already exists, bailing"
+    exit
+fi
+
 PROD_BRANCH="production-$(date +"%Y%m%d-%s")"
 git checkout -b $PROD_BRANCH
 
 ./scripts/build_xcframework.sh
 
-# test our local build
+# Copy the archive to Google Storage
+gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_manager/${1}/
+
+# Setup the Package.swift file
 touch Package.swift
 git add Package.swift
 
-url="file://`pwd`/build/CardScan.xcframework.zip"
 checksum=`swift package compute-checksum build/CardScan.xcframework.zip`
-python scripts/generate_package_swift.py ${url} ${checksum} < Package.template > Package.swift
-
-git commit -a -m "Prep for prod, run xcframework test"
-
-./scripts/run_xcframework_test.sh ${PROD_BRANCH} "file://`pwd`"
-
-git checkout .
-
-
-# run another test but with the actual deployed XC framework
-
-gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_manager/${1}/
-
 url="https://downloads.getbouncer.com/swift_package_manager/${1}/CardScan.xcframework.zip"
 python scripts/generate_package_swift.py ${url} ${checksum} < Package.template > Package.swift
 
+# Push to prod branch for testing
 git commit -a -m "Last commit for prod"
 git push origin ${PROD_BRANCH}
 
@@ -61,7 +58,8 @@ git push origin ${PROD_BRANCH}
 
 git checkout .
 
-echo "xcarchive deployed successfully, tagging branch"
+# Success tag the branch and we're done
+echo "xcarchive deployed successfully and tested, tagging branch"
 
 git tag ${1}
 git push origin ${PROD_BRANCH} --tags
