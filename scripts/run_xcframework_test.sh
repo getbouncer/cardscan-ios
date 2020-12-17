@@ -1,21 +1,15 @@
 #!/bin/bash
 
-if [[ -z "$1"  ||  -z "$2"  || -z "$3" ]]; then
-    echo Usage ${0}: branch repo_url xcframework_url
+if [[ -z "$1"  ||  -z "$2" ]]; then
+    echo Usage ${0}: branch repo_url
     echo       for example:
     echo
-    echo       ${0} 2.0.0000-beta0 file:///Users/kingst/work/cardscan-ios file:///Users/kingst/work/cardscan-ios/build/CardScan.xcframework.zip
+    echo       ${0} 2.0.0000-beta0 file:///Users/kingst/work/cardscan-ios
     echo
     exit
 fi
 
 source venv/bin/activate
-
-url="${3}"
-checksum=`swift package compute-checksum build/CardScan.xcframework.zip`
-python scripts/generate_package_swift.py ${url} ${checksum} < Package.template > Package.swift
-
-git commit -a -m "Prep for prod, run xcframework test"
 
 cd SpmXCFrameworkTest
 
@@ -27,3 +21,6 @@ cd SpmXCFrameworkTest
 xcodebuild clean -project SpmXCFrameworkTest.xcodeproj -scheme SpmXCFrameworkTest -destination 'platform=iOS Simulator,name=iPhone 11'
 
 xcodebuild test -project SpmXCFrameworkTest.xcodeproj -scheme SpmXCFrameworkTest -destination 'platform=iOS Simulator,name=iPhone 11'
+
+cd ..
+
