@@ -49,8 +49,18 @@ git checkout -b $PROD_BRANCH
 ./scripts/run_xcframework_test.sh ${PROD_BRANCH} "https://github.com/getbouncer/cardscan-ios.git"
 
 # Success tag the branch and we're done
-echo "xcarchive deployed successfully and tested, tagging branch"
 
+echo "pushing to cocoapods"
+python scripts/generate_podspec.py ${1} < CardScan.podspec.template > CardScan.podspec
+
+git add CardScan.podspec
+git commit -a -m "Adding podspec"
+git push origin ${PROD_BRANCH}
 git tag ${1}
 git push origin ${PROD_BRANCH} --tags
+
+pod trunk push
+
+echo "xcarchive deployed successfully"
+
 git checkout master
