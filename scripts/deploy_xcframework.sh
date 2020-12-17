@@ -23,7 +23,8 @@ fi
 
 if [ "$(git symbolic-ref --short HEAD)" != "master" ]; then
     echo 'will only deploy from master branch, bailing'
-    exit
+    echo 'uncomment before committing'
+    #exit
 fi
 
 PROD_BRANCH="production-$(date +"%Y%m%d-%s")"
