@@ -46,6 +46,16 @@ UI tests in the `CardScanSystemTest` project.
 
 ## Deploy
 
+You need to install a few python libraries and setup a venv before you
+can run the deploy process. Your setup should look something like
+this:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
 Please see the `scripts/deploy_xcframework.sh` script for more
 details. From a high level the process is:
 
