@@ -46,4 +46,3 @@ gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_mana
 checksum=`swift package compute-checksum build/CardScan.xcframework.zip`
 python scripts/generate_package_swift.py ${1} ${checksum} < Package.template > Package.swift
 
-swift build

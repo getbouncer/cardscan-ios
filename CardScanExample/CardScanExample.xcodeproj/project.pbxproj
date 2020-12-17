@@ -33,13 +33,6 @@
 			remoteGlobalIDString = 3B7B804C2587D233007DB4D9;
 			remoteInfo = CardScanSystemTest;
 		};
-		3B7B80872587D264007DB4D9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3B7B807F2587D264007DB4D9 /* CardScanSystemTest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3B7B80622587D234007DB4D9;
-			remoteInfo = CardScanSystemTestTests;
-		};
 		3B7B80892587D264007DB4D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3B7B807F2587D264007DB4D9 /* CardScanSystemTest.xcodeproj */;
@@ -82,6 +75,7 @@
 		3B20EE5725865CAE00CBF05E /* ModalNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalNavViewController.swift; sourceTree = "<group>"; };
 		3B20EE5825865CAE00CBF05E /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		3B20EE5C25865D1400CBF05E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3B24F14B258B90D600C47E4D /* CardScanExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CardScanExample.entitlements; sourceTree = "<group>"; };
 		3B7B807F2587D264007DB4D9 /* CardScanSystemTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CardScanSystemTest.xcodeproj; path = ../CardScanSystemTest/CardScanSystemTest.xcodeproj; sourceTree = "<group>"; };
 		3BB809862587686D00C244EA /* CardScanExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScanExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BB8098A2587686D00C244EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,6 +129,7 @@
 		3B20ED7B2586531D00CBF05E /* CardScanExample */ = {
 			isa = PBXGroup;
 			children = (
+				3B24F14B258B90D600C47E4D /* CardScanExample.entitlements */,
 				3B20EE5C25865D1400CBF05E /* Images.xcassets */,
 				3B20EE5725865CAE00CBF05E /* ModalNavViewController.swift */,
 				3B20EE5625865CAE00CBF05E /* ModalScanViewController.swift */,
@@ -160,7 +155,6 @@
 			isa = PBXGroup;
 			children = (
 				3B7B80862587D264007DB4D9 /* CardScanSystemTest.app */,
-				3B7B80882587D264007DB4D9 /* CardScanSystemTestTests.xctest */,
 				3B7B808A2587D264007DB4D9 /* CardScanSystemTestUITests.xctest */,
 			);
 			name = Products;
@@ -268,13 +262,6 @@
 			fileType = wrapper.application;
 			path = CardScanSystemTest.app;
 			remoteRef = 3B7B80852587D264007DB4D9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3B7B80882587D264007DB4D9 /* CardScanSystemTestTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = CardScanSystemTestTests.xctest;
-			remoteRef = 3B7B80872587D264007DB4D9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3B7B808A2587D264007DB4D9 /* CardScanSystemTestUITests.xctest */ = {
@@ -483,6 +470,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CardScanExample/CardScanExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L4TQ6C2R74;
 				INFOPLIST_FILE = CardScanExample/Info.plist;
@@ -493,6 +481,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.CardScanExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -503,6 +492,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CardScanExample/CardScanExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L4TQ6C2R74;
 				INFOPLIST_FILE = CardScanExample/Info.plist;
@@ -513,6 +503,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.CardScanExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

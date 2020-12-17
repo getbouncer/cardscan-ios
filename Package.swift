@@ -20,7 +20,7 @@ let package = Package(
         .binaryTarget(
             name: "CardScan",
             url: "https://downloads.getbouncer.com/swift_package_manager/2.0.0000-beta3/CardScan.xcframework.zip",
-            checksum: "352dcf12f3509731679de35817662cb9740f438488f2c79eaa9df54bc94f0e4d"
+            checksum: "6270b6091624ebd2add68aa5f0141fd50ee68383ba9d38edcc1e5d624024de7c"
         )
     ]
 )
