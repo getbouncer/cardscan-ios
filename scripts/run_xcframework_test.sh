@@ -7,7 +7,7 @@ if [[ -z "$1"  ||  -z "$2" ]]; then
     echo Usage ${0}: branch repo_url
     echo       for example:
     echo
-    echo       ${0} 2.0.0000-beta0 file:///Users/kingst/work/cardscan-ios
+    echo       ${0} 2.0.0000-beta0 https://github.com/getbouncer/cardscan-ios.git
     echo
     exit
 fi

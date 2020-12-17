@@ -39,21 +39,16 @@ git checkout -b $PROD_BRANCH
 
 ./scripts/build_xcframework.sh
 
-# Copy the archive to Google Storage
-gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_manager/${1}/
+./scripts/copy_archive_and_package.sh ${PROD_BRANCH} ${PROD_BRANCH}
 
-# Setup the Package.swift file
-touch Package.swift
-git add Package.swift
+./scripts/run_xcframework_test.sh ${PROD_BRANCH} "https://github.com/getbouncer/cardscan-ios.git"
 
-checksum=`swift package compute-checksum build/CardScan.xcframework.zip`
-url="https://downloads.getbouncer.com/swift_package_manager/${1}/CardScan.xcframework.zip"
-python scripts/generate_package_swift.py ${url} ${checksum} < Package.template > Package.swift
+git checkout .
 
-# Push to prod branch for testing
-git commit -a -m "Last commit for prod"
-git push origin ${PROD_BRANCH}
+# we're all done, copy the prod archive and tag the prod branch
+./scripts/copy_archive_and_package.sh ${PROD_BRANCH} ${1}
 
+# one last test
 ./scripts/run_xcframework_test.sh ${PROD_BRANCH} "https://github.com/getbouncer/cardscan-ios.git"
 
 git checkout .
