@@ -24,5 +24,6 @@ cd SpmXCFrameworkTest
 
 /usr/libexec/PlistBuddy -c "set :objects:3B24F191258B971900C47E4D:repositoryURL ${2}" SpmXCFrameworkTest.xcodeproj/project.pbxproj
 
+xcodebuild clean -project SpmXCFrameworkTest.xcodeproj -scheme SpmXCFrameworkTest -destination 'platform=iOS Simulator,name=iPhone 11'
 
 xcodebuild test -project SpmXCFrameworkTest.xcodeproj -scheme SpmXCFrameworkTest -destination 'platform=iOS Simulator,name=iPhone 11'
