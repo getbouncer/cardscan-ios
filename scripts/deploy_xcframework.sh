@@ -44,7 +44,7 @@ git commit -a -m "Prep for prod, run xcframework test"
 git checkout .
 
 
-# run another test but with the actual value
+# run another test but with the actual deployed XC framework
 
 gsutil cp build/CardScan.xcframework.zip  gs://bouncer-models/swift_package_manager/${1}/
 
