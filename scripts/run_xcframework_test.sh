@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# if we get an error bail
+set -euxo pipefail
+
 if [[ -z "$1"  ||  -z "$2" ]]; then
     echo Usage ${0}: branch repo_url
     echo       for example:

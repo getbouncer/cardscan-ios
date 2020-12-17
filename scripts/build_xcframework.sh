@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# if we get an error bail
+set -euxo pipefail
+
 xcodebuild archive \
   -workspace CardScan.xcworkspace \
   -scheme CardScanExample \
