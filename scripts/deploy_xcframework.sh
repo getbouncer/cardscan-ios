@@ -42,15 +42,11 @@ git checkout -b $PROD_BRANCH
 
 ./scripts/run_xcframework_test.sh ${PROD_BRANCH} "https://github.com/getbouncer/cardscan-ios.git"
 
-git checkout .
-
 # we're all done, copy the prod archive and tag the prod branch
 ./scripts/setup_package.sh ${PROD_BRANCH} ${1}
 
 # one last test
 ./scripts/run_xcframework_test.sh ${PROD_BRANCH} "https://github.com/getbouncer/cardscan-ios.git"
-
-git checkout .
 
 # Success tag the branch and we're done
 echo "xcarchive deployed successfully and tested, tagging branch"

@@ -25,5 +25,7 @@ xcodebuild clean -project SpmXCFrameworkTest.xcodeproj -scheme SpmXCFrameworkTes
 
 xcodebuild test -project SpmXCFrameworkTest.xcodeproj -scheme SpmXCFrameworkTest -destination 'platform=iOS Simulator,name=iPhone 11'
 
+git checkout .
+
 cd ..
 
