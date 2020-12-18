@@ -53,6 +53,8 @@ git checkout -b $PROD_BRANCH
 echo "pushing to cocoapods"
 python scripts/generate_podspec.py ${1} < CardScan.podspec.template > CardScan.podspec
 
+cp -r build/CardScan.xcframework .
+git add CardScan.xcframework
 git add CardScan.podspec
 git commit -a -m "Adding podspec"
 git push origin ${PROD_BRANCH}
