@@ -37,7 +37,7 @@ struct SSDOcrDetect {
     
     //Statistics about last prediction
     var lastDetectedBoxes: [CGRect] = []
-    
+    static var hasPrintedInitError = false
     
     func warmUp() {
         SSDOcrDetect.initializeModels()
@@ -50,7 +50,10 @@ struct SSDOcrDetect {
         UIGraphicsEndImageContext()
         
         guard let ssdOcrModel = ssdOcrModel else{
-            print("OCR Model not initialized")
+            if !SSDOcrDetect.hasPrintedInitError {
+                print("OCR Model not initialized")
+            }
+            SSDOcrDetect.hasPrintedInitError = true
             return
         }
         if let pixelBuffer = newImage?.pixelBuffer(width: ssdOcrImageWidth,
