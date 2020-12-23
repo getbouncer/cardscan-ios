@@ -192,7 +192,7 @@ public protocol TestingImageDataSource: AnyObject {
         self.videoFeed.requestCameraAccess(permissionDelegate: self)
     }
     
-    func invokeFakeLoop() {
+    internal func invokeFakeLoop() {
         guard let dataSource = testingImageDataSource else {
             return
         }
@@ -202,7 +202,7 @@ public protocol TestingImageDataSource: AnyObject {
         }
         
         guard let roiFrame = self.regionOfInterestLabelFrame, let previewViewFrame = self.previewViewFrame,
-        let (fullScreenImage, roiRectInPixels) = fullTestingImage.toFullScreenAndRoi(previewViewFrame: previewViewFrame, regionOfInterestLabelFrame: roiFrame) else {
+        let (_, roiRectInPixels) = fullTestingImage.toFullScreenAndRoi(previewViewFrame: previewViewFrame, regionOfInterestLabelFrame: roiFrame) else {
             print("could not get the cgImage from the region of interest, dropping frame")
             return
         }
@@ -210,7 +210,7 @@ public protocol TestingImageDataSource: AnyObject {
         mainLoop?.push(fullImage: fullTestingImage, roiRectangle: roiRectInPixels)
     }
     
-    func startFakeCameraLoop() {
+    internal func startFakeCameraLoop() {
         let timer = Timer(timeInterval: 0.1, repeats: true) { [weak self] _ in
             self?.invokeFakeLoop()
         }
