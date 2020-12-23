@@ -23,12 +23,6 @@ struct TestStats {
     }
 }
 
-class DelegateToHandle303:NSObject, URLSessionTaskDelegate {
-    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
-        print(response.description)
-    }
-}
-
 class ViewController: UIViewController {
     var videoData: [[String: String]] = []
     
