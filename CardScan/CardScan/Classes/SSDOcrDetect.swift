@@ -109,7 +109,6 @@ struct SSDOcrDetect {
         
         if scores.isEmpty || boxes.isEmpty{
             return nil
-            
         }
         
         let result: Result = PredictionUtilOcr().predictionUtil(
