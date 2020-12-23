@@ -9,12 +9,11 @@
 /* Begin PBXBuildFile section */
 		3B3506E22592EB6C001DAACE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B3506D32592EB6B001DAACE /* Main.storyboard */; };
 		3B3506E42592EB6C001DAACE /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3506D62592EB6B001DAACE /* ResultsViewController.swift */; };
-		3B3506E62592EB6C001DAACE /* new_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B3506D92592EB6C001DAACE /* new_cards.json */; };
-		3B3506E72592EB6C001DAACE /* videos.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B3506DA2592EB6C001DAACE /* videos.json */; };
-		3B3506E82592EB6C001DAACE /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3506DB2592EB6C001DAACE /* API.swift */; };
 		3B3506E92592EB6C001DAACE /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3506DC2592EB6C001DAACE /* LaunchViewController.swift */; };
 		3B3506EE2592EBBD001DAACE /* CardScan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B3506ED2592EBBD001DAACE /* CardScan.framework */; };
 		3B3506EF2592EBBD001DAACE /* CardScan.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B3506ED2592EBBD001DAACE /* CardScan.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3B7F36D42593869C00A9B414 /* apikey.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B7F36D22593869C00A9B414 /* apikey.json */; };
+		3B7F36D52593869C00A9B414 /* full_videos.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B7F36D32593869C00A9B414 /* full_videos.json */; };
 		3BDA26E52592EAC600813E6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDA26E42592EAC600813E6E /* AppDelegate.swift */; };
 		3BDA26E92592EAC600813E6E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDA26E82592EAC600813E6E /* ViewController.swift */; };
 		3BDA26EE2592EAC900813E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BDA26ED2592EAC900813E6E /* Assets.xcassets */; };
@@ -39,11 +38,10 @@
 		3B3506D22592EB6B001DAACE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B3506D42592EB6B001DAACE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		3B3506D62592EB6B001DAACE /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
-		3B3506D92592EB6C001DAACE /* new_cards.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_cards.json; sourceTree = "<group>"; };
-		3B3506DA2592EB6C001DAACE /* videos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = videos.json; sourceTree = "<group>"; };
-		3B3506DB2592EB6C001DAACE /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		3B3506DC2592EB6C001DAACE /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		3B3506ED2592EBBD001DAACE /* CardScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B7F36D22593869C00A9B414 /* apikey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = apikey.json; sourceTree = "<group>"; };
+		3B7F36D32593869C00A9B414 /* full_videos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = full_videos.json; sourceTree = "<group>"; };
 		3BDA26E12592EAC600813E6E /* TestOcr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestOcr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BDA26E42592EAC600813E6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3BDA26E82592EAC600813E6E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,8 +75,8 @@
 		3B3506D82592EB6C001DAACE /* json */ = {
 			isa = PBXGroup;
 			children = (
-				3B3506D92592EB6C001DAACE /* new_cards.json */,
-				3B3506DA2592EB6C001DAACE /* videos.json */,
+				3B7F36D22593869C00A9B414 /* apikey.json */,
+				3B7F36D32593869C00A9B414 /* full_videos.json */,
 			);
 			path = json;
 			sourceTree = "<group>";
@@ -111,7 +109,6 @@
 		3BDA26E32592EAC600813E6E /* testocr-ios */ = {
 			isa = PBXGroup;
 			children = (
-				3B3506DB2592EB6C001DAACE /* API.swift */,
 				3B3506D02592EB6B001DAACE /* Base.lproj */,
 				3B3506D82592EB6C001DAACE /* json */,
 				3B3506DC2592EB6C001DAACE /* LaunchViewController.swift */,
@@ -186,9 +183,9 @@
 			files = (
 				3BDA26F12592EAC900813E6E /* LaunchScreen.storyboard in Resources */,
 				3BDA26EE2592EAC900813E6E /* Assets.xcassets in Resources */,
+				3B7F36D42593869C00A9B414 /* apikey.json in Resources */,
+				3B7F36D52593869C00A9B414 /* full_videos.json in Resources */,
 				3B3506E22592EB6C001DAACE /* Main.storyboard in Resources */,
-				3B3506E62592EB6C001DAACE /* new_cards.json in Resources */,
-				3B3506E72592EB6C001DAACE /* videos.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +199,6 @@
 				3B3506E92592EB6C001DAACE /* LaunchViewController.swift in Sources */,
 				3BDA26E92592EAC600813E6E /* ViewController.swift in Sources */,
 				3BDA26E52592EAC600813E6E /* AppDelegate.swift in Sources */,
-				3B3506E82592EB6C001DAACE /* API.swift in Sources */,
 				3B3506E42592EB6C001DAACE /* ResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,20 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3B7B80852587D264007DB4D9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3B7B807F2587D264007DB4D9 /* CardScanSystemTest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3B7B804C2587D233007DB4D9;
-			remoteInfo = CardScanSystemTest;
-		};
-		3B7B80892587D264007DB4D9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3B7B807F2587D264007DB4D9 /* CardScanSystemTest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3B7B806D2587D234007DB4D9;
-			remoteInfo = CardScanSystemTestUITests;
-		};
 		3BB8098B2587686D00C244EA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3B20ED712586531D00CBF05E /* Project object */;
@@ -76,7 +62,6 @@
 		3B20EE5825865CAE00CBF05E /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		3B20EE5C25865D1400CBF05E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3B24F14B258B90D600C47E4D /* CardScanExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CardScanExample.entitlements; sourceTree = "<group>"; };
-		3B7B807F2587D264007DB4D9 /* CardScanSystemTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CardScanSystemTest.xcodeproj; path = ../CardScanSystemTest/CardScanSystemTest.xcodeproj; sourceTree = "<group>"; };
 		3BB809862587686D00C244EA /* CardScanExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScanExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BB8098A2587686D00C244EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3BB80991258768C700C244EA /* CardScanDD_BundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScanDD_BundleTests.swift; sourceTree = "<group>"; };
@@ -109,7 +94,6 @@
 		3B20ED702586531D00CBF05E = {
 			isa = PBXGroup;
 			children = (
-				3B7B807F2587D264007DB4D9 /* CardScanSystemTest.xcodeproj */,
 				3B20ED7B2586531D00CBF05E /* CardScanExample */,
 				3BB809872587686D00C244EA /* CardScanExampleTests */,
 				3B20ED7A2586531D00CBF05E /* Products */,
@@ -149,15 +133,6 @@
 				3B20EDAD2586545500CBF05E /* CardScan.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3B7B80802587D264007DB4D9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3B7B80862587D264007DB4D9 /* CardScanSystemTest.app */,
-				3B7B808A2587D264007DB4D9 /* CardScanSystemTestUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		3BB809872587686D00C244EA /* CardScanExampleTests */ = {
@@ -242,12 +217,6 @@
 			mainGroup = 3B20ED702586531D00CBF05E;
 			productRefGroup = 3B20ED7A2586531D00CBF05E /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 3B7B80802587D264007DB4D9 /* Products */;
-					ProjectRef = 3B7B807F2587D264007DB4D9 /* CardScanSystemTest.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				3B20ED782586531D00CBF05E /* CardScanExample */,
@@ -255,23 +224,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		3B7B80862587D264007DB4D9 /* CardScanSystemTest.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = CardScanSystemTest.app;
-			remoteRef = 3B7B80852587D264007DB4D9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3B7B808A2587D264007DB4D9 /* CardScanSystemTestUITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = CardScanSystemTestUITests.xctest;
-			remoteRef = 3B7B80892587D264007DB4D9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3B20ED772586531D00CBF05E /* Resources */ = {

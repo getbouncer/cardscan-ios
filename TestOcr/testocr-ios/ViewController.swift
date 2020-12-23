@@ -23,6 +23,12 @@ struct TestStats {
     }
 }
 
+class DelegateToHandle303:NSObject, URLSessionTaskDelegate {
+    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
+        print(response.description)
+    }
+}
+
 class ViewController: UIViewController {
     var videoData: [[String: String]] = []
     
@@ -43,7 +49,8 @@ class ViewController: UIViewController {
     var currentExpiry = ""
     var currentTestResult: TestStats?
     
-    let baseUrl = "https://lab-fees.appspot.com/videos/"
+    static var apiKey: String?
+    let baseUrl = "https://api.getbouncer.com/v1/downloads/sdk/card_verify"
     
     var testResults: [TestStats] = []
     
@@ -62,7 +69,7 @@ class ViewController: UIViewController {
         for data in videoData {
             let destinationFile = documentDirectory.appendingPathComponent(data["name"]!)
             if !FileManager.default.fileExists(atPath: destinationFile.path) {
-                let url = URL(string: "\(self.baseUrl)\(data["name"]!)")!
+                let url = URL(string: "\(self.baseUrl)/\(ViewController.apiKey!)/\(data["name"]!)")!
                 dispatchGroup.enter()
                 session.downloadTask(with: url) { (location: URL?, response: URLResponse?, error: Error?) in
                     guard let location = location else {
@@ -70,7 +77,7 @@ class ViewController: UIViewController {
                         print("could not download file")
                         return
                     }
-                    print("saving file")
+                    print("saving file \(data["name"]!)")
                     try! FileManager.default.moveItem(at: location, to: destinationFile)
                     dispatchGroup.leave()
                 }.resume()
@@ -109,7 +116,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let url = Bundle.main.url(forResource: "videos", withExtension: "json")
+        let url = Bundle.main.url(forResource: "full_videos", withExtension: "json")
         let jsonData = try! Data(contentsOf: url!)
         videoData = try! JSONSerialization.jsonObject(with: jsonData) as! [[String : String]]
         
@@ -169,46 +176,6 @@ class ViewController: UIViewController {
         return newImage!
     }
     
-    func postBackgroundTrainingDigits(image: CGImage, boxes: [CGRect]) {
-        var dxs: [CGFloat] = []
-        for idx in 0..<(boxes.count-1) {
-            dxs.append(0.5 * (boxes[idx+1].minX - boxes[idx].minX))
-        }
-        
-        var offsetBoxes: [CGRect] = []
-        for (idx, dx) in dxs.enumerated() {
-            let box = boxes[idx]
-            let rect = CGRect(x: box.origin.x + dx,
-                              y: box.origin.y,
-                              width: box.size.width,
-                              height: box.size.height)
-            offsetBoxes.append(rect)
-        }
-        
-        let imageStrings = offsetBoxes.compactMap { UIImage(cgImage: image.cropping(to: $0)!).pngData()?.base64EncodedString() }
-        let digits = imageStrings.map { ["image_png": $0, "label": "10"] }
-        Api.trainingEmbossedDigits(imagesAndLabels: digits)
-    }
-    
-    func postTrainingImages(image: CGImage, boxes: [CGRect]) {
-        let imageStrings = boxes.compactMap { UIImage(cgImage: image.cropping(to: $0)!).pngData()?.base64EncodedString() }
-        let images = imageStrings.map { ["image_png": $0] }
-        Api.trainingImages(images: images)
-    }
-    
-    func postTrainingDigits(image: CGImage, boxes: [CGRect]) {
-        let imageStrings = boxes.compactMap { UIImage(cgImage: image.cropping(to: $0)!).pngData()?.base64EncodedString() }
-        
-        /*
-        var sampledImageStrings: [String] = []
-        for _ in 0..<self.currentNumber.count {
-            sampledImageStrings.append(imageStrings[Int.random(in: 0..<imageStrings.count)])
-        }*/
-        
-        let embossedDigits = zip(imageStrings, self.currentNumber).map { ["image_png": $0, "label": String($1)] }
-        Api.trainingEmbossedDigits(imagesAndLabels: embossedDigits)
-    }
-    
     func resizeImage(image: UIImage) -> UIImage {
         
         UIGraphicsBeginImageContext(CGSize(width: 480, height: 302))
@@ -221,10 +188,6 @@ class ViewController: UIViewController {
         return newImage!
     }
     
-    func postDetectionImage(image: CGImage) {
-        let imageData = self.resizeImage(image: UIImage(cgImage: image)).pngData()!.base64EncodedString()
-        Api.trainingDetectionImage(imagePng: imageData)
-    }
     
     func cardScanOcr(fullImage: CGImage, roiRectangle: CGRect) {
         let startTime = Date()
