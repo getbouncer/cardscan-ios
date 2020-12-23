@@ -27,7 +27,7 @@ jobs:
 
       - name: test
         run: |
-          echo ${{ secrets.CARDSCAN_SYSTEM_TEST_API_KEY }}
+          echo hello
           touch CardScanSystemTest/CardScanSystemTest/Resources/apikey.json
 	  xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanSystemTest -destination 'platform=iOS Simulator,name=iPhone 11'
 
