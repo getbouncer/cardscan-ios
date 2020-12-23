@@ -28,7 +28,7 @@ jobs:
       - name: ui-test
         run:
           touch CardScanSystemTest/CardScanSystemTest/Resources/apikey.json
-	  xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanSystemTest -destination 'platform=iOS Simulator,name=iPhone 11'
+          xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanSystemTest -destination 'platform=iOS Simulator,name=iPhone 11'
 
       - name: upload-artifacts-ui
         uses: actions/upload-artifact@v2
