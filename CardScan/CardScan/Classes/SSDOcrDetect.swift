@@ -90,42 +90,48 @@ struct SSDOcrDetect {
     mutating func detectOcrObjects(prediction: SSDOcrOutput, image: UIImage) -> String? {
         var DetectedOcrBoxes = DetectedAllOcrBoxes()
         
-        var scores : [[Float]]
-        var boxes : [[Float]]
-        var filterArray : [Float]
 
-        (scores, boxes, filterArray) = prediction.getScores(filterThreshold: filterThreshold)
-        let regularBoxes = prediction.convertLocationsToBoxes(locations: boxes,
-                                                              priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(),
-                                                              centerVariance: 0.1, sizeVariance: 0.2)
+        var (scores, boxes, filterArray) = prediction.getScores(filterThreshold: filterThreshold)
+        let regularBoxes = prediction.convertLocationsToBoxes(
+            locations: boxes,
+            priors: SSDOcrDetect.priors ?? OcrPriorsGen.combinePriors(),
+            centerVariance: centerVariance,
+            sizeVariance: sizeVariance
+        )
         let cornerFormBoxes = prediction.centerFormToCornerForm(regularBoxes: regularBoxes)
         
-        var prunnedScores : [[Float]]
-        var prunnedBoxes : [[Float]]
+        (scores, boxes) = prediction.filterScoresAndBoxes(
+            scores: scores,
+            boxes: cornerFormBoxes,
+            filterArray:  filterArray,
+            filterThreshold: filterThreshold
+        )
         
-        (prunnedScores, prunnedBoxes) = prediction.filterScoresAndBoxes(scores: scores,
-                                                                         boxes: cornerFormBoxes,
-                                                                         filterArray:  filterArray,
-                                                                         filterThreshold: filterThreshold)
-        
-        if prunnedScores.isEmpty || prunnedBoxes.isEmpty{
-            prunnedScores = [[Float]](repeating: [Float](repeating: 0.0, count: 2), count: 2)
-            prunnedBoxes = [[Float]](repeating: [Float](repeating: 0.0, count: 2 ), count: 2)
-            
+        if scores.isEmpty || boxes.isEmpty{
+            return nil
         }
         
-        let predUtil = PredictionUtilOcr()
-        let result:Result = predUtil.predictionUtil(scores:prunnedScores, boxes: prunnedBoxes,
-                                                  probThreshold: probThreshold,
-                                                  iouThreshold: iouThreshold,
-                                                  candidateSize: candidateSize,
-                                                  topK: topK)
+        let result: Result = PredictionUtilOcr().predictionUtil(
+            scores:scores,
+            boxes: boxes,
+            probThreshold: probThreshold,
+            iouThreshold: iouThreshold,
+            candidateSize: candidateSize,
+            topK: topK
+        )
     
         for idx in 0..<result.pickedBoxes.count {
-            DetectedOcrBoxes.allBoxes.append(DetectedSSDOcrBox(category: result.pickedLabels[idx], conf: result.pickedBoxProbs[idx],
-                                                               XMin: Double(result.pickedBoxes[idx][0]), YMin: Double(result.pickedBoxes[idx][1]),
-                                                               XMax: Double(result.pickedBoxes[idx][2]), YMax: Double(result.pickedBoxes[idx][3]),
-                                                               imageSize: image.size))
+            DetectedOcrBoxes.allBoxes.append(
+                DetectedSSDOcrBox(
+                    category: result.pickedLabels[idx],
+                    conf: result.pickedBoxProbs[idx],
+                    XMin: Double(result.pickedBoxes[idx][0]),
+                    YMin: Double(result.pickedBoxes[idx][1]),
+                    XMax: Double(result.pickedBoxes[idx][2]),
+                    YMax: Double(result.pickedBoxes[idx][3]),
+                    imageSize: image.size
+                )
+            )
         }
         
         if !DetectedOcrBoxes.allBoxes.isEmpty {

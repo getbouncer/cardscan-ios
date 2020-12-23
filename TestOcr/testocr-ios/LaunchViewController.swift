@@ -20,6 +20,10 @@ class LaunchViewController: UIViewController {
     }
     
     @IBAction func runTestOcrApplePress() {
+        guard #available(iOS 13.0, *) else {
+            print("AppleOcr is only available on iOS 13 or above")
+            return
+        }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "viewController") as! ViewController
         vc.ocr = AppleCreditCardOcr(dispatchQueueLabel: "TestOcr Apple")
