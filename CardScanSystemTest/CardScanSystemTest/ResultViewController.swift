@@ -32,7 +32,8 @@ class ResultViewController: UIViewController {
             self.verifyLabel.text = "verify \(verifiedCard) match \(verifiedMatch)"
         }
         
-        self.apiResultLabel.isHidden = true
+        self.apiResultLabel.text = "API key = \(Api.apiKey)"
+        self.apiResultLabel.isHidden = false
         
         DispatchQueue.global(qos: .background).async {
             var hasResult = false
