@@ -14,6 +14,14 @@ class CardScanSystemTestUITests: XCTestCase {
     var app: XCUIApplication?
     var interruptionToken: NSObjectProtocol?
     
+    func isSimulator() -> Bool {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return false
+        #endif
+    }
+    
     override func setUp() {
         self.interruptionToken = addUIInterruptionMonitor(withDescription: "Camera Services") { (alert) -> Bool in
 
@@ -139,6 +147,11 @@ class CardScanSystemTestUITests: XCTestCase {
             return
         }
         
+        guard !isSimulator() else {
+            print("skipping test when running on a simulator")
+            return
+        }
+        
         let imagePicker = app.buttons["OpenImagePicker"]
         let cancel = app.buttons["Cancel"]
         let cardScan = app.buttons["OpenCardScan"]
@@ -167,6 +180,11 @@ class CardScanSystemTestUITests: XCTestCase {
     func testTorchState() {
         guard let app = self.app else {
             XCTAssert(false);
+            return
+        }
+        
+        guard !isSimulator() else {
+            print("skipping test when running on a simulator")
             return
         }
         

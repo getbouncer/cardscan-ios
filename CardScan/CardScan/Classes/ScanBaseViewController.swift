@@ -192,6 +192,31 @@ public protocol TestingImageDataSource: AnyObject {
         self.videoFeed.requestCameraAccess(permissionDelegate: self)
     }
     
+    func invokeFakeLoop() {
+        guard let dataSource = testingImageDataSource else {
+            return
+        }
+        
+        guard let (_, fullTestingImage) = dataSource.nextSquareAndFullImage() else {
+            return
+        }
+        
+        guard let roiFrame = self.regionOfInterestLabelFrame, let previewViewFrame = self.previewViewFrame,
+        let (fullScreenImage, roiRectInPixels) = fullTestingImage.toFullScreenAndRoi(previewViewFrame: previewViewFrame, regionOfInterestLabelFrame: roiFrame) else {
+            print("could not get the cgImage from the region of interest, dropping frame")
+            return
+        }
+        
+        mainLoop?.push(fullImage: fullTestingImage, roiRectangle: roiRectInPixels)
+    }
+    
+    func startFakeCameraLoop() {
+        let timer = Timer(timeInterval: 0.1, repeats: true) { [weak self] _ in
+            self?.invokeFakeLoop()
+        }
+        RunLoop.main.add(timer, forMode: .default)
+    }
+    
     public func setupOnViewDidLoad(regionOfInterestLabel: UIView, blurView: BlurView, previewView: PreviewView, cornerView: CornerView?, debugImageView: UIImageView?, torchLevel: Float?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
@@ -226,6 +251,11 @@ public protocol TestingImageDataSource: AnyObject {
             }
             if let level = torchLevel {
                 self.setTorchLevel(level: level)
+            }
+            
+            if !success && self.testingImageDataSource != nil {
+                print("starting fake image loop on simulator")
+                self.startFakeCameraLoop()
             }
         })
     }

@@ -24,3 +24,15 @@ jobs:
         with:
           name: test-report
           path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
+
+      - name: test
+        run: |
+          xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanSystemTest -destination 'platform=iOS Simulator,name=iPhone 11'
+
+      - name: upload-artifacts
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test-report
+          path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
+
