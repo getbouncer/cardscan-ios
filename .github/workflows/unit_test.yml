@@ -26,8 +26,11 @@ jobs:
           path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
 
       - name: test
+        env:
+          CARDSCAN_SYSTEM_TEST_API_KEY: ${{ secrets.CARDSCAN_SYSTEM_TEST_API_KEY }}
         run: |
-          xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanSystemTest -destination 'platform=iOS Simulator,name=iPhone 11'
+	  touch CardScanSystemTest/CardScanSystemTest/Resources/apikey.json
+	  xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanSystemTest -destination 'platform=iOS Simulator,name=iPhone 11'
 
       - name: upload-artifacts
         uses: actions/upload-artifact@v2
