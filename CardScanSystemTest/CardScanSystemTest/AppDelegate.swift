@@ -15,12 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // check the environment variable first, if our API key is here use it and finish up
-        if let apiKeyEnv = ProcessInfo.processInfo.environment["CARDSCAN_SYSTEM_TEST_API_KEY"] {
-            ScanBaseViewController.configure(apiKey: apiKeyEnv)
-            return true
-        }
-        
         let bundle = Bundle(for: AppDelegate.self)
         guard let apiKeyJsonUrl = bundle.url(forResource: "apikey", withExtension: "json") else {
             print("make sure that you create an 'apikey.json' file in the Resources dir")
