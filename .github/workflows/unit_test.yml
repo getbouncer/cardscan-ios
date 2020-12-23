@@ -26,7 +26,8 @@ jobs:
           path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
 
       - name: ui-test
-        env: CARDSCAN_SYSTEM_TEST_API_KEY: ${{secrets.CARDSCAN_SYSTEM_TEST_API_KEY}}
+        env:
+          CARDSCAN_SYSTEM_TEST_API_KEY: ${{secrets.CARDSCAN_SYSTEM_TEST_API_KEY}}
         run: |
           touch CardScanSystemTest/CardScanSystemTest/Resources/apikey.json
           xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanSystemTest -destination 'platform=iOS Simulator,name=iPhone 11'
