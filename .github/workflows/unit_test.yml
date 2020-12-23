@@ -14,13 +14,26 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: test
-        run: |
+      - name: unit-test
+        run:
           xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanExample -destination 'platform=iOS Simulator,name=iPhone 11'
 
-      - name: upload-artifacts
+      - name: upload-artifacts-unit
         uses: actions/upload-artifact@v2
         if: failure()
         with:
-          name: test-report
+          name: test-report-unit
           path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
+
+      - name: ui-test
+        run: |
+          echo '{"apikey": "${{secrets.CARDSCAN_SYSTEM_TEST_API_KEY}}"}' > CardScanSystemTest/CardScanSystemTest/Resources/apikey.json
+          xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanSystemTest -destination 'platform=iOS Simulator,name=iPhone 11'
+
+      - name: upload-artifacts-ui
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test-report-ui
+          path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
+
