@@ -217,6 +217,14 @@ public protocol TestingImageDataSource: AnyObject {
         RunLoop.main.add(timer, forMode: .default)
     }
     
+    func isSimulator() -> Bool {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return false
+        #endif
+    }
+    
     public func setupOnViewDidLoad(regionOfInterestLabel: UIView, blurView: BlurView, previewView: PreviewView, cornerView: CornerView?, debugImageView: UIImageView?, torchLevel: Float?) {
         
         self.regionOfInterestLabel = regionOfInterestLabel
@@ -253,7 +261,7 @@ public protocol TestingImageDataSource: AnyObject {
                 self.setTorchLevel(level: level)
             }
             
-            if !success && self.testingImageDataSource != nil {
+            if !success && self.testingImageDataSource != nil && self.isSimulator() {
                 print("starting fake image loop on simulator")
                 self.startFakeCameraLoop()
             }
