@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/kingst/work/cardscan-ios/testocr-ios/TestOcr.xcodeproj">
+      location = "group:TestOcr/TestOcr.xcodeproj">
    </FileRef>
    <FileRef
       location = "container:CardScanExample/CardScanExample.xcodeproj">
