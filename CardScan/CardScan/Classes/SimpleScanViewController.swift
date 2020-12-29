@@ -57,13 +57,13 @@ import UIKit
  the most sense for your app.
  */
 
-@available(iOS 11.2, *)
+@available(iOS 9.3, *)
 @objc public protocol SimpleScanDelegate {
     @objc func userDidCancelSimple(_ scanViewController: SimpleScanViewController)
     @objc func userDidScanCardSimple(_ scanViewController: SimpleScanViewController, creditCard: CreditCard)
 }
 
-@available(iOS 11.2, *)
+@available(iOS 9.3, *)
 open class SimpleScanViewController: ScanBaseViewController {
 
     // used by ScanBase
@@ -382,7 +382,7 @@ open class SimpleScanViewController: ScanBaseViewController {
             return
         }
         
-        UIApplication.shared.open(settingsUrl)
+        UIApplication.shared.openURL(settingsUrl)
     }
 }
 

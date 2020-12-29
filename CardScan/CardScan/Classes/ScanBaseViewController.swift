@@ -211,10 +211,10 @@ public protocol TestingImageDataSource: AnyObject {
     }
     
     internal func startFakeCameraLoop() {
-        let timer = Timer(timeInterval: 0.1, repeats: true) { [weak self] _ in
-            self?.invokeFakeLoop()
-        }
-        RunLoop.main.add(timer, forMode: .default)
+        // let timer = Timer(timeInterval: 0.1, repeats: true) { [weak self] _ in
+        //     self?.invokeFakeLoop()
+        // }
+        // RunLoop.main.add(timer, forMode: .default)
     }
     
     func isSimulator() -> Bool {
