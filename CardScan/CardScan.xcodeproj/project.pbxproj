@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AF3AB34259B7EA3008D7CDE /* USScanCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF3AB33259B7EA3008D7CDE /* USScanCardViewController.swift */; };
 		3B20EDA12586539600CBF05E /* CardScan.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B20ED9F2586539600CBF05E /* CardScan.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3B20EDF22586550600CBF05E /* VideoFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB32586550600CBF05E /* VideoFeed.swift */; };
 		3B20EDF32586550600CBF05E /* ActiveStateComputation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB42586550600CBF05E /* ActiveStateComputation.swift */; };
@@ -72,6 +73,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1AF3AB33259B7EA3008D7CDE /* USScanCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USScanCardViewController.swift; sourceTree = "<group>"; };
 		3B20ED9C2586539600CBF05E /* CardScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CardScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B20ED9F2586539600CBF05E /* CardScan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardScan.h; sourceTree = "<group>"; };
 		3B20EDA02586539600CBF05E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				3B20EDD52586550600CBF05E /* Torch.swift */,
 				3B20EDD62586550600CBF05E /* DetectedBox.swift */,
 				3B20EDD72586550600CBF05E /* SimpleScanViewController.swift */,
+				1AF3AB33259B7EA3008D7CDE /* USScanCardViewController.swift */,
 				3B20EDD82586550600CBF05E /* CardNetwork.swift */,
 				3B20EDD92586550600CBF05E /* CardType.swift */,
 				3B20EDDA2586550600CBF05E /* CornerView.swift */,
@@ -404,6 +407,7 @@
 				3B20EE242586550600CBF05E /* Image+utils.swift in Sources */,
 				3B20EE292586550600CBF05E /* BlurView.swift in Sources */,
 				3B20EDFA2586550600CBF05E /* CreditCardOcrResult.swift in Sources */,
+				1AF3AB34259B7EA3008D7CDE /* USScanCardViewController.swift in Sources */,
 				3B20EE232586550600CBF05E /* CreditCardOcrPrediction+expiry.swift in Sources */,
 				3B20EE112586550600CBF05E /* DetectedSSDBox.swift in Sources */,
 				3B20EE2B2586550600CBF05E /* SSDOcr.mlmodel in Sources */,
