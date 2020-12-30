@@ -1,0 +1,12 @@
+"Scan Card" = "카드 스캔";
+"Enable camera access" = "카메라 액세스 활성화";
+"To scan your card you'll need to update your phone settings" = "카드를 스캔하려면 스마트폰 설정을 업데이트해 주셔야 합니다";
+"Close" = "닫기";
+"Torch" = "플래시";
+"Enter card details manually" = "카드 정보 직접 입력";
+"We need you to confirm this card" = "이 카드를 확인해 주셔야 합니다";
+"Get your card ready so you can scan it with your phone. This helps us keep your account secure." = "카드를 준비해서 스마트폰으로 스캔하세요. 귀하의 계정을 안전하게 유지하는 데 도움이 됩니다.";
+"Scan my card" = "내 카드 스캔";
+"I don't have this card" = "이 카드가 없습니다";
+"Card doesn't match" = "카드가 일치하지 않습니다";
+"Try to pay another way" = "다른 결제 방법 시도";

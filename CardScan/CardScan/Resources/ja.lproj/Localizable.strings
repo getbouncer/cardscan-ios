@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  CardVerify
+
+  Created by Sam King on 12/29/20.
+  
+*/
+"Scan Card" = "カードをスキャン";
+"Enable camera access" = "カメラのアクセスを有効にする";
+"To scan your card you'll need to update your phone settings" = "カードをスキャ
+ンするにはスマホの設定を更新する必要があります";
+"Close" = "閉じる";
+"Torch" = "フラッシュライト";
+"Enter card details manually" = "カードの詳細を手入力してください";
+"We need you to confirm this card" = "このカードの確認を行っていただく必要があります";
+"Get your card ready so you can scan it with your phone. This helps us keep your account secure." = "カードをスマホでスキャンできるように準備してください。アカ
+ウントの安全性を確保するのに役立ちます。";
+"Scan my card" = "自分のカードをスキャン";
+"I don't have this card" = "このカードを持っていない";
+"Card doesn't match" = "カードが一致しません";
+"Try to pay another way" = "別の方法でのお支払いをお試しください";
