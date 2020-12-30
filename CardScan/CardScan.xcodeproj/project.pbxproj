@@ -69,6 +69,7 @@
 		3B20EE49258655DC00CBF05E /* card_types.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3B20EE44258655DC00CBF05E /* card_types.txt */; };
 		3B20EE4A258655DC00CBF05E /* CardScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B20EE45258655DC00CBF05E /* CardScan.storyboard */; };
 		3B20EE54258658F900CBF05E /* SSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EE53258658F900CBF05E /* SSD.swift */; };
+		3B9F1588259C1F4C00881C1B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3B9F158A259C1F4C00881C1B /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +137,21 @@
 		3B20EE44258655DC00CBF05E /* card_types.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = card_types.txt; sourceTree = "<group>"; };
 		3B20EE45258655DC00CBF05E /* CardScan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CardScan.storyboard; sourceTree = "<group>"; };
 		3B20EE53258658F900CBF05E /* SSD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSD.swift; sourceTree = "<group>"; };
+		3B9F1589259C1F4C00881C1B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F158C259C1FAA00881C1B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3B9F158D259C1FB000881C1B /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3B9F158E259C1FB600881C1B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F158F259C1FBD00881C1B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F1590259C1FC400881C1B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F1591259C1FCA00881C1B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F1592259C1FD600881C1B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F1593259C1FDD00881C1B /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3B9F1594259C1FE100881C1B /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3B9F1595259C1FE800881C1B /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F1596259C1FF400881C1B /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F1597259C200100881C1B /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F1598259C200700881C1B /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B9F1599259C201600881C1B /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,53 +195,53 @@
 		3B20EDB22586550600CBF05E /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3B20EE53258658F900CBF05E /* SSD.swift */,
-				3B20EDB32586550600CBF05E /* VideoFeed.swift */,
 				3B20EDB42586550600CBF05E /* ActiveStateComputation.swift */,
-				3B20EDB52586550600CBF05E /* CreditCardOcr */,
-				3B20EDC12586550600CBF05E /* PriorsGen.swift */,
-				3B20EDC22586550600CBF05E /* PreviewView.swift */,
-				3B20EDC32586550600CBF05E /* Expiry.swift */,
-				3B20EDC42586550600CBF05E /* DetectedAllOcrBoxes.swift */,
-				3B20EDC52586550600CBF05E /* SsdDetect.swift */,
-				3B20EDC62586550600CBF05E /* CSBundle.swift */,
-				3B20EDC72586550600CBF05E /* NMS.swift */,
-				3B20EDC82586550600CBF05E /* DetectedAllBoxes.swift */,
 				3B20EDCA2586550600CBF05E /* API.swift */,
-				3B20EDCB2586550600CBF05E /* OcrPriorsGen.swift */,
-				3B20EDCC2586550600CBF05E /* PostDetectionAlgorithm.swift */,
-				3B20EDCD2586550600CBF05E /* SSDOcrDetect.swift */,
-				3B20EDCE2586550600CBF05E /* OcrDD.swift */,
+				3B20EDEB2586550600CBF05E /* AppleOcr */,
 				3B20EDCF2586550600CBF05E /* AppState.swift */,
-				3B20EDD02586550600CBF05E /* UIImage+pixelBuffer.swift */,
-				3B20EDD12586550600CBF05E /* CreditCardUtils.swift */,
-				3B20EDD22586550600CBF05E /* ScanConfiguration.swift */,
-				3B20EDD32586550600CBF05E /* DetectedSSDBox.swift */,
-				3B20EDD42586550600CBF05E /* CGRectExtension.swift */,
-				3B20EDD52586550600CBF05E /* Torch.swift */,
-				3B20EDD62586550600CBF05E /* DetectedBox.swift */,
-				3B20EDD72586550600CBF05E /* SimpleScanViewController.swift */,
+				3B20EDED2586550600CBF05E /* BlurView.swift */,
 				3B20EDD82586550600CBF05E /* CardNetwork.swift */,
 				3B20EDD92586550600CBF05E /* CardType.swift */,
+				3B20EDD42586550600CBF05E /* CGRectExtension.swift */,
 				3B20EDDA2586550600CBF05E /* CornerView.swift */,
-				3B20EDDB2586550600CBF05E /* ScanViewController.swift */,
-				3B20EDDC2586550600CBF05E /* SoftNMS.swift */,
-				3B20EDDD2586550600CBF05E /* PredictionUtilOcr.swift */,
-				3B20EDDE2586550600CBF05E /* PredictionResult.swift */,
-				3B20EDDF2586550600CBF05E /* ScanEventsProtocol.swift */,
-				3B20EDE02586550600CBF05E /* SSDOcrOutputExtensions.swift */,
-				3B20EDE12586550600CBF05E /* SSDOutputExtensions.swift */,
-				3B20EDE32586550600CBF05E /* ScanBaseViewController.swift */,
+				3B20EDB52586550600CBF05E /* CreditCardOcr */,
+				3B20EDD12586550600CBF05E /* CreditCardUtils.swift */,
+				3B20EDC62586550600CBF05E /* CSBundle.swift */,
+				3B20EDC82586550600CBF05E /* DetectedAllBoxes.swift */,
+				3B20EDC42586550600CBF05E /* DetectedAllOcrBoxes.swift */,
+				3B20EDD62586550600CBF05E /* DetectedBox.swift */,
+				3B20EDD32586550600CBF05E /* DetectedSSDBox.swift */,
 				3B20EDE42586550600CBF05E /* DetectedSSDOcrBox.swift */,
+				3B20EDC32586550600CBF05E /* Expiry.swift */,
 				3B20EDE52586550600CBF05E /* Extensions */,
 				3B20EDE82586550600CBF05E /* InterfaceOrientation.swift */,
-				3B20EDE92586550600CBF05E /* ScanStats.swift */,
-				3B20EDEA2586550600CBF05E /* OcrDDUtils.swift */,
-				3B20EDEB2586550600CBF05E /* AppleOcr */,
-				3B20EDED2586550600CBF05E /* BlurView.swift */,
-				3B20EDEE2586550600CBF05E /* PredictionAPI.swift */,
-				3B20EDEF2586550600CBF05E /* SSDOcr.mlmodel */,
 				3B20EDF12586550600CBF05E /* ModelConfigResponse.swift */,
+				3B20EDC72586550600CBF05E /* NMS.swift */,
+				3B20EDCE2586550600CBF05E /* OcrDD.swift */,
+				3B20EDEA2586550600CBF05E /* OcrDDUtils.swift */,
+				3B20EDCB2586550600CBF05E /* OcrPriorsGen.swift */,
+				3B20EDCC2586550600CBF05E /* PostDetectionAlgorithm.swift */,
+				3B20EDEE2586550600CBF05E /* PredictionAPI.swift */,
+				3B20EDDE2586550600CBF05E /* PredictionResult.swift */,
+				3B20EDDD2586550600CBF05E /* PredictionUtilOcr.swift */,
+				3B20EDC22586550600CBF05E /* PreviewView.swift */,
+				3B20EDC12586550600CBF05E /* PriorsGen.swift */,
+				3B20EDE32586550600CBF05E /* ScanBaseViewController.swift */,
+				3B20EDD22586550600CBF05E /* ScanConfiguration.swift */,
+				3B20EDDF2586550600CBF05E /* ScanEventsProtocol.swift */,
+				3B20EDE92586550600CBF05E /* ScanStats.swift */,
+				3B20EDDB2586550600CBF05E /* ScanViewController.swift */,
+				3B20EDD72586550600CBF05E /* SimpleScanViewController.swift */,
+				3B20EDDC2586550600CBF05E /* SoftNMS.swift */,
+				3B20EE53258658F900CBF05E /* SSD.swift */,
+				3B20EDC52586550600CBF05E /* SsdDetect.swift */,
+				3B20EDEF2586550600CBF05E /* SSDOcr.mlmodel */,
+				3B20EDCD2586550600CBF05E /* SSDOcrDetect.swift */,
+				3B20EDE02586550600CBF05E /* SSDOcrOutputExtensions.swift */,
+				3B20EDE12586550600CBF05E /* SSDOutputExtensions.swift */,
+				3B20EDD52586550600CBF05E /* Torch.swift */,
+				3B20EDD02586550600CBF05E /* UIImage+pixelBuffer.swift */,
+				3B20EDB32586550600CBF05E /* VideoFeed.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -271,6 +287,7 @@
 				3B20EE42258655DC00CBF05E /* Assets.xcassets */,
 				3B20EE43258655DC00CBF05E /* Config */,
 				3B20EE45258655DC00CBF05E /* CardScan.storyboard */,
+				3B9F158A259C1F4C00881C1B /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -334,7 +351,20 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				"zh-Hans",
+				"zh-Hant",
+				ja,
+				es,
+				fr,
+				de,
+				ru,
+				"pt-BR",
+				"pt-PT",
+				ko,
+				ar,
+				id,
+				he,
+				hi,
 			);
 			mainGroup = 3B20ED922586539600CBF05E;
 			productRefGroup = 3B20ED9D2586539600CBF05E /* Products */;
@@ -352,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B20EE49258655DC00CBF05E /* card_types.txt in Resources */,
+				3B9F1588259C1F4C00881C1B /* Localizable.strings in Resources */,
 				3B20EE48258655DC00CBF05E /* Assets.xcassets in Resources */,
 				3B20EE4A258655DC00CBF05E /* CardScan.storyboard in Resources */,
 			);
@@ -427,11 +458,37 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		3B9F158A259C1F4C00881C1B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3B9F1589259C1F4C00881C1B /* en */,
+				3B9F158C259C1FAA00881C1B /* zh-Hans */,
+				3B9F158D259C1FB000881C1B /* zh-Hant */,
+				3B9F158E259C1FB600881C1B /* ja */,
+				3B9F158F259C1FBD00881C1B /* es */,
+				3B9F1590259C1FC400881C1B /* fr */,
+				3B9F1591259C1FCA00881C1B /* de */,
+				3B9F1592259C1FD600881C1B /* ru */,
+				3B9F1593259C1FDD00881C1B /* pt-BR */,
+				3B9F1594259C1FE100881C1B /* pt-PT */,
+				3B9F1595259C1FE800881C1B /* ko */,
+				3B9F1596259C1FF400881C1B /* ar */,
+				3B9F1597259C200100881C1B /* id */,
+				3B9F1598259C200700881C1B /* he */,
+				3B9F1599259C201600881C1B /* hi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		3B20EDA22586539600CBF05E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -496,6 +553,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

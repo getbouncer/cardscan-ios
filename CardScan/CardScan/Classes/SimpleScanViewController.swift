@@ -87,11 +87,11 @@ open class SimpleScanViewController: ScanBaseViewController {
     public var expiryLayoutView = UIView()
     
     // String
-    @objc public static var descriptionString = "Scan Card"
-    @objc public static var enableCameraPermissionString = "Enable camera access"
-    @objc public static var enableCameraPermissionsDescriptionString = "To scan your card you'll need to update your phone settings"
-    @objc public static var closeButtonString = "Close"
-    @objc public static var torchButtonString = "Torch"
+    @objc public static var descriptionString = NSLocalizedString("Scan Card", tableName: nil, bundle: CSBundle.bundle() ?? Bundle.main, value: "Scan Card", comment: "Scan Card")
+    @objc public static var enableCameraPermissionString = NSLocalizedString("Enable camera access", tableName: nil, bundle: CSBundle.bundle() ?? Bundle.main, value: "Enable camera access", comment: "Enable camera access")
+    @objc public static var enableCameraPermissionsDescriptionString = NSLocalizedString("To scan your card you'll need to update your phone settings", tableName: nil, bundle: CSBundle.bundle() ?? Bundle.main, value: "To scan your card you'll need to update your phone settings", comment: "To scan your card you'll need to update your phone settings")
+    @objc public static var closeButtonString = NSLocalizedString("Close", tableName: nil, bundle: CSBundle.bundle() ?? Bundle.main, value: "Close", comment: "Close")
+    @objc public static var torchButtonString = NSLocalizedString("Torch", tableName: nil, bundle: CSBundle.bundle() ?? Bundle.main, value: "Torch", comment: "Torch")
     
     public weak var delegate: SimpleScanDelegate?
     

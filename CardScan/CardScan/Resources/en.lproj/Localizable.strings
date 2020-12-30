@@ -1,0 +1,19 @@
+/* 
+  Localizable.string.strings
+  CardVerify
+
+  Created by Sam King on 12/29/20.
+  
+*/
+"Scan Card" = "Scan Card";
+"Enable camera access" = "Enable camera access";
+"To scan your card you'll need to update your phone settings" = "To scan your card you'll need to update your phone settings";
+"Close" = "Close";
+"Torch" = "Torch";
+"Enter card details manually" = "Enter card details manually";
+"We need you to confirm this card" = "We need you to confirm this card";
+"Get your card ready so you can scan it with your phone. This helps us keep your account secure." = "Get your card ready so you can scan it with your phone. This helps us keep your account secure.";
+"Scan my card" = "Scan my card";
+"I don't have this card" = "I don't have this card";
+"Card doesn't match" = "Card doesn't match";
+"Try to pay another way" = "Try to pay another way";

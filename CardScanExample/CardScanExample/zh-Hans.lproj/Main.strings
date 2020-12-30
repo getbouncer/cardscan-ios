@@ -1,0 +1,57 @@
+
+/* Class = "UIButton"; normalTitle = "Simple Scan"; ObjectID = "6NY-p4-OvD"; */
+"6NY-p4-OvD.normalTitle" = "Simple Scan";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "7Cr-oD-9K4"; */
+"7Cr-oD-9K4.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "89z-WF-akV"; */
+"89z-WF-akV.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "to modal ScanViewController"; ObjectID = "8gB-Lp-YcB"; */
+"8gB-Lp-YcB.normalTitle" = "to modal ScanViewController";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "E1g-fi-cUQ"; */
+"E1g-fi-cUQ.title" = "Back";
+
+/* Class = "UIButton"; normalTitle = "to ScanViewController"; ObjectID = "Fyx-FO-b7y"; */
+"Fyx-FO-b7y.normalTitle" = "to ScanViewController";
+
+/* Class = "UIButton"; normalTitle = "Scan and show image"; ObjectID = "HGF-3W-kd7"; */
+"HGF-3W-kd7.normalTitle" = "Scan and show image";
+
+/* Class = "UIButton"; normalTitle = "Present Modally"; ObjectID = "Hq5-Pp-QoB"; */
+"Hq5-Pp-QoB.normalTitle" = "Present Modally";
+
+/* Class = "UIButton"; normalTitle = "Scan With Timeout"; ObjectID = "LBI-Nj-Ojb"; */
+"LBI-Nj-Ojb.normalTitle" = "Scan With Timeout";
+
+/* Class = "UIButton"; normalTitle = "Scan w/ MIR"; ObjectID = "NWV-5A-wUg"; */
+"NWV-5A-wUg.normalTitle" = "Scan w/ MIR";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "ci9-Th-M77"; */
+"ci9-Th-M77.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "Scan on old phones"; ObjectID = "f3P-G8-yKq"; */
+"f3P-G8-yKq.normalTitle" = "Scan on old phones";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "fQb-rL-taA"; */
+"fQb-rL-taA.title" = "Cancel";
+
+/* Class = "UIButton"; normalTitle = "Custom images"; ObjectID = "lOx-Ed-LOH"; */
+"lOx-Ed-LOH.normalTitle" = "Custom images";
+
+/* Class = "UIButton"; normalTitle = "Scan with stats"; ObjectID = "ohs-2Q-mlC"; */
+"ohs-2Q-mlC.normalTitle" = "Scan with stats";
+
+/* Class = "UIButton"; accessibilityLabel = "ScanCardCustomStrings"; ObjectID = "pIK-as-bko"; */
+"pIK-as-bko.accessibilityLabel" = "ScanCardCustomStrings";
+
+/* Class = "UIButton"; normalTitle = "Scan Card Custom UI"; ObjectID = "pIK-as-bko"; */
+"pIK-as-bko.normalTitle" = "Scan Card Custom UI";
+
+/* Class = "UIButton"; normalTitle = "Scan Card"; ObjectID = "qlz-Ds-Znv"; */
+"qlz-Ds-Znv.normalTitle" = "Scan Card";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "wuH-z7-S5E"; */
+"wuH-z7-S5E.text" = "Label";
