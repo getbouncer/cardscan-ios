@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B15C14F259C326A005A394A /* String+localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15C14E259C326A005A394A /* String+localization.swift */; };
 		3B20EDA12586539600CBF05E /* CardScan.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B20ED9F2586539600CBF05E /* CardScan.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3B20EDF22586550600CBF05E /* VideoFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB32586550600CBF05E /* VideoFeed.swift */; };
 		3B20EDF32586550600CBF05E /* ActiveStateComputation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EDB42586550600CBF05E /* ActiveStateComputation.swift */; };
@@ -73,6 +74,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B15C14E259C326A005A394A /* String+localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+localization.swift"; sourceTree = "<group>"; };
 		3B20ED9C2586539600CBF05E /* CardScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CardScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B20ED9F2586539600CBF05E /* CardScan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardScan.h; sourceTree = "<group>"; };
 		3B20EDA02586539600CBF05E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			children = (
 				3B20EDE62586550600CBF05E /* CreditCardOcrPrediction+expiry.swift */,
 				3B20EDE72586550600CBF05E /* Image+utils.swift */,
+				3B15C14E259C326A005A394A /* String+localization.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				3B20EE0C2586550600CBF05E /* OcrDD.swift in Sources */,
 				3B20EDFC2586550600CBF05E /* NonNameWords.swift in Sources */,
 				3B20EE102586550600CBF05E /* ScanConfiguration.swift in Sources */,
+				3B15C14F259C326A005A394A /* String+localization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
