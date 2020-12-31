@@ -71,6 +71,8 @@
 		3B20EE4A258655DC00CBF05E /* CardScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B20EE45258655DC00CBF05E /* CardScan.storyboard */; };
 		3B20EE54258658F900CBF05E /* SSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EE53258658F900CBF05E /* SSD.swift */; };
 		3B9F1588259C1F4C00881C1B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3B9F158A259C1F4C00881C1B /* Localizable.strings */; };
+		F3B3697F259D42DC00E75F9B /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3697E259D42DC00E75F9B /* Device.swift */; };
+		F3B3698B259D45DD00E75F9B /* DeviceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3698A259D45DD00E75F9B /* DeviceUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -154,6 +156,8 @@
 		3B9F1597259C200100881C1B /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3B9F1598259C200700881C1B /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3B9F1599259C201600881C1B /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F3B3697E259D42DC00E75F9B /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		F3B3698A259D45DD00E75F9B /* DeviceUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,8 +201,8 @@
 		3B20EDB22586550600CBF05E /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F3B3697C259D3CA600E75F9B /* Api */,
 				3B20EDB42586550600CBF05E /* ActiveStateComputation.swift */,
-				3B20EDCA2586550600CBF05E /* API.swift */,
 				3B20EDEB2586550600CBF05E /* AppleOcr */,
 				3B20EDCF2586550600CBF05E /* AppState.swift */,
 				3B20EDED2586550600CBF05E /* BlurView.swift */,
@@ -301,6 +305,32 @@
 				3B20EE44258655DC00CBF05E /* card_types.txt */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		F3B3697C259D3CA600E75F9B /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				F3B36989259D45B300E75F9B /* Utils */,
+				F3B3697D259D42C100E75F9B /* Data */,
+				3B20EDCA2586550600CBF05E /* API.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		F3B3697D259D42C100E75F9B /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F3B3697E259D42DC00E75F9B /* Device.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F3B36989259D45B300E75F9B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F3B3698A259D45DD00E75F9B /* DeviceUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,9 +467,11 @@
 				3B20EDFE2586550600CBF05E /* ErrorCorrection.swift in Sources */,
 				3B20EE242586550600CBF05E /* Image+utils.swift in Sources */,
 				3B20EE292586550600CBF05E /* BlurView.swift in Sources */,
+				F3B3697F259D42DC00E75F9B /* Device.swift in Sources */,
 				3B20EDFA2586550600CBF05E /* CreditCardOcrResult.swift in Sources */,
 				3B20EE232586550600CBF05E /* CreditCardOcrPrediction+expiry.swift in Sources */,
 				3B20EE112586550600CBF05E /* DetectedSSDBox.swift in Sources */,
+				F3B3698B259D45DD00E75F9B /* DeviceUtils.swift in Sources */,
 				3B20EE2B2586550600CBF05E /* SSDOcr.mlmodel in Sources */,
 				3B20EE182586550600CBF05E /* CornerView.swift in Sources */,
 				3B20EE282586550600CBF05E /* AppleOcr.swift in Sources */,
