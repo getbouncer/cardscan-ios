@@ -308,6 +308,8 @@ public protocol TestingImageDataSource: AnyObject {
     
     override open func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        self.view.layoutIfNeeded()
         guard let roiFrame = self.regionOfInterestLabel?.frame, let previewViewFrame = self.previewView?.frame else { return }
          // store .frame to avoid accessing UI APIs in the machineLearningQueue
         self.regionOfInterestLabelFrame = roiFrame
