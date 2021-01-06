@@ -7,7 +7,6 @@
 
 import CoreGraphics
 import Foundation
-import os.log
 import UIKit
 
 /** Documentation for SSD OCR
@@ -50,10 +49,7 @@ struct SSDOcrDetect {
         UIGraphicsEndImageContext()
         
         guard let ssdOcrModel = ssdOcrModel else{
-            if !SSDOcrDetect.hasPrintedInitError {
-                print("OCR Model not initialized")
-            }
-            SSDOcrDetect.hasPrintedInitError = true
+            print("OCR Model not initialized")
             return
         }
         if let pixelBuffer = newImage?.pixelBuffer(width: ssdOcrImageWidth,
@@ -154,20 +150,23 @@ struct SSDOcrDetect {
         guard let pixelBuffer = image.pixelBuffer(width: ssdOcrImageWidth,
                                                   height: ssdOcrImageHeight)
         else {
-            os_log("Couldn't convert to pixel buffer", type: .debug)
+            print("Couldn't convert to pixel buffer")
             return nil
                                                     
         }
         
         guard let ocrDetectModel = ssdOcrModel else {
-            os_log("Ocr Model not initialized", type: .debug)
+            if !SSDOcrDetect.hasPrintedInitError {
+                print("Ocr Model not initialized")
+                SSDOcrDetect.hasPrintedInitError = true
+            }
             return nil
         }
         
         let input = SSDOcrInput(_0: pixelBuffer)
         
         guard let prediction = try? ocrDetectModel.prediction(input: input) else {
-            os_log("Ocr Couldn't predict", type: .debug)
+            print("Ocr Couldn't predict")
             return nil
         }
         return self.detectOcrObjects(prediction: prediction, image: image)

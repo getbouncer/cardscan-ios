@@ -12,6 +12,8 @@ public class CSBundle {
     // initializing the library
     public static var bundleIdentifier = "com.getbouncer.CardScan"
     public static var cardScanBundle: Bundle?
+    public static var namedBundle = "CardScan"
+    public static var namedBundleExtension = "bundle"
     
     // Public for testing
     public static func bundle() -> Bundle? {
@@ -19,7 +21,16 @@ public class CSBundle {
             return cardScanBundle
         }
         
-        return Bundle(identifier: bundleIdentifier)
+        if let bundle = Bundle(identifier: bundleIdentifier) {
+            return bundle
+        }
+        
+        // as a fall back try getting a named bundle for cases when we deploy as source
+        guard let bundleUrl = Bundle(for: CSBundle.self).url(forResource: namedBundle, withExtension: namedBundleExtension)  else {
+            return nil
+        }
+        
+        return Bundle(url: bundleUrl)
     }
     
     static func compiledModel(forResource: String, withExtension: String) -> URL? {
