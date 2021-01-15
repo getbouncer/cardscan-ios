@@ -131,21 +131,18 @@ public protocol TestingImageDataSource: AnyObject {
             return false
         }
         
-        if #available(iOS 11.2, *) {
-            // make sure that we don't run on iPhone 6 / 6plus or older
-            if configuration.runOnOldDevices {
+        // make sure that we don't run on iPhone 6 / 6plus or older
+        if configuration.runOnOldDevices {
+            return true
+        }
+        
+        switch Api.deviceType() {
+            case "iPhone3,1", "iPhone3,2", "iPhone3,3", "iPhone4,1":
                 return true
-            }
-            switch Api.deviceType() {
-                case "iPhone3,1", "iPhone3,2", "iPhone3,3", "iPhone4,1":
-                    return true
-                case "iPhone5,1", "iPhone5,2", "iPhone5,3", "iPhone5,4", "iPhone6,1", "iPhone6,2", "iPhone7,2", "iPhone7,1":
-                    return true
-                default:
-                    return true
-            }
-        } else {
-            return false
+            case "iPhone5,1", "iPhone5,2", "iPhone5,3", "iPhone5,4", "iPhone6,1", "iPhone6,2", "iPhone7,2", "iPhone7,1":
+                return true
+            default:
+                return true
         }
     }
     
@@ -380,9 +377,7 @@ public protocol TestingImageDataSource: AnyObject {
             }
             mainLoop?.push(fullImage: fullTestingImage, roiRectangle: roiRectInPixels)
         } else {
-            if #available(iOS 11.2, *) {
-                mainLoop?.push(fullImage: fullScreenImage, roiRectangle: roiRectInPixels)
-            }
+            mainLoop?.push(fullImage: fullScreenImage, roiRectangle: roiRectInPixels)
         }
     }
     
