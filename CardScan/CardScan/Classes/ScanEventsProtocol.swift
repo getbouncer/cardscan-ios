@@ -9,6 +9,7 @@
 
 import CoreGraphics
 
+@available(iOS 11.2, *)
 public protocol ScanEvents {
     mutating func onNumberRecognized(number: String, expiry: Expiry?, numberBoundingBox: CGRect, expiryBoundingBox: CGRect?, croppedCardSize: CGSize, squareCardImage: CGImage, fullCardImage: CGImage, centeredCardState: CenteredCardState?, uxFrameConfidenceValues: UxFrameConfidenceValues?, flashForcedOn: Bool)
     mutating func onScanComplete(scanStats: ScanStats)

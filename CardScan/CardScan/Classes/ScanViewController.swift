@@ -12,7 +12,7 @@ import UIKit
     import Stripe
 #endif
 
-
+@available(iOS 11.2, *)
 @objc public protocol ScanDelegate {
     @objc func userDidCancel(_ scanViewController: ScanViewController)
     @objc func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard)
@@ -20,6 +20,7 @@ import UIKit
     @objc func userDidSkip(_ scanViewController: ScanViewController)
 }
 
+@available(iOS 11.2, *)
 @objc public protocol ScanStringsDataSource {
     @objc func scanCard() -> String
     @objc func positionCard() -> String
@@ -27,6 +28,7 @@ import UIKit
     @objc func skipButton() -> String
 }
 
+@available(iOS 11.2, *)
 @objc public protocol CaptureOutputDelegate {
     func capture(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection)
 }
@@ -39,6 +41,7 @@ import UIKit
 // If you prefer to just set the main strings on the ScanViewController
 // the ScanStringsDataSource protocol is stable and won't change, but
 // might be incomplete.
+@available(iOS 11.2, *)
 @objc public protocol FullScanStringsDataSource: ScanStringsDataSource {
     @objc func denyPermissionTitle() -> String
     @objc func denyPermissionMessage() -> String
@@ -88,6 +91,7 @@ import UIKit
     #endif
 }
 
+@available(iOS 11.2, *)
 @objc public class ScanViewController: ScanBaseViewController {
     
     public weak var scanDelegate: ScanDelegate?
@@ -373,6 +377,7 @@ import UIKit
     
 }
 
+@available(iOS 11.2, *)
 extension ScanViewController {
      @objc func viewOnWillResignActive() {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
