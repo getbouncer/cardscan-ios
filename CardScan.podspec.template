@@ -13,7 +13,7 @@ CardScan is a library for scanning credit cards.
 
   # lint warning, who knows
   #s.social_media_url = 'https://twitter.com/stk'
-  s.ios.deployment_target = '11.2'
+  s.ios.deployment_target = '11.0'
   s.swift_version = '5.3.1'
   s.vendored_frameworks = 'CardScan.xcframework'
   s.weak_frameworks = 'AVKit', 'CoreML', 'VideoToolbox', 'Vision', 'UIKit', 'AVFoundation'
