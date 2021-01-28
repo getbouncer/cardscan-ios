@@ -34,6 +34,8 @@ public protocol MainLoopStateMachine {
     let minimumErrorCorrection = 2.0
     let maximumErrorCorrection = ScanConfiguration.scanPerformancePriority == .fastScan ? 2.0 : 4.0
     
+    public override init() {}
+    
     public func loopState() -> MainLoopState {
         return state
     }

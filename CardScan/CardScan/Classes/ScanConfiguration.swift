@@ -8,5 +8,5 @@ import Foundation
 @objc public class ScanConfiguration: NSObject {
     @objc public var runOnOldDevices = false
     @objc public var setPreviouslyDeniedDevicesAsIncompatible = false
-    @objc public static var scanPerformancePriority: ScanPerformance = .accurateScan
+    @objc public static var scanPerformancePriority: ScanPerformance = .fastScan
 }
