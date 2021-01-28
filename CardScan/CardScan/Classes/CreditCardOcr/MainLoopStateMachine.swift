@@ -29,10 +29,10 @@ public protocol MainLoopStateMachine {
 @objc open class OcrMainLoopStateMachine: NSObject, MainLoopStateMachine {
     public var state: MainLoopState = .initial
     public var startTimeForCurrentState = Date()
+    public var hasExpiryPrediction = ScanConfiguration.scanPerformancePriority == .fastScan
     
-    public override init() { }
-    
-    public let errorCorrectionDurationSeconds = 2.0
+    let minimumErrorCorrection = 2.0
+    let maximumErrorCorrection = ScanConfiguration.scanPerformancePriority == .fastScan ? 2.0 : 4.0
     
     public func loopState() -> MainLoopState {
         return state
@@ -51,11 +51,14 @@ public protocol MainLoopStateMachine {
     open func transition(prediction: CreditCardOcrPrediction) -> MainLoopState? {
         let timeInCurrentStateSeconds = -startTimeForCurrentState.timeIntervalSinceNow
         let frameHasOcr = prediction.number != nil
-        
-        switch (state, timeInCurrentStateSeconds, frameHasOcr) {
-        case (.initial, _, true):
+        hasExpiryPrediction = hasExpiryPrediction || prediction.expiryForDisplay != nil
+
+        switch (state, timeInCurrentStateSeconds, frameHasOcr, hasExpiryPrediction) {
+        case (.initial, _, true, _):
             return .ocrOnly
-        case (.ocrOnly, errorCorrectionDurationSeconds..., _):
+        case (.ocrOnly, minimumErrorCorrection..., _, true):
+            return .finished
+        case (.ocrOnly, maximumErrorCorrection..., _, false):
             return .finished
         default:
             // no state transitions
