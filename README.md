@@ -20,7 +20,8 @@ they are scanned.
 
 ## Requirements
 * Xcode 11 or higher
-* iOS 11 or higher
+* iOS 11 or higher (but the scanning view controllers require iOS 11.2 or higher to run)
+* iOS 13 or higher for name and expiry extraction
 
 ## Demo
 This repository contains a demonstration app for the CardScan product. To build and run the demo app, follow the
