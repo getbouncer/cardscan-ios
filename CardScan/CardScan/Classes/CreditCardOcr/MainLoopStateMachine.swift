@@ -29,9 +29,6 @@ public protocol MainLoopStateMachine {
 @objc open class OcrMainLoopStateMachine: NSObject, MainLoopStateMachine {
     public var state: MainLoopState = .initial
     public var startTimeForCurrentState = Date()
-    
-    public override init() { }
-    
     public let errorCorrectionDurationSeconds = 2.0
     
     public override init() {}
@@ -67,5 +64,53 @@ public protocol MainLoopStateMachine {
     
     open func reset() -> MainLoopStateMachine {
         return OcrMainLoopStateMachine()
+    }
+}
+
+@objc public class OcrDurationMainLoopStateMachine: NSObject, MainLoopStateMachine {
+    var state: MainLoopState = .initial
+    var startTimeForCurrentState = Date()
+    var hasExpiryPrediction = false
+    
+    let minimumErrorCorrection = 2.0
+    var maximumErrorCorrection = 4.0
+    
+    public func loopState() -> MainLoopState {
+        return state
+    }
+    
+    override init() { }
+    
+    public init(maxErrorCorrection: Double) {
+        self.maximumErrorCorrection = maxErrorCorrection
+    }
+    
+    public func event(prediction: CreditCardOcrPrediction) -> MainLoopState {
+        let newState = transition(prediction: prediction)
+        if let newState = newState {
+            startTimeForCurrentState = Date()
+            state = newState
+        }
+        return newState ?? state
+    }
+    
+    public func transition(prediction: CreditCardOcrPrediction) -> MainLoopState? {
+        let timeInCurrentStateSeconds = -startTimeForCurrentState.timeIntervalSinceNow
+        let frameHasOcr = prediction.number != nil
+        hasExpiryPrediction = hasExpiryPrediction || prediction.expiryForDisplay != nil
+        switch (state, timeInCurrentStateSeconds, frameHasOcr, hasExpiryPrediction) {
+        case (.initial, _, true, _):
+            return .ocrOnly
+        case (.ocrOnly, minimumErrorCorrection..., _, true):
+            return .finished
+        case (.ocrOnly, maximumErrorCorrection..., _, false):
+            return .finished
+        default:
+            // no state transitions
+            return nil
+        }
+    }
+    public func reset() -> MainLoopStateMachine {
+        return OcrDurationMainLoopStateMachine()
     }
 }

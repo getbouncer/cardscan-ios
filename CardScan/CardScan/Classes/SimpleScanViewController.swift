@@ -94,6 +94,7 @@ open class SimpleScanViewController: ScanBaseViewController {
     @objc public static var torchButtonString = "Torch".localize()
     
     public weak var delegate: SimpleScanDelegate?
+    public var scanPerformancePriority: ScanPerformancePriority = .fast
     
     public static func createViewController() -> SimpleScanViewController {
         let vc = SimpleScanViewController()
@@ -117,7 +118,15 @@ open class SimpleScanViewController: ScanBaseViewController {
         setupConstraints()
         
         setupOnViewDidLoad(regionOfInterestLabel: roiView, blurView: blurView, previewView: previewView, cornerView: cornerView, debugImageView: debugView, torchLevel: 1.0)
+        setUpMainLoop()
         startCameraPreview()
+    }
+    
+    func setUpMainLoop() {
+        if scanPerformancePriority == .accurate {
+            let mainLoop = self.mainLoop as? OcrMainLoop
+            mainLoop?.errorCorrection = ErrorCorrection(stateMachine: OcrDurationMainLoopStateMachine())
+        }
     }
     
     // MARK: -Visual and UI event setup for UI components
