@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="vXZ-lx-hvc" customClass="ViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="vXZ-lx-hvc" customClass="ViewController" customModule="CardScanExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -19,7 +20,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qlz-Ds-Znv">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qlz-Ds-Znv">
                                 <rect key="frame" x="16" y="313.5" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.83529411760000005" blue="0.45098039220000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -34,7 +35,7 @@
                                     <action selector="scanCardPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dje-0L-2QO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6NY-p4-OvD">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6NY-p4-OvD">
                                 <rect key="frame" x="16" y="361.5" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.81568627449999997" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -55,7 +56,7 @@
                                     <constraint firstAttribute="width" constant="32" id="qe9-YZ-gfV"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pIK-as-bko">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pIK-as-bko">
                                 <rect key="frame" x="16" y="409.5" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <accessibility key="accessibilityConfiguration" label="ScanCardCustomStrings"/>
@@ -70,7 +71,7 @@
                                     <action selector="scanCardCustomStringsPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="u4z-Ts-KST"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LBI-Nj-Ojb">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LBI-Nj-Ojb">
                                 <rect key="frame" x="16" y="457.5" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -84,7 +85,7 @@
                                     <action selector="scanWithTimeoutPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Jph-sI-e4m"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGF-3W-kd7">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGF-3W-kd7">
                                 <rect key="frame" x="16" y="505.5" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.0" green="0.58823529409999997" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -98,39 +99,46 @@
                                     <action selector="scanAndShowImagePress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="4Yh-It-wDZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOx-Ed-LOH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOx-Ed-LOH">
                                 <rect key="frame" x="134" y="553.5" width="107" height="30"/>
                                 <state key="normal" title="Custom images"/>
                                 <connections>
                                     <action selector="customVideoPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="mp5-uJ-PSq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohs-2Q-mlC">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohs-2Q-mlC">
                                 <rect key="frame" x="32" y="227.5" width="311" height="30"/>
                                 <state key="normal" title="Scan with stats"/>
                                 <connections>
                                     <action selector="scanWithStatsPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="jE8-iT-1in"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3P-G8-yKq">
-                                <rect key="frame" x="119.5" y="189.5" width="136" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3P-G8-yKq">
+                                <rect key="frame" x="120" y="189.5" width="135" height="30"/>
                                 <state key="normal" title="Scan on old phones"/>
                                 <connections>
                                     <action selector="scanCardOldDevicePress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lSb-gT-iHT"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hq5-Pp-QoB">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hq5-Pp-QoB">
                                 <rect key="frame" x="132" y="588" width="111" height="30"/>
                                 <state key="normal" title="Present Modally"/>
                                 <connections>
                                     <segue destination="QHk-Pe-Pgw" kind="show" id="KAt-Cl-VDw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWV-5A-wUg">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWV-5A-wUg">
                                 <rect key="frame" x="145.5" y="151.5" width="84" height="30"/>
                                 <state key="normal" title="Scan w/ MIR"/>
                                 <connections>
                                     <action selector="scanWithMirPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Py8-zH-DVS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9DG-kK-DcC">
+                                <rect key="frame" x="112.5" y="623" width="150" height="30"/>
+                                <state key="normal" title="Scan Simple Accurate"/>
+                                <connections>
+                                    <segue destination="puQ-1T-HWr" kind="show" id="Gg0-Jx-gRw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -143,6 +151,7 @@
                             <constraint firstItem="f3P-G8-yKq" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="8CR-et-Rxz"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="AkZ-f5-Cw0"/>
                             <constraint firstItem="LBI-Nj-Ojb" firstAttribute="top" secondItem="pIK-as-bko" secondAttribute="bottom" constant="8" id="DKk-6B-vtM"/>
+                            <constraint firstItem="9DG-kK-DcC" firstAttribute="top" secondItem="Hq5-Pp-QoB" secondAttribute="bottom" constant="5" id="FFf-Fy-uA5"/>
                             <constraint firstItem="9tR-DO-gyb" firstAttribute="top" secondItem="ohs-2Q-mlC" secondAttribute="bottom" constant="8" id="Fjf-BO-ZHs"/>
                             <constraint firstItem="9tR-DO-gyb" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="IXC-rr-ZtJ"/>
                             <constraint firstItem="lOx-Ed-LOH" firstAttribute="top" secondItem="HGF-3W-kd7" secondAttribute="bottom" constant="8" id="IrW-Pq-bcY"/>
@@ -161,6 +170,7 @@
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="top" secondItem="9tR-DO-gyb" secondAttribute="bottom" constant="16" id="hrc-Fy-VMw"/>
                             <constraint firstItem="HGF-3W-kd7" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="jJ2-Kn-FQ2"/>
                             <constraint firstItem="HGF-3W-kd7" firstAttribute="top" secondItem="LBI-Nj-Ojb" secondAttribute="bottom" constant="8" id="n9T-02-cay"/>
+                            <constraint firstItem="9DG-kK-DcC" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="oAQ-pS-GWX"/>
                             <constraint firstItem="6NY-p4-OvD" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="sRZ-M5-dWl"/>
                             <constraint firstItem="f3P-G8-yKq" firstAttribute="top" secondItem="NWV-5A-wUg" secondAttribute="bottom" constant="8" id="snC-PU-qzF"/>
                             <constraint firstItem="qlz-Ds-Znv" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="tRj-Xx-bJf"/>
@@ -179,7 +189,7 @@
         <!--Result View Controller-->
         <scene sceneID="QQj-aS-VAE">
             <objects>
-                <viewController storyboardIdentifier="results" modalPresentationStyle="fullScreen" id="mw5-ZK-itv" customClass="ResultViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="results" modalPresentationStyle="fullScreen" id="mw5-ZK-itv" customClass="ResultViewController" customModule="CardScanExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xXx-1S-0Fk"/>
                         <viewControllerLayoutGuide type="bottom" id="WyV-H4-nAt"/>
@@ -204,10 +214,10 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Cr-oD-9K4">
                                 <rect key="frame" x="16" y="418" width="343" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" systemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ci9-Th-M77">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ci9-Th-M77">
                                 <rect key="frame" x="16" y="597" width="343" height="50"/>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.81568627449999997" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -231,13 +241,13 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuH-z7-S5E">
                                 <rect key="frame" x="16" y="446" width="343" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" systemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89z-WF-akV">
                                 <rect key="frame" x="16" y="474" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" systemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -280,7 +290,7 @@
         <!--Modal Scan View Controller-->
         <scene sceneID="KW8-5r-Gdc">
             <objects>
-                <viewController id="s5g-OK-FOJ" customClass="ModalScanViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="s5g-OK-FOJ" customClass="ModalScanViewController" customModule="CardScanExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gel-rM-WUS"/>
                         <viewControllerLayoutGuide type="bottom" id="LQA-Lg-cau"/>
@@ -289,14 +299,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fyx-FO-b7y">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fyx-FO-b7y">
                                 <rect key="frame" x="111.5" y="318.5" width="152" height="30"/>
                                 <state key="normal" title="to ScanViewController"/>
                                 <connections>
                                     <action selector="toScanViewPress:" destination="s5g-OK-FOJ" eventType="touchUpInside" id="zDD-nE-V4P"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8gB-Lp-YcB">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8gB-Lp-YcB">
                                 <rect key="frame" x="88.5" y="358.5" width="198" height="30"/>
                                 <state key="normal" title="to modal ScanViewController"/>
                                 <connections>
@@ -304,7 +314,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="8gB-Lp-YcB" firstAttribute="top" secondItem="Fyx-FO-b7y" secondAttribute="bottom" constant="10" id="7cZ-PU-FC7"/>
                             <constraint firstItem="8gB-Lp-YcB" firstAttribute="centerX" secondItem="CIL-DC-8QO" secondAttribute="centerX" id="IOy-k7-8KR"/>
@@ -314,7 +324,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="IPK-7t-g8N">
                         <barButtonItem key="backBarButtonItem" title="Back" id="E1g-fi-cUQ">
-                            <color key="tintColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" systemColor="linkColor"/>
                         </barButtonItem>
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="fQb-rL-taA"/>
                     </navigationItem>
@@ -326,10 +336,78 @@
             </objects>
             <point key="canvasLocation" x="886" y="811"/>
         </scene>
+        <!--Simple Accurate View Controller-->
+        <scene sceneID="ZcD-gs-ekb">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="puQ-1T-HWr" customClass="SimpleAccurateViewController" customModule="CardScanExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Q5G-Oh-JkB"/>
+                        <viewControllerLayoutGuide type="bottom" id="UZa-LY-XYh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RqN-XZ-rKp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ufI-wX-X8Y">
+                                <rect key="frame" x="26" y="268.5" width="323" height="30"/>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.83529411760000005" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Open Simple Scan With Accurate Scanning">
+                                    <color key="titleColor" red="0.96078431369999995" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="openSimpleAccuratePress:" destination="puQ-1T-HWr" eventType="touchUpInside" id="Wdm-hj-SZX"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRz-gE-JgL">
+                                <rect key="frame" x="166.5" y="347.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan time will be approximated by view controller existence " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SCA-fP-O15">
+                                <rect key="frame" x="20" y="308.5" width="335" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYJ-td-flc">
+                                <rect key="frame" x="166.5" y="376.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eRz-gE-JgL" firstAttribute="top" secondItem="SCA-fP-O15" secondAttribute="bottom" constant="10" id="8SH-91-Yyn"/>
+                            <constraint firstAttribute="trailing" secondItem="SCA-fP-O15" secondAttribute="trailing" constant="20" id="CJ8-az-ujx"/>
+                            <constraint firstItem="SCA-fP-O15" firstAttribute="centerX" secondItem="RqN-XZ-rKp" secondAttribute="centerX" id="G7W-2V-dqb"/>
+                            <constraint firstItem="SCA-fP-O15" firstAttribute="top" secondItem="ufI-wX-X8Y" secondAttribute="bottom" constant="10" id="RqS-pW-rTA"/>
+                            <constraint firstItem="eRz-gE-JgL" firstAttribute="centerX" secondItem="RqN-XZ-rKp" secondAttribute="centerX" id="SwA-1Y-KeB"/>
+                            <constraint firstItem="ufI-wX-X8Y" firstAttribute="centerX" secondItem="RqN-XZ-rKp" secondAttribute="centerX" id="WG4-tc-xax"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ufI-wX-X8Y" secondAttribute="trailing" constant="10" id="WoB-UH-Gws"/>
+                            <constraint firstItem="ufI-wX-X8Y" firstAttribute="centerY" secondItem="RqN-XZ-rKp" secondAttribute="centerY" constant="-50" id="Wt5-mA-tHB"/>
+                            <constraint firstItem="SCA-fP-O15" firstAttribute="leading" secondItem="RqN-XZ-rKp" secondAttribute="leading" constant="20" id="fr4-tZ-zGO"/>
+                            <constraint firstItem="hYJ-td-flc" firstAttribute="top" secondItem="eRz-gE-JgL" secondAttribute="bottom" constant="8" id="jep-2U-wfz"/>
+                            <constraint firstItem="ufI-wX-X8Y" firstAttribute="leading" secondItem="RqN-XZ-rKp" secondAttribute="leadingMargin" constant="10" id="njP-Ey-V7C"/>
+                            <constraint firstItem="hYJ-td-flc" firstAttribute="centerX" secondItem="RqN-XZ-rKp" secondAttribute="centerX" id="wgg-7v-qjK"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ouX-hm-A9U"/>
+                    <connections>
+                        <outlet property="errorCorrectionLabel" destination="hYJ-td-flc" id="CRB-Hg-VFX"/>
+                        <outlet property="expiryLabel" destination="eRz-gE-JgL" id="XAj-Rb-V5F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2bN-KP-WGE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-546" y="811"/>
+        </scene>
         <!--Modal Nav View Controller-->
         <scene sceneID="mDp-3X-wbx">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="QHk-Pe-Pgw" customClass="ModalNavViewController" customModule="CardScan_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="QHk-Pe-Pgw" customClass="ModalNavViewController" customModule="CardScanExample" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FGP-py-bfx">
@@ -346,4 +424,21 @@
             <point key="canvasLocation" x="137" y="811"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

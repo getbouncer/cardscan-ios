@@ -23,6 +23,8 @@
 		3BB8099B258768C800C244EA /* CardScanDD_ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB80994258768C800C244EA /* CardScanDD_ModelTests.swift */; };
 		3BB8099D258768C800C244EA /* CardScanDD_BackgroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB80996258768C800C244EA /* CardScanDD_BackgroundTests.swift */; };
 		3BB8099E258768C800C244EA /* CardScan_CardUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB80997258768C800C244EA /* CardScan_CardUtilsTests.swift */; };
+		F3D3B77B25CB4E2200D88073 /* CardScan_StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D3B77A25CB4E2200D88073 /* CardScan_StateMachineTests.swift */; };
+		F3D3B79925CCA44900D88073 /* SimpleAccurateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D3B79825CCA44900D88073 /* SimpleAccurateViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +100,8 @@
 		3BB80994258768C800C244EA /* CardScanDD_ModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScanDD_ModelTests.swift; sourceTree = "<group>"; };
 		3BB80996258768C800C244EA /* CardScanDD_BackgroundTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScanDD_BackgroundTests.swift; sourceTree = "<group>"; };
 		3BB80997258768C800C244EA /* CardScan_CardUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardScan_CardUtilsTests.swift; sourceTree = "<group>"; };
+		F3D3B77A25CB4E2200D88073 /* CardScan_StateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_StateMachineTests.swift; sourceTree = "<group>"; };
+		F3D3B79825CCA44900D88073 /* SimpleAccurateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAccurateViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +155,7 @@
 				3B20ED822586531D00CBF05E /* Main.storyboard */,
 				3B20ED872586532100CBF05E /* LaunchScreen.storyboard */,
 				3B20ED8A2586532100CBF05E /* Info.plist */,
+				F3D3B79825CCA44900D88073 /* SimpleAccurateViewController.swift */,
 			);
 			path = CardScanExample;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 				3BB80991258768C700C244EA /* CardScanDD_BundleTests.swift */,
 				3BB80994258768C800C244EA /* CardScanDD_ModelTests.swift */,
 				3BB80992258768C800C244EA /* CardScanDD_OCRTest.swift */,
+				F3D3B77A25CB4E2200D88073 /* CardScan_StateMachineTests.swift */,
 			);
 			path = CardScanExampleTests;
 			sourceTree = "<group>";
@@ -296,6 +302,7 @@
 				3B20EE5A25865CAE00CBF05E /* ModalNavViewController.swift in Sources */,
 				3B20EE5925865CAE00CBF05E /* ModalScanViewController.swift in Sources */,
 				3B20ED812586531D00CBF05E /* ViewController.swift in Sources */,
+				F3D3B79925CCA44900D88073 /* SimpleAccurateViewController.swift in Sources */,
 				3B20ED7D2586531D00CBF05E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,6 +314,7 @@
 				3BB80999258768C800C244EA /* CardScanDD_OCRTest.swift in Sources */,
 				3BB80998258768C800C244EA /* CardScanDD_BundleTests.swift in Sources */,
 				3BB8099A258768C800C244EA /* CardScan_ModelDownloadConfigTests.swift in Sources */,
+				F3D3B77B25CB4E2200D88073 /* CardScan_StateMachineTests.swift in Sources */,
 				3BB8099E258768C800C244EA /* CardScan_CardUtilsTests.swift in Sources */,
 				3BB8099D258768C800C244EA /* CardScanDD_BackgroundTests.swift in Sources */,
 				3BB8099B258768C800C244EA /* CardScanDD_ModelTests.swift in Sources */,
