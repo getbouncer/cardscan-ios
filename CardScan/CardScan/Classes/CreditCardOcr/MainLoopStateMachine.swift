@@ -111,6 +111,6 @@ public protocol MainLoopStateMachine {
         }
     }
     public func reset() -> MainLoopStateMachine {
-        return OcrAccurateMainLoopStateMachine()
+        return OcrAccurateMainLoopStateMachine(maxErrorCorrection: maximumErrorCorrection)
     }
 }
