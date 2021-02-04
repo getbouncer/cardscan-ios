@@ -20,7 +20,7 @@ class CardScan_StateMachineTests: XCTestCase {
             return
         }
         
-        let durationStateMachine = OcrDurationMainLoopStateMachine()
+        let durationStateMachine = OcrAccurateMainLoopStateMachine()
         XCTAssert(durationStateMachine.state == .initial)
         
         let prediction = CreditCardOcrPrediction(image: cardImage, number: number, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
@@ -34,7 +34,7 @@ class CardScan_StateMachineTests: XCTestCase {
             return
         }
         
-        let durationStateMachine = OcrDurationMainLoopStateMachine()
+        let durationStateMachine = OcrAccurateMainLoopStateMachine()
         let minDuration = -durationStateMachine.minimumErrorCorrection
         durationStateMachine.state = .ocrOnly
         durationStateMachine.startTimeForCurrentState = Date(timeInterval: minDuration, since: durationStateMachine.startTimeForCurrentState)
@@ -51,7 +51,7 @@ class CardScan_StateMachineTests: XCTestCase {
             return
         }
         
-        let durationStateMachine = OcrDurationMainLoopStateMachine()
+        let durationStateMachine = OcrAccurateMainLoopStateMachine()
         let maxDuration = -durationStateMachine.maximumErrorCorrection
         
         durationStateMachine.state = .ocrOnly

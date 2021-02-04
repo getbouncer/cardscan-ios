@@ -1,6 +1,6 @@
 import Foundation
 
-@objc public enum ScanPerformancePriority: Int {
+@objc public enum ScanPerformance: Int {
     case fast
     case accurate
 }

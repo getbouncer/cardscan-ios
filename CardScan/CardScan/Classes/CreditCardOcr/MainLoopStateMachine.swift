@@ -67,7 +67,7 @@ public protocol MainLoopStateMachine {
     }
 }
 
-@objc public class OcrDurationMainLoopStateMachine: NSObject, MainLoopStateMachine {
+@objc public class OcrAccurateMainLoopStateMachine: NSObject, MainLoopStateMachine {
     var state: MainLoopState = .initial
     var startTimeForCurrentState = Date()
     var hasExpiryPrediction = false
@@ -111,6 +111,6 @@ public protocol MainLoopStateMachine {
         }
     }
     public func reset() -> MainLoopStateMachine {
-        return OcrDurationMainLoopStateMachine()
+        return OcrAccurateMainLoopStateMachine()
     }
 }

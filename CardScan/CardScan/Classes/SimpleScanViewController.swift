@@ -94,7 +94,8 @@ open class SimpleScanViewController: ScanBaseViewController {
     @objc public static var torchButtonString = "Torch".localize()
     
     public weak var delegate: SimpleScanDelegate?
-    public var scanPerformancePriority: ScanPerformancePriority = .fast
+    public var scanPerformancePriority: ScanPerformance = .fast
+    public var maxErrorCorrectionDuration: Double = 4.0
     
     public static func createViewController() -> SimpleScanViewController {
         let vc = SimpleScanViewController()
@@ -118,14 +119,19 @@ open class SimpleScanViewController: ScanBaseViewController {
         setupConstraints()
         
         setupOnViewDidLoad(regionOfInterestLabel: roiView, blurView: blurView, previewView: previewView, cornerView: cornerView, debugImageView: debugView, torchLevel: 1.0)
-        setUpMainLoop()
+        
+        if #available(iOS 13.0, *) {
+            setUpMainLoop(errorCorrectionDuration: maxErrorCorrectionDuration)
+        }
+        
         startCameraPreview()
     }
     
-    func setUpMainLoop() {
+    @available(iOS 13.0, *)
+    func setUpMainLoop(errorCorrectionDuration: Double) {
         if scanPerformancePriority == .accurate {
             let mainLoop = self.mainLoop as? OcrMainLoop
-            mainLoop?.errorCorrection = ErrorCorrection(stateMachine: OcrDurationMainLoopStateMachine())
+            mainLoop?.errorCorrection = ErrorCorrection(stateMachine: OcrAccurateMainLoopStateMachine(maxErrorCorrection: maxErrorCorrectionDuration))
         }
     }
     
