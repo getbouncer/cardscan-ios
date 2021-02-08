@@ -141,6 +141,7 @@ open class OcrMainLoop : MachineLearningLoop {
         userDidCancel = true
         mutexQueue.sync { [weak self] in
             guard let self = self else { return }
+            self.scanStats.userCanceled = userDidCancel
             if self.scanStats.success == nil {
                 self.scanStats.success = false
                 self.scanStats.endTime = Date()

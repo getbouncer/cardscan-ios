@@ -29,6 +29,7 @@ public struct ScanStats {
     public var expiryBoxes: [CGRect]?
     public var cardsDetected = 0
     public var permissionGranted: Bool?
+    public var userCanceled: Bool = false
     
     init() {
         var systemInfo = utsname()
@@ -58,7 +59,8 @@ public struct ScanStats {
                 "duration": self.duration(),
                 "model": self.model ?? "unknown",
                 "permission_granted": self.permissionGranted.map { $0 ? "granted" : "denied" } ?? "not_determined",
-                "device_type": self.deviceType ?? ""]
+                "device_type": self.deviceType ?? "",
+                "user_canceled": self.userCanceled]
     }
     
     public func duration() -> Double {

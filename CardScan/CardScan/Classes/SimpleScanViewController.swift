@@ -384,6 +384,7 @@ open class SimpleScanViewController: ScanBaseViewController {
     // MARK: -UI event handlers
     @objc open func cancelButtonPress() {
         delegate?.userDidCancelSimple(self)
+        self.cancelScan()
     }
     
     @objc open func torchButtonPress() {
