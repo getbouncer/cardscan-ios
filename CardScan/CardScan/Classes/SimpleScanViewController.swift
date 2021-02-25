@@ -64,7 +64,7 @@ import UIKit
 }
 
 @available(iOS 11.2, *)
-open class SimpleScanViewController: ScanBaseViewController {
+@objc open class SimpleScanViewController: ScanBaseViewController {
 
     // used by ScanBase
     public var previewView: PreviewView = PreviewView()
@@ -93,11 +93,11 @@ open class SimpleScanViewController: ScanBaseViewController {
     @objc public static var closeButtonString = "Close".localize()
     @objc public static var torchButtonString = "Torch".localize()
     
-    public weak var delegate: SimpleScanDelegate?
-    public var scanPerformancePriority: ScanPerformance = .fast
-    public var maxErrorCorrectionDuration: Double = 4.0
+    @objc public weak var delegate: SimpleScanDelegate?
+    @objc public var scanPerformancePriority: ScanPerformance = .fast
+    @objc public var maxErrorCorrectionDuration: Double = 4.0
     
-    public static func createViewController() -> SimpleScanViewController {
+    @objc public static func createViewController() -> SimpleScanViewController {
         let vc = SimpleScanViewController()
 
         if UIDevice.current.userInterfaceIdiom == .pad {
