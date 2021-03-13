@@ -16,6 +16,7 @@ public enum MainLoopState {
     case ocrDelayForCard
     case ocrForceFlash
     case finished
+    case nameAndExpiry
 }
 
 public protocol MainLoopStateMachine {
