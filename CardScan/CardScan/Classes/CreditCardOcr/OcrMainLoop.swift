@@ -243,6 +243,8 @@ open class OcrMainLoop : MachineLearningLoop {
                 delegate?.showCardDetailsWithFlash(number: result.number, expiry: result.expiry, name: result.name)
             case MainLoopState.finished:
                 delegate?.complete(creditCardOcrResult: result)
+            case MainLoopState.nameAndExpiry:
+                break
             }
         }
         return result
