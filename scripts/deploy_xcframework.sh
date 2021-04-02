@@ -33,10 +33,15 @@ else
     exit
 fi
 
+# Update info plist with latest version
+./scripts/update_version.sh ${1}
+
+git add ./CardScan/CardScan/Info.plist
+git commit -m "Bump version to ${1}"
+git push origin master
+
 PROD_BRANCH="production-$(date +"%Y%m%d-%s")"
 git checkout -b $PROD_BRANCH
-
-./scripts/update_version.sh ${1}
 
 ./scripts/build_xcframework.sh
 
