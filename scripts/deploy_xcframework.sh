@@ -36,6 +36,8 @@ fi
 PROD_BRANCH="production-$(date +"%Y%m%d-%s")"
 git checkout -b $PROD_BRANCH
 
+./scripts/update_version.sh ${1}
+
 ./scripts/build_xcframework.sh
 
 ./scripts/setup_package.sh ${PROD_BRANCH} ${PROD_BRANCH}
