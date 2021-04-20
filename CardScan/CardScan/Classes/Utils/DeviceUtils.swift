@@ -19,6 +19,7 @@ struct ClientIdsUtils {
 
 struct DeviceUtils {
     static let name: String = getDeviceType()
+    static let build: String = getBuildVersion()
     static let bootCount: Int? = nil
     static let locale: String? = getDeviceLocale()
     static let carrier: String? = getCarrier()
@@ -46,6 +47,10 @@ struct DeviceUtils {
         }
         
         return deviceType
+    }
+    
+    static internal func getBuildVersion() -> String {
+        return Bundle.main.infoDictionary?["CFBundleVersion"].flatMap { $0 as? String } ?? "0000"
     }
     
     static internal func getDeviceLocale() -> String? {
