@@ -74,7 +74,6 @@
 		F3EEF433262E5E770022FBAC /* AppInfoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF430262E5E470022FBAC /* AppInfoUtils.swift */; };
 		F3EEF434262E5E770022FBAC /* DeviceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF431262E5E470022FBAC /* DeviceUtils.swift */; };
 		F3EEF43D262E60DA0022FBAC /* ScanStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */; };
-		F3EEF43E262E60DA0022FBAC /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF43B262E60DA0022FBAC /* Device.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -161,7 +160,6 @@
 		F3EEF430262E5E470022FBAC /* AppInfoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoUtils.swift; sourceTree = "<group>"; };
 		F3EEF431262E5E470022FBAC /* DeviceUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtils.swift; sourceTree = "<group>"; };
 		F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanStatistics.swift; sourceTree = "<group>"; };
-		F3EEF43B262E60DA0022FBAC /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,7 +324,6 @@
 			isa = PBXGroup;
 			children = (
 				F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */,
-				F3EEF43B262E60DA0022FBAC /* Device.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -480,7 +477,6 @@
 				3B20EDFF2586550600CBF05E /* PriorsGen.swift in Sources */,
 				3B20EE1A2586550600CBF05E /* SoftNMS.swift in Sources */,
 				3B20EE2D2586550600CBF05E /* ModelConfigResponse.swift in Sources */,
-				F3EEF43E262E60DA0022FBAC /* Device.swift in Sources */,
 				3B20EE272586550600CBF05E /* OcrDDUtils.swift in Sources */,
 				3B20EDF62586550600CBF05E /* CreditCardOcrPrediction.swift in Sources */,
 				3B20EE092586550600CBF05E /* OcrPriorsGen.swift in Sources */,
