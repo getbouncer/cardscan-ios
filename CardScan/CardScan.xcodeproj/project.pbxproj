@@ -74,6 +74,9 @@
 		F3EEF433262E5E770022FBAC /* AppInfoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF430262E5E470022FBAC /* AppInfoUtils.swift */; };
 		F3EEF434262E5E770022FBAC /* DeviceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF431262E5E470022FBAC /* DeviceUtils.swift */; };
 		F3EEF43D262E60DA0022FBAC /* ScanStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */; };
+		F3EEF44C262F84510022FBAC /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF44B262F84510022FBAC /* ApiRequest.swift */; };
+		F3EEF451262F86A30022FBAC /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF450262F86A30022FBAC /* ApiClient.swift */; };
+		F3EEF46F262F9E100022FBAC /* ScanApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF46E262F9E100022FBAC /* ScanApi.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +163,9 @@
 		F3EEF430262E5E470022FBAC /* AppInfoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoUtils.swift; sourceTree = "<group>"; };
 		F3EEF431262E5E470022FBAC /* DeviceUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtils.swift; sourceTree = "<group>"; };
 		F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanStatistics.swift; sourceTree = "<group>"; };
+		F3EEF44B262F84510022FBAC /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
+		F3EEF450262F86A30022FBAC /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		F3EEF46E262F9E100022FBAC /* ScanApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanApi.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,9 +329,20 @@
 		F3EEF438262E60DA0022FBAC /* Api */ = {
 			isa = PBXGroup;
 			children = (
-				F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */,
+				F3EEF471262F9E580022FBAC /* DTO */,
+				F3EEF44B262F84510022FBAC /* ApiRequest.swift */,
+				F3EEF450262F86A30022FBAC /* ApiClient.swift */,
+				F3EEF46E262F9E100022FBAC /* ScanApi.swift */,
 			);
 			path = Api;
+			sourceTree = "<group>";
+		};
+		F3EEF471262F9E580022FBAC /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -428,6 +445,7 @@
 				3B20EE1D2586550600CBF05E /* ScanEventsProtocol.swift in Sources */,
 				3B20EE152586550600CBF05E /* SimpleScanViewController.swift in Sources */,
 				3B20EE082586550600CBF05E /* API.swift in Sources */,
+				F3EEF44C262F84510022FBAC /* ApiRequest.swift in Sources */,
 				3B20EE062586550600CBF05E /* DetectedAllBoxes.swift in Sources */,
 				3B20EE132586550600CBF05E /* Torch.swift in Sources */,
 				3B20EE162586550600CBF05E /* CardNetwork.swift in Sources */,
@@ -457,6 +475,7 @@
 				3B20EE212586550600CBF05E /* ScanBaseViewController.swift in Sources */,
 				3B20EE172586550600CBF05E /* CardType.swift in Sources */,
 				3B20EDF42586550600CBF05E /* OcrObject.swift in Sources */,
+				F3EEF451262F86A30022FBAC /* ApiClient.swift in Sources */,
 				3B20EDFB2586550600CBF05E /* MainLoopStateMachine.swift in Sources */,
 				3B20EE012586550600CBF05E /* Expiry.swift in Sources */,
 				3B20EE2A2586550600CBF05E /* PredictionAPI.swift in Sources */,
@@ -469,6 +488,7 @@
 				3B20EE232586550600CBF05E /* CreditCardOcrPrediction+expiry.swift in Sources */,
 				3B20EE112586550600CBF05E /* DetectedSSDBox.swift in Sources */,
 				3B20EE2B2586550600CBF05E /* SSDOcr.mlmodel in Sources */,
+				F3EEF46F262F9E100022FBAC /* ScanApi.swift in Sources */,
 				3B20EE182586550600CBF05E /* CornerView.swift in Sources */,
 				3B20EE282586550600CBF05E /* AppleOcr.swift in Sources */,
 				3B20EE1F2586550600CBF05E /* SSDOutputExtensions.swift in Sources */,
