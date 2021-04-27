@@ -31,6 +31,9 @@ public struct ScanStats {
     public var permissionGranted: Bool?
     public var userCanceled: Bool = false
     
+    // FIX ME: Used for testing if api result is successful. Integration test shouldn't rely on this.
+    public static var lastScanStatsSuccess: Date?
+    
     init() {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -64,15 +67,17 @@ public struct ScanStats {
     }
     
     func createPayload() -> ScanStatisticsPayload {
-        let scanStats = ScanStatistics(scans: self.scans,
-                                       cardsDetected: self.cardsDetected,
-                                       torchOn: self.torchOn,
-                                       orientation: self.orientation,
-                                       success: self.success,
-                                       duration: self.duration(),
-                                       model: self.model,
-                                       permissionGranted: self.permissionGranted,
-                                       userCanceled: self.userCanceled)
+        let scanStats = ScanStatistics(
+            scans: self.scans,
+            cardsDetected: self.cardsDetected,
+            torchOn: self.torchOn,
+            orientation: self.orientation,
+            success: self.success,
+            duration: self.duration(),
+            model: self.model,
+            permissionGranted: self.permissionGranted,
+            userCanceled: self.userCanceled
+        )
         return ScanStatisticsPayload(scanStats: scanStats)
     }
     
