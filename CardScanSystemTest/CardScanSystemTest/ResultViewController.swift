@@ -38,7 +38,7 @@ class ResultViewController: UIViewController {
             var hasResult = false
             while !hasResult {
                 Thread.sleep(forTimeInterval: 0.1)
-                if Api.lastScanStatsSuccess != self.currentApiTime {
+                if ScanStats.lastScanStatsSuccess != self.currentApiTime {
                     hasResult = true
                     DispatchQueue.main.async {
                         self.apiResultLabel.isHidden = false

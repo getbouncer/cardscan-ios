@@ -59,6 +59,18 @@ struct ScanStatistics: Encodable {
     let deviceType: String = DeviceUtils.getDeviceType()
     let userCanceled: Bool
     
+    init(scans: Int, cardsDetected: Int, torchOn: Bool, orientation: String, success: Bool?, duration: Double, model: String?, permissionGranted: Bool?, userCanceled: Bool) {
+        self.scans = scans
+        self.cardsDetected = cardsDetected
+        self.torchOn = torchOn
+        self.orientation = orientation
+        self.success = success ?? false
+        self.duration = duration
+        self.model = model ?? "unknown"
+        self.permissionGranted = permissionGranted.map { $0 ? "granted" : "denied" } ?? "not_determined"
+        self.userCanceled = userCanceled
+    }
+    
     enum CodingKeys: String, CodingKey {
         case scans = "scans"
         case cardDetected = "cards_detected"
