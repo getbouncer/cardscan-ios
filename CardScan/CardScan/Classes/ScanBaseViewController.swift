@@ -161,7 +161,8 @@ public protocol TestingImageDataSource: AnyObject {
         ocrMainLoop.userCancelled()
         
         if (self.sendScanStats) {
-            Api.scanStats(scanStats: ocrMainLoop.scanStats, completion: {_, _ in })
+            let scanStatsPayload = ocrMainLoop.scanStats.createPayload()
+            ScanApi.uploadScanStats(payload: scanStatsPayload, completion: { _, _ in })
         }
     }
      
@@ -400,7 +401,8 @@ public protocol TestingImageDataSource: AnyObject {
 
         if (self.sendScanStats) {
             // fire and forget
-            Api.scanStats(scanStats: self.getScanStats(), completion: {_, _ in })
+            let scanStatsPayload = self.ocrMainLoop()?.scanStats.createPayload() ?? ScanStats().createPayload()
+            ScanApi.uploadScanStats(payload: scanStatsPayload, completion: { _, _ in })
         }
         self.onScannedCard(number: creditCardOcrResult.number, expiryYear: creditCardOcrResult.expiryYear, expiryMonth: creditCardOcrResult.expiryMonth, scannedImage: scannedCardImage)
     }

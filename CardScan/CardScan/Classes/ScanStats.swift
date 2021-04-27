@@ -63,6 +63,19 @@ public struct ScanStats {
                 "user_canceled": self.userCanceled]
     }
     
+    func createPayload() -> ScanStatisticsPayload {
+        let scanStats = ScanStatistics(scans: self.scans,
+                                       cardsDetected: self.cardsDetected,
+                                       torchOn: self.torchOn,
+                                       orientation: self.orientation,
+                                       success: self.success,
+                                       duration: self.duration(),
+                                       model: self.model,
+                                       permissionGranted: self.permissionGranted,
+                                       userCanceled: self.userCanceled)
+        return ScanStatisticsPayload(scanStats: scanStats)
+    }
+    
     public func duration() -> Double {
         guard let endTime = self.endTime else {
             return 0.0
