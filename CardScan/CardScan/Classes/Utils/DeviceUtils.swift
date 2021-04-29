@@ -30,7 +30,7 @@ struct DeviceUtils {
     static let osVersion: String = getOsVersion()
     static let platform: String = "ios"
     
-    static internal func getDeviceType() -> String{
+    static internal func getDeviceType() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
         var deviceType = ""

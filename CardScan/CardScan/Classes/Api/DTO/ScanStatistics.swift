@@ -8,7 +8,7 @@
 import Foundation
 
 struct ScanStatisticsPayload: Encodable {
-    let device = ScanStatisticDevice()
+    let device = DevicePayload()
     let scanStats: ScanStatistics
 
     enum CodingKeys: String, CodingKey {
@@ -19,31 +19,6 @@ struct ScanStatisticsPayload: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(scanStats, forKey: .scanStats)
         try device.encode(to: encoder)
-    }
-}
-
-struct ScanStatisticDevice: Encodable {
-    let locale: String? = DeviceUtils.locale
-    let build: String = DeviceUtils.build
-    let osVersion: String = DeviceUtils.osVersion
-    let platform: String = DeviceUtils.platform
-    let sdkVersion = AppInfoUtils.getSdkVersion()
-    
-    enum CodingKeys: String, CodingKey {
-        case locale = "device_locale"
-        case build = "build"
-        case osVersion = "os"
-        case platform = "platform"
-        case sdkVersion = "sdk_version"
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(locale, forKey: .locale)
-        try container.encode(build, forKey: .build)
-        try container.encode(osVersion, forKey: .osVersion)
-        try container.encode(platform, forKey: .platform)
-        try container.encode(sdkVersion, forKey: .sdkVersion)
     }
 }
 

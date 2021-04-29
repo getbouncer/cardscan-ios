@@ -71,6 +71,7 @@
 		3B20EE4A258655DC00CBF05E /* CardScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B20EE45258655DC00CBF05E /* CardScan.storyboard */; };
 		3B20EE54258658F900CBF05E /* SSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EE53258658F900CBF05E /* SSD.swift */; };
 		3B9F1588259C1F4C00881C1B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3B9F158A259C1F4C00881C1B /* Localizable.strings */; };
+		F374F07E263B5AA50062F735 /* DevicePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = F374F07D263B5AA50062F735 /* DevicePayload.swift */; };
 		F3EEF433262E5E770022FBAC /* AppInfoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF430262E5E470022FBAC /* AppInfoUtils.swift */; };
 		F3EEF434262E5E770022FBAC /* DeviceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF431262E5E470022FBAC /* DeviceUtils.swift */; };
 		F3EEF43D262E60DA0022FBAC /* ScanStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */; };
@@ -160,6 +161,7 @@
 		3B9F1597259C200100881C1B /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3B9F1598259C200700881C1B /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3B9F1599259C201600881C1B /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F374F07D263B5AA50062F735 /* DevicePayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicePayload.swift; sourceTree = "<group>"; };
 		F3EEF430262E5E470022FBAC /* AppInfoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoUtils.swift; sourceTree = "<group>"; };
 		F3EEF431262E5E470022FBAC /* DeviceUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtils.swift; sourceTree = "<group>"; };
 		F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanStatistics.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 		F3EEF471262F9E580022FBAC /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				F374F07D263B5AA50062F735 /* DevicePayload.swift */,
 				F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */,
 			);
 			path = DTO;
@@ -450,6 +453,7 @@
 				3B20EE132586550600CBF05E /* Torch.swift in Sources */,
 				3B20EE162586550600CBF05E /* CardNetwork.swift in Sources */,
 				3B20EDF22586550600CBF05E /* VideoFeed.swift in Sources */,
+				F374F07E263B5AA50062F735 /* DevicePayload.swift in Sources */,
 				3B20EE0D2586550600CBF05E /* AppState.swift in Sources */,
 				F3EEF43D262E60DA0022FBAC /* ScanStatistics.swift in Sources */,
 				3B20EE1B2586550600CBF05E /* PredictionUtilOcr.swift in Sources */,
