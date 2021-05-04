@@ -78,7 +78,19 @@
 		F3EEF44C262F84510022FBAC /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF44B262F84510022FBAC /* ApiRequest.swift */; };
 		F3EEF451262F86A30022FBAC /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF450262F86A30022FBAC /* ApiClient.swift */; };
 		F3EEF46F262F9E100022FBAC /* ScanApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF46E262F9E100022FBAC /* ScanApi.swift */; };
+		F3FB366E2640BEC10010382C /* CardScan_PayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB366D2640BEC10010382C /* CardScan_PayloadTests.swift */; };
+		F3FB36702640BEC10010382C /* CardScan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B20ED9C2586539600CBF05E /* CardScan.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F3FB36712640BEC10010382C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3B20ED932586539600CBF05E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3B20ED9B2586539600CBF05E;
+			remoteInfo = CardScan;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3B15C14E259C326A005A394A /* String+localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+localization.swift"; sourceTree = "<group>"; };
@@ -168,6 +180,9 @@
 		F3EEF44B262F84510022FBAC /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		F3EEF450262F86A30022FBAC /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		F3EEF46E262F9E100022FBAC /* ScanApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanApi.swift; sourceTree = "<group>"; };
+		F3FB366B2640BEC10010382C /* CardScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3FB366D2640BEC10010382C /* CardScan_PayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_PayloadTests.swift; sourceTree = "<group>"; };
+		F3FB366F2640BEC10010382C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +193,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F3FB36682640BEC10010382C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3FB36702640BEC10010382C /* CardScan.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -185,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				3B20ED9E2586539600CBF05E /* CardScan */,
+				F3FB366C2640BEC10010382C /* CardScanTests */,
 				3B20ED9D2586539600CBF05E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -193,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				3B20ED9C2586539600CBF05E /* CardScan.framework */,
+				F3FB366B2640BEC10010382C /* CardScanTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -348,6 +373,15 @@
 			path = DTO;
 			sourceTree = "<group>";
 		};
+		F3FB366C2640BEC10010382C /* CardScanTests */ = {
+			isa = PBXGroup;
+			children = (
+				F3FB366D2640BEC10010382C /* CardScan_PayloadTests.swift */,
+				F3FB366F2640BEC10010382C /* Info.plist */,
+			);
+			path = CardScanTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -380,16 +414,38 @@
 			productReference = 3B20ED9C2586539600CBF05E /* CardScan.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		F3FB366A2640BEC10010382C /* CardScanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F3FB36752640BEC10010382C /* Build configuration list for PBXNativeTarget "CardScanTests" */;
+			buildPhases = (
+				F3FB36672640BEC10010382C /* Sources */,
+				F3FB36682640BEC10010382C /* Frameworks */,
+				F3FB36692640BEC10010382C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F3FB36722640BEC10010382C /* PBXTargetDependency */,
+			);
+			name = CardScanTests;
+			productName = CardScanTests;
+			productReference = F3FB366B2640BEC10010382C /* CardScanTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		3B20ED932586539600CBF05E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					3B20ED9B2586539600CBF05E = {
 						CreatedOnToolsVersion = 12.2;
+					};
+					F3FB366A2640BEC10010382C = {
+						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
@@ -420,6 +476,7 @@
 			projectRoot = "";
 			targets = (
 				3B20ED9B2586539600CBF05E /* CardScan */,
+				F3FB366A2640BEC10010382C /* CardScanTests */,
 			);
 		};
 /* End PBXProject section */
@@ -433,6 +490,13 @@
 				3B9F1588259C1F4C00881C1B /* Localizable.strings in Resources */,
 				3B20EE48258655DC00CBF05E /* Assets.xcassets in Resources */,
 				3B20EE4A258655DC00CBF05E /* CardScan.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3FB36692640BEC10010382C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,7 +576,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F3FB36672640BEC10010382C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3FB366E2640BEC10010382C /* CardScan_PayloadTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F3FB36722640BEC10010382C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3B20ED9B2586539600CBF05E /* CardScan */;
+			targetProxy = F3FB36712640BEC10010382C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3B9F158A259C1F4C00881C1B /* Localizable.strings */ = {
@@ -714,6 +794,44 @@
 			};
 			name = Release;
 		};
+		F3FB36732640BEC10010382C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				INFOPLIST_FILE = CardScanTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.CardScanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F3FB36742640BEC10010382C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L4TQ6C2R74;
+				INFOPLIST_FILE = CardScanTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.getbouncer.CardScanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -731,6 +849,15 @@
 			buildConfigurations = (
 				3B20EDA52586539600CBF05E /* Debug */,
 				3B20EDA62586539600CBF05E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F3FB36752640BEC10010382C /* Build configuration list for PBXNativeTarget "CardScanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F3FB36732640BEC10010382C /* Debug */,
+				F3FB36742640BEC10010382C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

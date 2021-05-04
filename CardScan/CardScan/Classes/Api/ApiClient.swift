@@ -18,7 +18,7 @@ class ApiClient {
         let config = URLSessionConfiguration.ephemeral
         config.timeoutIntervalForRequest = 60
         config.timeoutIntervalForResource = 60
-        config.httpAdditionalHeaders = apiKey.flatMap { ["x-bouncer-auth": $0] }
+        config.httpAdditionalHeaders = apiKey.map { ["x-bouncer-auth": $0] }
         return config
     }()
 }
