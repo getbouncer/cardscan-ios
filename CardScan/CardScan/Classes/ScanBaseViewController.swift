@@ -84,7 +84,7 @@ public protocol TestingImageDataSource: AnyObject {
     
     @objc static public func configure(apiKey: String? = nil) {
         if let apiKey = apiKey {
-            Api.apiKey = apiKey
+            ApiClient.apiKey = apiKey
         }
     }
     

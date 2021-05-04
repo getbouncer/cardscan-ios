@@ -58,7 +58,7 @@ struct ApiRequest {
     }
     
     static func parseResponse<ResponseType: Decodable>(data: Data?, response: URLResponse?, error: Error?, completion: @escaping (ResponseType?, Error?) -> Void) {
-        if let _ = error {
+        guard error == nil else {
             DispatchQueue.main.async {
                 completion(nil, DefaultApiError.requestError)
             }
