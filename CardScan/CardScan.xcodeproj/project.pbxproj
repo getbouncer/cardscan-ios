@@ -80,6 +80,13 @@
 		F3EEF46F262F9E100022FBAC /* ScanApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF46E262F9E100022FBAC /* ScanApi.swift */; };
 		F3FB366E2640BEC10010382C /* CardScan_PayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB366D2640BEC10010382C /* CardScan_PayloadTests.swift */; };
 		F3FB36702640BEC10010382C /* CardScan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B20ED9C2586539600CBF05E /* CardScan.framework */; };
+		F3FB36B826432E160010382C /* CardScan_StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB36B126432E160010382C /* CardScan_StateMachineTests.swift */; };
+		F3FB36B926432E160010382C /* CardScanDD_BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB36B226432E160010382C /* CardScanDD_BundleTests.swift */; };
+		F3FB36BA26432E160010382C /* CardScanDD_ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB36B326432E160010382C /* CardScanDD_ModelTests.swift */; };
+		F3FB36BB26432E160010382C /* CardScanDD_BackgroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB36B426432E160010382C /* CardScanDD_BackgroundTests.swift */; };
+		F3FB36BC26432E160010382C /* CardScan_CardUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB36B526432E160010382C /* CardScan_CardUtilsTests.swift */; };
+		F3FB36BD26432E160010382C /* CardScanDD_OCRTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB36B626432E160010382C /* CardScanDD_OCRTest.swift */; };
+		F3FB36BE26432E160010382C /* CardScan_ModelDownloadConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB36B726432E160010382C /* CardScan_ModelDownloadConfigTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,6 +190,13 @@
 		F3FB366B2640BEC10010382C /* CardScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3FB366D2640BEC10010382C /* CardScan_PayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_PayloadTests.swift; sourceTree = "<group>"; };
 		F3FB366F2640BEC10010382C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3FB36B126432E160010382C /* CardScan_StateMachineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardScan_StateMachineTests.swift; path = ../../../../.Trash/CardScan_StateMachineTests.swift; sourceTree = "<group>"; };
+		F3FB36B226432E160010382C /* CardScanDD_BundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardScanDD_BundleTests.swift; path = ../../../../.Trash/CardScanDD_BundleTests.swift; sourceTree = "<group>"; };
+		F3FB36B326432E160010382C /* CardScanDD_ModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardScanDD_ModelTests.swift; path = ../../../../.Trash/CardScanDD_ModelTests.swift; sourceTree = "<group>"; };
+		F3FB36B426432E160010382C /* CardScanDD_BackgroundTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardScanDD_BackgroundTests.swift; path = ../../../../.Trash/CardScanDD_BackgroundTests.swift; sourceTree = "<group>"; };
+		F3FB36B526432E160010382C /* CardScan_CardUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardScan_CardUtilsTests.swift; path = ../../../../.Trash/CardScan_CardUtilsTests.swift; sourceTree = "<group>"; };
+		F3FB36B626432E160010382C /* CardScanDD_OCRTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardScanDD_OCRTest.swift; path = ../../../../.Trash/CardScanDD_OCRTest.swift; sourceTree = "<group>"; };
+		F3FB36B726432E160010382C /* CardScan_ModelDownloadConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardScan_ModelDownloadConfigTests.swift; path = ../../../../.Trash/CardScan_ModelDownloadConfigTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,6 +390,13 @@
 		F3FB366C2640BEC10010382C /* CardScanTests */ = {
 			isa = PBXGroup;
 			children = (
+				F3FB36B526432E160010382C /* CardScan_CardUtilsTests.swift */,
+				F3FB36B726432E160010382C /* CardScan_ModelDownloadConfigTests.swift */,
+				F3FB36B126432E160010382C /* CardScan_StateMachineTests.swift */,
+				F3FB36B426432E160010382C /* CardScanDD_BackgroundTests.swift */,
+				F3FB36B226432E160010382C /* CardScanDD_BundleTests.swift */,
+				F3FB36B326432E160010382C /* CardScanDD_ModelTests.swift */,
+				F3FB36B626432E160010382C /* CardScanDD_OCRTest.swift */,
 				F3FB366D2640BEC10010382C /* CardScan_PayloadTests.swift */,
 				F3FB366F2640BEC10010382C /* Info.plist */,
 			);
@@ -580,6 +601,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3FB36BB26432E160010382C /* CardScanDD_BackgroundTests.swift in Sources */,
+				F3FB36BD26432E160010382C /* CardScanDD_OCRTest.swift in Sources */,
+				F3FB36BE26432E160010382C /* CardScan_ModelDownloadConfigTests.swift in Sources */,
+				F3FB36BA26432E160010382C /* CardScanDD_ModelTests.swift in Sources */,
+				F3FB36BC26432E160010382C /* CardScan_CardUtilsTests.swift in Sources */,
+				F3FB36B826432E160010382C /* CardScan_StateMachineTests.swift in Sources */,
+				F3FB36B926432E160010382C /* CardScanDD_BundleTests.swift in Sources */,
 				F3FB366E2640BEC10010382C /* CardScan_PayloadTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

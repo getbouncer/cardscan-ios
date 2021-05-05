@@ -14,17 +14,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: unit-example-test
-        run:
-          xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanExample -destination 'platform=iOS Simulator,name=iPhone 11'
-
-      - name: upload-artifacts-unit-example
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: test-report-unit
-          path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
-          
       - name: unit-test
         run:
           xcodebuild test -workspace CardScan.xcworkspace -scheme CardScanTests -destination 'platform=iOS Simulator,name=iPhone 11'
