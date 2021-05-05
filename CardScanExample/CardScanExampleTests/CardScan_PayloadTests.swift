@@ -30,11 +30,14 @@ class CardScanTests: XCTestCase {
 
         // Turn data into JSON
         do{
-            let json1 = try JSONSerialization.jsonObject(with: scanStatsPayload1, options: []) as? [String : Any]
-            let json2 = try JSONSerialization.jsonObject(with: scanStatsPayload2, options: []) as? [String : Any]
-            XCTAssert(NSDictionary(dictionary: json1!).isEqual(to: json2!))
+            guard let json1 = try JSONSerialization.jsonObject(with: scanStatsPayload1, options: []) as? [String : Any],
+                  let json2 = try JSONSerialization.jsonObject(with: scanStatsPayload2, options: []) as? [String : Any] else {
+                XCTAssert(false, "Payload could not be json-ified")
+                return
+            }
+            XCTAssert(NSDictionary(dictionary: json1).isEqual(to: json2))
         } catch{
-            XCTAssert(false, "Payload could not be jsonified")
+            XCTAssert(false, "Error with JSON serialization")
         }
     }
 }

@@ -78,7 +78,6 @@
 		F3EEF44C262F84510022FBAC /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF44B262F84510022FBAC /* ApiRequest.swift */; };
 		F3EEF451262F86A30022FBAC /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF450262F86A30022FBAC /* ApiClient.swift */; };
 		F3EEF46F262F9E100022FBAC /* ScanApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF46E262F9E100022FBAC /* ScanApi.swift */; };
-		F3FB366E2640BEC10010382C /* CardScan_PayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB366D2640BEC10010382C /* CardScan_PayloadTests.swift */; };
 		F3FB36702640BEC10010382C /* CardScan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B20ED9C2586539600CBF05E /* CardScan.framework */; };
 /* End PBXBuildFile section */
 
@@ -181,8 +180,6 @@
 		F3EEF450262F86A30022FBAC /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		F3EEF46E262F9E100022FBAC /* ScanApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanApi.swift; sourceTree = "<group>"; };
 		F3FB366B2640BEC10010382C /* CardScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F3FB366D2640BEC10010382C /* CardScan_PayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScan_PayloadTests.swift; sourceTree = "<group>"; };
-		F3FB366F2640BEC10010382C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,7 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				3B20ED9E2586539600CBF05E /* CardScan */,
-				F3FB366C2640BEC10010382C /* CardScanTests */,
 				3B20ED9D2586539600CBF05E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -371,15 +367,6 @@
 				F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */,
 			);
 			path = DTO;
-			sourceTree = "<group>";
-		};
-		F3FB366C2640BEC10010382C /* CardScanTests */ = {
-			isa = PBXGroup;
-			children = (
-				F3FB366D2640BEC10010382C /* CardScan_PayloadTests.swift */,
-				F3FB366F2640BEC10010382C /* Info.plist */,
-			);
-			path = CardScanTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -580,7 +567,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3FB366E2640BEC10010382C /* CardScan_PayloadTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
