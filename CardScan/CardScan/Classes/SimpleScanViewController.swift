@@ -74,8 +74,23 @@ import UIKit
 
     // our UI components
     public var descriptionText = UILabel()
-    public var closeButton = UIButton(type: .system)
-    public var torchButton = UIButton(type: .system)
+    
+    @objc public var closeButton: UIButton = {
+        var button = UIButton(type: .system)
+        button.setTitleColor(.white, for: .normal)
+        button.tintColor = .white
+        button.setTitle(SimpleScanViewController.closeButtonString, for: .normal)
+        return button
+    }()
+    
+    @objc public var torchButton: UIButton = {
+        var button = UIButton(type: .system)
+        button.setTitleColor(.white, for: .normal)
+        button.tintColor = .white
+        button.setTitle(SimpleScanViewController.torchButtonString, for: .normal)
+        return button
+    }()
+    
     private var debugView: UIImageView?
     public var enableCameraPermissionsButton = UIButton(type: .system)
     public var enableCameraPermissionsText = UILabel()
@@ -172,18 +187,10 @@ import UIKit
     }
     
     open func setupCloseButtonUi() {
-        closeButton.setTitleColor(.white, for: .normal)
-        closeButton.tintColor = .white
-        closeButton.setTitle(SimpleScanViewController.closeButtonString, for: .normal)
-        
         closeButton.addTarget(self, action: #selector(cancelButtonPress), for: .touchUpInside)
     }
     
     open func setupTorchButtonUi() {
-        torchButton.setTitleColor(.white, for: .normal)
-        torchButton.tintColor = .white
-        torchButton.setTitle(SimpleScanViewController.torchButtonString, for: .normal)
-        
         torchButton.addTarget(self, action: #selector(torchButtonPress), for: .touchUpInside)
     }
     
