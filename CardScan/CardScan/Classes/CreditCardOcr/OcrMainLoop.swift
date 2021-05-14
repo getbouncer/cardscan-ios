@@ -66,7 +66,7 @@
 
 import UIKit
 
-public protocol OcrMainLoopDelegate: class {
+public protocol OcrMainLoopDelegate: AnyObject {
     func complete(creditCardOcrResult: CreditCardOcrResult)
     func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage, state: MainLoopState)
     func showCardDetails(number: String?, expiry: String?, name: String?)
@@ -76,7 +76,7 @@ public protocol OcrMainLoopDelegate: class {
     func shouldUsePrediction(errorCorrectedNumber: String?, prediction: CreditCardOcrPrediction) -> Bool
 }
 
-public protocol MachineLearningLoop: class {
+public protocol MachineLearningLoop: AnyObject {
     func push(fullImage: CGImage, roiRectangle: CGRect)
 }
 
