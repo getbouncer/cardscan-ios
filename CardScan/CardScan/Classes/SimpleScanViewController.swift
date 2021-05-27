@@ -142,6 +142,18 @@ import UIKit
         startCameraPreview()
     }
     
+    /* TODO:
+     Removing targets manually since we are allowing custom buttons which retains button reference ->
+     ARC doesn't automatically decrement its reference count ->
+     Targets gets added on every setUpUi call.
+
+     Figure out a better way of allow custom buttons programmatically instead of whole UI buttons.
+    */
+    open override func viewDidDisappear(_ animated: Bool) {
+        closeButton.removeTarget(self, action: #selector(cancelButtonPress), for: .touchUpInside)
+        torchButton.removeTarget(self, action: #selector(torchButtonPress), for: .touchUpInside)
+    }
+    
     @available(iOS 13.0, *)
     func setUpMainLoop(errorCorrectionDuration: Double) {
         if scanPerformancePriority == .accurate {
