@@ -36,10 +36,25 @@ struct OcrDDUtils {
             aggregateDeviation += abs(medianYCenter - boxCenters[idx])
         }
         
-        if (aggregateDeviation > offsetQuickRead * medianHeight)
-        {
-            return true
+        if (aggregateDeviation > offsetQuickRead * medianHeight) {
+            let quickReadGroups = allBoxes.allBoxes
+                .sorted(by: { return $0.rect.centerY() < $1.rect.centerY() })
+                .chunked(into: 4)
+                .map { $0.sorted(by: { return $0.rect.centerX() < $1.rect.centerX() }) }
+
+            guard let quickReadGroupFirstRowFirstDigit = quickReadGroups[0].first,
+                  let quickReadGroupSecondRowFirstDigit = quickReadGroups[1].first,
+                  let quickReadGroupFirstRowLastDigit = quickReadGroups[0].last,
+                  let quickReadGroupSecondRowLastDigit = quickReadGroups[1].last else {
+                return false
+            }
+
+            if (quickReadGroupSecondRowFirstDigit.rect.centerX() < quickReadGroupFirstRowLastDigit.rect.centerX() &&
+                quickReadGroupSecondRowLastDigit.rect.centerX() > quickReadGroupFirstRowFirstDigit.rect.centerX()) {
+                return true
+            }
         }
+
         return false
     }
     
