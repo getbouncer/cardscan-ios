@@ -662,7 +662,7 @@ class CardScan_QuickReadTest: XCTestCase {
         boxes.allBoxes = linearNumbers_BottomLeftTopRight
         
         guard let number = OcrDDUtils.sortAndRemoveFalsePositives(allBoxes: boxes) else {
-            XCTFail("testOCRBoxes_LinearNumber: Failed to produce card number")
+            XCTFail("testOCRBoxes_LinearNumberBottomLeftTopRight: Failed to produce card number")
             return
         }
         
