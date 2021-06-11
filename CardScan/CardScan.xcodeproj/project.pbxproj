@@ -72,6 +72,8 @@
 		3B20EE54258658F900CBF05E /* SSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B20EE53258658F900CBF05E /* SSD.swift */; };
 		3B9F1588259C1F4C00881C1B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3B9F158A259C1F4C00881C1B /* Localizable.strings */; };
 		F374F07E263B5AA50062F735 /* DevicePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = F374F07D263B5AA50062F735 /* DevicePayload.swift */; };
+		F38B48B72673FBBB002CFB22 /* CGrect+utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38B48B62673FBBB002CFB22 /* CGrect+utils.swift */; };
+		F38B48B92673FD0C002CFB22 /* Array+utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38B48B82673FD0C002CFB22 /* Array+utils.swift */; };
 		F3EEF433262E5E770022FBAC /* AppInfoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF430262E5E470022FBAC /* AppInfoUtils.swift */; };
 		F3EEF434262E5E770022FBAC /* DeviceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF431262E5E470022FBAC /* DeviceUtils.swift */; };
 		F3EEF43D262E60DA0022FBAC /* ScanStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */; };
@@ -173,6 +175,8 @@
 		3B9F1598259C200700881C1B /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3B9F1599259C201600881C1B /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F374F07D263B5AA50062F735 /* DevicePayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicePayload.swift; sourceTree = "<group>"; };
+		F38B48B62673FBBB002CFB22 /* CGrect+utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGrect+utils.swift"; sourceTree = "<group>"; };
+		F38B48B82673FD0C002CFB22 /* Array+utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+utils.swift"; sourceTree = "<group>"; };
 		F3EEF430262E5E470022FBAC /* AppInfoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoUtils.swift; sourceTree = "<group>"; };
 		F3EEF431262E5E470022FBAC /* DeviceUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtils.swift; sourceTree = "<group>"; };
 		F3EEF43A262E60DA0022FBAC /* ScanStatistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanStatistics.swift; sourceTree = "<group>"; };
@@ -309,6 +313,8 @@
 				3B20EDE62586550600CBF05E /* CreditCardOcrPrediction+expiry.swift */,
 				3B20EDE72586550600CBF05E /* Image+utils.swift */,
 				3B15C14E259C326A005A394A /* String+localization.swift */,
+				F38B48B62673FBBB002CFB22 /* CGrect+utils.swift */,
+				F38B48B82673FD0C002CFB22 /* Array+utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -501,6 +507,7 @@
 				3B20EE082586550600CBF05E /* API.swift in Sources */,
 				F3EEF44C262F84510022FBAC /* ApiRequest.swift in Sources */,
 				3B20EE062586550600CBF05E /* DetectedAllBoxes.swift in Sources */,
+				F38B48B92673FD0C002CFB22 /* Array+utils.swift in Sources */,
 				3B20EE132586550600CBF05E /* Torch.swift in Sources */,
 				3B20EE162586550600CBF05E /* CardNetwork.swift in Sources */,
 				3B20EDF22586550600CBF05E /* VideoFeed.swift in Sources */,
@@ -557,6 +564,7 @@
 				3B20EE092586550600CBF05E /* OcrPriorsGen.swift in Sources */,
 				3B20EE252586550600CBF05E /* InterfaceOrientation.swift in Sources */,
 				3B20EE0C2586550600CBF05E /* OcrDD.swift in Sources */,
+				F38B48B72673FBBB002CFB22 /* CGrect+utils.swift in Sources */,
 				3B20EDFC2586550600CBF05E /* NonNameWords.swift in Sources */,
 				3B20EE102586550600CBF05E /* ScanConfiguration.swift in Sources */,
 				3B15C14F259C326A005A394A /* String+localization.swift in Sources */,
