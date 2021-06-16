@@ -38,6 +38,7 @@ public enum CenteredCardState {
 
 public struct CreditCardOcrPrediction {
     public let image: CGImage
+    public let ocrCroppingRectangle: CGRect
     public let number: String?
     public let expiryMonth: String?
     public let expiryYear: String?
@@ -51,9 +52,10 @@ public struct CreditCardOcrPrediction {
     public var centeredCardState: CenteredCardState?
     public var uxFrameConfidenceValues: UxFrameConfidenceValues?
     
-    public init(image: CGImage, number: String?, expiryMonth: String?, expiryYear: String?, name: String?, computationTime: Double, numberBoxes: [CGRect]?, expiryBoxes: [CGRect]?, nameBoxes: [CGRect]?, centeredCardState: CenteredCardState? = nil, uxFrameConfidenceValues: UxFrameConfidenceValues? = nil) {
+    public init(image: CGImage, ocrCroppingRectangle: CGRect, number: String?, expiryMonth: String?, expiryYear: String?, name: String?, computationTime: Double, numberBoxes: [CGRect]?, expiryBoxes: [CGRect]?, nameBoxes: [CGRect]?, centeredCardState: CenteredCardState? = nil, uxFrameConfidenceValues: UxFrameConfidenceValues? = nil) {
         
         self.image = image
+        self.ocrCroppingRectangle = ocrCroppingRectangle
         self.number = number
         self.expiryMonth = expiryMonth
         self.expiryYear = expiryYear
@@ -67,7 +69,7 @@ public struct CreditCardOcrPrediction {
     }
     
     public static func emptyPrediction(cgImage: CGImage) -> CreditCardOcrPrediction {
-        CreditCardOcrPrediction(image: cgImage, number: nil, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
+        CreditCardOcrPrediction(image: cgImage, ocrCroppingRectangle: CGRect(), number: nil, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
     }
     
     public var expiryForDisplay: String? {
@@ -92,6 +94,15 @@ public struct CreditCardOcrPrediction {
     
     public var expiryBox: CGRect? {
         return expiryBoxes.flatMap { $0.first }
+    }
+    
+    public var numberBoxesInFullImageFrame: [CGRect]? {
+        guard let boxes = numberBoxes else { return nil }
+        let cropOrigin = ocrCroppingRectangle.origin
+        return boxes.map { CGRect(x: $0.origin.x + cropOrigin.x,
+                                  y: $0.origin.y + cropOrigin.y,
+                                  width: $0.size.width,
+                                  height: $0.size.height) }
     }
     
     static func likelyExpiry(_ string: String) -> (String, String)? {

@@ -16,7 +16,7 @@ extension UIImage {
 extension CGImage {
     
     // Crop a full image
-    public func croppedImageForSsd(roiRectangle: CGRect) -> CGImage? {
+    public func croppedImageForSsd(roiRectangle: CGRect) -> (CGImage, CGRect)? {
         
         // add 10% to our ROI rectangle
         let centerX = roiRectangle.origin.x + roiRectangle.size.width * 0.5
@@ -29,8 +29,14 @@ extension CGImage {
         
         let ssdRoiRectangle = CGRect(x: x, y: y, width: width, height: height)
         
-        // if the expanded roi rectangle is too big, fall back to the tight roi rectangle
-        return self.cropping(to: ssdRoiRectangle) ?? self.cropping(to: roiRectangle)
+        if let image = self.cropping(to: ssdRoiRectangle) {
+            return (image, ssdRoiRectangle)
+        } else if let image = self.cropping(to: roiRectangle) {
+            // fall back if the crop was out of bounds
+            return (image, roiRectangle)
+        }
+        
+        return nil
     }
     
     // crop a full image

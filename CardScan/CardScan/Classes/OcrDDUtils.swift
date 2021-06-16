@@ -5,7 +5,7 @@
 //  Created by xaen on 6/17/20.
 //
 
-import Foundation
+import UIKit
 
 struct OcrDDUtils {
     static let offsetQuickRead:Float = 2.0
@@ -58,13 +58,14 @@ struct OcrDDUtils {
         return false
     }
     
-    static func processQuickRead(allBoxes: DetectedAllOcrBoxes) -> String? {
+    static func processQuickRead(allBoxes: DetectedAllOcrBoxes) -> (String, [CGRect])? {
         
         if (allBoxes.allBoxes.count != numOfQuickReadDigits){
             return nil
         }
         
         var _cardNumber: String = ""
+        var boxes: [CGRect] = []
         let sortedBoxes = allBoxes.allBoxes.sorted(by: { (left, right) -> Bool in
             let leftAverageY = (left.rect.minY / 2 + left.rect.maxY / 2)
             let rightAverageY = (right.rect.minY / 2 + right.rect.maxY / 2)
@@ -75,9 +76,10 @@ struct OcrDDUtils {
         var end = numOfQuickReadDigitsPerGroup - 1 // since indices start with 0
         for _ in 0..<sortedBoxes.count / numOfQuickReadDigitsPerGroup {
             
-            if let partialNumber = OcrDDUtils.sortBoxesInRange(boxes: sortedBoxes,
+            if let (partialNumber, partialBoxes) = OcrDDUtils.sortBoxesInRange(boxes: sortedBoxes,
                                                                start: start, end: end) {
                 _cardNumber = _cardNumber + partialNumber
+                boxes += partialBoxes
                 start = start + numOfQuickReadDigitsPerGroup
                 end = end + numOfQuickReadDigitsPerGroup
             }
@@ -87,31 +89,33 @@ struct OcrDDUtils {
         }
 
         if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
-            return _cardNumber
+            return (_cardNumber, boxes)
         }
         return nil
     }
     
-    static func sortBoxesInRange(boxes: [DetectedSSDOcrBox], start: Int, end: Int) -> String? {
+    static func sortBoxesInRange(boxes: [DetectedSSDOcrBox], start: Int, end: Int) -> (String, [CGRect])? {
         
         if boxes.indices.contains(start) && boxes.indices.contains(end) {
             var _groupNumber: String = ""
             let groupSlice = boxes[start...end]
             let group = Array(groupSlice)
             let sortedGroup = group.sorted(by: {$0.rect.minX < $1.rect.minX})
+            var sortedBoxes: [CGRect] = []
             
             for idx in 0..<sortedGroup.count {
                 _groupNumber = _groupNumber + String(sortedGroup[idx].label)
+                sortedBoxes.append(sortedGroup[idx].rect)
             }
             
-            return _groupNumber
+            return (_groupNumber, sortedBoxes)
         }
         else {
             return nil
         }
     }
     
-    static func sortAndRemoveFalsePositives(allBoxes: DetectedAllOcrBoxes) -> String? {
+    static func sortAndRemoveFalsePositives(allBoxes: DetectedAllOcrBoxes) -> (String, [CGRect])? {
         
         if (allBoxes.allBoxes.isEmpty) || (allBoxes.allBoxes.count < minimumCardDigits) {
             return nil
@@ -120,6 +124,7 @@ struct OcrDDUtils {
         var leftCordinates = [Float]()
         var topCordinates = [Float]()
         var bottomCordinates = [Float]()
+        var sortedBoxes = [CGRect]()
         
         for idx in 0..<allBoxes.allBoxes.count {
             leftCordinates.append(Float(allBoxes.allBoxes[idx].rect.minX))
@@ -144,12 +149,13 @@ struct OcrDDUtils {
                 let boxHeight = abs(Float(box.rect.maxY) - Float(box.rect.minY))
                 if abs(boxCenter - medianCenter) < medianHeight && boxHeight < falsePositiveTolerance * medianHeight {
                     _cardNumber = _cardNumber + String(box.label)
+                    sortedBoxes.append(box.rect)
                 }
             }
         }
         
         if CreditCardUtils.isValidNumber(cardNumber: _cardNumber){
-            return _cardNumber
+            return (_cardNumber, sortedBoxes)
         }
         
         return nil
