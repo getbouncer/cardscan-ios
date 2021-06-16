@@ -23,7 +23,7 @@ class CardScan_StateMachineTests: XCTestCase {
         let durationStateMachine = OcrAccurateMainLoopStateMachine()
         XCTAssert(durationStateMachine.state == .initial)
         
-        let prediction = CreditCardOcrPrediction(image: cardImage, number: number, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
+        let prediction = CreditCardOcrPrediction(image: cardImage, ocrCroppingRectangle: CGRect(), number: number, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
         let state = durationStateMachine.event(prediction: prediction)
         XCTAssert(state == .ocrOnly)
     }
@@ -39,7 +39,7 @@ class CardScan_StateMachineTests: XCTestCase {
         durationStateMachine.state = .ocrOnly
         durationStateMachine.startTimeForCurrentState = Date(timeInterval: minDuration, since: durationStateMachine.startTimeForCurrentState)
         
-        let prediction = CreditCardOcrPrediction(image: cardImage, number: number, expiryMonth: expiryMonth, expiryYear: expiryYear, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
+        let prediction = CreditCardOcrPrediction(image: cardImage, ocrCroppingRectangle: CGRect(), number: number, expiryMonth: expiryMonth, expiryYear: expiryYear, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
         let state = durationStateMachine.event(prediction: prediction)
         
         XCTAssert(state == .finished)
@@ -57,7 +57,7 @@ class CardScan_StateMachineTests: XCTestCase {
         durationStateMachine.state = .ocrOnly
         durationStateMachine.startTimeForCurrentState = Date(timeInterval: maxDuration, since: durationStateMachine.startTimeForCurrentState)
         
-        let prediction = CreditCardOcrPrediction(image: cardImage, number: number, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
+        let prediction = CreditCardOcrPrediction(image: cardImage, ocrCroppingRectangle: CGRect(), number: number, expiryMonth: nil, expiryYear: nil, name: nil, computationTime: 0.0, numberBoxes: nil, expiryBoxes: nil, nameBoxes: nil)
         let state = durationStateMachine.event(prediction: prediction)
         
         XCTAssert(state == .finished)
