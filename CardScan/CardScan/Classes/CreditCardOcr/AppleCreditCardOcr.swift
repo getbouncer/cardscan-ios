@@ -10,7 +10,7 @@ import UIKit
 @available(iOS 13.0, *)
 public class AppleCreditCardOcr: CreditCardOcrImplementation {
     public override func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
-        guard let image = fullImage.croppedImageForSsd(roiRectangle: roiRectangle) else {
+        guard let (image, roiForOcr) = fullImage.croppedImageForSsd(roiRectangle: roiRectangle) else {
             return CreditCardOcrPrediction.emptyPrediction(cgImage: fullImage)
         }
         
@@ -67,7 +67,7 @@ public class AppleCreditCardOcr: CreditCardOcrImplementation {
         self.computationTime += duration
         self.frames += 1
 
-        return CreditCardOcrPrediction(image: image, number: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, name: name, computationTime: duration, numberBoxes: numberBox.map { [$0] }, expiryBoxes: expiryBox.map { [$0] }, nameBoxes: nameBox.map { [$0] })
+        return CreditCardOcrPrediction(image: image, ocrCroppingRectangle: roiForOcr, number: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, name: name, computationTime: duration, numberBoxes: numberBox.map { [$0] }, expiryBoxes: expiryBox.map { [$0] }, nameBoxes: nameBox.map { [$0] })
     }
     
     static func likelyName(_ text: String) -> String? {

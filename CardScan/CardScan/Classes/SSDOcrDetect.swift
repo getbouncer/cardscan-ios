@@ -135,10 +135,13 @@ struct SSDOcrDetect {
         }
         
         if OcrDDUtils.isQuickRead(allBoxes: DetectedOcrBoxes){
-            return OcrDDUtils.processQuickRead(allBoxes: DetectedOcrBoxes)
-        }
-        else {
-            return OcrDDUtils.sortAndRemoveFalsePositives(allBoxes: DetectedOcrBoxes)
+            guard let (number, boxes) = OcrDDUtils.processQuickRead(allBoxes: DetectedOcrBoxes) else { return nil }
+            self.lastDetectedBoxes = boxes
+            return number
+        } else {
+            guard let (number, boxes) = OcrDDUtils.sortAndRemoveFalsePositives(allBoxes: DetectedOcrBoxes) else { return nil }
+            self.lastDetectedBoxes = boxes
+            return number
         }
         
         

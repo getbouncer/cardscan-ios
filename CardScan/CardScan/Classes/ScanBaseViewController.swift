@@ -442,12 +442,12 @@ public protocol TestingImageDataSource: AnyObject {
         }
         
         let cardSize = CGSize(width: prediction.image.width, height: prediction.image.height)
-        if let number = prediction.number, let numberBox = prediction.numberBox {
+        if let number = prediction.number, let numberBox = prediction.numberBox, let numberBoxes = prediction.numberBoxesInFullImageFrame {
             let expiry = prediction.expiryObject()
             let expiryBox = prediction.expiryBox
             
             ScanBaseViewController.machineLearningQueue.async {
-                self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBox, expiryBoundingBox: expiryBox, croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage, centeredCardState: prediction.centeredCardState, uxFrameConfidenceValues: prediction.uxFrameConfidenceValues, flashForcedOn: isFlashForcedOn)
+                self.scanEventsDelegate?.onNumberRecognized(number: number, expiry: expiry, numberBoundingBox: numberBox, expiryBoundingBox: expiryBox, croppedCardSize: cardSize, squareCardImage: squareCardImage, fullCardImage: fullCardImage, centeredCardState: prediction.centeredCardState, uxFrameConfidenceValues: prediction.uxFrameConfidenceValues, flashForcedOn: isFlashForcedOn, numberBoxesInFullImageFrame: numberBoxes)
             }
         } else {
             ScanBaseViewController.machineLearningQueue.async {
