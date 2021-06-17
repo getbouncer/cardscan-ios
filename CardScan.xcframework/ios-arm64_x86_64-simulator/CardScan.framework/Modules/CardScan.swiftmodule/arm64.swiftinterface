@@ -1,0 +1,608 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target arm64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name CardScan
+import AVFoundation
+import AVKit
+import Accelerate
+@_exported import CardScan
+import CoreGraphics
+import CoreML
+import CoreTelephony
+import Foundation
+import Swift
+import UIKit
+import VideoToolbox
+import Vision
+import os.log
+import os
+@available(iOS 11.2, *)
+public protocol ScanEvents {
+  mutating func onNumberRecognized(number: Swift.String, expiry: CardScan.Expiry?, numberBoundingBox: CoreGraphics.CGRect, expiryBoundingBox: CoreGraphics.CGRect?, croppedCardSize: CoreGraphics.CGSize, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, centeredCardState: CardScan.CenteredCardState?, uxFrameConfidenceValues: CardScan.UxFrameConfidenceValues?, flashForcedOn: Swift.Bool, numberBoxesInFullImageFrame: [CoreGraphics.CGRect])
+  mutating func onScanComplete(scanStats: CardScan.ScanStats)
+  mutating func onFrameDetected(croppedCardSize: CoreGraphics.CGSize, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, centeredCardState: CardScan.CenteredCardState?, uxFrameConfidenceValues: CardScan.UxFrameConfidenceValues?, flashForcedOn: Swift.Bool)
+}
+@available(iOS 11.2, *)
+@objc public protocol SimpleScanDelegate {
+  @objc func userDidCancelSimple(_ scanViewController: CardScan.SimpleScanViewController)
+  @objc func userDidScanCardSimple(_ scanViewController: CardScan.SimpleScanViewController, creditCard: CardScan.CreditCard)
+}
+@_inheritsConvenienceInitializers @available(iOS 11.2, *)
+@objc open class SimpleScanViewController : CardScan.ScanBaseViewController {
+  public var previewView: CardScan.PreviewView
+  public var blurView: CardScan.BlurView
+  public var roiView: UIKit.UIView
+  public var cornerView: CardScan.CornerView?
+  public var descriptionText: UIKit.UILabel
+  @objc public var closeButton: UIKit.UIButton
+  @objc public var torchButton: UIKit.UIButton
+  public var enableCameraPermissionsButton: UIKit.UIButton
+  public var enableCameraPermissionsText: UIKit.UILabel
+  public var numberText: UIKit.UILabel
+  public var expiryText: UIKit.UILabel
+  public var nameText: UIKit.UILabel
+  public var expiryLayoutView: UIKit.UIView
+  @objc public static var descriptionString: Swift.String
+  @objc public static var enableCameraPermissionString: Swift.String
+  @objc public static var enableCameraPermissionsDescriptionString: Swift.String
+  @objc public static var closeButtonString: Swift.String
+  @objc public static var torchButtonString: Swift.String
+  @objc weak public var delegate: CardScan.SimpleScanDelegate?
+  @objc public var scanPerformancePriority: CardScan.ScanPerformance
+  @objc public var maxErrorCorrectionDuration: Swift.Double
+  @objc public static func createViewController() -> CardScan.SimpleScanViewController
+  @objc override dynamic open func viewDidLoad()
+  @objc override dynamic open func viewDidDisappear(_ animated: Swift.Bool)
+  open func setupUiComponents()
+  open func setupPreviewViewUi()
+  open func setupBlurViewUi()
+  open func setupRoiViewUi()
+  open func setupCloseButtonUi()
+  open func setupTorchButtonUi()
+  open func setupDescriptionTextUi()
+  open func setupCardDetailsUi()
+  open func setupDenyUi()
+  open func setupDebugViewUi()
+  open func setupConstraints()
+  open func setupPreviewViewConstraints()
+  open func setupBlurViewConstraints()
+  open func setupRoiViewConstraints()
+  open func setupCloseButtonConstraints()
+  open func setupTorchButtonConstraints()
+  open func setupDescriptionTextConstraints()
+  open func setupCardDetailsConstraints()
+  open func setupDenyConstraints()
+  open func setupDebugViewConstraints()
+  @objc override open func onScannedCard(number: Swift.String, expiryYear: Swift.String?, expiryMonth: Swift.String?, scannedImage: UIKit.UIImage?)
+  open func showScannedCardDetails(prediction: CardScan.CreditCardOcrPrediction)
+  override open func prediction(prediction: CardScan.CreditCardOcrPrediction, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, state: CardScan.MainLoopState)
+  @objc override open func onCameraPermissionDenied(showedPrompt: Swift.Bool)
+  @objc open func cancelButtonPress()
+  @objc open func torchButtonPress()
+  @objc open func enableCameraPermissionsPress()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension UIView {
+  public func setAnchorsEqual(to otherView: UIKit.UIView)
+}
+public struct Api {
+  public struct ApiError : Swift.Error {
+  }
+  public static var lastScanStatsSuccess: Foundation.Date?
+  public typealias ApiCompletion = (([Swift.String : Any]?, CardScan.Api.ApiError?) -> Swift.Void)
+  public static var baseUrl: Swift.String?
+  public static var apiKey: Swift.String?
+  public static func apiCallWithDeviceInfo(endpoint: Swift.String, parameters: [Swift.String : Any], completion: @escaping CardScan.Api.ApiCompletion)
+  @available(iOS 11.0, *)
+  public static func downloadAndCompileLatestModel(signedUrl: Swift.String, completion: @escaping ((Foundation.URL?, CardScan.Api.ApiError?) -> Swift.Void))
+  public static func getLatestModelConfig(modelClass: Swift.String, modelFrameworkVersion: Swift.String, parameters: [Swift.String : Any], completion: @escaping ((CardScan.ModelConfigResponse?, CardScan.Api.ApiError?) -> Swift.Void))
+}
+public struct DetectedAllBoxes {
+  public init()
+  public func toArray() -> [[Swift.String : Any]]
+}
+@objc public enum CardNetwork : Swift.Int {
+  case VISA
+  case MASTERCARD
+  case AMEX
+  case DISCOVER
+  case UNIONPAY
+  case JCB
+  case DINERSCLUB
+  case REGIONAL
+  case UNKNOWN
+  public func toString() -> Swift.String
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension UIImage {
+  public func pixelBuffer(width: Swift.Int, height: Swift.Int) -> CoreVideo.CVPixelBuffer?
+  public func pixelBufferGray(width: Swift.Int, height: Swift.Int) -> CoreVideo.CVPixelBuffer?
+  public func pixelBufferGray() -> CoreVideo.CVPixelBuffer?
+  public func areCornerPixelsBlack() -> Swift.Bool
+}
+extension UIImage {
+  convenience public init?(pixelBuffer: CoreVideo.CVPixelBuffer)
+  convenience public init?(pixelBuffer: CoreVideo.CVPixelBuffer, context: CoreImage.CIContext)
+}
+extension UIImage {
+  @nonobjc public class func fromByteArrayRGBA(_ bytes: [Swift.UInt8], width: Swift.Int, height: Swift.Int, scale: CoreGraphics.CGFloat = 0, orientation: UIKit.UIImage.Orientation = .up) -> UIKit.UIImage?
+  @nonobjc public class func fromByteArrayGray(_ bytes: [Swift.UInt8], width: Swift.Int, height: Swift.Int, scale: CoreGraphics.CGFloat = 0, orientation: UIKit.UIImage.Orientation = .up) -> UIKit.UIImage?
+}
+extension UIImage {
+  public static func blankGrayImage(width: Swift.Int, height: Swift.Int) -> UIKit.UIImage?
+}
+public struct ScanStats {
+  public var scans: Swift.Int
+  public var flatDigitsRecognized: Swift.Int
+  public var flatDigitsDetected: Swift.Int
+  public var embossedDigitsRecognized: Swift.Int
+  public var embossedDigitsDetected: Swift.Int
+  public var torchOn: Swift.Bool
+  public var orientation: Swift.String
+  public var success: Swift.Bool?
+  public var endTime: Foundation.Date?
+  public var model: Swift.String?
+  public var algorithm: Swift.String?
+  public var bin: Swift.String?
+  public var lastFlatBoxes: [CoreGraphics.CGRect]?
+  public var lastEmbossedBoxes: [CoreGraphics.CGRect]?
+  public var deviceType: Swift.String?
+  public var numberRect: CoreGraphics.CGRect?
+  public var expiryBoxes: [CoreGraphics.CGRect]?
+  public var cardsDetected: Swift.Int
+  public var permissionGranted: Swift.Bool?
+  public var userCanceled: Swift.Bool
+  public static var lastScanStatsSuccess: Foundation.Date?
+  public func toDictionaryForAnalytics() -> [Swift.String : Any]
+  public func duration() -> Swift.Double
+}
+@_inheritsConvenienceInitializers @available(iOS 13.0, *)
+public class AppleCreditCardOcr : CardScan.CreditCardOcrImplementation {
+  override public func recognizeCard(in fullImage: CoreGraphics.CGImage, roiRectangle: CoreGraphics.CGRect) -> CardScan.CreditCardOcrPrediction
+  @objc deinit
+  override public init(dispatchQueueLabel: Swift.String)
+}
+open class CreditCardOcrImplementation {
+  public var frames: Swift.Int
+  public var computationTime: Swift.Double
+  public init(dispatchQueueLabel: Swift.String)
+  open func recognizeCard(in fullImage: CoreGraphics.CGImage, roiRectangle: CoreGraphics.CGRect) -> CardScan.CreditCardOcrPrediction
+  @objc deinit
+}
+@available(iOS 11.2, *)
+public struct SsdDetect {
+  public static func warmUp()
+  public init()
+  public static func initializeModels(contentsOf url: Foundation.URL)
+  public static func isModelLoaded() -> Swift.Bool
+  public func predict(image: UIKit.UIImage) -> CardScan.DetectedAllBoxes?
+}
+@_hasMissingDesignatedInitializers public class MachineLearningResult {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @available(iOS 11.2, *)
+public class SSDCreditCardOcr : CardScan.CreditCardOcrImplementation {
+  override public init(dispatchQueueLabel: Swift.String)
+  override public func recognizeCard(in fullImage: CoreGraphics.CGImage, roiRectangle: CoreGraphics.CGRect) -> CardScan.CreditCardOcrPrediction
+  @objc deinit
+}
+public struct DetectedAllOcrBoxes {
+  public init()
+  public func toArray() -> [[Swift.String : Any]]
+  public func getBoundingBoxesOfDigits() -> [CoreGraphics.CGRect]
+}
+@available(iOS 11.2, *)
+@objc public protocol ScanDelegate {
+  @objc func userDidCancel(_ scanViewController: CardScan.ScanViewController)
+  @objc func userDidScanCard(_ scanViewController: CardScan.ScanViewController, creditCard: CardScan.CreditCard)
+  @objc optional func userDidScanQrCode(_ scanViewController: CardScan.ScanViewController, payload: Swift.String)
+  @objc func userDidSkip(_ scanViewController: CardScan.ScanViewController)
+}
+@available(iOS 11.2, *)
+@objc public protocol ScanStringsDataSource {
+  @objc func scanCard() -> Swift.String
+  @objc func positionCard() -> Swift.String
+  @objc func backButton() -> Swift.String
+  @objc func skipButton() -> Swift.String
+}
+@available(iOS 11.2, *)
+@objc public protocol CaptureOutputDelegate {
+  @objc func capture(_ output: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from connection: AVFoundation.AVCaptureConnection)
+}
+@available(iOS 11.2, *)
+@objc public protocol FullScanStringsDataSource : CardScan.ScanStringsDataSource {
+  @objc func denyPermissionTitle() -> Swift.String
+  @objc func denyPermissionMessage() -> Swift.String
+  @objc func denyPermissionButton() -> Swift.String
+}
+@objc public class CreditCard : ObjectiveC.NSObject {
+  @objc public var number: Swift.String
+  @objc public var expiryMonth: Swift.String?
+  @objc public var expiryYear: Swift.String?
+  @objc public var name: Swift.String?
+  @objc public var image: UIKit.UIImage?
+  @objc public var cvv: Swift.String?
+  @objc public var postalCode: Swift.String?
+  public init(number: Swift.String)
+  @objc public func expiryForDisplay() -> Swift.String?
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @available(iOS 11.2, *)
+@objc public class ScanViewController : CardScan.ScanBaseViewController {
+  weak public var scanDelegate: CardScan.ScanDelegate?
+  weak public var captureOutputDelegate: CardScan.CaptureOutputDelegate?
+  @objc weak public var stringDataSource: CardScan.ScanStringsDataSource?
+  @objc public var allowSkip: Swift.Bool
+  public var torchLevel: Swift.Float?
+  public var scanQrCode: Swift.Bool
+  public var navigationBarIsHidden: Swift.Bool
+  @objc public var hideBackButtonImage: Swift.Bool
+  @objc public var backButtonImage: UIKit.UIImage?
+  @objc public var backButtonColor: UIKit.UIColor?
+  @objc public var backButtonFont: UIKit.UIFont?
+  @objc public var scanCardFont: UIKit.UIFont?
+  @objc public var positionCardFont: UIKit.UIFont?
+  @objc public var skipButtonFont: UIKit.UIFont?
+  @objc public var backButtonImageToTextDelta: Foundation.NSNumber?
+  @objc public var torchButtonImage: UIKit.UIImage?
+  @objc public var cornerColor: UIKit.UIColor?
+  @objc @IBOutlet weak public var regionOfInterestLabel: UIKit.UILabel!
+  public var torchButtonSize: CoreGraphics.CGSize?
+  @objc public static func createViewController(withDelegate delegate: CardScan.ScanDelegate? = nil) -> CardScan.ScanViewController?
+  @objc public static func createViewController(withDelegate delegate: CardScan.ScanDelegate? = nil, configuration: CardScan.ScanConfiguration) -> CardScan.ScanViewController?
+  @objc public func cancel(callDelegate: Swift.Bool)
+  public func setStrings()
+  @objc override public func onCameraPermissionDenied(showedPrompt: Swift.Bool)
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewDidLayoutSubviews()
+  @objc override public func showCardNumber(_ number: Swift.String, expiry: Swift.String?)
+  @objc override public func useCurrentFrameNumber(errorCorrectedNumber: Swift.String?, currentFrameNumber: Swift.String) -> Swift.Bool
+  @objc override public func captureOutput(_ output: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from connection: AVFoundation.AVCaptureConnection)
+  @objc override public func onScannedCard(number: Swift.String, expiryYear: Swift.String?, expiryMonth: Swift.String?, scannedImage: UIKit.UIImage?)
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+public struct CreditCardUtils {
+  public static var prefixesRegional: [Swift.String]
+  public static func addMirSupport()
+  public static func isValidNumber(cardNumber: Swift.String) -> Swift.Bool
+  public static func isValidCvv(cvv: Swift.String, network: CardScan.CardNetwork) -> Swift.Bool
+  public static func isValidDate(expMonth: Swift.String, expYear: Swift.String) -> Swift.Bool
+  public static func determineCardNetwork(cardNumber: Swift.String) -> CardScan.CardNetwork
+  public static func determineCardType(cardNumber: Swift.String) -> CardScan.CardType
+  public static func format(number: Swift.String) -> Swift.String
+  public static func formatCardNumber(cardNumber: Swift.String) -> Swift.String
+  public static func formatExpirationDate(expMonth: Swift.String, expYear: Swift.String) -> Swift.String
+}
+extension CreditCardUtils {
+  public static func isVisa(number: Swift.String) -> Swift.Bool
+  public static func isAmex(number: Swift.String) -> Swift.Bool
+  public static func isDiscover(number: Swift.String) -> Swift.Bool
+  public static func isMastercard(number: Swift.String) -> Swift.Bool
+  public static func isUnionPay(number: Swift.String) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PreviewView : UIKit.UIView {
+  @objc override dynamic public class var layerClass: Swift.AnyClass {
+    @objc get
+  }
+  @objc override dynamic public func layoutSubviews()
+  @objc deinit
+}
+@available(iOS 11.2, *)
+public protocol TestingImageDataSource : AnyObject {
+  func nextSquareAndFullImage() -> (CoreGraphics.CGImage, CoreGraphics.CGImage)?
+}
+@_inheritsConvenienceInitializers @available(iOS 11.2, *)
+@objc open class ScanBaseViewController : UIKit.UIViewController, AVFoundation.AVCaptureVideoDataOutputSampleBufferDelegate, CardScan.OcrMainLoopDelegate {
+  weak public var testingImageDataSource: CardScan.TestingImageDataSource?
+  @objc public var includeCardImage: Swift.Bool
+  @objc public var showDebugImageView: Swift.Bool
+  @objc public var sendScanStats: Swift.Bool
+  public var scanEventsDelegate: CardScan.ScanEvents?
+  public static let machineLearningQueue: Dispatch.DispatchQueue
+  public var hideNavigationBar: Swift.Bool?
+  public var regionOfInterestCornerRadius: CoreGraphics.CGFloat
+  public var mainLoop: CardScan.MachineLearningLoop?
+  public var predictedName: Swift.String?
+  @objc open func onScannedCard(number: Swift.String, expiryYear: Swift.String?, expiryMonth: Swift.String?, scannedImage: UIKit.UIImage?)
+  @objc open func showCardNumber(_ number: Swift.String, expiry: Swift.String?)
+  @objc open func showWrongCard(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  @objc open func showNoCard()
+  @objc open func onCameraPermissionDenied(showedPrompt: Swift.Bool)
+  @objc open func useCurrentFrameNumber(errorCorrectedNumber: Swift.String?, currentFrameNumber: Swift.String) -> Swift.Bool
+  public func toggleTorch()
+  public func isTorchOn() -> Swift.Bool
+  public func hasTorchAndIsAvailable() -> Swift.Bool
+  public func setTorchLevel(level: Swift.Float)
+  @objc public static func configure(apiKey: Swift.String? = nil)
+  @objc public static func supportedOrientationMaskOrDefault() -> UIKit.UIInterfaceOrientationMask
+  @objc public static func isCompatible() -> Swift.Bool
+  @objc public static func isCompatible(configuration: CardScan.ScanConfiguration) -> Swift.Bool
+  @objc public static func cameraImage() -> UIKit.UIImage?
+  public func cancelScan()
+  public func setUpCorners()
+  public func startCameraPreview()
+  public func setupOnViewDidLoad(regionOfInterestLabel: UIKit.UIView, blurView: CardScan.BlurView, previewView: CardScan.PreviewView, cornerView: CardScan.CornerView?, debugImageView: UIKit.UIImageView?, torchLevel: Swift.Float?)
+  @objc override dynamic open var shouldAutorotate: Swift.Bool {
+    @objc get
+  }
+  @objc override dynamic open var supportedInterfaceOrientations: UIKit.UIInterfaceOrientationMask {
+    @objc get
+  }
+  @objc override dynamic open var preferredInterfaceOrientationForPresentation: UIKit.UIInterfaceOrientation {
+    @objc get
+  }
+  @objc override dynamic open var preferredStatusBarStyle: UIKit.UIStatusBarStyle {
+    @objc get
+  }
+  @objc override dynamic open func viewWillTransition(to size: CoreGraphics.CGSize, with coordinator: UIKit.UIViewControllerTransitionCoordinator)
+  @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic open func viewDidLayoutSubviews()
+  @objc override dynamic open func viewDidAppear(_ animated: Swift.Bool)
+  @objc override dynamic open func viewWillDisappear(_ animated: Swift.Bool)
+  @objc override dynamic open func viewDidDisappear(_ animated: Swift.Bool)
+  public func getScanStats() -> CardScan.ScanStats
+  @objc open func captureOutput(_ output: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from connection: AVFoundation.AVCaptureConnection)
+  public func updateDebugImageView(image: UIKit.UIImage)
+  public func complete(creditCardOcrResult: CardScan.CreditCardOcrResult)
+  open func prediction(prediction: CardScan.CreditCardOcrPrediction, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, state: CardScan.MainLoopState)
+  public func showCardDetails(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  public func showCardDetailsWithFlash(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  public func shouldUsePrediction(errorCorrectedNumber: Swift.String?, prediction: CardScan.CreditCardOcrPrediction) -> Swift.Bool
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc public enum CardType : Swift.Int {
+  case CREDIT
+  case DEBIT
+  case PREPAID
+  case UNKNOWN
+  public func toString() -> Swift.String
+  public static func fromString(_ str: Swift.String) -> CardScan.CardType
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum MainLoopState {
+  case initial
+  case ocrOnly
+  case cardOnly
+  case ocrAndCard
+  case ocrIncorrect
+  case ocrDelayForCard
+  case ocrForceFlash
+  case finished
+  case nameAndExpiry
+  public static func == (a: CardScan.MainLoopState, b: CardScan.MainLoopState) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public protocol MainLoopStateMachine {
+  func loopState() -> CardScan.MainLoopState
+  func event(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState
+  func reset() -> CardScan.MainLoopStateMachine
+}
+@_inheritsConvenienceInitializers @objc open class OcrMainLoopStateMachine : ObjectiveC.NSObject, CardScan.MainLoopStateMachine {
+  public var state: CardScan.MainLoopState
+  public var startTimeForCurrentState: Foundation.Date
+  final public let errorCorrectionDurationSeconds: Swift.Double
+  @objc override dynamic public init()
+  public func loopState() -> CardScan.MainLoopState
+  public func event(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState
+  open func transition(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState?
+  open func reset() -> CardScan.MainLoopStateMachine
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class OcrAccurateMainLoopStateMachine : ObjectiveC.NSObject, CardScan.MainLoopStateMachine {
+  public func loopState() -> CardScan.MainLoopState
+  public init(maxErrorCorrection: Swift.Double)
+  public func event(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState
+  public func transition(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.MainLoopState?
+  public func reset() -> CardScan.MainLoopStateMachine
+  @objc deinit
+}
+public struct Expiry : Swift.Hashable {
+  public let string: Swift.String
+  public let month: Swift.UInt
+  public let year: Swift.UInt
+  public static func == (lhs: CardScan.Expiry, rhs: CardScan.Expiry) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol OcrMainLoopDelegate : AnyObject {
+  func complete(creditCardOcrResult: CardScan.CreditCardOcrResult)
+  func prediction(prediction: CardScan.CreditCardOcrPrediction, squareCardImage: CoreGraphics.CGImage, fullCardImage: CoreGraphics.CGImage, state: CardScan.MainLoopState)
+  func showCardDetails(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  func showCardDetailsWithFlash(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  func showWrongCard(number: Swift.String?, expiry: Swift.String?, name: Swift.String?)
+  func showNoCard()
+  func shouldUsePrediction(errorCorrectedNumber: Swift.String?, prediction: CardScan.CreditCardOcrPrediction) -> Swift.Bool
+}
+public protocol MachineLearningLoop : AnyObject {
+  func push(fullImage: CoreGraphics.CGImage, roiRectangle: CoreGraphics.CGRect)
+}
+open class OcrMainLoop : CardScan.MachineLearningLoop {
+  public enum AnalyzerType {
+    case apple
+    case ssd
+    public static func == (a: CardScan.OcrMainLoop.AnalyzerType, b: CardScan.OcrMainLoop.AnalyzerType) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  public var scanStats: CardScan.ScanStats
+  weak public var mainLoopDelegate: CardScan.OcrMainLoopDelegate?
+  public var errorCorrection: CardScan.ErrorCorrection
+  public var imageQueueSize: Swift.Int
+  public init(analyzers: [CardScan.OcrMainLoop.AnalyzerType] = [.ssd, .apple])
+  public func setupMl(ocrImplementations: [CardScan.CreditCardOcrImplementation])
+  public func push(fullImage: CoreGraphics.CGImage, roiRectangle: CoreGraphics.CGRect)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class CSBundle {
+  public static var bundleIdentifier: Swift.String
+  public static var cardScanBundle: Foundation.Bundle?
+  public static var namedBundle: Swift.String
+  public static var namedBundleExtension: Swift.String
+  public static func bundle() -> Foundation.Bundle?
+  @objc deinit
+}
+open class ErrorCorrection {
+  final public let stateMachine: CardScan.MainLoopStateMachine
+  public var frames: Swift.Int
+  final public let startTime: Foundation.Date
+  public var mostRecentPrediction: CardScan.CreditCardOcrPrediction?
+  public init(stateMachine: CardScan.MainLoopStateMachine)
+  open func result() -> CardScan.CreditCardOcrResult?
+  open func add(prediction: CardScan.CreditCardOcrPrediction) -> CardScan.CreditCardOcrResult?
+  open func reset() -> CardScan.ErrorCorrection
+  @objc deinit
+}
+extension CGImage {
+  public func croppedImageForSsd(roiRectangle: CoreGraphics.CGRect) -> (CoreGraphics.CGImage, CoreGraphics.CGRect)?
+  public func squareImageForUxModel(roiRectangle: CoreGraphics.CGRect) -> CoreGraphics.CGImage?
+  public func squareCardImage(roiRectangle: CoreGraphics.CGRect) -> CoreGraphics.CGImage?
+}
+@objc @_inheritsConvenienceInitializers public class BlurView : UIKit.UIView {
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  public func maskToRoi(roi: UIKit.UIView)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class CreditCardOcrResult : CardScan.MachineLearningResult {
+  final public let mostRecentPrediction: CardScan.CreditCardOcrPrediction
+  final public let number: Swift.String
+  final public let expiry: Swift.String?
+  final public let name: Swift.String?
+  final public let state: CardScan.MainLoopState
+  public var hasCenteredCard: CardScan.CenteredCardState?
+  public var expiryMonth: Swift.String? {
+    get
+  }
+  public var expiryYear: Swift.String? {
+    get
+  }
+  public static func finishedWithNonNumberSideCard(prediction: CardScan.CreditCardOcrPrediction, duration: Swift.Double, frames: Swift.Int) -> CardScan.CreditCardOcrResult
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class CornerView : UIKit.UIView {
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  public func setFrameSize(roi: UIKit.UIView)
+  public func drawCorners()
+  @objc deinit
+}
+public class ActiveStateComputation {
+  public init(label: Swift.String)
+  public func async(execute work: @escaping () -> Swift.Void)
+  @objc deinit
+}
+public struct ModelConfigResponse {
+  public let modelVersion: Swift.String
+  public let hash: Swift.String
+  public let hashAlgorithm: Swift.String
+  public let signedUrl: Swift.String
+}
+public struct UxFrameConfidenceValues {
+  public let hasOcr: Swift.Bool
+  public let uxPan: Swift.Double
+  public let uxNoPan: Swift.Double
+  public let uxNoCard: Swift.Double
+  public init(hasOcr: Swift.Bool, uxPan: Swift.Double, uxNoPan: Swift.Double, uxNoCard: Swift.Double)
+  public func toArray() -> [Swift.Double]
+}
+public enum CenteredCardState {
+  case numberSide
+  case nonNumberSide
+  case noCard
+  public func hasCard() -> Swift.Bool
+  public static func == (a: CardScan.CenteredCardState, b: CardScan.CenteredCardState) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public struct CreditCardOcrPrediction {
+  public let image: CoreGraphics.CGImage
+  public let ocrCroppingRectangle: CoreGraphics.CGRect
+  public let number: Swift.String?
+  public let expiryMonth: Swift.String?
+  public let expiryYear: Swift.String?
+  public let name: Swift.String?
+  public let computationTime: Swift.Double
+  public let numberBoxes: [CoreGraphics.CGRect]?
+  public let expiryBoxes: [CoreGraphics.CGRect]?
+  public let nameBoxes: [CoreGraphics.CGRect]?
+  public var centeredCardState: CardScan.CenteredCardState?
+  public var uxFrameConfidenceValues: CardScan.UxFrameConfidenceValues?
+  public init(image: CoreGraphics.CGImage, ocrCroppingRectangle: CoreGraphics.CGRect, number: Swift.String?, expiryMonth: Swift.String?, expiryYear: Swift.String?, name: Swift.String?, computationTime: Swift.Double, numberBoxes: [CoreGraphics.CGRect]?, expiryBoxes: [CoreGraphics.CGRect]?, nameBoxes: [CoreGraphics.CGRect]?, centeredCardState: CardScan.CenteredCardState? = nil, uxFrameConfidenceValues: CardScan.UxFrameConfidenceValues? = nil)
+  public static func emptyPrediction(cgImage: CoreGraphics.CGImage) -> CardScan.CreditCardOcrPrediction
+  public var expiryForDisplay: Swift.String? {
+    get
+  }
+  public var expiryAsUInt: (Swift.UInt, Swift.UInt)? {
+    get
+  }
+  public var numberBox: CoreGraphics.CGRect? {
+    get
+  }
+  public var expiryBox: CoreGraphics.CGRect? {
+    get
+  }
+  public var numberBoxesInFullImageFrame: [CoreGraphics.CGRect]? {
+    get
+  }
+}
+@available(iOS 11.2, *)
+public class OcrDD {
+  public var lastDetectedBoxes: [CoreGraphics.CGRect]
+  public init()
+  public func perform(croppedCardImage: CoreGraphics.CGImage) -> Swift.String?
+  @objc deinit
+}
+@objc public enum ScanPerformance : Swift.Int {
+  case fast
+  case accurate
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class ScanConfiguration : ObjectiveC.NSObject {
+  @objc public var runOnOldDevices: Swift.Bool
+  @objc public var setPreviouslyDeniedDevicesAsIncompatible: Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension CardScan.CardNetwork : Swift.Equatable {}
+extension CardScan.CardNetwork : Swift.Hashable {}
+extension CardScan.CardNetwork : Swift.RawRepresentable {}
+extension CardScan.CardType : Swift.Equatable {}
+extension CardScan.CardType : Swift.Hashable {}
+extension CardScan.CardType : Swift.RawRepresentable {}
+extension CardScan.MainLoopState : Swift.Equatable {}
+extension CardScan.MainLoopState : Swift.Hashable {}
+extension CardScan.OcrMainLoop.AnalyzerType : Swift.Equatable {}
+extension CardScan.OcrMainLoop.AnalyzerType : Swift.Hashable {}
+extension CardScan.CenteredCardState : Swift.Equatable {}
+extension CardScan.CenteredCardState : Swift.Hashable {}
+extension CardScan.ScanPerformance : Swift.Equatable {}
+extension CardScan.ScanPerformance : Swift.Hashable {}
+extension CardScan.ScanPerformance : Swift.RawRepresentable {}
