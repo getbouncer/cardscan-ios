@@ -21,6 +21,7 @@ public class AppleCreditCardOcr: CreditCardOcrImplementation {
         let startTime = Date()
         var name: String?
         var nameBox: CGRect?
+        var numberBoxes: [CGRect]?
         var numberBox: CGRect?
         var expiryBox: CGRect?
         var nameCandidates: [OcrObject] = []
@@ -67,7 +68,11 @@ public class AppleCreditCardOcr: CreditCardOcrImplementation {
         self.computationTime += duration
         self.frames += 1
 
-        return CreditCardOcrPrediction(image: image, ocrCroppingRectangle: roiForOcr, number: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, name: name, computationTime: duration, numberBoxes: numberBox.map { [$0] }, expiryBoxes: expiryBox.map { [$0] }, nameBoxes: nameBox.map { [$0] })
+        if let somePan = pan, let someNumberBox = numberBox {
+            numberBoxes = extractBoxes(number: somePan, numberBox: someNumberBox)
+        }
+        
+        return CreditCardOcrPrediction(image: image, ocrCroppingRectangle: roiForOcr, number: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, name: name, computationTime: duration, numberBoxes: numberBoxes, expiryBoxes: expiryBox.map { [$0] }, nameBoxes: nameBox.map { [$0] })
     }
     
     static func likelyName(_ text: String) -> String? {
@@ -76,5 +81,41 @@ public class AppleCreditCardOcr: CreditCardOcrImplementation {
         let validWordCount = validWords.count >= 2
         
         return validWordCount ? validWords.joined(separator: " ") : nil
+    }
+    
+    func isSpace(digits: Int, index: Int) -> Bool {
+        if index == 4 {
+            return true
+        }
+        
+        if digits == 17 && index == 11 {
+            return true
+        }
+        
+        if digits == 19 && index == 9 {
+            return true
+        }
+        
+        if digits == 19 && index == 14 {
+            return true
+        }
+        
+        return false
+    }
+    
+    func extractBoxes(number: String, numberBox: CGRect) -> [CGRect] {
+        let digits = number.count == 15 ? 17 : 19
+        let width = Double(numberBox.size.width) / Double(digits)
+        let height = Double(numberBox.size.height)
+        var x = Double(numberBox.origin.x)
+        let y = Double(numberBox.minY)
+        var rects: [CGRect] = []
+        for index in 0..<digits {
+            if !isSpace(digits: digits, index: index) {
+                rects.append(CGRect(x: x, y: y, width: width, height: height))
+            }
+            x += width
+        }
+        return rects
     }
 }
