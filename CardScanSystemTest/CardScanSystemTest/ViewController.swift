@@ -12,7 +12,7 @@ import CardScan
 import AVKit
 
 class ViewController: UIViewController, TestingImageDataSource {
-    let testImages = [0,1,2,3,4,5,6,7,8,9].map { UIImage(imageLiteralResourceName: "bofa_frame\($0)") }
+    let testImages = [0].map { UIImage(imageLiteralResourceName: "synthetic_card_\($0)") }
     var currentTestImages: [CGImage]?
     var currentApiTime = ScanStats.lastScanStatsSuccess
 
