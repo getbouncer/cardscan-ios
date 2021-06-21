@@ -13,16 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var cameraImage: UIImageView!
     @IBOutlet weak var scanCardButton: UIButton!
     
-    let testImages = [UIImage(imageLiteralResourceName: "frame0"),
-                      UIImage(imageLiteralResourceName: "frame19"),
-                      UIImage(imageLiteralResourceName: "frame38"),
-                      UIImage(imageLiteralResourceName: "frame57"),
-                      UIImage(imageLiteralResourceName: "frame73"),
-                      UIImage(imageLiteralResourceName: "frame76"),
-                      UIImage(imageLiteralResourceName: "frame95"),
-                      UIImage(imageLiteralResourceName: "frame99"),
-                      UIImage(imageLiteralResourceName: "frame114"),
-                      UIImage(imageLiteralResourceName: "frame133")]
+    let testImages = [UIImage(imageLiteralResourceName: "synthetic_card_full")]
     var currentTestImages: [CGImage]?
     
     override func viewDidLoad() {

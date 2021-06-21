@@ -9,10 +9,10 @@ import XCTest
 @testable import CardScan
 
 class CardScan_StateMachineTests: XCTestCase {
-    let cardImage: CGImage? = UIImage(imageLiteralResourceName: "frame0").cgImage
-    let number = "4847186095118770"
-    let expiryMonth = "03"
-    let expiryYear = "21"
+    let cardImage: CGImage? = UIImage(imageLiteralResourceName: "synthetic_card_visa").cgImage
+    let number = "4673851385043538"
+    let expiryMonth = "02"
+    let expiryYear = "37"
     
     func testDuration_Initial() {
         guard let cardImage = cardImage else {
