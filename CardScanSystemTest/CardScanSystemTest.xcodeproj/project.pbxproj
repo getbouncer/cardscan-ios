@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B46FC1F2587E37500849658 /* apikey.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B46FC1E2587E37500849658 /* apikey.json */; };
 		3B7B80502587D233007DB4D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7B804F2587D233007DB4D9 /* AppDelegate.swift */; };
 		3B7B80542587D233007DB4D9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7B80532587D233007DB4D9 /* ViewController.swift */; };
 		3B7B80572587D233007DB4D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B7B80552587D233007DB4D9 /* Main.storyboard */; };
@@ -49,7 +48,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3B46FC1E2587E37500849658 /* apikey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = apikey.json; sourceTree = "<group>"; };
 		3B7B804C2587D233007DB4D9 /* CardScanSystemTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardScanSystemTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B7B804F2587D233007DB4D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B7B80532587D233007DB4D9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 		3B46FC1C2587DB5000849658 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3B46FC1E2587E37500849658 /* apikey.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -235,7 +232,6 @@
 			files = (
 				3B7B805C2587D234007DB4D9 /* LaunchScreen.storyboard in Resources */,
 				3B7B80592587D234007DB4D9 /* Assets.xcassets in Resources */,
-				3B46FC1F2587E37500849658 /* apikey.json in Resources */,
 				3B7B80572587D233007DB4D9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

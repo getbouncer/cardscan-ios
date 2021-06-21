@@ -64,7 +64,7 @@ class CardScanSystemTestUITests: XCTestCase {
             while !exists {
                 Thread.sleep(forTimeInterval: 0.5)
                 DispatchQueue.main.sync {
-                    exists = app.staticTexts["4635516434099347"].exists
+                    exists = app.staticTexts["6297324512093652"].exists
                 }
             }
             expectation.fulfill()
