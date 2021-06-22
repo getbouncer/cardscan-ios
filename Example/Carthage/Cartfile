@@ -1,0 +1,3 @@
+#change branch to master before deploy
+github "getbouncer/cardscan-ios" "add_carthage"
+
