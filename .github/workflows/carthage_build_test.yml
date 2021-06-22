@@ -1,0 +1,28 @@
+name: Carthage Build Test
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+
+    runs-on: macOS-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+            token: ${{secrets.SERVICE_PERSONAL_ACCESS_TOKEN}}
+
+      - name: test
+        run: |
+          cd Example
+          carthage update --platform iOS --no-use-binaries
+
+      - name: upload-artifacts
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test-report
+          path: /var/folders/**/carthage-xcodebuild.*.log
