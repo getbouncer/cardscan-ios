@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct DefaultApiError {
     struct ApiError: Error {
         let message: String
@@ -18,10 +19,12 @@ struct DefaultApiError {
     static let parsingError = ApiError(message: "There has been an error with parsing the response", code: "response_parsing_error")
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct DefaultResponse: Decodable {
     let status: String
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct ApiRequest {
     static func post<ResponseType: Decodable>(endpoint: String, requestData: Data, completion: @escaping (ResponseType?, Error?) -> Void) {
         guard let baseUrl = ApiClient.shared.baseUrl else {

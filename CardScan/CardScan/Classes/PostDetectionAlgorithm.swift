@@ -10,6 +10,7 @@ import Foundation
  for filtering out unlikely sequences.
  */
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct PostDetectionAlgorithm {
     let kNumberWordCount = 4
     let kAmexWordCount = 5

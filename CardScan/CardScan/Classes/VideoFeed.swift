@@ -1,10 +1,12 @@
 import AVKit
 import VideoToolbox
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 protocol AfterPermissions {
     func permissionDidComplete(granted: Bool, showedPrompt: Bool)
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 class VideoFeed {
     private enum SessionSetupResult {
         case success

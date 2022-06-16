@@ -8,6 +8,7 @@ import CoreGraphics
 import Foundation
 
 @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct PriorsGen{
     /**
             This struct represents the logic to generate initiail bounding boxes or priors for our implementation of SSD.
@@ -120,6 +121,7 @@ struct PriorsGen{
     }
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 extension Float {
     func clamp(minimum: Float =  0.0, maximum: Float =  1.0) -> Float {
         return max(minimum, min(maximum, self))

@@ -1,3 +1,14 @@
+# Deprecation Notice
+Hello from the Stripe (formerly Bouncer) team!
+
+We're excited to provide an update on the state and future of the [Card Scan OCR](https://github.com/stripe/stripe-ios/tree/master/StripeCardScan) product! As we continue to build into Stripe's ecosystem, we'll be supporting the mission to continuously improve the end customer experience in many of Stripe's core checkout products.
+
+This SDK has been [migrated to Stripe](https://github.com/stripe/stripe-ios/tree/master/StripeCardScan) and is now free for use under the MIT license! The CardScan OCR API is currently getting built and will be free for use very soon!
+
+If you are not currently a Stripe user, and interested in learning more about improving checkout experience through Stripe, please let us know and we can connect you with the team.
+
+If you are not currently a Stripe user, and want to continue using the existing SDK, you can do so free of charge. Starting January 1, 2022, we will no longer be charging for use of the existing Bouncer Card Scan OCR SDK. For product support on [Android](https://github.com/stripe/stripe-android/issues) and [iOS](https://github.com/stripe/stripe-ios/issues). For billing support, please email [bouncer-support@stripe.com](mailto:bouncer-support@stripe.com).
+For the new product, please visit the [stripe github repository](https://github.com/stripe/stripe-ios/tree/master/StripeCardScan).
 # CardScan
 This repository contains the open source code for the [Bouncer](https://www.getbouncer.com) CardScan product.
 
@@ -35,33 +46,4 @@ for installing CardScan into your app.
 Sam King, Jaime Park, Adam Wushensky, Zain ul Abi Din, and Andy Li
 
 ## License
-This library is available under paid and free licenses. See the [LICENSE](LICENSE) file for the full license text.
-
-### Quick summary
-In short, this library will remain free forever for non-commercial applications, but use by commercial applications is
-limited to 90 days, after which time a licensing agreement is required. We're also adding some legal liability
-protections.
-
-After this period commercial applications need to convert to a licensing agreement to continue to use this library.
-* Details of licensing (pricing, etc) are available at [https://cardscan.io/pricing](https://cardscan.io/pricing), or
-you can contact us at [license@getbouncer.com](mailto:license@getbouncer.com).
-
-### More detailed summary
-What's allowed under the license:
-* Free use for any app for 90 days (for demos, evaluations, hackathons, etc).
-* Contributions (contributors must agree to the [Contributor License Agreement](Contributor%20License%20Agreement))
-* Any modifications as needed to work in your app
-
-What's not allowed under the license:
-* Commercial applications using the license for longer than 90 days without a license agreement.
-* Using us now in a commercial app today? No worries! Just email
-[license@getbouncer.com](mailto:license@getbouncer.com) and we’ll get you set up.
-* Redistribution under a different license
-* Removing attribution
-* Modifying logos
-* Indemnification: using this free software is ‘at your own risk’, so you can’t sue Bouncer Technologies, Inc. for
-problems caused by this library
-
-### Questions? Concerns?
-Please email us at [license@getbouncer.com](mailto:license@getbouncer.com) or ask us on
-[slack](https://getbouncer.slack.com).
+This library is available under the MIT license. See the [LICENSE](LICENSE) file for the full license text.

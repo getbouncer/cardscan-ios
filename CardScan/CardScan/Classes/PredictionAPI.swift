@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct Result{
     var pickedBoxProbs: [Float]
     var pickedLabels: [Int]
@@ -18,6 +19,8 @@ struct Result{
         pickedBoxes = [[Float]]()
     }
 }
+
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct PredictionAPI{
     
     /**

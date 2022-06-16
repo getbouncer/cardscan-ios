@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct OcrDDUtils {
     static let offsetQuickRead:Float = 2.0
     static let falsePositiveTolerance:Float = 1.2

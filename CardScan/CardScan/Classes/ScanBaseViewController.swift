@@ -3,11 +3,13 @@ import AVKit
 import Vision
 
 @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public protocol TestingImageDataSource: AnyObject {
     func nextSquareAndFullImage() -> (CGImage, CGImage)?
 }
 
 @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 @objc open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AfterPermissions, OcrMainLoopDelegate {
     
     public weak var testingImageDataSource: TestingImageDataSource?

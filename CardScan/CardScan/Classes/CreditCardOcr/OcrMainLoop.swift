@@ -66,6 +66,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public protocol OcrMainLoopDelegate: AnyObject {
     func complete(creditCardOcrResult: CreditCardOcrResult)
     func prediction(prediction: CreditCardOcrPrediction, squareCardImage: CGImage, fullCardImage: CGImage, state: MainLoopState)
@@ -76,10 +77,12 @@ public protocol OcrMainLoopDelegate: AnyObject {
     func shouldUsePrediction(errorCorrectedNumber: String?, prediction: CreditCardOcrPrediction) -> Bool
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public protocol MachineLearningLoop: AnyObject {
     func push(fullImage: CGImage, roiRectangle: CGRect)
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 open class OcrMainLoop : MachineLearningLoop {
     public enum AnalyzerType {
         case apple

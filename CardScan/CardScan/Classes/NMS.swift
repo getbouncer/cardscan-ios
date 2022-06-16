@@ -8,6 +8,7 @@ import CoreGraphics
 import Foundation
 import os.log
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct NMS{
     static func hardNMS(subsetBoxes: [[Float]], probs: [Float], iouThreshold: Float, topK: Int, candidateSize: Int) -> [Int] {
         /** In this project we implement HARD NMS and NOT Soft NMS

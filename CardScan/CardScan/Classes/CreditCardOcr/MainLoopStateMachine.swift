@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public enum MainLoopState {
     case initial
     case ocrOnly
@@ -19,6 +20,7 @@ public enum MainLoopState {
     case nameAndExpiry
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public protocol MainLoopStateMachine {
     func loopState() -> MainLoopState
     func event(prediction: CreditCardOcrPrediction) -> MainLoopState
@@ -27,6 +29,7 @@ public protocol MainLoopStateMachine {
 
 // Note: This class is _not_ thread safe, it relies on syncrhonization
 // from the `OcrMainLoop`
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 @objc open class OcrMainLoopStateMachine: NSObject, MainLoopStateMachine {
     public var state: MainLoopState = .initial
     public var startTimeForCurrentState = Date()
@@ -68,6 +71,7 @@ public protocol MainLoopStateMachine {
     }
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 @objc public class OcrAccurateMainLoopStateMachine: NSObject, MainLoopStateMachine {
     var state: MainLoopState = .initial
     var startTimeForCurrentState = Date()

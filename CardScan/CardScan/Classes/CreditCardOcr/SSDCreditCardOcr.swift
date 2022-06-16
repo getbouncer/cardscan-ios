@@ -7,6 +7,7 @@
 import UIKit
 
 @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public class SSDCreditCardOcr: CreditCardOcrImplementation {
     let ocr: OcrDD
     

@@ -18,6 +18,7 @@ import CoreML
 
 
 @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public struct SsdDetect {
     static var ssdModel: SSD? = nil
     static var priors:[CGRect]? = nil

@@ -8,6 +8,7 @@
 import UIKit
 
 @available(iOS 13.0, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public class AppleCreditCardOcr: CreditCardOcrImplementation {
     public override func recognizeCard(in fullImage: CGImage, roiRectangle: CGRect) -> CreditCardOcrPrediction {
         guard let (image, roiForOcr) = fullImage.croppedImageForSsd(roiRectangle: roiRectangle) else {

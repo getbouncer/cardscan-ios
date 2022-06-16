@@ -13,6 +13,7 @@ import UIKit
 #endif
 
 @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 @objc public protocol ScanDelegate {
     @objc func userDidCancel(_ scanViewController: ScanViewController)
     @objc func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard)
@@ -405,6 +406,7 @@ extension ScanViewController {
 }
 
 // https://stackoverflow.com/a/53143736/947883
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 extension UIView {
     func fadeIn(_ duration: TimeInterval? = 0.4, onCompletion: (() -> Void)? = nil) {
         self.alpha = 0

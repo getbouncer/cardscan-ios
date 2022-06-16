@@ -11,6 +11,7 @@ import CoreGraphics
 import Foundation
 
 @available(iOS 11.2, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct OcrPriorsGen{
     /**
             This struct represents the logic to generate initiail bounding boxes or priors for our implementation of SSD.

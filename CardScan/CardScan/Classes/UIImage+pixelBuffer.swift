@@ -25,6 +25,7 @@
 import UIKit
 import VideoToolbox
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 extension UIImage {
     /**
      Resizes the image to width x height and converts it to an RGB CVPixelBuffer.
@@ -212,6 +213,7 @@ extension UIImage {
     }
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public extension UIImage {
     static func blankGrayImage(width: Int, height: Int) -> UIImage? {
         UIGraphicsBeginImageContext(CGSize(width: width, height: height))

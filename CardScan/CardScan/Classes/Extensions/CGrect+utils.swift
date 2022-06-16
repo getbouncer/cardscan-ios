@@ -7,6 +7,7 @@
 
 import CoreGraphics
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 extension CGRect {
     func centerY() -> CGFloat {
         return (minY / 2 + maxY / 2)

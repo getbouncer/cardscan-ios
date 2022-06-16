@@ -1,5 +1,6 @@
 import Foundation
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct AppState {
     
     static let lock = DispatchSemaphore(value: 1)
