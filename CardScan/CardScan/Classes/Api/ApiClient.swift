@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 class ApiClient {
     public static let shared = ApiClient()
     public static var apiKey: String?

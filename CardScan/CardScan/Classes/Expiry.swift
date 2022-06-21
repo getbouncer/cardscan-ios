@@ -1,5 +1,6 @@
 import Foundation
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 public struct Expiry: Hashable {
     public let string: String
     public let month: UInt

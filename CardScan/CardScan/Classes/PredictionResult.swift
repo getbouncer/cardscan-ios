@@ -12,6 +12,7 @@ import UIKit
 // The PredictionResult includes images of the bin and the last four. The OCR model returns clusters of 4 digits for
 // the number so we use only the first 4 for the bin and the full last 4 as a single image
 //
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct PredictionResult {
     let cardWidth: CGFloat
     let cardHeight: CGFloat

@@ -2,6 +2,7 @@ import Vision
 import UIKit
 
 @available(iOS 13.0, *)
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct AppleOcr {
     static func configure() {
         // warm up the model eventually

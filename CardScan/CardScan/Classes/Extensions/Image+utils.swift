@@ -1,6 +1,7 @@
 import VideoToolbox
 import UIKit
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 extension UIImage {
     static func grayImage(size: CGSize) -> UIImage? {
         UIGraphicsBeginImageContext(size)
@@ -13,6 +14,7 @@ extension UIImage {
     }
 }
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 extension CGImage {
     
     // Crop a full image

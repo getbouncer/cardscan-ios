@@ -11,7 +11,7 @@ import UIKit
  Base class for any OCR prediction systems. All implementations must override `recognizeCard` and update the `frames`
  and `computationTime` member variables
  */
-
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 open class CreditCardOcrImplementation {
     let dispatchQueue: ActiveStateComputation
     public var frames = 0

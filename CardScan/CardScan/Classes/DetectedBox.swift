@@ -7,6 +7,7 @@ import Foundation
  Note: the rect member is in the image's coordinate system.
  */
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct DetectedBox {
     let rect: CGRect
     let row: Int

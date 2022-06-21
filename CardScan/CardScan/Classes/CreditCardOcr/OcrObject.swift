@@ -1,5 +1,6 @@
 import UIKit
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct OcrObject {
     let rect: CGRect
     let text: String

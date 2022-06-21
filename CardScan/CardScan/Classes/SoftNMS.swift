@@ -8,6 +8,7 @@
 import Foundation
 import Accelerate
 
+@available(*, deprecated, message: "Replaced by stripe card scan. See https://github.com/stripe/stripe-ios/tree/master/StripeCardScan")
 struct SoftNMS{
     static func softNMS(subsetBoxes: [[Float]], probs: [Float],
                         probThreshold: Float, sigma: Float, topK: Int,
